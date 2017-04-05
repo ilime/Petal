@@ -2,9 +2,9 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MainWindow from './components/mainWindow/index.jsx'
+import Container from './components/Container/index.jsx'
 
 ReactDOM.render(
-	<MainWindow />,
+	<Container />,
 	document.getElementById('app')
 )

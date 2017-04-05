@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 
-class MainWindow extends Component {
+class Container extends Component {
 
 	render() {
 		return (
@@ -11,4 +11,4 @@ class MainWindow extends Component {
 	}
 }
 
-export default MainWindow
+export default Container

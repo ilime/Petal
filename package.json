@@ -2,10 +2,12 @@
   "name": "petal",
   "version": "1.0.0",
   "description": "Douban.FM Client With Extra - - -",
-  "main": "main.js",
+  "main": "./bundle/main.bundle.js",
   "scripts": {
     "start": "electron .",
-    "bundle": "webpack",
+    "bundleSrc": "webpack --config webpack.config.src.js --progress",
+    "bundleMain": "webpack --config webpack.config.main.js --progress",
+    "bundleSrcAndMain": "npm run bundleSrc && npm run bundleMain",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,15 +24,19 @@
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-react": "^6.23.0",
     "electron": "^1.6.2",
+    "electron-devtools-installer": "^2.1.0",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^6.10.3",
     "webpack": "^2.3.3"
   },
   "dependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "redux": "^3.6.0",
+    "semantic-ui-react": "^0.67.2"
   }
 }
