@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light');
+
+$sidebarFontsFamily: 'Shadows Into Light', cursive;
+
+#sidebarColumn {
+	background-color: #f7fcf8;
+	width: 9% !important;
+	height: 500px;
+	position: relative;
+	padding-left: 0;
+}
+
+.navigation {
+	list-style: none;
+
+	li {
+		width: 0;
+		height: 3.5rem;
+		margin-top: .9rem;
+		margin-left: -.9rem;
+		border-bottom: 3px solid green;
+		transition: width .5s ease;
+
+		&:hover {
+			width: 2.8rem;
+		}
+
+		a {
+			color: grey !important;
+		}
+
+		.icon {
+			margin-left: .4rem;
+		}
+
+		span {
+			display: block;
+			margin-top: .3rem;
+			margin-left: .5rem;
+			font-family: $sidebarFontsFamily;
+		}
+	}
+}
+
+.selected {
+	i.grey.large.icon {
+		color: seagreen !important;
+	}
+
+	span {
+		color: seagreen;
+	}
+}
+
+#logIn {
+	position: absolute;
+	bottom: 2rem;
+}

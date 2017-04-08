@@ -12,8 +12,8 @@ let mainWindow = null
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600
+    height: 500,
+    resizable: false
   })
 
   mainWindow.loadURL(url.format({
@@ -26,9 +26,9 @@ const createWindow = () => {
     Promise.all([
       [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].map(tool => installExtension(tool))
     ]).then(() => {
-      console.log("install dev tools successfully ");
-      mainWindow.webContents.openDevTools()
+      console.log('install dev tools successfully');
     }).catch(console.log)
+    mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('close', () => {
