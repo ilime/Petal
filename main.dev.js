@@ -13,7 +13,8 @@ let mainWindow = null
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     height: 500,
-    resizable: false
+    resizable: false,
+    frame: false
   })
 
   mainWindow.loadURL(url.format({
