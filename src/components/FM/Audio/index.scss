@@ -1,0 +1,68 @@
+.player {
+	position: relative;
+	top: 4rem;
+	left: 2rem;
+	-webkit-app-region: no-drag;
+
+	.songProgress {
+		width: 93%;
+	}
+
+	.st-vo {
+		display: flex;
+
+		.startAndEnd {
+			flex: none;
+			width: 6rem;
+			color: grey;
+		}
+
+		.volume {
+			position: relative;
+			flex: 1;
+
+			i.volume.up {
+				position: absolute;
+				right: 1.6rem;
+				top: .1rem;
+			}
+			
+			.volumeBar {
+				position: absolute;
+				width: 165px;
+				height: 2px;
+				background: grey;
+				left: 1.8rem;
+				bottom: .5rem;
+
+				.pin {
+					display: block;
+					position: relative;
+					z-index: 2;
+					cursor: pointer;
+					width: 10px;
+					height: 10px;
+					background-color: seagreen;
+					border-radius: 50%;
+					bottom: .3rem;
+					left: 39px;
+					transition-property: width, height, bottom;
+					transition-duration: 1s, 1s, 1s;
+
+					&:active {
+						width: 15px;
+						height: 15px;
+						bottom: 0.5rem;
+					}
+				}
+			}
+
+			.volumeProgress {
+				position: absolute;
+				width: 30%;
+				height: 2px;
+				background: seagreen;
+			}
+		}
+	}
+}

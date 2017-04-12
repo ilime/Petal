@@ -9,13 +9,11 @@ import PetalRoutes from '../../routes'
 import './index.scss'
 
 class Container extends Component {
-
   render() {
-
     return (
       <Grid>
-        <Grid.Row>
-          <Grid.Column width={2} id='sidebarColumn'>
+        <Grid.Row className='outSide'>
+          <Grid.Column as='nav' width={2} id='sidebarColumn'>
             <ul className='navigation'>
               <li>
                 <NavLink exact to='/' activeClassName='selected'>
@@ -34,10 +32,6 @@ class Container extends Component {
               <li>
                 <Icon name='music' size='large' color='grey' />
                 <span>Music</span>
-              </li>
-              <li>
-                <Icon name='users' size='large' color='grey' />
-                <span>City</span>
               </li>
               <li id='logIn'>
                 <NavLink to='/login' activeClassName='selected'>

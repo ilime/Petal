@@ -1,0 +1,30 @@
+.songTitleAndSinger {
+	display: flex;
+	justify-content: space-between;
+
+	#title {
+		margin-top: 25px;
+	}
+}
+
+.lyric {
+	text-align: center;
+	position: relative;
+	top: 20px;
+	overflow-y: scroll;
+	height: 250px;
+	color: grey;
+	-webkit-app-region: no-drag;
+	&::-webkit-scrollbar { 
+    display: none; 
+	}
+
+	.cannotscroll {
+		color: black;
+		font-weight: bold;
+	}
+}
+
+.lyricGreen {
+	color: seagreen;
+}

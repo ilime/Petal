@@ -2,7 +2,10 @@
 
 import axios from 'axios'
 
-import { playlistNewRequest, playlistResponse } from './types'
+import {
+  playlistNewRequest, playlistResponse,
+  songLyricResponse
+} from './types'
 
 const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
 
@@ -31,16 +34,34 @@ const playlistOriginUrl = FM_ROOT_URL
       return previous + key + '=' + value + '&'
     }, '')
 
+const songLyricGET = () => {
+  return (dispatch, getState) => {
+    return axios.get(FM_ROOT_URL
+      + '/lyric?'
+      + 'sid=' + getState().fmReducer.sid
+      + '&ssid=' + getState().fmReducer.ssid
+    ).then(response => {
+      dispatch(songLyricResponse(response.data))
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+}
+
 export const playlistGET = (type, sid) => {
   return (dispatch, getState) => {
     dispatch(playlistTypes[type](sid))
     return axios.get(playlistOriginUrl
       + 'type=' + getState().fmReducer.type
       + '&sid=' + getState().fmReducer.sid
-    ).then((response) => {
-      console.log(response)
-      dispatch(playlistResponse(response))
-    }).catch((error) => {
+    ).then(response => {
+      let playlist = response.data
+      let sid = playlist.song[0].sid
+      let ssid = playlist.song[0].ssid
+      dispatch(playlistResponse(playlist, sid, ssid))
+    }).then(() => {
+      dispatch(songLyricGET())
+    }).catch(error => {
       console.log(error)
     })
   }

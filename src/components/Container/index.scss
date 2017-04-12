@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light');
+@import url('https://fonts.googleapis.com/css?family=Rubik');
 
-$sidebarFontsFamily: 'Shadows Into Light', cursive;
+$sidebarFontsFamily: 'Rubik', sans-serif;
+
+#app {
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
 
 #sidebarColumn {
 	background-color: #f7fcf8;
@@ -34,9 +39,7 @@ $sidebarFontsFamily: 'Shadows Into Light', cursive;
 		}
 
 		span {
-			display: block;
 			margin-top: .3rem;
-			margin-left: .5rem;
 			font-family: $sidebarFontsFamily;
 		}
 	}
@@ -54,5 +57,5 @@ $sidebarFontsFamily: 'Shadows Into Light', cursive;
 
 #logIn {
 	position: absolute;
-	bottom: .8rem;
+	bottom: .1rem;
 }

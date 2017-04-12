@@ -16,8 +16,11 @@ const config = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules|\.git/,
-        loader: 'babel-loader'
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        }
       }
     ]
   },

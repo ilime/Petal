@@ -8,11 +8,13 @@ import FM from './components/FM/index.jsx'
 
 const routes = [
   {
+    id: 1,
     path: '/',
     component: FM,
     exact: true
   },
   {
+    id: 2,
     path: '/login',
     component: Login
   }
@@ -24,6 +26,6 @@ const RouteWithSubRoutes = (route) => (
   )} />
 )
 
-export default routes.map((route, i) => (
-  <RouteWithSubRoutes key={i} {...route} />
+export default routes.map(route => (
+  <RouteWithSubRoutes key={route.id} {...route} />
 ))

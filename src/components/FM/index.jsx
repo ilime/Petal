@@ -2,35 +2,42 @@
 
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Header } from 'semantic-ui-react'
+import { Grid, Image} from 'semantic-ui-react'
+
+import Cover from './Cover/index.jsx'
+import Audio from './Audio/index.jsx'
+import Info from './Info/index.jsx'
 
 import { playlistGET } from '../../actions/fm/apis'
 
-class FM extends Component {
+import './index.scss'
 
+class FM extends Component {
   componentDidMount() {
     this.props.getPlaylist('new')
   }
 
   render() {
-
     return (
-      <div>
-        <Header size='huge' textAlign='center'>Petal FM</Header>
-      </div>
+      <article className='fmRegion'>
+        <Grid>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <Cover />
+              <Audio />
+            </Grid.Column>
+            <Grid.Column>
+              <Info />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </article>
     )
   }
 }
 
 FM.PropTypes = {
-  playlist: PropTypes.object.isRequired,
   getPlaylist: PropTypes.func.isRequired
-}
-
-const mapStateToProps = state => {
-  return {
-    playlist: state.fmReducer.playlist
-  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -40,6 +47,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(FM)

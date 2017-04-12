@@ -1,12 +1,15 @@
 'use strict'
 
 const path = require('path')
+const webpack = require('webpack')
 
 const OUTPUT_PATH = path.resolve(__dirname, 'bundle')
 const SRC_PATH = path.resolve(__dirname, 'src')
+const STYLE_PATH = path.resolve(__dirname, 'src/components')
 
 const config = {
   entry: {
+    vendor: ['react', 'react-dom'],
     app: './src/app'
   },
   output: {
@@ -21,17 +24,23 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['es2015', 'react'],
+          presets: ['es2015', 'react', 'stage-2'],
           cacheDirectory: true
         }
       },
       {
         test: /\.scss$/,
-        include: SRC_PATH,
+        include: STYLE_PATH,
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      miniChunks: Infinity
+    })
+  ]
 }
 
 module.exports = config

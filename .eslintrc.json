@@ -5,11 +5,13 @@
         "node": true
     },
     "parserOptions": {
+        "ecmaVersion": 8,
         "ecmaFeatures": {
             "jsx": true
         },
         "sourceType": "module"
     },
+    "parser": "babel-eslint",
     "rules": {
         "indent": [
             2,
@@ -20,8 +22,14 @@
             2,
             "single"
         ],
+        "semi": [
+            2,
+            "never"
+        ],
         "react/jsx-uses-react": 2,
-        "react/jsx-uses-vars": 2
+        "react/jsx-uses-vars": 2,
+        "react/no-unused-prop-types": 2,
+        "react/jsx-no-undef": 2
     },
     "plugins": [
         "react"
