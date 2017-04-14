@@ -9,12 +9,6 @@ import FM from './components/FM/index.jsx'
 const routes = [
   {
     id: 1,
-    path: '/',
-    component: FM,
-    exact: true
-  },
-  {
-    id: 2,
     path: '/login',
     component: Login
   }

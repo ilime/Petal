@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom'
 
 import PetalRoutes from '../../routes'
 
+import FM from '../FM/index.jsx'
+
 import './index.scss'
 
 class Container extends Component {
@@ -42,6 +44,7 @@ class Container extends Component {
             </ul>
           </Grid.Column>
           <Grid.Column width={14}>
+            <FM />
             {PetalRoutes}
           </Grid.Column>
         </Grid.Row>

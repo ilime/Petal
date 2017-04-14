@@ -83,20 +83,21 @@ class Info extends Component {
     const lc = this.state.lc
     let index = 0
 
-    audio.addEventListener('timeupdate', () => {
+    audio.ontimeupdate = () => {
       if (index === lc.length) { return }
       let ct = audio.currentTime
       if (ct > lc[index][1]) {
-        lyricContainer.children[index].classList.add('lyricGreen')
+        let lines = lyricContainer.children
+        lines[index].classList.add('lyricGreen')
         if (index > 0) {
-          lyricContainer.children[index - 1].classList.remove('lyricGreen')
+          lines[index - 1].classList.remove('lyricGreen')
           if (index > 3) {
-            lyricContainer.scrollTop += 33
+            lyricContainer.scrollTop += lines[index - 1].clientHeight + 14
           }
         }
         index++
       }
-    })
+    }
   }
 
   render() {
