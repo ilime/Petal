@@ -3,59 +3,59 @@
 $sidebarFontsFamily: 'Rubik', sans-serif;
 
 #app {
-	overflow-x: hidden;
-	overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 #sidebarColumn {
-	background-color: #f7fcf8;
-	width: 9% !important;
-	height: 500px;
-	position: relative;
-	padding-left: 0;
+  background-color: #f7fcf8;
+  width: 9% !important;
+  height: 500px;
+  position: relative;
+  padding-left: 0;
 }
 
 .navigation {
-	list-style: none;
+  list-style: none;
 
-	li {
-		width: 0;
-		height: 3.5rem;
-		margin-top: .9rem;
-		margin-left: -.9rem;
-		border-bottom: 3px solid green;
-		transition: width .5s ease;
+  li {
+    width: 0;
+    height: 3.5rem;
+    margin-top: .9rem;
+    margin-left: -.9rem;
+    border-bottom: 3px solid green;
+    transition: width .5s ease;
 
-		&:hover {
-			width: 2.8rem;
-		}
+    &:hover {
+      width: 2.8rem;
+    }
 
-		a {
-			color: grey !important;
-		}
+    a {
+      color: grey !important;
+    }
 
-		.icon {
-			margin-left: .4rem;
-		}
+    .icon {
+      margin-left: .4rem;
+    }
 
-		span {
-			margin-top: .3rem;
-			font-family: $sidebarFontsFamily;
-		}
-	}
+    span {
+      margin-top: .3rem;
+      font-family: $sidebarFontsFamily;
+    }
+  }
 }
 
 .selected {
-	i.grey.large.icon {
-		color: seagreen !important;
-	}
+  i.grey.large.icon {
+    color: seagreen !important;
+  }
 
-	span {
-		color: seagreen;
-	}
+  span {
+    color: seagreen;
+  }
 }
 
 #logIn {
-	position: absolute;
-	bottom: .1rem;
+  position: absolute;
+  bottom: .1rem;
 }

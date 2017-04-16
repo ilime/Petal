@@ -1,35 +1,35 @@
 .cover {
-	position: relative;
-	top: 2rem;
-	left: 2rem;
+  position: relative;
+  top: 2rem;
+  left: 2rem;
 
-	img {
-		width: 300px !important;
-		height: 300px !important;
-	}
+  img {
+    width: 300px !important;
+    height: 300px !important;
+  }
 }
 
 .musicPause {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 5rem;
-	height: 5rem;
-	border: 3px solid seagreen;
-	border-radius: 50%;
-	margin: 0 auto;
-	cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  border: 3px solid seagreen;
+  border-radius: 50%;
+  margin: 0 auto;
+  cursor: pointer;
 
-	i {
-		margin-left: .5rem;
-	}
+  i {
+    margin-left: .5rem;
+  }
 }
 
 .heartTrashForward {
-	margin-top: 2rem;
-	
-	i {
-		margin: 0 .9rem;
-		cursor: pointer;
-	}
+  margin-top: 2rem;
+  
+  i {
+    margin: 0 .9rem;
+    cursor: pointer;
+  }
 }
