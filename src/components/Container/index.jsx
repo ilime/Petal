@@ -14,7 +14,7 @@ class Container extends Component {
   render() {
     return (
       <Grid>
-        <Grid.Row className='outSide'>
+        <Grid.Row className='outside'>
           <Grid.Column as='nav' width={2} id='sidebarColumn'>
             <ul className='navigation'>
               <li>
@@ -25,20 +25,20 @@ class Container extends Component {
               </li>
               <li>
                 <Icon name='book' size='large' color='grey' />
-                <span>Book</span>
+                <span>图书</span>
               </li>
               <li>
                 <Icon name='video' size='large' color='grey' />
-                <span>Movie</span>
+                <span>电影</span>
               </li>
               <li>
                 <Icon name='music' size='large' color='grey' />
-                <span>Music</span>
+                <span>音乐</span>
               </li>
               <li id='logIn'>
                 <NavLink to='/login' activeClassName='selected'>
                   <Icon name='user circle' size='large' color='grey' />
-                  <span>Login</span>
+                  <span>登录</span>
                 </NavLink>
               </li>
             </ul>

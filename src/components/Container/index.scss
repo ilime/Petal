@@ -8,54 +8,66 @@ $sidebarFontsFamily: 'Rubik', sans-serif;
 }
 
 #sidebarColumn {
-  background-color: #f7fcf8;
+  // background-color: #f7fcf8;
+  background: #f1faf1;
   width: 9% !important;
   height: 500px;
-  position: relative;
-  padding-left: 0;
+  text-align: center;
+  padding: 0;
+  margin-left: 1rem;
 }
 
 .navigation {
   list-style: none;
-
+  padding: 0;
   li {
-    width: 0;
+    position: relative;
+    margin: .8rem auto .5rem;
+    width: 55%;
     height: 3.5rem;
-    margin-top: .9rem;
-    margin-left: -.9rem;
-    border-bottom: 3px solid green;
-    transition: width .5s ease;
-
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: 0;
+      background: #2e963d;
+      height: 3px;
+      transition-property: right;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-out;
+    }
     &:hover {
-      width: 2.8rem;
+      cursor: pointer;
+      &::after {
+        right: 0;
+      }
     }
-
     a {
+      display: block;
+      width: 100%;
       color: grey !important;
-    }
-
-    .icon {
-      margin-left: .4rem;
-    }
-
-    span {
-      margin-top: .3rem;
-      font-family: $sidebarFontsFamily;
+      span {
+        display: block;
+        margin-top: .3rem;
+        font-family: $sidebarFontsFamily;
+      }
     }
   }
 }
 
 .selected {
   i.grey.large.icon {
-    color: seagreen !important;
+    color: #2e963d !important;
   }
-
   span {
-    color: seagreen;
+    color: #2e963d;
   }
 }
 
 #logIn {
   position: absolute;
+  left: 50%;
+  transform: translate(-50%);
   bottom: .1rem;
 }

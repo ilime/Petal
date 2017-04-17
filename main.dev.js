@@ -27,7 +27,7 @@ const createWindow = () => {
     Promise.all([
       [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].map(tool => installExtension(tool))
     ]).then(() => {
-      console.log('install dev tools successfully');
+      console.log('install dev tools successfully')
     }).catch(console.log)
     mainWindow.webContents.openDevTools()
   }
