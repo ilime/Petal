@@ -111,7 +111,7 @@ class Info extends Component {
             <Header.Subheader>专辑: {albumTitle}</Header.Subheader>
           </Header>
           <Header as='h5'>
-            <Image size='mini' shape='circular' src={avatar} />
+            <Image size='mini' shape='circular' src={avatar} className='avatar' />
             {singer}
           </Header>
         </div>

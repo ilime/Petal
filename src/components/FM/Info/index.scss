@@ -1,9 +1,13 @@
 .songTitleAndSinger {
   display: flex;
+  -webkit-app-region: no-drag;
   justify-content: space-between;
 
   #title {
     margin-top: 25px;
+  }
+  .avatar {
+    user-select: none;
   }
 }
 
