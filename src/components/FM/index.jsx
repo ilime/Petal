@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Image} from 'semantic-ui-react'
+import { Grid, Image, Dimmer, Loader } from 'semantic-ui-react'
 
 import Cover from './Cover/index.jsx'
 import Audio from './Audio/index.jsx'
@@ -19,26 +19,39 @@ class FM extends Component {
   }
 
   render() {
+    const { isFetching } = this.props
     return (
-      <article className='fmRegion'>
-        <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <Cover />
-              <Audio />
-            </Grid.Column>
-            <Grid.Column>
-              <Info />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </article>
+      <Dimmer.Dimmable dimmed className='fmRegion'>
+        <Dimmer active={isFetching} inverted>
+          <Loader>加载中</Loader>
+        </Dimmer>
+        <article>
+          <Grid>
+            <Grid.Row columns={2}>
+              <Grid.Column>
+                <Cover />
+                <Audio />
+              </Grid.Column>
+              <Grid.Column>
+                <Info />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </article>
+      </Dimmer.Dimmable>
     )
   }
 }
 
 FM.propTypes = {
-  getPlaylist: PropTypes.func.isRequired
+  getPlaylist: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired
+}
+
+const mapStateToProps = state => {
+  return {
+    isFetching: state.fmReducer.isFetching
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -48,6 +61,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(FM)

@@ -3,8 +3,8 @@
 import axios from 'axios'
 
 import {
-  playlistNewRequest, playlistResponse,
-  songLyricResponse
+  playlistLoading, playlistNewRequest,
+  playlistResponse, songLyricResponse
 } from './types'
 
 const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
@@ -50,6 +50,7 @@ const songLyricGET = () => {
 
 export const playlistGET = (type, sid) => {
   return (dispatch, getState) => {
+    dispatch(playlistLoading())
     dispatch(playlistTypes[type](sid))
     return axios.get(playlistOriginUrl
       + 'type=' + getState().fmReducer.type

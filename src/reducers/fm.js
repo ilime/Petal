@@ -1,11 +1,12 @@
 'use strict'
 
 import {
-  PLAYLIST_NEW_REQUEST, PLAYLIST_RESPONSE,
-  SONG_LYRIC_RESPONSE
+  PLAYLIST_LOADING, PLAYLIST_NEW_REQUEST,
+  PLAYLIST_RESPONSE, SONG_LYRIC_RESPONSE
 } from '../actions/fm/types'
 
 const fmReducer = (state = {
+  isFetching: false,
   playlist: {},
   type: '',
   sid: '',
@@ -13,6 +14,10 @@ const fmReducer = (state = {
   lyric: {}
 }, action) => {
   switch (action.type) {
+    case PLAYLIST_LOADING:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
     case PLAYLIST_NEW_REQUEST:
       return Object.assign({}, state, {
         type: 'n'
@@ -25,6 +30,7 @@ const fmReducer = (state = {
       })
     case SONG_LYRIC_RESPONSE:
       return Object.assign({}, state, {
+        isFetching: false,
         lyric: action.lyric
       })
     default:
@@ -33,4 +39,3 @@ const fmReducer = (state = {
 }
 
 export default fmReducer
-

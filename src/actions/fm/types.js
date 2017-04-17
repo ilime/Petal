@@ -1,8 +1,15 @@
 'use strict'
 
+export const PLAYLIST_LOADING = 'PLAYLIST_LOADING'
 export const PLAYLIST_NEW_REQUEST = 'PLAYLIST_NEW_REQUEST'
 export const PLAYLIST_RESPONSE = 'PLAYLIST_RESPONSE'
 export const SONG_LYRIC_RESPONSE = 'SONG_LYRIC'
+
+export const playlistLoading = () => {
+  return {
+    type: PLAYLIST_LOADING
+  }
+}
 
 export const playlistNewRequest = () => {
   return {
