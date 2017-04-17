@@ -1,6 +1,7 @@
 'use strict'
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Grid, Image} from 'semantic-ui-react'
 
@@ -36,7 +37,7 @@ class FM extends Component {
   }
 }
 
-FM.PropTypes = {
+FM.propTypes = {
   getPlaylist: PropTypes.func.isRequired
 }
 

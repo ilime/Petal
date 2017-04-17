@@ -1,6 +1,7 @@
 'use strict'
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Image } from 'semantic-ui-react'
 
@@ -125,9 +126,9 @@ class Info extends Component {
   }
 }
 
-Info.PropTypes = {
+Info.propTypes = {
   playlist: PropTypes.object.isRequired,
-  lyric: PropTypes.string.isRequired
+  lyric: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {

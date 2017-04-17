@@ -1,6 +1,7 @@
 'use strict'
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
 
@@ -143,7 +144,7 @@ class Audio extends Component {
   }
 }
 
-Audio.PropTypes = {
+Audio.propTypes = {
   playlist: PropTypes.object.isRequired
 }
 
@@ -152,13 +153,8 @@ const mapStateToProps = state => {
     playlist: state.fmReducer.playlist
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-
-  }
-}
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Audio)

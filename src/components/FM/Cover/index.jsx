@@ -1,6 +1,7 @@
 'use strict'
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Image, Icon } from 'semantic-ui-react'
 
@@ -70,7 +71,7 @@ class Cover extends Component {
   }
 }
 
-Cover.PropTypes = {
+Cover.propTypes = {
   playlist: PropTypes.object.isRequired
 }
 
@@ -80,13 +81,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Cover)
