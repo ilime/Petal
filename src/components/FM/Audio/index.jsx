@@ -20,15 +20,15 @@ class Audio extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.playlist !== this.props.playlist) {
-      const { playlist } = nextProps
-      this.nextAudio(playlist)
+    if (nextProps.song !== this.props.song) {
+      const { song } = nextProps
+      this.nextAudio(song)
     }
   }
 
-  nextAudio = (playlist) => {
+  nextAudio = (song) => {
     let audio = document.querySelector('#_audio')
-    audio.src = playlist.song[0].url
+    audio.src = song[0].url
     let totalTime = document.querySelector('.totalTime')
     audio.addEventListener('loadedmetadata', () => {
       totalTime.textContent = this.formatTime(audio.duration)
@@ -80,7 +80,7 @@ class Audio extends Component {
     })
 
     function updateSlider(e) {
-      let X = e.pageX - 186
+      let X = e.pageX - 196
       if (mouseDown
         && X >= rangeLeft
         && X <= rangeLeft + rangeWidth) {
@@ -112,12 +112,14 @@ class Audio extends Component {
   endedAudio = (audio) => {
     return () => {
       audio.currentTime = 0
+      if (this.props.song[1] !== null) {
+        
+      }
     }
   }
 
   render() {
     const { percent } = this.state
-    const { playlist } = this.props
     return (
       <div className='player'>
         <div className='songProgress'>
@@ -145,12 +147,12 @@ class Audio extends Component {
 }
 
 Audio.propTypes = {
-  playlist: PropTypes.object.isRequired
+  song: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    playlist: state.fmReducer.playlist
+    song: state.fmReducer.song
   }
 }
 

@@ -2,7 +2,8 @@
 
 import {
   PLAYLIST_LOADING, PLAYLIST_NEW_REQUEST,
-  PLAYLIST_RESPONSE, SONG_LYRIC_RESPONSE
+  PLAYLIST_RESPONSE, SONG_LYRIC_RESPONSE,
+  PLAYLIST_NEXT_SONG
 } from '../actions/fm/types'
 
 const fmReducer = (state = {
@@ -11,6 +12,7 @@ const fmReducer = (state = {
   type: '',
   sid: '',
   ssid: '',
+  song: [],
   lyric: {}
 }, action) => {
   switch (action.type) {
@@ -26,7 +28,8 @@ const fmReducer = (state = {
       return Object.assign({}, state, {
         playlist: action.playlist,
         sid: action.sid,
-        ssid: action.ssid
+        ssid: action.ssid,
+        song: action.song
       })
     case SONG_LYRIC_RESPONSE:
       return Object.assign({}, state, {

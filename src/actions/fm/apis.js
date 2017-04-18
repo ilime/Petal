@@ -56,10 +56,12 @@ export const playlistGET = (type, sid) => {
       + 'type=' + getState().fmReducer.type
       + '&sid=' + getState().fmReducer.sid
     ).then(response => {
-      let playlist = response.data
-      let sid = playlist.song[0].sid
-      let ssid = playlist.song[0].ssid
-      dispatch(playlistResponse(playlist, sid, ssid))
+      let playlist = response.data,
+        song = playlist.song,
+        sid = song[0].sid,
+        ssid = song[0].ssid
+      delete playlist.song
+      dispatch(playlistResponse(playlist, sid, ssid, song))
     }).then(() => {
       dispatch(songLyricGET())
     }).catch(error => {

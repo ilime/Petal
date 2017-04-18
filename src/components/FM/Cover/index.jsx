@@ -17,10 +17,10 @@ class Cover extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.playlist !== this.props.playlist) {
-      const { playlist } = nextProps
+    if (nextProps.song !== this.props.song) {
+      const { song } = nextProps
       this.setState({
-        cover: playlist.song[0].picture
+        cover: song[0].picture
       })
     }
   }
@@ -72,12 +72,12 @@ class Cover extends Component {
 }
 
 Cover.propTypes = {
-  playlist: PropTypes.object.isRequired
+  song: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    playlist: state.fmReducer.playlist
+    song: state.fmReducer.song
   }
 }
 

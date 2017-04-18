@@ -21,13 +21,13 @@ class Info extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.playlist !== this.props.playlist) {
-      const { playlist, lyric } = nextProps
+    if (nextProps.song !== this.props.song) {
+      const { song, lyric } = nextProps
       this.setState({
-        title: playlist.song[0].title,
-        singer: playlist.song[0].singers[0].name,
-        avatar: playlist.song[0].singers[0].avatar,
-        albumTitle: playlist.song[0].albumtitle,
+        title: song[0].title,
+        singer: song[0].singers[0].name,
+        avatar: song[0].singers[0].avatar,
+        albumTitle: song[0].albumtitle,
       })
     }
     if (nextProps.lyric !== this.props.lyric) {
@@ -127,13 +127,13 @@ class Info extends Component {
 }
 
 Info.propTypes = {
-  playlist: PropTypes.object.isRequired,
+  song: PropTypes.array.isRequired,
   lyric: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    playlist: state.fmReducer.playlist,
+    song: state.fmReducer.song,
     lyric: state.fmReducer.lyric
   }
 }
