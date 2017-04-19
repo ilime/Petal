@@ -1,7 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik');
-
-$sidebarFontsFamily: 'Rubik', sans-serif;
-
 #app {
   overflow-x: hidden;
   overflow-y: hidden;
@@ -15,6 +11,10 @@ $sidebarFontsFamily: 'Rubik', sans-serif;
   text-align: center;
   padding: 0;
   margin-left: 1rem;
+}
+
+.outside {
+  position: relative;
 }
 
 .navigation {
@@ -50,7 +50,6 @@ $sidebarFontsFamily: 'Rubik', sans-serif;
       span {
         display: block;
         margin-top: .3rem;
-        font-family: $sidebarFontsFamily;
       }
     }
   }
@@ -70,4 +69,14 @@ $sidebarFontsFamily: 'Rubik', sans-serif;
   left: 50%;
   transform: translate(-50%);
   bottom: .1rem;
+}
+
+.petalControl {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+
+  .windowMinimize {
+    margin-bottom: 10px;
+  }
 }

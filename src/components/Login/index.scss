@@ -1,31 +1,48 @@
-.logoPlaceholder {
-    display: table;
-    margin: 1.5rem auto 2rem;
-    text-align: center;
-    width: 100px;
-    height: 100px;
-    border: 1px solid green;
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+.loginRegion {
+  margin-top: 2rem;
 }
-header.loginHeader {
-    padding: 1.8rem 0 1rem !important;
-    border-bottom: 2px solid #565656 !important;
+
+.ui.header.loginHeader {
+  margin-bottom: 2rem;
 }
-.formContent {
-    margin: 0rem auto;
-    width: 380px !important;
+
+.appTitle {
+  position: relative;
+  top: .3rem;
+  left: 1rem;
+  font: 2.4rem 'Dancing Script', cursive;
+  -webkit-app-region: no-drag;
 }
-.submitBtn {
-    margin-bottom: 1.5rem !important;
-    border-radius: 1.2rem !important;
+
+.loginFormContent {
+  margin: 0rem auto;
+  width: 380px !important;
 }
-.panelTail {
-    color: #2e2f33;
-    text-align: center;
-    font-size: 1rem;
-    a {
-        color:#2ebd59;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+
+.ui.button.loginSubmitBtn {
+  margin-bottom: 1.5rem;
+  border-radius: 1.2rem;
+}
+
+.loginExtra {
+  color: #2e2f33;
+  text-align: center;
+  margin-bottom: 2rem;
+  span {
+      color:#2ebd59;
+      cursor: pointer;
+  }
+}
+
+.aboutUs {
+  text-align: center;
+  margin-top: 2rem;
+  -webkit-app-region: no-drag;
+  
+  span {
+      color:#2ebd59;
+      cursor: pointer;
+  }
 }

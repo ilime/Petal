@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { Grid, Icon, Header } from 'semantic-ui-react'
+import { Grid, Icon, Header, Image } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 
 import PetalRoutes from '../../routes'
@@ -11,6 +11,16 @@ import FM from '../FM/index.jsx'
 import './index.scss'
 
 class Container extends Component {
+  handleAppMinimize = () => {
+    const remote = window.require('electron').remote
+    remote.getCurrentWindow().minimize()
+  }
+
+  handleAppClose = () => {
+    const remote = window.require('electron').remote
+    remote.getCurrentWindow().close()
+  }
+
   render() {
     return (
       <Grid>
@@ -47,6 +57,11 @@ class Container extends Component {
             <FM />
             {PetalRoutes}
           </Grid.Column>
+          <footer className='petalControl'>
+            <Icon name='window minimize' size='large' color='yellow' link className='windowMinimize' onClick={this.handleAppMinimize} />
+            <Icon name='close' size='large' color='red' link onClick={this.handleAppClose} />
+            <Icon name='setting' size='large' color='grey' link />
+          </footer>
         </Grid.Row>
       </Grid>
     )

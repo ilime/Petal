@@ -40,7 +40,10 @@ const config = {
       name: 'vendor',
       miniChunks: Infinity
     })
-  ]
+  ],
+  node: {
+    fs: 'empty'
+  }
 }
 
 module.exports = config

@@ -24,11 +24,11 @@ const config = {
       }
     ]
   },
-  target: 'electron',
+  target: 'electron-main',
   node: {
     __dirname: false,
     __filename: false
-  },
+  }
 }
 
 module.exports = config
