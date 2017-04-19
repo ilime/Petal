@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
 
-import { nextSong } from '../../../actions/fm/apis'
+import { nextSong, playlistGET } from '../../../actions/fm/apis'
 
 import './index.scss'
 
@@ -29,12 +29,17 @@ class Audio extends Component {
   }
 
   nextAudio = (song) => {
-    let audio = document.querySelector('#_audio')
+    const audio = document.querySelector('#_audio')
+    const lyricContainer = document.querySelector('.lyric')
+    const totalTime = document.querySelector('.totalTime')
+
     audio.src = song[0].url
-    let totalTime = document.querySelector('.totalTime')
+    audio.currentTime = 0
     audio.onloadedmetadata = () => {
       totalTime.textContent = this.formatTime(audio.duration)
     }
+    audio.play()
+    lyricContainer.scrollTop = 0
   }
 
   initAudio = () => {
@@ -113,12 +118,10 @@ class Audio extends Component {
 
   endedAudio = (audio) => {
     return () => {
-      audio.currentTime = 0
       if (this.props.song.length !== 1) {
         this.props.handleNextSong()
-        audio.play()
-        const lyricContainer = document.querySelector('.lyric')
-        lyricContainer.scrollTop = 0
+      } else {
+        this.props.getPlayList('playing')
       }
     }
   }
@@ -153,6 +156,7 @@ class Audio extends Component {
 
 Audio.propTypes = {
   song: PropTypes.array.isRequired,
+  getPlayList: PropTypes.func.isRequired,
   handleNextSong: PropTypes.func.isRequired
 }
 
@@ -164,6 +168,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    getPlayList: type => dispatch(playlistGET(type)),
     handleNextSong: () => dispatch(nextSong())
   }
 }

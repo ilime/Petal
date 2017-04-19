@@ -11,7 +11,7 @@ class Cover extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      playing: false,
+      playing: true,
       cover: ''
     }
   }

@@ -32,6 +32,7 @@ class Info extends Component {
     }
     if (nextProps.lyric !== this.props.lyric) {
       const { lyric } = nextProps
+      this.setState({ canScroll: true })
       Promise.resolve(this.setState({
         lc: this.handleLyric(lyric.lyric)
       })).then(() => {

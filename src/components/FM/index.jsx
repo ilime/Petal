@@ -56,7 +56,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPlaylist: (type, sid = '') => dispatch(playlistGET(type, sid))
+    getPlaylist: type => dispatch(playlistGET(type))
   }
 }
 

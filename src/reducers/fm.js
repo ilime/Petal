@@ -3,7 +3,7 @@
 import {
   PLAYLIST_LOADING, PLAYLIST_NEW_REQUEST,
   PLAYLIST_RESPONSE, SONG_LYRIC_RESPONSE,
-  PLAYLIST_NEXT_SONG
+  PLAYLIST_NEXT_SONG, PLAYLIST_PLAYING_REQUEST
 } from '../actions/fm/types'
 
 const fmReducer = (state = {
@@ -23,6 +23,10 @@ const fmReducer = (state = {
     case PLAYLIST_NEW_REQUEST:
       return Object.assign({}, state, {
         type: 'n'
+      })
+    case PLAYLIST_PLAYING_REQUEST:
+      return Object.assign({}, state, {
+        type: 'p'
       })
     case PLAYLIST_RESPONSE:
       return Object.assign({}, state, {

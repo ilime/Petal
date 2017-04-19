@@ -5,7 +5,7 @@ import axios from 'axios'
 import {
   playlistLoading, playlistNewRequest,
   playlistResponse, songLyricResponse,
-  playlistNextSong
+  playlistNextSong, playlistPlayingRequest
 } from './types'
 
 const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
@@ -25,7 +25,8 @@ const playlistFixedParams = {
 }
 
 const playlistTypes = {
-  new: playlistNewRequest
+  new: playlistNewRequest,
+  playing: playlistPlayingRequest
 }
 
 const playlistOriginUrl = FM_ROOT_URL
@@ -49,10 +50,10 @@ const songLyricGET = () => {
   }
 }
 
-export const playlistGET = (type, sid) => {
+export const playlistGET = type => {
   return (dispatch, getState) => {
     dispatch(playlistLoading())
-    dispatch(playlistTypes[type](sid))
+    dispatch(playlistTypes[type]())
     return axios.get(playlistOriginUrl
       + 'type=' + getState().fmReducer.type
       + '&sid=' + getState().fmReducer.sid
