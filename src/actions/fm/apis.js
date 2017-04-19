@@ -5,7 +5,8 @@ import axios from 'axios'
 import {
   playlistLoading, playlistNewRequest,
   playlistResponse, songLyricResponse,
-  playlistNextSong, playlistPlayingRequest
+  playlistNextSong, playlistPlayingRequest,
+  playlistSkipRequest, playlistTrashRequest
 } from './types'
 
 const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
@@ -26,7 +27,9 @@ const playlistFixedParams = {
 
 const playlistTypes = {
   new: playlistNewRequest,
-  playing: playlistPlayingRequest
+  playing: playlistPlayingRequest,
+  skip: playlistSkipRequest,
+  trash: playlistTrashRequest
 }
 
 const playlistOriginUrl = FM_ROOT_URL

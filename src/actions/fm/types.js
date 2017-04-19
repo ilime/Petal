@@ -3,6 +3,8 @@
 export const PLAYLIST_LOADING = 'PLAYLIST_LOADING'
 export const PLAYLIST_NEW_REQUEST = 'PLAYLIST_NEW_REQUEST'
 export const PLAYLIST_PLAYING_REQUEST = 'PLAYLIST_PLAYING_REQUEST'
+export const PLAYLIST_SKIP_REQUEST = 'PLAYLIST_SKIP_REQUEST'
+export const PLAYLIST_TRASH_REQUEST = 'PLAYLIST_TRASH_REQUEST'
 export const PLAYLIST_RESPONSE = 'PLAYLIST_RESPONSE'
 export const SONG_LYRIC_RESPONSE = 'SONG_LYRIC'
 export const PLAYLIST_NEXT_SONG = 'PLAYLIST_NEXT_SONG'
@@ -15,13 +17,25 @@ export const playlistLoading = () => {
 
 export const playlistNewRequest = () => {
   return {
-    type: PLAYLIST_NEW_REQUEST,
+    type: PLAYLIST_NEW_REQUEST
   }
 }
 
 export const playlistPlayingRequest = () => {
   return {
-    type: PLAYLIST_PLAYING_REQUEST,
+    type: PLAYLIST_PLAYING_REQUEST
+  }
+}
+
+export const playlistSkipRequest = () => {
+  return {
+    type: PLAYLIST_SKIP_REQUEST
+  }
+}
+
+export const playlistTrashRequest = () => {
+  return {
+    type: PLAYLIST_TRASH_REQUEST
   }
 }
 

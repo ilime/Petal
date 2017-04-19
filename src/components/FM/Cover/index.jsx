@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Image, Icon } from 'semantic-ui-react'
 
+import { playlistGET } from '../../../actions/fm/apis'
+
 import './index.scss'
 
 class Cover extends Component {
@@ -39,6 +41,14 @@ class Cover extends Component {
     }
   }
 
+  handleSkipSong = () => {
+    this.props.getPlayList('skip')
+  }
+
+  handleTrashSong = () => {
+    this.props.getPlayList('trash')
+  }
+
   render() {
     const { controlPanelActive, playing, cover } = this.state
     const controlPanel = (
@@ -48,8 +58,8 @@ class Cover extends Component {
         </div>
         <div className='heartTrashForward'>
           <Icon name='heart' size='big' />
-          <Icon name='trash' size='big' />
-          <Icon name='step forward' size='big' />
+          <Icon name='trash' size='big' onClick={this.handleTrashSong} />
+          <Icon name='step forward' size='big' onClick={this.handleSkipSong} />
         </div>
       </div>
     )
@@ -72,7 +82,8 @@ class Cover extends Component {
 }
 
 Cover.propTypes = {
-  song: PropTypes.array.isRequired
+  song: PropTypes.array.isRequired,
+  getPlayList: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -81,7 +92,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    getPlayList: (type) => dispatch(playlistGET(type))
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Cover)
