@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
 
+import { nextSong } from '../../../actions/fm/apis'
+
 import './index.scss'
 
 class Audio extends Component {
@@ -30,9 +32,9 @@ class Audio extends Component {
     let audio = document.querySelector('#_audio')
     audio.src = song[0].url
     let totalTime = document.querySelector('.totalTime')
-    audio.addEventListener('loadedmetadata', () => {
+    audio.onloadedmetadata = () => {
       totalTime.textContent = this.formatTime(audio.duration)
-    })
+    }
   }
 
   initAudio = () => {
@@ -112,8 +114,11 @@ class Audio extends Component {
   endedAudio = (audio) => {
     return () => {
       audio.currentTime = 0
-      if (this.props.song[1] !== null) {
-        
+      if (this.props.song.length !== 1) {
+        this.props.handleNextSong()
+        audio.play()
+        const lyricContainer = document.querySelector('.lyric')
+        lyricContainer.scrollTop = 0
       }
     }
   }
@@ -147,7 +152,8 @@ class Audio extends Component {
 }
 
 Audio.propTypes = {
-  song: PropTypes.array.isRequired
+  song: PropTypes.array.isRequired,
+  handleNextSong: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -156,7 +162,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    handleNextSong: () => dispatch(nextSong())
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Audio)

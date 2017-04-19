@@ -4,7 +4,8 @@ import axios from 'axios'
 
 import {
   playlistLoading, playlistNewRequest,
-  playlistResponse, songLyricResponse
+  playlistResponse, songLyricResponse,
+  playlistNextSong
 } from './types'
 
 const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
@@ -67,5 +68,12 @@ export const playlistGET = (type, sid) => {
     }).catch(error => {
       console.log(error)
     })
+  }
+}
+
+export const nextSong = () => {
+  return (dispatch, getState) => {
+    dispatch(playlistNextSong())
+    dispatch(songLyricGET())
   }
 }

@@ -36,6 +36,12 @@ const fmReducer = (state = {
         isFetching: false,
         lyric: action.lyric
       })
+    case PLAYLIST_NEXT_SONG:
+      return Object.assign({}, state, {
+        sid: state.song[1].sid,
+        ssid: state.song[1].ssid,
+        song: state.song.slice(1)
+      })
     default:
       return state
   }
