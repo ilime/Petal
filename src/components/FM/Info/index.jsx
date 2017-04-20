@@ -65,10 +65,12 @@ class Info extends Component {
     splitByNewline.forEach(l => {
       let time = l.match(pattern)
       let value = l.replace(pattern, '')
-      time.forEach(item => {
-        let t = item.slice(1, -1).split(':')
-        result.push([value, parseInt(t[0]) * 60 + parseFloat(t[1])])
-      })
+      if (time !== null) {
+        time.forEach(item => {
+          let t = item.slice(1, -1).split(':')
+          result.push([value, parseInt(t[0]) * 60 + parseFloat(t[1])])
+        })
+      }
     })
     result.sort((a, b) => {
       return a[1] - b[1]

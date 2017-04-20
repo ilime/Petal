@@ -2,7 +2,6 @@
 
 import 'babel-polyfill'
 import { app, BrowserWindow } from 'electron'
-import path from 'path'
 import url from 'url'
 import installExtension, {
   REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS
@@ -18,7 +17,7 @@ const createWindow = () => {
   })
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../index.html'),
+    pathname: __dirname + '/../index.html',
     protocol: 'file:',
     slashes: true
   }))
@@ -37,7 +36,12 @@ const createWindow = () => {
   })
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  if (process.platform === 'darwin') {
+    app.dock.setIcon('./petal.png')
+  }
+  createWindow()
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

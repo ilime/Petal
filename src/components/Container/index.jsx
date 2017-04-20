@@ -10,14 +10,15 @@ import FM from '../FM/index.jsx'
 
 import './index.scss'
 
+const electron = window.require('electron'),
+  remote = electron.remote
+
 class Container extends Component {
   handleAppMinimize = () => {
-    const remote = window.require('electron').remote
     remote.getCurrentWindow().minimize()
   }
 
   handleAppClose = () => {
-    const remote = window.require('electron').remote
     remote.getCurrentWindow().close()
   }
 
