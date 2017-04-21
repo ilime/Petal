@@ -9,7 +9,7 @@
     "bundle:main": "webpack --config webpack.config.main.js --progress",
     "bundle:src+main": "npm run bundle:src && npm run bundle:main",
     "dev:watch": "webpack --config webpack.config.src.js --progress --watch",
-    "dev:mainWatch" : "webpack --config webpack.config.main.js --progress --watch",
+    "dev:mainWatch": "webpack --config webpack.config.main.js --progress --watch",
     "test": "jest"
   },
   "repository": {
@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "nedb": "^1.8.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

@@ -1,25 +1,37 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { Grid, Icon, Header, Image } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom'
+import { Grid, Icon } from 'semantic-ui-react'
 
 import PetalRoutes from '../../routes'
-
 import FM from '../FM/index.jsx'
-
+import Sidebar from '../Sidebar/index.jsx'
+import Setting from '../Setting/index.jsx'
 import './index.scss'
-
-const electron = window.require('electron'),
-  remote = electron.remote
+const { remote } = window.require('electron')
 
 class Container extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      settingOpen: false
+    }
+  }
+
   handleAppMinimize = () => {
     remote.getCurrentWindow().minimize()
   }
 
-  handleAppClose = () => {
-    remote.getCurrentWindow().close()
+  handleAppQuit = () => {
+    remote.app.quit()
+  }
+
+  handleSettingOpen = () => {
+    this.setState({ settingOpen: true })
+  }
+  
+  handleSettingClose = () => {
+    this.setState({ settingOpen: false })
   }
 
   render() {
@@ -27,42 +39,27 @@ class Container extends Component {
       <Grid>
         <Grid.Row className='outside'>
           <Grid.Column as='nav' width={2} id='sidebarColumn'>
-            <ul className='navigation'>
-              <li>
-                <NavLink exact to='/' activeClassName='selected'>
-                  <Icon name='leaf' size='large' color='grey' />
-                  <span>I'mFM</span>
-                </NavLink>
-              </li>
-              <li>
-                <Icon name='book' size='large' color='grey' />
-                <span>图书</span>
-              </li>
-              <li>
-                <Icon name='video' size='large' color='grey' />
-                <span>电影</span>
-              </li>
-              <li>
-                <Icon name='music' size='large' color='grey' />
-                <span>音乐</span>
-              </li>
-              <li id='logIn'>
-                <NavLink to='/login' activeClassName='selected'>
-                  <Icon name='user circle' size='large' color='grey' />
-                  <span>登录</span>
-                </NavLink>
-              </li>
-            </ul>
+            <Sidebar />
           </Grid.Column>
-          <Grid.Column width={14}>
+          <Grid.Column as='main' width={14}>
             <FM />
             {PetalRoutes}
           </Grid.Column>
-          <footer className='petalControl'>
-            <Icon name='window minimize' size='large' color='yellow' link className='windowMinimize' onClick={this.handleAppMinimize} />
-            <Icon name='close' size='large' color='red' link onClick={this.handleAppClose} />
-            <Icon name='setting' size='large' color='grey' link />
-          </footer>
+          <aside>
+            <div className='petalControl'>
+              <div className='miniButton' onClick={this.handleAppMinimize}></div>
+              <div className='quitButton' onClick={this.handleAppQuit}></div>
+            </div>
+            <Icon className='petalSetting'
+              name='setting'
+              size='large'
+              color='grey'
+              link
+              onClick={this.handleSettingOpen} />
+          </aside>
+          <Setting
+            open={this.state.settingOpen}
+            handleClose={this.handleSettingClose} />
         </Grid.Row>
       </Grid>
     )

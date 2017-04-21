@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
 
 import { nextSong, playlistGET } from '../../../actions/fm/apis'
-
 import './index.scss'
 
 class Audio extends Component {

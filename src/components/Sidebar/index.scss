@@ -1,0 +1,58 @@
+.navigation {
+  list-style: none;
+  padding: 0;
+  li {
+    position: relative;
+    margin: .8rem auto .5rem;
+    width: 55%;
+    height: 3.5rem;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: 0;
+      background: #2e963d;
+      height: 3px;
+      transition-property: right;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-out;
+    }
+    &:hover {
+      cursor: pointer;
+      &::after {
+        right: 0;
+      }
+    }
+    a {
+      display: block;
+      width: 100%;
+      color: grey !important;
+      span {
+        display: block;
+        margin-top: .3rem;
+      }
+    }
+  }
+}
+
+.selected {
+  i.grey.large.icon {
+    color: #2e963d !important;
+  }
+  span {
+    color: #2e963d;
+  }
+}
+
+#logIn {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: .1rem;
+
+  .ui.avatar.image.userAvatar {
+    width: 3rem;
+    height: 3rem;
+  }
+}

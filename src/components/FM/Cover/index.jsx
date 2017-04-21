@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { Dimmer, Image, Icon } from 'semantic-ui-react'
 
 import { playlistGET } from '../../../actions/fm/apis'
-
 import './index.scss'
 
 class Cover extends Component {
@@ -22,6 +21,7 @@ class Cover extends Component {
     if (nextProps.song !== this.props.song) {
       const { song } = nextProps
       this.setState({
+        playing: true,
         cover: song[0].picture
       })
     }

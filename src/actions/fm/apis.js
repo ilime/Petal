@@ -69,9 +69,7 @@ export const playlistGET = type => {
       dispatch(playlistResponse(playlist, sid, ssid, song))
     }).then(() => {
       dispatch(songLyricGET())
-    }).catch(error => {
-      console.log(error)
-    })
+    }).catch(console.log)
   }
 }
 

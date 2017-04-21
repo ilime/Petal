@@ -1,11 +1,22 @@
 'use strict'
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Header, Image, Form, Grid, Button, Divider } from 'semantic-ui-react'
 
+import { authPost } from '../../actions/auth/apis'
 import './index.scss'
 
 class Login extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: ''
+    }
+  }
+
   componentDidMount() {
     document.querySelector('.fmRegion').style.display = 'none'
   }
@@ -23,7 +34,24 @@ class Login extends Component {
     }
   }
 
+  handleInputChange = (e, { name, value }) => {
+    this.setState({ [name]: value })
+  }
+
+  handleLoginSubmit = (e) => {
+    e.preventDefault()
+    this.props.handleAuthPost(
+      {
+        username: this.state.username,
+        password: this.state.password
+      }
+    )
+    this.props.history.push('/')
+  }
+
   render() {
+    const { username, password } = this.state
+
     return (
       <article className='loginRegion'>
         <Header as='h1' textAlign='center' className='loginHeader'>
@@ -31,9 +59,9 @@ class Login extends Component {
           <span className='appTitle'>Petal</span>
         </Header>
         <Form className='loginFormContent'>
-          <Form.Input placeholder='豆瓣账号' />
-          <Form.Input placeholder='密码' />
-          <Button type='submit' fluid color='green' className='loginSubmitBtn'>登 录</Button>
+          <Form.Input name='username' value={username} onChange={this.handleInputChange} placeholder='豆瓣账号' />
+          <Form.Input type='password' name='password' value={password} onChange={this.handleInputChange} placeholder='密码' />
+          <Button fluid color='green' className='loginSubmitBtn' onClick={this.handleLoginSubmit}>登 录</Button>
         </Form>
         <p className='loginExtra'>没有豆瓣账号? <span onClick={this.openInDefaultBrowser('https://www.douban.com')}>去注册</span></p>
         <Divider horizontal>关于我们</Divider>
@@ -53,4 +81,17 @@ class Login extends Component {
   }
 }
 
-export default Login
+Login.PropTypes = {
+  handleAuthPost: PropTypes.func.isRequired
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleAuthPost: (usernameAndPassword) => dispatch(authPost(usernameAndPassword))
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login)

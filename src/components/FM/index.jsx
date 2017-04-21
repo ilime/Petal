@@ -3,14 +3,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Image, Dimmer, Loader } from 'semantic-ui-react'
+import { Grid, Dimmer, Loader } from 'semantic-ui-react'
 
 import Cover from './Cover/index.jsx'
 import Audio from './Audio/index.jsx'
 import Info from './Info/index.jsx'
-
 import { playlistGET } from '../../actions/fm/apis'
-
 import './index.scss'
 
 class FM extends Component {
@@ -45,7 +43,7 @@ class FM extends Component {
 
 FM.propTypes = {
   getPlaylist: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => {
@@ -56,7 +54,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPlaylist: type => dispatch(playlistGET(type))
+    getPlaylist: type => dispatch(playlistGET(type)),
   }
 }
 
