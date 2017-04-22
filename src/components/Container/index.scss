@@ -18,24 +18,47 @@
 
 .petalControl {
   position: absolute;
-  right: .8rem;
+  right: 1.6rem;
   top: 1.2rem;
-
-  div {
+  z-index: 2147483647;
+  color: #565656;
+  &:hover {
     cursor: pointer;
+    div {
+      span {
+        display: block;
+      }
+    }
+  }
+
+  div {    
     display: inline-block;
-    margin-right: .4rem;
-    width: .8rem;
-    height: .8rem;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
+    span {
+      position: absolute;
+      display: none;
+      top: -1.3px;
+      height: 100%;
+    }
+  }
+  div + div {
+    margin-left: 7px;
   }
 
   .miniButton {
     background-color: #fbbd08;
+    span {
+      left: -0.7px;
+    }
   }
 
   .quitButton {
     background-color: #f44336;
+    span {
+      left: 21.4px;
+    }
   }
 }
 

@@ -29,7 +29,7 @@ class Container extends Component {
   handleSettingOpen = () => {
     this.setState({ settingOpen: true })
   }
-  
+
   handleSettingClose = () => {
     this.setState({ settingOpen: false })
   }
@@ -47,8 +47,12 @@ class Container extends Component {
           </Grid.Column>
           <aside>
             <div className='petalControl'>
-              <div className='miniButton' onClick={this.handleAppMinimize}></div>
-              <div className='quitButton' onClick={this.handleAppQuit}></div>
+              <div className='miniButton' onClick={this.handleAppMinimize}>
+                <span>－</span>
+              </div>
+              <div className='quitButton' onClick={this.handleAppQuit}>
+                <span>×</span>
+              </div>
             </div>
             <Icon className='petalSetting'
               name='setting'
