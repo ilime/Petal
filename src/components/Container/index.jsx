@@ -2,9 +2,10 @@
 
 import React, { Component } from 'react'
 import { Grid, Icon } from 'semantic-ui-react'
+import { HashRouter as Router, Route } from 'react-router-dom'
 
-import PetalRoutes from '../../routes'
 import FM from '../FM/index.jsx'
+import Login from '../Login/index.jsx'
 import Sidebar from '../Sidebar/index.jsx'
 import Setting from '../Setting/index.jsx'
 import './index.scss'
@@ -36,36 +37,38 @@ class Container extends Component {
 
   render() {
     return (
-      <Grid>
-        <Grid.Row className='outside'>
-          <Grid.Column as='nav' width={2} id='sidebarColumn'>
-            <Sidebar />
-          </Grid.Column>
-          <Grid.Column as='main' width={14}>
-            <FM />
-            {PetalRoutes}
-          </Grid.Column>
-          <aside>
-            <div className='petalControl'>
-              <div className='miniButton' onClick={this.handleAppMinimize}>
-                <span>－</span>
+      <Router>
+        <Grid>
+          <Grid.Row className='outside'>
+            <Grid.Column as='nav' width={2} id='sidebarColumn'>
+              <Sidebar />
+            </Grid.Column>
+            <Grid.Column as='main' width={14}>
+              <FM />
+              <Route path='/login' component={Login} />
+            </Grid.Column>
+            <aside>
+              <div className='petalControl'>
+                <div className='miniButton' onClick={this.handleAppMinimize}>
+                  <span>－</span>
+                </div>
+                <div className='quitButton' onClick={this.handleAppQuit}>
+                  <span>×</span>
+                </div>
               </div>
-              <div className='quitButton' onClick={this.handleAppQuit}>
-                <span>×</span>
-              </div>
-            </div>
-            <Icon className='petalSetting'
-              name='setting'
-              size='large'
-              color='grey'
-              link
-              onClick={this.handleSettingOpen} />
-          </aside>
-          <Setting
-            open={this.state.settingOpen}
-            handleClose={this.handleSettingClose} />
-        </Grid.Row>
-      </Grid>
+              <Icon className='petalSetting'
+                name='setting'
+                size='large'
+                color='grey'
+                link
+                onClick={this.handleSettingOpen} />
+            </aside>
+            <Setting
+              open={this.state.settingOpen}
+              handleClose={this.handleSettingClose} />
+          </Grid.Row>
+        </Grid>
+      </Router>
     )
   }
 }

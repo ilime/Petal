@@ -31,9 +31,7 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools()
   }
 
-  mainWindow.on('close', () => {
-    mainWindow = null
-  })
+  mainWindow.on('close', () => { mainWindow = null })
 }
 
 app.on('ready', () => {
@@ -42,15 +40,4 @@ app.on('ready', () => {
   }
   createWindow()
 })
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow()
-  }
-})
+app.on('window-all-closed', () => { app.quit() })

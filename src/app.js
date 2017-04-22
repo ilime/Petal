@@ -4,7 +4,6 @@ import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { HashRouter as Router } from 'react-router-dom'
 
 import Container from './components/Container/index.jsx'
 
@@ -14,9 +13,7 @@ const store = configureStore()
 
 ReactDOM.render(
 	<Provider store={store}>
-		<Router>
-			<Container />
-		</Router>
+		<Container />
 	</Provider>,
 	document.getElementById('app')
 )
