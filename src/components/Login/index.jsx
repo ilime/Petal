@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Header, Image, Form, Grid, Button, Divider } from 'semantic-ui-react'
+import { Header, Image, Form, Grid, Button, Divider, Dimmer, Loader } from 'semantic-ui-react'
 
 import { authPost } from '../../actions/auth/apis'
 import './index.scss'
@@ -50,6 +50,7 @@ class Login extends Component {
   }
 
   render() {
+    const { isFetching } = this.props
     const { username, password } = this.state
 
     return (
@@ -58,11 +59,16 @@ class Login extends Component {
           <Image src='./petal.png' size='tiny' />
           <span className='appTitle'>Petal</span>
         </Header>
-        <Form className='loginFormContent'>
-          <Form.Input name='username' value={username} onChange={this.handleInputChange} placeholder='豆瓣账号' />
-          <Form.Input type='password' name='password' value={password} onChange={this.handleInputChange} placeholder='密码' />
-          <Button fluid color='green' className='loginSubmitBtn' onClick={this.handleLoginSubmit}>登 录</Button>
-        </Form>
+        <Dimmer.Dimmable dimmed>
+          <Dimmer active={isFetching} inverted>
+            <Loader>加载中</Loader>
+          </Dimmer>
+          <Form className='loginFormContent'>
+            <Form.Input name='username' value={username} onChange={this.handleInputChange} placeholder='豆瓣账号' />
+            <Form.Input type='password' name='password' value={password} onChange={this.handleInputChange} placeholder='密码' />
+            <Button fluid color='green' className='loginSubmitBtn' onClick={this.handleLoginSubmit}>登 录</Button>
+          </Form>
+        </Dimmer.Dimmable>
         <p className='loginExtra'>没有豆瓣账号? <span onClick={this.openInDefaultBrowser('https://www.douban.com')}>去注册</span></p>
         <Divider horizontal>关于我们</Divider>
         <div className='aboutUs'>
@@ -82,7 +88,14 @@ class Login extends Component {
 }
 
 Login.PropTypes = {
-  handleAuthPost: PropTypes.func.isRequired
+  handleAuthPost: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isFetching: state.authReducer.isFetching
+  }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -92,6 +105,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login)

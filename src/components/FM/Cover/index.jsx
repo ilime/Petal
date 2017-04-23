@@ -13,8 +13,17 @@ class Cover extends Component {
     super(props)
     this.state = {
       playing: true,
-      cover: ''
+      cover: '',
+      love: 'white'
     }
+  }
+
+  componentDidMount() {
+    document.querySelector('#_audio').addEventListener(
+      'ended',
+      () => {
+        this.setState({ love: 'white' })
+      })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,15 +58,27 @@ class Cover extends Component {
     this.props.getPlayList('trash')
   }
 
+  handleLoveSong = () => {
+    const { love } = this.state
+    if (love === 'white') {
+      this.props.getPlayList('rate')
+      this.setState({ love: 'red' })
+    }
+    if (love === 'red') {
+      this.props.getPlayList('unrate')
+      this.setState({ love: 'white' })
+    }
+  }
+
   render() {
-    const { controlPanelActive, playing, cover } = this.state
+    const { controlPanelActive, playing, cover, love } = this.state
     const controlPanel = (
       <div>
         <div className='musicPause' onClick={this.handleAudioPlay}>
           <Icon name={playing ? 'pause' : 'play'} size='large' />
         </div>
         <div className='heartTrashForward'>
-          <Icon name='heart' size='big' />
+          <Icon name='heart' size='big' style={{ color: love }} onClick={this.handleLoveSong} />
           <Icon name='trash' size='big' onClick={this.handleTrashSong} />
           <Icon name='step forward' size='big' onClick={this.handleSkipSong} />
         </div>

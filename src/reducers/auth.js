@@ -8,7 +8,7 @@ import {
 const authReducer = (state = {
   isFetching: false,
   _id: 0,
-  userInfo: {}
+  userToken: {}
 }, action) => {
   switch (action.type) {
     case AUTH_LOGIN_REQUEST:
@@ -19,17 +19,17 @@ const authReducer = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         _id: action._id,
-        userInfo: action.userInfo
+        userToken: action.userToken
       })
     case AUTH_TOKEN_LOAD:
       return Object.assign({}, state, {
         _id: action._id,
-        userInfo: action.userInfo
+        userToken: action.userToken
       })
     case AUTH_LOGOUT:
       return Object.assign({}, state, {
         _id: 0,
-        userInfo: {}
+        userToken: {}
       })
     default:
       return state

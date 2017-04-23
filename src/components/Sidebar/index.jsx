@@ -7,6 +7,7 @@ import { Icon, Image } from 'semantic-ui-react'
 import { NavLink, withRouter } from 'react-router-dom'
 
 import { authLoad } from '../../actions/auth/apis'
+import { redHeartListGET } from '../../actions/fm/apis'
 import './index.scss'
 
 class Sidebar extends Component {
@@ -15,7 +16,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { _id, userInfo } = this.props
+    const { _id, userToken } = this.props
 
     return (
       <ul className='navigation'>
@@ -43,7 +44,7 @@ class Sidebar extends Component {
               <Icon name='user circle' size='large' color='grey' />
               <span>登录</span>
             </NavLink> :
-            <Image src={'https://img3.doubanio.com/icon/ul' + userInfo.douban_user_id + '-2.jpg'} avatar className='userAvatar' />
+            <Image src={'https://img3.doubanio.com/icon/ul' + userToken.douban_user_id + '-2.jpg'} avatar className='userAvatar' />
           }
         </li>
       </ul>
@@ -54,19 +55,19 @@ class Sidebar extends Component {
 Sidebar.PropTypes = {
   handleAuthLoad: PropTypes.func.isRequired,
   _id: PropTypes.number.isRequired,
-  userInfo: PropTypes.object.isRequired
+  userToken: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     _id: state.authReducer._id,
-    userInfo: state.authReducer.userInfo
+    userToken: state.authReducer.userToken
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleAuthLoad: () => authLoad(dispatch)
+    handleAuthLoad: () => dispatch(authLoad())
   }
 }
 

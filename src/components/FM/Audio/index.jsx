@@ -22,8 +22,10 @@ class Audio extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.song !== this.props.song) {
-      const { song } = nextProps
-      this.nextAudio(song)
+      const { song, type } = nextProps
+      if (type !== 'r' && type != 'u') {
+        this.nextAudio(song)
+      }
     }
   }
 
@@ -156,12 +158,14 @@ class Audio extends Component {
 Audio.propTypes = {
   song: PropTypes.array.isRequired,
   getPlayList: PropTypes.func.isRequired,
-  handleNextSong: PropTypes.func.isRequired
+  handleNextSong: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    song: state.fmReducer.song
+    song: state.fmReducer.song,
+    type: state.fmReducer.type
   }
 }
 
