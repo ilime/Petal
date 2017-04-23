@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Image } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
 import { authLoad } from '../../actions/auth/apis'
 import './index.scss'
@@ -70,8 +70,8 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Sidebar)
+)(Sidebar))
 
