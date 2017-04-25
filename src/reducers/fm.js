@@ -7,7 +7,8 @@ import {
   PLAYLIST_SKIP_REQUEST, PLAYLIST_TRASH_REQUEST,
   RED_HEART_LIST, RED_HEART_RATE,
   RED_HEART_UNRATE, RED_HEART_RATE_NEXT_SONG_APPEND,
-  RED_HEART_UN_RATE_NEXT_SONG_APPEND, PLAYLIST_END_REQUEST
+  RED_HEART_UN_RATE_NEXT_SONG_APPEND, PLAYLIST_END_REQUEST,
+  RED_HEART_EMPTY
 } from '../actions/fm/types'
 
 const fmReducer = (state = {
@@ -83,6 +84,10 @@ const fmReducer = (state = {
     case PLAYLIST_END_REQUEST:
       return Object.assign({}, state, {
         type: 'e'
+      })
+    case RED_HEART_EMPTY:
+      return Object.assign({}, state, {
+        redheart: {}
       })
     default:
       return state

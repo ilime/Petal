@@ -32,14 +32,10 @@ class Audio extends Component {
   nextAudio = (song) => {
     const audio = document.querySelector('#_audio')
     const lyricContainer = document.querySelector('.lyric')
-    const totalTime = document.querySelector('.totalTime')
 
-    audio.src = song[0].url
     audio.currentTime = 0
-    audio.onloadedmetadata = () => {
-      totalTime.textContent = this.formatTime(audio.duration)
-    }
-    audio.play()
+    audio.src = song[0].url
+    audio.load()
     lyricContainer.scrollTop = 0
   }
 
@@ -51,6 +47,13 @@ class Audio extends Component {
       this.updateAudioTimeAndProgress(currentTime, audio))
     audio.addEventListener('ended',
       this.endedAudio(audio))
+    audio.onloadedmetadata = () => {
+      const totalTime = document.querySelector('.totalTime')
+      totalTime.textContent = this.formatTime(audio.duration)
+    }
+    audio.oncanplaythrough = () => {
+      audio.play()
+    }
     this.volumeSlider('.volumeBar', audio)
   }
 
@@ -150,7 +153,7 @@ class Audio extends Component {
             <Icon name='volume up' />
           </div>
         </div>
-        <audio id='_audio'></audio>
+        <audio id='_audio' preload='none'></audio>
       </div>
     )
   }
