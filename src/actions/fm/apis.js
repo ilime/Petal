@@ -9,7 +9,7 @@ import {
   playlistSkipRequest, playlistTrashRequest,
   redHeartList, redHeartRate,
   redHeartUnRate, redHeartRateNextSongAppend,
-  redHeartUnRateNextSongAppend
+  redHeartUnRateNextSongAppend, playlistEndRequest
 } from './types'
 
 const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
@@ -34,7 +34,8 @@ const playlistTypes = {
   skip: playlistSkipRequest,
   trash: playlistTrashRequest,
   rate: redHeartRate,
-  unrate: redHeartUnRate
+  unrate: redHeartUnRate,
+  end: playlistEndRequest
 }
 
 const playlistOriginUrl = FM_ROOT_URL
@@ -60,7 +61,7 @@ const songLyricGET = () => {
 
 export const playlistGET = type => {
   return (dispatch, getState) => {
-    if (type !== 'rate' && type !== 'unrate') {
+    if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
       dispatch(playlistLoading())
     }
     dispatch(playlistTypes[type]())
@@ -72,6 +73,7 @@ export const playlistGET = type => {
       getState().authReducer._id === 1 &&
       { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }
     )).then(response => {
+      if (type === 'end') { return }
       let playlist = response.data,
         song = playlist.song,
         sid = song[0].sid,
@@ -85,7 +87,7 @@ export const playlistGET = type => {
         dispatch(playlistResponse(playlist, sid, ssid, song))
       }
     }).then(() => {
-      if (type !== 'rate' && type !== 'unrate') {
+      if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
         dispatch(songLyricGET())
       }
     }).catch(console.log)

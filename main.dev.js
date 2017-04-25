@@ -36,7 +36,7 @@ const createWindow = () => {
 
 app.on('ready', () => {
   if (process.platform === 'darwin') {
-    app.dock.setIcon('./petal.png')
+    app.dock.setIcon('./resources/petal.png')
   }
   createWindow()
 })

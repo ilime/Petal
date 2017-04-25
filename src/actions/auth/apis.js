@@ -50,8 +50,8 @@ export const authLoad = () => {
     db.findOne({ _id: 1 }, (err, doc) => {
       if (doc !== null) {
         dispatch(authTokenLoad(doc))
+        dispatch(redHeartListGET())
       }
-      dispatch(redHeartListGET())
     })
   }
 }

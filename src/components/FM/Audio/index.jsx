@@ -122,6 +122,7 @@ class Audio extends Component {
       if (this.props.song.length !== 1) {
         this.props.handleNextSong()
       } else {
+        this.props.getPlayList('end')
         this.props.getPlayList('playing')
       }
     }

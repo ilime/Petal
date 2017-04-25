@@ -13,6 +13,7 @@ export const RED_HEART_RATE = 'RED_HEART_RATE'
 export const RED_HEART_UNRATE = 'RED_HEART_UNRATE'
 export const RED_HEART_RATE_NEXT_SONG_APPEND = 'RED_HEART_RATE_NEXT_SONG_APPEND'
 export const RED_HEART_UN_RATE_NEXT_SONG_APPEND = 'RED_HEART_UN_RATE_NEXT_SONG_APPEND'
+export const PLAYLIST_END_REQUEST = 'PLAYLIST_END_REQUEST'
 
 export const playlistLoading = () => {
   return {
@@ -98,4 +99,10 @@ export const redHeartUnRateNextSongAppend = song => {
     type: RED_HEART_UN_RATE_NEXT_SONG_APPEND,
     song
   } 
+}
+
+export const playlistEndRequest = () => {
+  return {
+    type: PLAYLIST_END_REQUEST
+  }
 }
