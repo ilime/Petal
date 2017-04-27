@@ -40,43 +40,47 @@ class Info extends Component {
 
   handleLyric = (lyric) => {
     let result = []
+    const pattern = /\[\d{2}:\d{2}([\.\:]\d{2,3})?\]/g
     if (lyric === '暂无歌词') {
       result.push(lyric)
     }
     if (lyric.startsWith('\r\n')) {
       lyric = lyric.slice(2)
     }
-    if (!lyric.startsWith('[')) {
+    if(!lyric.startsWith('[') || !pattern.test(lyric)) {
       var re = lyric.split('\r\n').map(l => l.trim())
       return { lyric: re, canScroll: false }
     }
-    let pattern = /\[\d{2}:\d{2}([\.\:]\d{2,3})?\]/g
-    let splitByNewline = lyric.split('\r\n')
-    while (!pattern.test(splitByNewline[0])) {
-      splitByNewline = splitByNewline.slice(1)
-    }
-    splitByNewline = splitByNewline.filter((l) => {
-      return l !== ''
-    })
-    splitByNewline.forEach(l => {
-      let time = l.match(pattern)
-      let value = l.replace(pattern, '')
-      if (time !== null) {
-        time.forEach(item => {
-          let t = item.slice(1, -1).split(':')
-          result.push([value, parseInt(t[0]) * 60 + parseFloat(t[1])])
-        })
+    
+    if (pattern.test(lyric)) {
+      let splitByNewline = lyric.split('\r\n')
+      while (!pattern.test(splitByNewline[0])) {
+        splitByNewline = splitByNewline.slice(1)
       }
-    })
-    result.sort((a, b) => {
-      return a[1] - b[1]
-    })
-    return {
-      lyric: result.filter(l => {
-        return l[0] !== ''
-      }),
-      canScroll: true
+      splitByNewline = splitByNewline.filter((l) => {
+        return l !== ''
+      })
+      splitByNewline.forEach(l => {
+        let time = l.match(pattern)
+        let value = l.replace(pattern, '')
+        if (time !== null) {
+          time.forEach(item => {
+            let t = item.slice(1, -1).split(':')
+            result.push([value, parseInt(t[0]) * 60 + parseFloat(t[1])])
+          })
+        }
+      })
+      result.sort((a, b) => {
+        return a[1] - b[1]
+      })
+      return {
+        lyric: result.filter(l => {
+          return l[0] !== ''
+        }),
+        canScroll: true
+      }
     }
+
   }
 
   syncLyric = (canScroll) => {
