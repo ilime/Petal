@@ -15,8 +15,7 @@ class Info extends Component {
       singer: '',
       avatar: '',
       albumTitle: '',
-      lc: [],
-      canScroll: true
+      lc: []
     }
   }
 
@@ -32,11 +31,9 @@ class Info extends Component {
     }
     if (nextProps.lyric !== this.props.lyric) {
       const { lyric } = nextProps
-      this.setState({ canScroll: true })
-      Promise.resolve(this.setState({
-        lc: this.handleLyric(lyric.lyric)
-      })).then(() => {
-        this.syncLyric()
+      let newLc = this.handleLyric(lyric.lyric)
+      this.setState({ lc: newLc.lyric }, () => {
+        this.syncLyric(newLc.canScroll)
       })
     }
   }
@@ -51,10 +48,9 @@ class Info extends Component {
     }
     if (!lyric.startsWith('[')) {
       var re = lyric.split('\r\n').map(l => l.trim())
-      this.setState({ canScroll: false })
-      return re
+      return { lyric: re, canScroll: false }
     }
-    let pattern = /\[\d{2}:\d{2}\.\d{2}\]/g
+    let pattern = /\[\d{2}:\d{2}([\.\:]\d{2,3})?\]/g
     let splitByNewline = lyric.split('\r\n')
     while (!pattern.test(splitByNewline[0])) {
       splitByNewline = splitByNewline.slice(1)
@@ -75,13 +71,16 @@ class Info extends Component {
     result.sort((a, b) => {
       return a[1] - b[1]
     })
-    return result.filter(l => {
-      return l[0] !== ''
-    })
+    return {
+      lyric: result.filter(l => {
+        return l[0] !== ''
+      }),
+      canScroll: true
+    }
   }
 
-  syncLyric = () => {
-    if (this.state.canScroll === false) { return }
+  syncLyric = (canScroll) => {
+    if (canScroll === false) { return }
     const audio = document.querySelector('#_audio')
     const lyricContainer = document.querySelector('.lyric')
     const lc = this.state.lc
@@ -119,7 +118,10 @@ class Info extends Component {
           </Header>
         </div>
         <div className='lyric'>
-          {!canScroll && <p className='cannotscroll'>暂不支持滚动</p>}
+          {lc.length > 0
+            && typeof lc[0] === 'string'
+            && lc[0] !== '暂无歌词'
+            && <p className='cannotscroll'>歌词不支持滚动</p>}
           {lc.length > 0 && lc.map((l, i) => {
             return <p key={i}>{typeof l === 'string' ? l : l[0]}</p>
           })}

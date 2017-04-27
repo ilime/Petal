@@ -45,18 +45,12 @@ const playlistOriginUrl = FM_ROOT_URL
       return previous + key + '=' + value + '&'
     }, '')
 
-const songLyricGET = () => {
-  return (dispatch, getState) => {
-    return axios.get(FM_ROOT_URL
-      + '/lyric?'
-      + 'sid=' + getState().fmReducer.sid
-      + '&ssid=' + getState().fmReducer.ssid
-    ).then(response => {
-      dispatch(songLyricResponse(response.data))
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+const songLyricGET = (sid, ssid) => {
+  return axios.get(FM_ROOT_URL
+    + '/lyric?'
+    + 'sid=' + sid
+    + '&ssid=' + ssid
+  )
 }
 
 export const playlistGET = type => {
@@ -65,7 +59,7 @@ export const playlistGET = type => {
       dispatch(playlistLoading())
     }
     dispatch(playlistTypes[type]())
-    return axios(Object.assign(
+    axios(Object.assign(
       {
         method: 'GET',
         url: playlistOriginUrl + 'type=' + getState().fmReducer.type + '&sid=' + getState().fmReducer.sid,
@@ -86,9 +80,12 @@ export const playlistGET = type => {
       } else {
         dispatch(playlistResponse(playlist, sid, ssid, song))
       }
-    }).then(() => {
       if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
-        dispatch(songLyricGET())
+        return songLyricGET(sid, ssid)
+      }
+    }).then(response => {
+      if (response) {
+        dispatch(songLyricResponse(response.data))
       }
     }).catch(console.log)
   }
@@ -97,7 +94,11 @@ export const playlistGET = type => {
 export const nextSong = () => {
   return (dispatch, getState) => {
     dispatch(playlistNextSong())
-    dispatch(songLyricGET())
+    songLyricGET(getState().fmReducer.sid, getState().fmReducer.ssid).then(
+      response => {
+        dispatch(songLyricResponse(response.data))
+      }
+    )
   }
 }
 

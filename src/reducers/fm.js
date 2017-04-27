@@ -52,6 +52,7 @@ const fmReducer = (state = {
       })
     case PLAYLIST_RESPONSE:
       return Object.assign({}, state, {
+        isFetching: false,
         playlist: action.playlist,
         sid: action.sid,
         ssid: action.ssid,
@@ -59,7 +60,6 @@ const fmReducer = (state = {
       })
     case SONG_LYRIC_RESPONSE:
       return Object.assign({}, state, {
-        isFetching: false,
         lyric: action.lyric
       })
     case PLAYLIST_NEXT_SONG:
