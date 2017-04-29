@@ -1,0 +1,10 @@
+.personal {
+	position: relative;
+	top: 3rem;
+	height: 440px;
+
+	.songlist {
+		overflow-y: scroll;
+		height: 420px;
+	}
+}

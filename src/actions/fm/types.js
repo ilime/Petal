@@ -8,13 +8,17 @@ export const PLAYLIST_TRASH_REQUEST = 'PLAYLIST_TRASH_REQUEST'
 export const PLAYLIST_RESPONSE = 'PLAYLIST_RESPONSE'
 export const SONG_LYRIC_RESPONSE = 'SONG_LYRIC'
 export const PLAYLIST_NEXT_SONG = 'PLAYLIST_NEXT_SONG'
-export const RED_HEART_LIST = 'RED_HEART_LIST'
 export const RED_HEART_RATE = 'RED_HEART_RATE'
 export const RED_HEART_UNRATE = 'RED_HEART_UNRATE'
 export const RED_HEART_RATE_NEXT_SONG_APPEND = 'RED_HEART_RATE_NEXT_SONG_APPEND'
 export const RED_HEART_UN_RATE_NEXT_SONG_APPEND = 'RED_HEART_UN_RATE_NEXT_SONG_APPEND'
 export const PLAYLIST_END_REQUEST = 'PLAYLIST_END_REQUEST'
+export const RECENT_LIST = 'RECENT_LIST'
+export const RECENT_EMPTY = 'RECENT_EMPTY'
+export const RED_HEART_LIST = 'RED_HEART_LIST'
 export const RED_HEART_EMPTY = 'RED_HEART_EMPTY'
+export const TRASH_LIST = 'TRASH_LIST'
+export const TRASH_EMPTY = 'TRASH_EMPTY'
 
 export const playlistLoading = () => {
   return {
@@ -69,13 +73,6 @@ export const playlistNextSong = () => {
   }
 }
 
-export const redHeartList = redheart => {
-  return {
-    type: RED_HEART_LIST,
-    redheart
-  }
-}
-
 export const redHeartRate = () => {
   return {
     type: RED_HEART_RATE
@@ -92,14 +89,14 @@ export const redHeartRateNextSongAppend = song => {
   return {
     type: RED_HEART_RATE_NEXT_SONG_APPEND,
     song
-  } 
+  }
 }
 
 export const redHeartUnRateNextSongAppend = song => {
   return {
     type: RED_HEART_UN_RATE_NEXT_SONG_APPEND,
     song
-  } 
+  }
 }
 
 export const playlistEndRequest = () => {
@@ -108,8 +105,41 @@ export const playlistEndRequest = () => {
   }
 }
 
+export const recentList = recent => {
+  return {
+    type: RECENT_LIST,
+    recent
+  }
+}
+
+export const recentEmpty = () => {
+  return {
+    type: RECENT_EMPTY
+  }
+}
+
+export const redHeartList = redheart => {
+  return {
+    type: RED_HEART_LIST,
+    redheart
+  }
+}
+
 export const redHeartEmpty = () => {
   return {
     type: RED_HEART_EMPTY
+  }
+}
+
+export const trashList = trash => {
+  return {
+    type: TRASH_LIST,
+    trash
+  }
+}
+
+export const trashEmpty = () => {
+  return {
+    type: TRASH_EMPTY
   }
 }

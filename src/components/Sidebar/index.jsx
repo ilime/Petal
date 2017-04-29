@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Image } from 'semantic-ui-react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { Link, NavLink, withRouter } from 'react-router-dom'
 
 import { authLoad } from '../../actions/auth/apis'
 import { redHeartListGET } from '../../actions/fm/apis'
@@ -44,7 +44,9 @@ class Sidebar extends Component {
               <Icon name='user circle' size='large' color='grey' />
               <span>登录</span>
             </NavLink> :
-            <Image src={'https://img3.doubanio.com/icon/ul' + userToken.douban_user_id + '-2.jpg'} avatar className='userAvatar' />
+            <Link to='/personal/recent'>
+              <Image src={'https://img3.doubanio.com/icon/ul' + userToken.douban_user_id + '-2.jpg'} avatar className='userAvatar' />
+            </Link>
           }
         </li>
       </ul>

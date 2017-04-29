@@ -8,6 +8,7 @@ import FM from '../FM/index.jsx'
 import Login from '../Login/index.jsx'
 import Sidebar from '../Sidebar/index.jsx'
 import Setting from '../Setting/index.jsx'
+import Personal from '../Personal/index.jsx'
 import './index.scss'
 const { remote } = window.require('electron')
 
@@ -46,6 +47,7 @@ class Container extends Component {
             <Grid.Column as='main' width={14}>
               <FM />
               <Route path='/login' component={Login} />
+              <Route path='/personal' component={Personal} />
             </Grid.Column>
             <aside>
               <div className='petalControl'>

@@ -5,10 +5,12 @@ import {
   PLAYLIST_RESPONSE, SONG_LYRIC_RESPONSE,
   PLAYLIST_NEXT_SONG, PLAYLIST_PLAYING_REQUEST,
   PLAYLIST_SKIP_REQUEST, PLAYLIST_TRASH_REQUEST,
-  RED_HEART_LIST, RED_HEART_RATE,
-  RED_HEART_UNRATE, RED_HEART_RATE_NEXT_SONG_APPEND,
-  RED_HEART_UN_RATE_NEXT_SONG_APPEND, PLAYLIST_END_REQUEST,
-  RED_HEART_EMPTY
+  RED_HEART_RATE, RED_HEART_UNRATE,
+  RED_HEART_RATE_NEXT_SONG_APPEND, RED_HEART_UN_RATE_NEXT_SONG_APPEND,
+  PLAYLIST_END_REQUEST, RECENT_LIST,
+  RECENT_EMPTY, RED_HEART_LIST,
+  RED_HEART_EMPTY, TRASH_LIST,
+  TRASH_EMPTY
 } from '../actions/fm/types'
 
 const fmReducer = (state = {
@@ -19,7 +21,9 @@ const fmReducer = (state = {
   ssid: '',
   song: [],
   lyric: {},
-  redheart: {}
+  recent: {},
+  redheart: [],
+  trash: {}
 }, action) => {
   switch (action.type) {
     case PLAYLIST_LOADING:
@@ -69,10 +73,6 @@ const fmReducer = (state = {
         ssid: state.song[1].ssid,
         song: state.song.slice(1)
       })
-    case RED_HEART_LIST:
-      return Object.assign({}, state, {
-        redheart: action.redheart
-      })
     case RED_HEART_RATE_NEXT_SONG_APPEND:
       return Object.assign({}, state, {
         song: state.song.concat(action.song)
@@ -85,9 +85,29 @@ const fmReducer = (state = {
       return Object.assign({}, state, {
         type: 'e'
       })
+    case RECENT_LIST:
+      return Object.assign({}, state, {
+        recent: action.recent
+      })
+    case RECENT_EMPTY:
+      return Object.assign({}, state, {
+        recent: {}
+      })
+    case RED_HEART_LIST:
+      return Object.assign({}, state, {
+        redheart: action.redheart
+      })
     case RED_HEART_EMPTY:
       return Object.assign({}, state, {
         redheart: {}
+      })
+    case TRASH_LIST:
+      return Object.assign({}, state, {
+        trash: action.trash
+      })
+    case TRASH_EMPTY:
+      return Object.assign({}, state, {
+        trash: {}
       })
     default:
       return state

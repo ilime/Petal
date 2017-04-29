@@ -7,22 +7,21 @@ import {
   playlistResponse, songLyricResponse,
   playlistNextSong, playlistPlayingRequest,
   playlistSkipRequest, playlistTrashRequest,
-  redHeartList, redHeartRate,
-  redHeartUnRate, redHeartRateNextSongAppend,
-  redHeartUnRateNextSongAppend, playlistEndRequest
+  redHeartRate, redHeartUnRate,
+  redHeartRateNextSongAppend, redHeartUnRateNextSongAppend,
+  playlistEndRequest, recentList,
+  redHeartList, trashList
 } from './types'
+
+import oToFd from '../../helper/objToFormD'
 
 const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
 
-const playlistFixedParams = {
+const fixedParams = {
   alt: 'json',
   apikey: '02646d3fb69a52ff072d47bf23cef8fd',
   app_name: 'radio_iphone',
-  channel: '-10',
-  client: 's%3Amobile%7Cy%3AiOS%2010.3.1%7Cf%3A116%7Cd%3A8ff78b4d03654c0dbc63d318fc7a065289a90af2%7Ce%3AiPhone6%2C2%7Cm%3Aappstore',
-  formats: 'acc',
-  kbps: '128',
-  pt: '0.0',
+  client: 's:mobile|y:iOS 10.3.1|f:116|d:8ff78b4d03654c0dbc63d318fc7a065289a90af2|e:iPhone6,2|m:appstore',
   douban_udid: '826390ea40bf43b0ee04d44a233b2511fcd76a8b',
   udid: '8ff78b4d03654c0dbc63d318fc7a065289a90af2',
   version: '116'
@@ -40,10 +39,11 @@ const playlistTypes = {
 
 const playlistOriginUrl = FM_ROOT_URL
   + '/playlist?'
-  + Object.entries(playlistFixedParams)
+  + Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
     }, '')
+  + 'channel=-10&formats=acc&kbps=128&pt=0.0'
 
 const songLyricGET = (sid, ssid) => {
   return axios.get(FM_ROOT_URL
@@ -62,7 +62,9 @@ export const playlistGET = type => {
     axios(Object.assign(
       {
         method: 'GET',
-        url: playlistOriginUrl + 'type=' + getState().fmReducer.type + '&sid=' + getState().fmReducer.sid,
+        url: playlistOriginUrl
+        + '&type=' + getState().fmReducer.type
+        + '&sid=' + getState().fmReducer.sid
       },
       getState().authReducer._id === 1 &&
       { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }
@@ -102,33 +104,80 @@ export const nextSong = () => {
   }
 }
 
-const redHeartFixedParams = {
-  apikey: '02646d3fb69a52ff072d47bf23cef8fd',
-  app_name: 'radio_iphone',
-  client: 's%3Amobile%7Cy%3AiOS%2010.3.1%7Cf%3A116%7Cd%3A8ff78b4d03654c0dbc63d318fc7a065289a90af2%7Ce%3AiPhone6%2C2%7Cm%3Aappstore',
-  douban_udid: '826390ea40bf43b0ee04d44a233b2511fcd76a8b',
-  kbps: 128,
-  udid: '8ff78b4d03654c0dbc63d318fc7a065289a90af2',
-  version: 116
+const recentOriginUrl = FM_ROOT_URL
+  + '/recent_played_tracks?'
+  + Object.entries(fixedParams)
+    .reduce((previous, [key, value]) => {
+      return previous + key + '=' + value + '&'
+    }, '')
+  + 'limit=100&start=0&type=played'
+
+export const recentListGET = () => {
+  return (dispatch, getState) => {
+    return axios(
+      Object.assign({
+        method: 'GET',
+        url: recentOriginUrl
+      }, getState().authReducer._id === 1 &&
+        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
+    ).then(response => {
+      dispatch(recentList(response.data))
+    }).catch(console.log)
+  }
 }
 
-const redHeartUrl = FM_ROOT_URL
-  + '/redheart/basic?alt=json'
-  + Object.entries(redHeartFixedParams)
+const redHeartSidsOriginUrl = FM_ROOT_URL
+  + '/redheart/basic?'
+  + Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
-      return previous + '&' + key + '=' + value
+      return previous + key + '=' + value + '&'
     }, '')
+  + 'kbps=128'
 
 export const redHeartListGET = () => {
   return (dispatch, getState) => {
     return axios(
       Object.assign({
         method: 'GET',
-        url: redHeartUrl,
+        url: redHeartSidsOriginUrl,
       }, getState().authReducer._id === 1 &&
         { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
     ).then(response => {
+      let songs = response.data.songs
+      let songsChain = songs.reduce((prev, song) => {
+        return prev + song.sid + '|'
+      }, '').slice(0, -1)
+      return axios(
+        Object.assign({
+          method: 'POST',
+          url: 'https://api.douban.com/v2/fm/songs',
+          data: oToFd(Object.assign(fixedParams, { sids: songsChain }))
+        }, getState().authReducer._id === 1 &&
+          { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }))
+    }).then(response => {
       dispatch(redHeartList(response.data))
+    }).catch(console.log)
+  }
+}
+
+const trashOriginUrl = FM_ROOT_URL
+  + '/banned_songs?'
+  + Object.entries(fixedParams)
+    .reduce((previous, [key, value]) => {
+      return previous + key + '=' + value + '&'
+    }, '')
+  + 'limit=50&start=0'
+
+export const trashListGET = () => {
+  return (dispatch, getState) => {
+    return axios(
+      Object.assign({
+        method: 'GET',
+        url: trashOriginUrl
+      }, getState().authReducer._id === 1 &&
+        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
+    ).then(response => {
+      dispatch(trashList(response.data))
     }).catch(console.log)
   }
 }

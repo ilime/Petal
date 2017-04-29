@@ -19,20 +19,13 @@ class Cover extends Component {
     }
   }
 
-  componentDidMount() {
-    document.querySelector('#_audio').addEventListener(
-      'ended',
-      () => {
-        this.setState({ love: 'white' })
-      })
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.song !== this.props.song) {
+    if (nextProps.song[0] !== this.props.song[0]) {
       const { song } = nextProps
       this.setState({
         playing: true,
-        cover: song[0].picture
+        cover: song[0].picture,
+        love: song[0].like === 1 ? 'red' : 'white'
       })
     }
     if (this.props._id === 1 && nextProps._id === 0) {

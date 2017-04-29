@@ -6,9 +6,9 @@ import {
   authLoginRequest, authLoginResponse,
   authTokenLoad, authLogout
 } from './types'
-import { redHeartEmpty } from '../fm/types'
 
-import { redHeartListGET } from '../fm/apis'
+import { recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
+import { recentListGET, redHeartListGET, trashListGET } from '../fm/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 
@@ -36,7 +36,9 @@ export const authPost = (usernameAndPassword) => {
     }).then(response => {
       const userToken = response.data
       dispatch(authLoginResponse(userToken))
+      dispatch(recentListGET())
       dispatch(redHeartListGET())
+      dispatch(trashListGET())
       db.insert({
         _id: 1,
         userToken
@@ -52,7 +54,9 @@ export const authLoad = () => {
     db.findOne({ _id: 1 }, (err, doc) => {
       if (doc !== null) {
         dispatch(authTokenLoad(doc))
+        dispatch(recentListGET())
         dispatch(redHeartListGET())
+        dispatch(trashListGET())
       }
     })
   }
@@ -61,6 +65,8 @@ export const authLoad = () => {
 export const authRemove = dispatch => {
   db.remove({ _id: 1 }, (err, doc) => {
     dispatch(authLogout())
+    dispatch(recentEmpty())
     dispatch(redHeartEmpty())
+    dispatch(trashEmpty())
   })
 }
