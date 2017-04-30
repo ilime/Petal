@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Image } from 'semantic-ui-react'
 
+import { songLyricGET } from '../../../actions/fm/apis'
+import { songLyricResponse } from '../../../actions/fm/types'
 import './index.scss'
 
 class Info extends Component {
@@ -20,22 +22,42 @@ class Info extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.song !== this.props.song) {
-      const { song, lyric } = nextProps
-      this.setState({
-        title: song[0].title,
-        singer: song[0].singers[0].name,
-        avatar: song[0].singers[0].avatar,
-        albumTitle: song[0].albumtitle,
-      })
+    const { pattern, song, lyric, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
+
+    if (pattern === 'select' && song !== this.props.song) {
+      this.setInfo(song[0])
     }
-    if (nextProps.lyric !== this.props.lyric) {
-      const { lyric } = nextProps
-      let newLc = this.handleLyric(lyric.lyric)
-      this.setState({ lc: newLc.lyric }, () => {
-        this.syncLyric(newLc.canScroll)
-      })
+
+    if (pattern === 'recent' && recentIndex !== this.props.recentIndex) {
+      this.setInfo(recentSong[recentIndex], pattern)
     }
+
+    if (pattern === 'redheart' && redheartIndex !== this.props.redheartIndex) {
+      this.setInfo(redheartSong[redheartIndex], pattern)
+    }
+
+    if (lyric !== this.props.lyric) {
+      this.lyricOperation(lyric.lyric)
+    }
+  }
+
+  setInfo = (song, pattern) => {
+    this.setState({
+      title: song.title,
+      singer: song.singers[0].name,
+      avatar: song.singers[0].avatar,
+      albumTitle: song.albumtitle,
+    })
+    if (pattern === 'recent' || pattern === 'redheart') {
+      this.props.lyricByRecentOrRedheart(song.sid, song.ssid)
+    }
+  }
+
+  lyricOperation = lyric => {
+    let newLc = this.handleLyric(lyric)
+    this.setState({ lc: newLc.lyric }, () => {
+      this.syncLyric(newLc.canScroll)
+    })
   }
 
   handleLyric = (lyric) => {
@@ -47,11 +69,11 @@ class Info extends Component {
     if (lyric.startsWith('\r\n')) {
       lyric = lyric.slice(2)
     }
-    if(!lyric.startsWith('[') || !pattern.test(lyric)) {
+    if (!lyric.startsWith('[') || !pattern.test(lyric)) {
       var re = lyric.split('\r\n').map(l => l.trim())
       return { lyric: re, canScroll: false }
     }
-    
+
     if (pattern.test(lyric)) {
       let splitByNewline = lyric.split('\r\n')
       while (!pattern.test(splitByNewline[0])) {
@@ -108,7 +130,7 @@ class Info extends Component {
   }
 
   render() {
-    const { title, singer, avatar, albumTitle, lc, canScroll } = this.state
+    const { title, singer, avatar, albumTitle, lc } = this.state
     return (
       <section>
         <div className='songTitleAndSinger'>
@@ -136,18 +158,39 @@ class Info extends Component {
 }
 
 Info.propTypes = {
+  pattern: PropTypes.string.isRequired,
   song: PropTypes.array.isRequired,
-  lyric: PropTypes.object.isRequired
+  recentSong: PropTypes.array,
+  redheartSong: PropTypes.array.isRequired,
+  lyric: PropTypes.object.isRequired,
+  recentIndex: PropTypes.number.isRequired,
+  redheartIndex: PropTypes.number.isRequired,
+  lyricByRecentOrRedheart: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
   return {
+    pattern: state.fmReducer.pattern,
     song: state.fmReducer.song,
-    lyric: state.fmReducer.lyric
+    recentSong: state.fmReducer.recent.songs,
+    redheartSong: state.fmReducer.redheart,
+    lyric: state.fmReducer.lyric,
+    recentIndex: state.fmReducer.recentIndex,
+    redheartIndex: state.fmReducer.redheartIndex
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    lyricByRecentOrRedheart: (sid, ssid) => {
+      songLyricGET(sid, ssid).then(response => {
+        dispatch(songLyricResponse(response.data))
+      })
+    }
   }
 }
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Info)

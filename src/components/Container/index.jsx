@@ -7,6 +7,7 @@ import { HashRouter as Router, Route } from 'react-router-dom'
 import FM from '../FM/index.jsx'
 import Login from '../Login/index.jsx'
 import Sidebar from '../Sidebar/index.jsx'
+import Pattern from '../Pattern/index.jsx'
 import Setting from '../Setting/index.jsx'
 import Personal from '../Personal/index.jsx'
 import './index.scss'
@@ -16,6 +17,7 @@ class Container extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      pattern: false,
       settingOpen: false
     }
   }
@@ -26,6 +28,14 @@ class Container extends Component {
 
   handleAppQuit = () => {
     remote.app.quit()
+  }
+
+  handlePatternOpen = () => {
+    this.setState({ patternOpen: true })
+  }
+
+  handlePatternClose = () => {
+    this.setState({ patternOpen: false })
   }
 
   handleSettingOpen = () => {
@@ -58,6 +68,12 @@ class Container extends Component {
                   <span>×</span>
                 </div>
               </div>
+              <Icon className='petalPattern'
+                name='signal'
+                size='large'
+                color='grey'
+                link
+                onClick={this.handlePatternOpen }/>
               <Icon className='petalSetting'
                 name='setting'
                 size='large'
@@ -65,6 +81,9 @@ class Container extends Component {
                 link
                 onClick={this.handleSettingOpen} />
             </aside>
+            <Pattern
+              open={this.state.patternOpen}
+              handleClose={this.handlePatternClose} />
             <Setting
               open={this.state.settingOpen}
               handleClose={this.handleSettingClose} />

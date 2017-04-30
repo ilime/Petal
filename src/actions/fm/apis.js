@@ -1,6 +1,7 @@
 'use strict'
 
 import axios from 'axios'
+import moment from 'moment'
 
 import {
   playlistLoading, playlistNewRequest,
@@ -45,7 +46,7 @@ const playlistOriginUrl = FM_ROOT_URL
     }, '')
   + 'channel=-10&formats=acc&kbps=128&pt=0.0'
 
-const songLyricGET = (sid, ssid) => {
+export const songLyricGET = (sid, ssid) => {
   return axios.get(FM_ROOT_URL
     + '/lyric?'
     + 'sid=' + sid
@@ -179,5 +180,30 @@ export const trashListGET = () => {
     ).then(response => {
       dispatch(trashList(response.data))
     }).catch(console.log)
+  }
+}
+
+const PLAY_LOG_URL = 'https://api.douban.com/v2/fm/play_log'
+
+export const playLog = (sid, type, play_source) => {
+  return (dispatch, getState) => {
+    return axios(
+      Object.assign({
+        method: 'POST',
+        url: PLAY_LOG_URL,
+        data: oToFd(Object.assign(fixedParams, { 
+          records: '[{"time":"'
+          + moment().format('YYYY-MM-DD HH:m:s')
+          + '","play_mode":"o","v":"4.8.2","sid":"'
+          + sid
+          + '","type":"'
+          + type
+          + '","play_source":"'
+          + play_source
+          + '","pid":"0"}]' 
+        }))
+      }, getState().authReducer._id === 1 &&
+        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
+    )
   }
 }

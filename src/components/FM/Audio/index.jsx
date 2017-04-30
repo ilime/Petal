@@ -5,7 +5,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
 
-import { nextSong, playlistGET } from '../../../actions/fm/apis'
+import {
+  recentGo, redheartGo,
+  recentIndexSet, redheartIndexSet
+} from '../../../actions/fm/types'
+import { nextSong, playlistGET, playLog } from '../../../actions/fm/apis'
 import './index.scss'
 
 class Audio extends Component {
@@ -21,20 +25,29 @@ class Audio extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.song !== this.props.song) {
-      const { song, type } = nextProps
+    const { pattern, song, type, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
+
+    if (pattern === 'select' && song !== this.props.song) {
       if (type !== 'r' && type != 'u') {
-        this.nextAudio(song)
+        this.nextAudio(song[0])
       }
+    }
+
+    if (pattern === 'recent' && recentIndex !== this.props.recentIndex) {
+      this.nextAudio(recentSong[recentIndex])
+    }
+
+    if (pattern === 'redheart' && redheartIndex !== this.props.redheartIndex) {
+      this.nextAudio(redheartSong[redheartIndex])
     }
   }
 
-  nextAudio = (song) => {
+  nextAudio = song => {
     const audio = document.querySelector('#_audio')
     const lyricContainer = document.querySelector('.lyric')
 
     audio.currentTime = 0
-    audio.src = song[0].url
+    audio.src = song.url
     audio.load()
     lyricContainer.scrollTop = 0
   }
@@ -57,7 +70,7 @@ class Audio extends Component {
     this.volumeSlider('.volumeBar', audio)
   }
 
-  formatTime = (time) => {
+  formatTime = time => {
     let min = Math.floor(time / 60)
     let sec = Math.floor(time % 60)
     return min + ':' + (sec < 10 ? '0' + sec : sec)
@@ -120,13 +133,36 @@ class Audio extends Component {
     }
   }
 
-  endedAudio = (audio) => {
+  endedAudio = audio => {
     return () => {
-      this.props.getPlayList('end')
-      if (this.props.song.length !== 1) {
-        this.props.handleNextSong()
-      } else {
-        this.props.getPlayList('playing')
+      const { pattern, fsid, recentIndex, recentSong, redheartIndex, redheartSong, handlePlayLog,
+        handleRecentGo, handleRecentIndexSet, handleRedheartGo, handleRedheartIndexSet } = this.props
+
+      if (pattern === 'select') {
+        this.props.getPlaylist('end')
+        if (this.props.song.length !== 1) {
+          this.props.handleNextSong()
+        } else {
+          this.props.getPlaylist('playing')
+        }
+      }
+
+      if (pattern === 'recent') {
+        handlePlayLog(fsid, 'p', 'y')
+        if (recentIndex === recentSong.length - 1) {
+          handleRecentIndexSet(0)
+        } else {
+          handleRecentGo()
+        }
+      }
+
+      if (pattern === 'redheart') {
+        handlePlayLog(fsid, 'p', 'h')
+        if (redheartIndex === redheartSong.length - 1) {
+          handleRedheartIndexSet(0)
+        } else {
+          handleRedheartGo()
+        }
       }
     }
   }
@@ -160,23 +196,45 @@ class Audio extends Component {
 }
 
 Audio.propTypes = {
+  pattern: PropTypes.string.isRequired,
   song: PropTypes.array.isRequired,
-  getPlayList: PropTypes.func.isRequired,
+  recentSong: PropTypes.array,
+  redheartSong: PropTypes.array.isRequired,
+  recentIndex: PropTypes.number.isRequired,
+  redheartIndex: PropTypes.number.isRequired,
+  getPlaylist: PropTypes.func.isRequired,
   handleNextSong: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  fsid: PropTypes.string.isRequired,
+  handlePlayLog: PropTypes.func.isRequired,
+  handleRecentGo: PropTypes.func.isRequired,
+  handleRedheartGo: PropTypes.func.isRequired,
+  handleRecentIndexSet: PropTypes.func.isRequired,
+  handleRedheartIndexSet: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
   return {
+    pattern: state.fmReducer.pattern,
     song: state.fmReducer.song,
-    type: state.fmReducer.type
+    type: state.fmReducer.type,
+    recentSong: state.fmReducer.recent.songs,
+    redheartSong: state.fmReducer.redheart,
+    recentIndex: state.fmReducer.recentIndex,
+    redheartIndex: state.fmReducer.redheartIndex,
+    fsid: state.fmReducer.fsid
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPlayList: type => dispatch(playlistGET(type)),
-    handleNextSong: () => dispatch(nextSong())
+    getPlaylist: type => dispatch(playlistGET(type)),
+    handleNextSong: () => dispatch(nextSong()),
+    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source)),
+    handleRecentGo: () => dispatch(recentGo),
+    handleRedheartGo: () => dispatch(redheartGo),
+    handleRecentIndexSet: index => dispatch(recentIndexSet(index)),
+    handleRedheartIndexSet: index => dispatch(redheartIndexSet(index))
   }
 }
 

@@ -6,7 +6,7 @@ export const PLAYLIST_PLAYING_REQUEST = 'PLAYLIST_PLAYING_REQUEST'
 export const PLAYLIST_SKIP_REQUEST = 'PLAYLIST_SKIP_REQUEST'
 export const PLAYLIST_TRASH_REQUEST = 'PLAYLIST_TRASH_REQUEST'
 export const PLAYLIST_RESPONSE = 'PLAYLIST_RESPONSE'
-export const SONG_LYRIC_RESPONSE = 'SONG_LYRIC'
+export const SONG_LYRIC_RESPONSE = 'SONG_LYRIC_RESPONSE'
 export const PLAYLIST_NEXT_SONG = 'PLAYLIST_NEXT_SONG'
 export const RED_HEART_RATE = 'RED_HEART_RATE'
 export const RED_HEART_UNRATE = 'RED_HEART_UNRATE'
@@ -19,6 +19,16 @@ export const RED_HEART_LIST = 'RED_HEART_LIST'
 export const RED_HEART_EMPTY = 'RED_HEART_EMPTY'
 export const TRASH_LIST = 'TRASH_LIST'
 export const TRASH_EMPTY = 'TRASH_EMPTY'
+export const SELECT_PATTERN = 'SELECT_PATTERN'
+export const RECENT_PATTERN = 'RECENT_PATTERN'
+export const REDHEART_PATTERH = 'REDHEART_PATTERN'
+export const FSID_SET = 'FSID_SET'
+export const RECENT_GO = 'RECENT_GO'
+export const RECENT_BACK = 'RECENT_BACK'
+export const RECENT_INDEX_SET = 'RECENT_INDEX_SET'
+export const REDHEART_GO = 'REDHEART_GO'
+export const REDHEART_BACK = 'REDHEART_BACK'
+export const REDHEART_INDEX_SET = 'REDHEART_INDEX_SET'
 
 export const playlistLoading = () => {
   return {
@@ -60,7 +70,7 @@ export const playlistResponse = (playlist, sid, ssid, song) => {
   }
 }
 
-export const songLyricResponse = (lyric) => {
+export const songLyricResponse = lyric => {
   return {
     type: SONG_LYRIC_RESPONSE,
     lyric
@@ -141,5 +151,40 @@ export const trashList = trash => {
 export const trashEmpty = () => {
   return {
     type: TRASH_EMPTY
+  }
+}
+
+export const selectPattern = { type: SELECT_PATTERN }
+
+export const recentPattern = { type: RECENT_PATTERN }
+
+export const redheartPattern = { type: REDHEART_PATTERH }
+
+export const fsidSet = fsid => {
+  return {
+    type: FSID_SET,
+    fsid
+  }
+}
+
+export const recentGo = { type: RECENT_GO }
+
+export const recentBack = { type: RECENT_BACK }
+
+export const recentIndexSet = recentIndex => {
+  return {
+    type: RECENT_INDEX_SET,
+    recentIndex
+  }
+}
+
+export const redheartGo = { type: REDHEART_GO }
+
+export const redheartBack = { type: REDHEART_BACK }
+
+export const redheartIndexSet = redheartIndex => {
+  return {
+    type: REDHEART_INDEX_SET,
+    redheartIndex
   }
 }

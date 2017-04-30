@@ -10,15 +10,24 @@ import {
   PLAYLIST_END_REQUEST, RECENT_LIST,
   RECENT_EMPTY, RED_HEART_LIST,
   RED_HEART_EMPTY, TRASH_LIST,
-  TRASH_EMPTY
+  TRASH_EMPTY, SELECT_PATTERN,
+  RECENT_PATTERN, REDHEART_PATTERH,
+  FSID_SET, RECENT_GO,
+  RECENT_BACK, REDHEART_GO,
+  REDHEART_BACK, RECENT_INDEX_SET,
+  REDHEART_INDEX_SET
 } from '../actions/fm/types'
 
 const fmReducer = (state = {
   isFetching: false,
+  pattern: 'select',
+  recentIndex: -1,
+  redheartIndex: -1,
   playlist: {},
   type: '',
   sid: '',
   ssid: '',
+  fsid: '',
   song: [],
   lyric: {},
   recent: {},
@@ -108,6 +117,48 @@ const fmReducer = (state = {
     case TRASH_EMPTY:
       return Object.assign({}, state, {
         trash: {}
+      })
+    case SELECT_PATTERN:
+      return Object.assign({}, state, {
+        pattern: 'select'
+      })
+    case RECENT_PATTERN:
+      return Object.assign({}, state, {
+        pattern: 'recent',
+        recentIndex: 0
+      })
+    case REDHEART_PATTERH:
+      return Object.assign({}, state, {
+        pattern: 'redheart',
+        redheartIndex: 0
+      })
+    case FSID_SET:
+      return Object.assign({}, state, {
+        fsid: action.fsid
+      })
+    case RECENT_GO:
+      return Object.assign({}, state, {
+        recentIndex: state.recentIndex + 1
+      })
+    case RECENT_BACK:
+      return Object.assign({}, state, {
+        recentIndex: state.recentIndex - 1
+      })
+    case REDHEART_GO:
+      return Object.assign({}, state, {
+        redheartIndex: state.redheartIndex + 1
+      })
+    case REDHEART_BACK:
+      return Object.assign({}, state, {
+        redheartIndex: state.redheartIndex - 1
+      })
+    case RECENT_INDEX_SET:
+      return Object.assign({}, state, {
+        recentIndex: action.recentIndex
+      })
+    case REDHEART_INDEX_SET:
+      return Object.assign({}, state, {
+        redheartIndex: action.redheartIndex
       })
     default:
       return state
