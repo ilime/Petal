@@ -7,7 +7,7 @@ import {
   authTokenLoad, authLogout
 } from './types'
 
-import { recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
+import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
 import { playlistGET, recentListGET, redHeartListGET, trashListGET } from '../fm/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
@@ -72,6 +72,7 @@ export const authRemove = dispatch => {
     dispatch(recentEmpty())
     dispatch(redHeartEmpty())
     dispatch(trashEmpty())
+    dispatch(selectPattern)
     dispatch(playlistGET('new'))
   })
 }

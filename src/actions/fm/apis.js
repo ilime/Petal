@@ -191,7 +191,7 @@ export const playLog = (sid, type, play_source) => {
       Object.assign({
         method: 'POST',
         url: PLAY_LOG_URL,
-        data: oToFd(Object.assign(fixedParams, { 
+        data: oToFd(Object.assign(fixedParams, {
           records: '[{"time":"'
           + moment().format('YYYY-MM-DD HH:m:s')
           + '","play_mode":"o","v":"4.8.2","sid":"'
@@ -200,10 +200,33 @@ export const playLog = (sid, type, play_source) => {
           + type
           + '","play_source":"'
           + play_source
-          + '","pid":"0"}]' 
+          + '","pid":"0"}]'
         }))
       }, getState().authReducer._id === 1 &&
-        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
-    )
+        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }))
+  }
+}
+
+const ACTION_LOG_URL = 'https://api.douban.com/v2/fm/action_log'
+
+export const actionLog = (sid, type, play_source) => {
+  return (dispatch, getState) => {
+    return axios(
+      Object.assign({
+        method: 'POST',
+        url: ACTION_LOG_URL,
+        data: oToFd(Object.assign(fixedParams, {
+          records: '[{"time":"'
+          + moment().format('YYYY-MM-DD HH:m:s')
+          + '","play_mode":"o","v":"4.8.2","sid":"'
+          + sid
+          + '","type":"'
+          + type
+          + '","play_source":"'
+          + play_source
+          + '"}]'
+        }))
+      }, getState().authReducer._id === 1 &&
+        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }))
   }
 }
