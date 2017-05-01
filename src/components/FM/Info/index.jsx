@@ -28,11 +28,11 @@ class Info extends Component {
       this.setInfo(song[0])
     }
 
-    if (pattern === 'recent' && recentIndex !== this.props.recentIndex) {
+    if (pattern === 'recent' && (recentIndex !== this.props.recentIndex || pattern !== this.props.pattern)) {
       this.setInfo(recentSong[recentIndex], pattern)
     }
 
-    if (pattern === 'redheart' && redheartIndex !== this.props.redheartIndex) {
+    if (pattern === 'redheart' && (redheartIndex !== this.props.redheartIndex || pattern !== this.props.pattern)) {
       this.setInfo(redheartSong[redheartIndex], pattern)
     }
 
@@ -161,7 +161,7 @@ Info.propTypes = {
   pattern: PropTypes.string.isRequired,
   song: PropTypes.array.isRequired,
   recentSong: PropTypes.array,
-  redheartSong: PropTypes.array.isRequired,
+  redheartSong: PropTypes.array,
   lyric: PropTypes.object.isRequired,
   recentIndex: PropTypes.number.isRequired,
   redheartIndex: PropTypes.number.isRequired,

@@ -32,12 +32,12 @@ class Cover extends Component {
       this.setCover(song[0])
     }
 
-    if (pattern === 'recent' && recentIndex !== this.props.recentIndex) {
+    if (pattern === 'recent' && (recentIndex !== this.props.recentIndex || pattern !== this.props.pattern)) {
       this.setCover(recentSong[recentIndex])
       this.props.setFsid(recentSong[recentIndex].sid)
     }
 
-    if (pattern === 'redheart' && redheartIndex !== this.props.redheartIndex) {
+    if (pattern === 'redheart' && (redheartIndex !== this.props.redheartIndex || pattern !== this.props.pattern)) {
       this.setCover(redheartSong[redheartIndex], pattern)
       this.props.setFsid(redheartSong[redheartIndex].sid)
     }
@@ -222,7 +222,7 @@ Cover.propTypes = {
   pattern: PropTypes.string.isRequired,
   song: PropTypes.array.isRequired,
   recentSong: PropTypes.array,
-  redheartSong: PropTypes.array.isRequired,
+  redheartSong: PropTypes.array,
   recentIndex: PropTypes.number.isRequired,
   redheartIndex: PropTypes.number.isRequired,
   getPlayList: PropTypes.func.isRequired,

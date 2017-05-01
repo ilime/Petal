@@ -33,11 +33,11 @@ class Audio extends Component {
       }
     }
 
-    if (pattern === 'recent' && recentIndex !== this.props.recentIndex) {
+    if (pattern === 'recent' && (recentIndex !== this.props.recentIndex || pattern !== this.props.pattern)) {
       this.nextAudio(recentSong[recentIndex])
     }
 
-    if (pattern === 'redheart' && redheartIndex !== this.props.redheartIndex) {
+    if (pattern === 'redheart' && (redheartIndex !== this.props.redheartIndex || pattern !== this.props.pattern)) {
       this.nextAudio(redheartSong[redheartIndex])
     }
   }
@@ -199,7 +199,7 @@ Audio.propTypes = {
   pattern: PropTypes.string.isRequired,
   song: PropTypes.array.isRequired,
   recentSong: PropTypes.array,
-  redheartSong: PropTypes.array.isRequired,
+  redheartSong: PropTypes.array,
   recentIndex: PropTypes.number.isRequired,
   redheartIndex: PropTypes.number.isRequired,
   getPlaylist: PropTypes.func.isRequired,

@@ -108,7 +108,7 @@ const fmReducer = (state = {
       })
     case RED_HEART_EMPTY:
       return Object.assign({}, state, {
-        redheart: {}
+        redheart: []
       })
     case TRASH_LIST:
       return Object.assign({}, state, {

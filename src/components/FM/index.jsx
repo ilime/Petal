@@ -12,10 +12,6 @@ import { playlistGET } from '../../actions/fm/apis'
 import './index.scss'
 
 class FM extends Component {
-  componentDidMount() {
-    this.props.getPlaylist('new')
-  }
-
   render() {
     const { isFetching } = this.props
     return (
@@ -42,7 +38,6 @@ class FM extends Component {
 }
 
 FM.propTypes = {
-  getPlaylist: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
 }
 
@@ -52,13 +47,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getPlaylist: type => dispatch(playlistGET(type)),
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(FM)

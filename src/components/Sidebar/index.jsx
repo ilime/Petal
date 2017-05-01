@@ -7,7 +7,7 @@ import { Icon, Image } from 'semantic-ui-react'
 import { Link, NavLink, withRouter } from 'react-router-dom'
 
 import { authLoad } from '../../actions/auth/apis'
-import { redHeartListGET } from '../../actions/fm/apis'
+import { playlistGET } from '../../actions/fm/apis'
 import './index.scss'
 
 class Sidebar extends Component {

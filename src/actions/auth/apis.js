@@ -8,7 +8,7 @@ import {
 } from './types'
 
 import { recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
-import { recentListGET, redHeartListGET, trashListGET } from '../fm/apis'
+import { playlistGET, recentListGET, redHeartListGET, trashListGET } from '../fm/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 
@@ -39,6 +39,7 @@ export const authPost = (usernameAndPassword) => {
       dispatch(recentListGET())
       dispatch(redHeartListGET())
       dispatch(trashListGET())
+      dispatch(playlistGET('new'))
       db.insert({
         _id: 1,
         userToken
@@ -57,6 +58,9 @@ export const authLoad = () => {
         dispatch(recentListGET())
         dispatch(redHeartListGET())
         dispatch(trashListGET())
+        dispatch(playlistGET('new'))
+      } else {
+        dispatch(playlistGET('new'))
       }
     })
   }
@@ -68,5 +72,6 @@ export const authRemove = dispatch => {
     dispatch(recentEmpty())
     dispatch(redHeartEmpty())
     dispatch(trashEmpty())
+    dispatch(playlistGET('new'))
   })
 }

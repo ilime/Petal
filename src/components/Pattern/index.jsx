@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Modal, Header, Button, Icon } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 import { selectPattern, recentPattern, redheartPattern } from '../../actions/fm/types'
 import { playlistGET } from '../../actions/fm/apis'
@@ -29,24 +30,30 @@ class Pattern extends Component {
   }
 
   render() {
-    const { pattern } = this.props
+    const { _id, pattern } = this.props
 
     return (
       <Modal
         open={this.props.open}
         basic
         size='small'
+        dimmer
       >
         <Header icon='signal' content='播放模式控制' />
         <Modal.Content>
-          <Button.Group attached='top' vertical fluid>
-            <Button name='select' inverted active={pattern === 'select'} onClick={this.handleSwitchPattern}>豆瓣精选</Button>
-            <Button name='recent' inverted active={pattern === 'recent'} onClick={this.handleSwitchPattern}>最近播放</Button>
-            <Button name='redheart' inverted active={pattern === 'redheart'} onClick={this.handleSwitchPattern}>红心歌曲</Button>
-          </Button.Group>
+          <Button name='select' inverted active={pattern === 'select'} onClick={this.handleSwitchPattern}>豆瓣精选</Button>
+          {_id === 0 ?
+            <Link to='login'>
+              <Button basic onClick={this.props.handleClose} inverted color='red'>登录后解锁更多模式</Button>
+            </Link>
+            :
+            <div style={{ 'display': 'inline' }}>
+              <Button name='recent' inverted active={pattern === 'recent'} onClick={this.handleSwitchPattern}>最近播放</Button>
+              <Button name='redheart' inverted active={pattern === 'redheart'} onClick={this.handleSwitchPattern}>红心歌曲</Button>
+            </div>}
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={this.props.handleClose} inverted>
+          <Button basic onClick={this.props.handleClose} inverted color='green'>
             <Icon name='checkmark' /> 关闭
           </Button>
         </Modal.Actions>
@@ -56,12 +63,14 @@ class Pattern extends Component {
 }
 
 Pattern.PropTypes = {
+  _id: PropTypes.number.isRequired,
   pattern: PropTypes.string.isRequired,
   getPlaylist: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    _id: state.authReducer._id,
     pattern: state.fmReducer.pattern
   }
 }
