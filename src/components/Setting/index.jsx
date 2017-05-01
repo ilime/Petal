@@ -6,32 +6,51 @@ import { connect } from 'react-redux'
 import { Modal, Header, Button, Icon } from 'semantic-ui-react'
 
 import { authRemove } from '../../actions/auth/apis'
+import './index.scss'
 
 class Setting extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeItem: 'setting'
+    }
+  }
+
   handleAuthRemove = () => {
     this.props.handleAuthRemove()
     this.props.handleClose()
   }
 
+  changeFocus = (e, name) => {
+    e.stopPropagation()
+    this.setState({ activeItem: name })
+  }
+
+  stopProp = e => { e.stopPropagation() }
+
   render() {
-    const { _id } = this.props
+    const { activeItem } = this.state
+    const Tab = ({ name, active, onClick, activeClass }) => (
+      <li className={active ? (activeClass ? activeClass : 'active') : ''} onClick={onClick}>{name}</li>
+    )
 
     return (
-      <Modal
-        open={this.props.open}
-        basic
-        size='small'
-      >
-        <Header icon='setting' content='设置' />
-        <Modal.Content>
-        </Modal.Content>
-        <Modal.Actions>
-          {_id === 1 && <Button color='red' inverted onClick={this.handleAuthRemove}>登出账号</Button>}
-          <Button color='green' onClick={this.props.handleClose} inverted>
-            <Icon name='checkmark' /> 保存并关闭
-          </Button>
-        </Modal.Actions>
-      </Modal>
+      <div className='mask'
+        onClick={this.props.handleClose}
+        style={{ 'display': this.props.open ? 'block' : 'none' }}>
+        <div className='layer'>
+          <nav className='layer-nav'>
+            <ul>
+              <Tab name='设置' active={activeItem === 'setting'} onClick={e => this.changeFocus(e, 'setting')} />
+              <Tab name='关于' active={activeItem === 'about'} onClick={e => this.changeFocus(e, 'about')} />
+            </ul>
+          </nav>
+          <div className="layer-content">
+            <div className={activeItem === 'setting' ? 'active' : ''} onClick={this.stopProp}>1</div>
+            <div className={activeItem === 'about' ? 'active' : ''} onClick={this.stopProp}>2</div>
+          </div>
+        </div>
+      </div>
     )
   }
 }

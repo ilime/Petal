@@ -22,29 +22,17 @@ class Container extends Component {
     }
   }
 
-  handleAppMinimize = () => {
-    remote.getCurrentWindow().minimize()
-  }
+  handleAppMinimize = () => { remote.getCurrentWindow().minimize() }
 
-  handleAppQuit = () => {
-    remote.app.quit()
-  }
+  handleAppQuit = () => { remote.app.quit() }
 
-  handlePatternOpen = () => {
-    this.setState({ patternOpen: true })
-  }
+  handlePatternOpen = () => { this.setState({ patternOpen: true }) }
 
-  handlePatternClose = () => {
-    this.setState({ patternOpen: false })
-  }
+  handlePatternClose = () => { this.setState({ patternOpen: false }) }
 
-  handleSettingOpen = () => {
-    this.setState({ settingOpen: true })
-  }
+  handleSettingOpen = () => { this.setState({ settingOpen: true }) }
 
-  handleSettingClose = () => {
-    this.setState({ settingOpen: false })
-  }
+  handleSettingClose = () => { this.setState({ settingOpen: false }) }
 
   render() {
     return (
@@ -73,7 +61,7 @@ class Container extends Component {
                 size='large'
                 color='grey'
                 link
-                onClick={this.handlePatternOpen }/>
+                onClick={this.handlePatternOpen} />
               <Icon className='petalSetting'
                 name='setting'
                 size='large'
