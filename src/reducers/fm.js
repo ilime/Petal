@@ -154,10 +154,12 @@ const fmReducer = (state = {
       })
     case RECENT_INDEX_SET:
       return Object.assign({}, state, {
+        pattern: 'recent',
         recentIndex: action.recentIndex
       })
     case REDHEART_INDEX_SET:
       return Object.assign({}, state, {
+        pattern: 'redheart',
         redheartIndex: action.redheartIndex
       })
     default:

@@ -3,16 +3,24 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Item } from 'semantic-ui-react'
+import { Item, Icon } from 'semantic-ui-react'
+
+import { recentIndexSet } from '../../../actions/fm/types'
+import './index.scss'
 
 class Recent extends Component {
+  handleRecentPlay = index => {
+    const { handleRecentIndexSet } = this.props
+    handleRecentIndexSet(index)
+  }
+
   render() {
     const { recent } = this.props
 
     return (
       <Item.Group>
         {recent.length > 0 && recent.map((song, index) => {
-          return <Item key={index}>
+          return <Item key={index} className='recentItem'>
             <Item.Image size='tiny' src={song.picture} />
 
             <Item.Content>
@@ -26,6 +34,9 @@ class Recent extends Component {
                 {song.albumtitle + ' - ' + song.public_time}
               </Item.Extra>
             </Item.Content>
+            <div className='recentControl'>
+              <Icon name='play' color='grey' link onClick={() => this.handleRecentPlay(index)} />
+            </div>
           </Item>
         })}
       </Item.Group>
@@ -34,7 +45,8 @@ class Recent extends Component {
 }
 
 Recent.PropTypes = {
-  recent: PropTypes.array.isRequired
+  recent: PropTypes.array.isRequired,
+  handleRecentIndexSet: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -43,7 +55,13 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleRecentIndexSet: index => dispatch(recentIndexSet(index))
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Recent)
