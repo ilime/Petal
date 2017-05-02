@@ -3,7 +3,8 @@
 import {
   AUTH_LOGIN_REQUEST, AUTH_LOGIN_RESPONSE,
   AUTH_LOGIN_FAIL, AUTH_REMOVE_FAIL_MESSAGE,
-  AUTH_TOKEN_LOAD, AUTH_LOGOUT
+  AUTH_TOKEN_LOAD, AUTH_LOGOUT,
+  USER_INFO
 } from '../actions/auth/types'
 
 const authReducer = (state = {
@@ -11,7 +12,8 @@ const authReducer = (state = {
   loginFail: false,
   loginFailMessage: '',
   _id: 0,
-  userToken: {}
+  userToken: {},
+  userInfo: {}
 }, action) => {
   switch (action.type) {
     case AUTH_LOGIN_REQUEST:
@@ -43,7 +45,12 @@ const authReducer = (state = {
     case AUTH_LOGOUT:
       return Object.assign({}, state, {
         _id: 0,
-        userToken: {}
+        userToken: {},
+        userInfo: {}
+      })
+    case USER_INFO:
+      return Object.assign({}, state, {
+        userInfo: action.userInfo
       })
     default:
       return state

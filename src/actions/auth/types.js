@@ -6,6 +6,7 @@ export const AUTH_LOGIN_FAIL = 'AUTH_LOGIN_FAIL'
 export const AUTH_REMOVE_FAIL_MESSAGE = 'AUTH_REMOVE_FAIL_MESSAGE'
 export const AUTH_TOKEN_LOAD = 'AUTH_TOKEN_LOAD'
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
+export const USER_INFO = 'USER_INFO'
 
 export const authLoginRequest = () => {
   return {
@@ -41,5 +42,12 @@ export const authTokenLoad = doc => {
 export const authLogout = () => {
   return {
     type: AUTH_LOGOUT
+  }
+}
+
+export const userInfo = userInfo => {
+  return {
+    type: USER_INFO,
+    userInfo
   }
 }

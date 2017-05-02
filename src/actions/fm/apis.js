@@ -13,6 +13,7 @@ import {
   playlistEndRequest, recentList,
   redHeartList, trashList
 } from './types'
+import { userInfo } from '../auth/types'
 
 import oToFd from '../../helper/objToFormD'
 
@@ -228,5 +229,27 @@ export const actionLog = (sid, type, play_source) => {
         }))
       }, getState().authReducer._id === 1 &&
         { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }))
+  }
+}
+
+const userInfoOriginUrl = FM_ROOT_URL
+  + '/user_info?'
+  + Object.entries(fixedParams)
+    .reduce((previous, [key, value]) => {
+      return previous + key + '=' + value + '&'
+    }, '')
+  + 'avatar_size=large'
+
+export const userInfoGET = () => {
+  return (dispatch, getState) => {
+    return axios(
+      Object.assign({
+        method: 'GET',
+        url: userInfoOriginUrl
+      }, getState().authReducer._id === 1 &&
+        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
+    ).then(response => {
+      dispatch(userInfo(response.data))
+    }).catch(console.log)
   }
 }

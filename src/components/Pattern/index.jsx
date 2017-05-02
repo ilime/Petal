@@ -30,7 +30,7 @@ class Pattern extends Component {
   }
 
   render() {
-    const { _id, pattern } = this.props
+    const { _id, pattern, likedNum, playedNum } = this.props
 
     return (
       <Modal
@@ -48,8 +48,12 @@ class Pattern extends Component {
             </Link>
             :
             <div style={{ 'display': 'inline' }}>
-              <Button name='recent' inverted active={pattern === 'recent'} onClick={this.handleSwitchPattern}>最近播放</Button>
-              <Button name='redheart' inverted active={pattern === 'redheart'} onClick={this.handleSwitchPattern}>红心歌曲</Button>
+              {playedNum !== 0
+                ? <Button name='recent' inverted active={pattern === 'recent'} onClick={this.handleSwitchPattern}>最近播放</Button>
+                : <Button negative>没有最近播放</Button>}
+              {likedNum !== 0
+                ? <Button name='redheart' inverted active={pattern === 'redheart'} onClick={this.handleSwitchPattern}>红心歌曲</Button>
+                : <Button negative>没有红心歌曲</Button>}
             </div>}
         </Modal.Content>
         <Modal.Actions>
@@ -65,13 +69,17 @@ class Pattern extends Component {
 Pattern.PropTypes = {
   _id: PropTypes.number.isRequired,
   pattern: PropTypes.string.isRequired,
-  getPlaylist: PropTypes.func.isRequired
+  getPlaylist: PropTypes.func.isRequired,
+  likedNum: PropTypes.number.isRequired,
+  playedNum: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     _id: state.authReducer._id,
-    pattern: state.fmReducer.pattern
+    pattern: state.fmReducer.pattern,
+    likedNum: state.authReducer.userInfo.liked_num,
+    playedNum: state.authReducer.userInfo.played_num
   }
 }
 

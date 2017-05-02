@@ -16,7 +16,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { _id, userToken } = this.props
+    const { _id, userToken, icon } = this.props
 
     return (
       <ul className='navigation'>
@@ -45,7 +45,7 @@ class Sidebar extends Component {
               <span>登录</span>
             </NavLink> :
             <Link to='/personal/recent'>
-              <Image src={'https://img3.doubanio.com/icon/ul' + userToken.douban_user_id + '-2.jpg'} avatar className='userAvatar' />
+              <Image src={icon} avatar className='userAvatar' />
             </Link>
           }
         </li>
@@ -57,13 +57,15 @@ class Sidebar extends Component {
 Sidebar.PropTypes = {
   handleAuthLoad: PropTypes.func.isRequired,
   _id: PropTypes.number.isRequired,
-  userToken: PropTypes.object.isRequired
+  userToken: PropTypes.object.isRequired,
+  icon: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     _id: state.authReducer._id,
-    userToken: state.authReducer.userToken
+    userToken: state.authReducer.userToken,
+    icon: state.authReducer.userInfo.icon
   }
 }
 

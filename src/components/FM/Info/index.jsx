@@ -56,6 +56,12 @@ class Info extends Component {
   lyricOperation = lyric => {
     let newLc = this.handleLyric(lyric)
     this.setState({ lc: newLc.lyric }, () => {
+      Array.from(document.querySelector('.lyric').children).some(line => {
+        if (line.classList.contains('lyricGreen')) {
+          line.classList.remove('lyricGreen')
+          return true
+        }
+      })
       this.syncLyric(newLc.canScroll)
     })
   }
@@ -102,18 +108,23 @@ class Info extends Component {
         canScroll: true
       }
     }
-
   }
 
-  syncLyric = (canScroll) => {
+  syncLyric = canScroll => {
+    const audio = document.querySelector('#_audio'),
+      lyricContainer = document.querySelector('.lyric'),
+      lc = this.state.lc
+    audio.ontimeupdate = null
     if (canScroll === false) { return }
-    const audio = document.querySelector('#_audio')
-    const lyricContainer = document.querySelector('.lyric')
-    const lc = this.state.lc
     let index = 0
 
-    audio.ontimeupdate = () => {
-      if (index === lc.length) { return }
+    audio.ontimeupdate = scrollLyric
+
+    function scrollLyric() {
+      if (index === lc.length) {
+        audio.removeEventListener('timeupdate', scrollLyric)
+        return
+      }
       let ct = audio.currentTime
       if (ct > lc[index][1]) {
         let lines = lyricContainer.children

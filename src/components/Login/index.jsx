@@ -47,9 +47,7 @@ class Login extends Component {
     if (username === '' || password === '') {
       handleAuthLoginFail('账号或密码不能为空')
     } else {
-      handleAuthPost({ username, password }, () => {
-        this.props.history.push('/')
-      })
+      handleAuthPost({ username, password }, () => this.props.history.push('/'))
     }
   }
 

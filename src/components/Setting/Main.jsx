@@ -4,12 +4,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Menu, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import { authRemove } from '../../actions/auth/apis'
 
 class Main extends Component {
   handleAuthRemove = () => {
-    this.props.handleAuthRemove()
+    this.props.handleAuthRemove(() => this.props.history.push('/login'))
     this.props.handleClose()
   }
 
@@ -51,11 +52,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleAuthRemove: () => authRemove(dispatch)
+    handleAuthRemove: callback => authRemove(dispatch, callback)
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Main)
+)(Main))

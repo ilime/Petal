@@ -8,7 +8,7 @@ import {
 } from './types'
 
 import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
-import { playlistGET, recentListGET, redHeartListGET, trashListGET } from '../fm/apis'
+import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET } from '../fm/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 
@@ -36,6 +36,7 @@ export const authPost = (usernameAndPassword, callback) => {
     }).then(response => {
       const userToken = response.data
       dispatch(authLoginResponse(userToken))
+      dispatch(userInfoGET())
       dispatch(recentListGET())
       dispatch(redHeartListGET())
       dispatch(trashListGET())
@@ -60,6 +61,7 @@ export const authLoad = () => {
     db.findOne({ _id: 1 }, (err, doc) => {
       if (doc !== null) {
         dispatch(authTokenLoad(doc))
+        dispatch(userInfoGET())
         dispatch(recentListGET())
         dispatch(redHeartListGET())
         dispatch(trashListGET())
@@ -71,7 +73,7 @@ export const authLoad = () => {
   }
 }
 
-export const authRemove = dispatch => {
+export const authRemove = (dispatch, callback) => {
   db.remove({ _id: 1 }, (err, doc) => {
     dispatch(authLogout())
     dispatch(recentEmpty())
@@ -79,5 +81,8 @@ export const authRemove = dispatch => {
     dispatch(trashEmpty())
     dispatch(selectPattern)
     dispatch(playlistGET('new'))
+    if (typeof callback === 'function') {
+      callback()
+    }
   })
 }
