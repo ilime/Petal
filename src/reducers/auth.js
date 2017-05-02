@@ -2,11 +2,14 @@
 
 import {
   AUTH_LOGIN_REQUEST, AUTH_LOGIN_RESPONSE,
+  AUTH_LOGIN_FAIL, AUTH_REMOVE_FAIL_MESSAGE,
   AUTH_TOKEN_LOAD, AUTH_LOGOUT
 } from '../actions/auth/types'
 
 const authReducer = (state = {
   isFetching: false,
+  loginFail: false,
+  loginFailMessage: '',
   _id: 0,
   userToken: {}
 }, action) => {
@@ -20,6 +23,17 @@ const authReducer = (state = {
         isFetching: false,
         _id: action._id,
         userToken: action.userToken
+      })
+    case AUTH_LOGIN_FAIL:
+      return Object.assign({}, state, {
+        isFetching: false,
+        loginFail: true,
+        loginFailMessage: action.message
+      })
+    case AUTH_REMOVE_FAIL_MESSAGE:
+      return Object.assign({}, state, {
+        loginFail: false,
+        loginFailMessage: ''
       })
     case AUTH_TOKEN_LOAD:
       return Object.assign({}, state, {

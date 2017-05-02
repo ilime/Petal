@@ -1,11 +1,9 @@
 'use strict'
 
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Modal, Header, Button, Icon } from 'semantic-ui-react'
 
-import { authRemove } from '../../actions/auth/apis'
+import Main from './Main.jsx'
+import About from './About.jsx'
 import './index.scss'
 
 class Setting extends Component {
@@ -14,11 +12,6 @@ class Setting extends Component {
     this.state = {
       activeItem: 'setting'
     }
-  }
-
-  handleAuthRemove = () => {
-    this.props.handleAuthRemove()
-    this.props.handleClose()
   }
 
   changeFocus = (e, name) => {
@@ -45,34 +38,18 @@ class Setting extends Component {
               <Tab name='关于' active={activeItem === 'about'} onClick={e => this.changeFocus(e, 'about')} />
             </ul>
           </nav>
-          <div className="layer-content">
-            <div className={activeItem === 'setting' ? 'active' : ''} onClick={this.stopProp}>1</div>
-            <div className={activeItem === 'about' ? 'active' : ''} onClick={this.stopProp}>2</div>
-          </div>
+          <article className="layer-content">
+            <section className={activeItem === 'setting' ? 'active' : ''} onClick={this.stopProp}>
+              <Main handleClose={this.props.handleClose} />
+            </section>
+            <section className={activeItem === 'about' ? 'active' : ''} onClick={this.stopProp}>
+              <About />
+            </section>
+          </article>
         </div>
       </div>
     )
   }
 }
 
-Setting.PropTypes = {
-  _id: PropTypes.number.isRequired,
-  handleAuthRemove: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    _id: state.authReducer._id
-  }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    handleAuthRemove: () => authRemove(dispatch)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Setting)
+export default Setting

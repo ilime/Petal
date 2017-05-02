@@ -18,11 +18,11 @@
   border: 1px solid #2e963d;
   border-radius: 5px;
   overflow: hidden;
-  .layer-content div {
+  .layer-content section {
     height: 384px;
     display: none;
   }
-  .layer-content div.active {
+  .layer-content section.active {
     display: block;
     transition: all 0s ease;
     animation: switch 600ms ease;
@@ -54,9 +54,32 @@
       border-bottom: 1px solid #2e963d;
     }
     li.active {
-        background: #2e963d;
-        color: #fff;
-        animation: switch 600ms ease;
+      background: #2e963d;
+      color: #fff;
+      animation: switch 600ms ease;
     }
+  }
+}
+
+.petalSettingMain {
+  position: relative;
+  top: 2rem;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.petalAbout {
+  position: relative;
+  top: 3rem;
+}
+
+.aboutUs {
+  text-align: center;
+  margin-top: 1rem;
+  -webkit-app-region: no-drag;
+  
+  span {
+    color:#2ebd59;
+    cursor: pointer;
   }
 }

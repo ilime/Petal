@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import {
   authLoginRequest, authLoginResponse,
-  authTokenLoad, authLogout
+  authLoginFail, authTokenLoad, authLogout
 } from './types'
 
 import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
@@ -26,7 +26,7 @@ const authFixedParams = {
   udid: '8ff78b4d03654c0dbc63d318fc7a065289a90af2'
 }
 
-export const authPost = (usernameAndPassword) => {
+export const authPost = (usernameAndPassword, callback) => {
   return (dispatch, getState) => {
     dispatch(authLoginRequest())
     return axios({
@@ -46,7 +46,12 @@ export const authPost = (usernameAndPassword) => {
       }, (err, doc) => {
         console.log(doc)
       })
-    }).catch(console.log)
+      if (typeof callback === 'function') {
+        callback()
+      }
+    }).catch(() => {
+      dispatch(authLoginFail('请检查账号或密码是否正确'))
+    })
   }
 }
 
