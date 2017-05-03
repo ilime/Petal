@@ -9,6 +9,7 @@ import {
 
 import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
 import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET } from '../fm/apis'
+import { settingLoad } from '../setting/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 
@@ -58,6 +59,7 @@ export const authPost = (usernameAndPassword, callback) => {
 
 export const authLoad = () => {
   return (dispatch, getState) => {
+    dispatch(settingLoad())
     db.findOne({ _id: 1 }, (err, doc) => {
       if (doc !== null) {
         dispatch(authTokenLoad(doc))

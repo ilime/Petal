@@ -66,6 +66,19 @@
   top: 2rem;
   width: 600px;
   margin: 0 auto;
+
+  .settingItem {
+    display: flex;
+    align-items: center;
+
+    div.label {
+      flex: 1
+    }
+
+    div.content {
+      flex: 5
+    }
+  }
 }
 
 .petalAbout {

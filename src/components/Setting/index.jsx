@@ -29,7 +29,6 @@ class Setting extends Component {
 
     return (
       <div className='mask'
-        onClick={this.props.handleClose}
         style={{ 'display': this.props.open ? 'block' : 'none' }}>
         <div className='layer'>
           <nav className='layer-nav'>

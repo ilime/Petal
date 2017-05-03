@@ -45,7 +45,7 @@
           background-color: seagreen;
           border-radius: 50%;
           bottom: .3rem;
-          left: 39px;
+          // left: 39px;
           transition-property: width, height, bottom;
           transition-duration: 1s, 1s, 1s;
 
@@ -59,7 +59,7 @@
 
       .volumeProgress {
         position: absolute;
-        width: 30%;
+        // width: 30%;
         height: 2px;
         background: seagreen;
       }

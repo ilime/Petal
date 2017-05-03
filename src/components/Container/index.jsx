@@ -57,7 +57,7 @@ class Container extends Component {
                 </div>
               </div>
               <Icon className='petalPattern'
-                name='signal'
+                name='options'
                 size='large'
                 color='grey'
                 link
