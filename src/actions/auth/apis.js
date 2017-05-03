@@ -1,6 +1,7 @@
 'use strict'
 
 import axios from 'axios'
+import moment from 'moment'
 
 import {
   authLoginRequest, authLoginResponse,
@@ -44,7 +45,8 @@ export const authPost = (usernameAndPassword, callback) => {
       dispatch(playlistGET('new'))
       db.insert({
         _id: 1,
-        userToken
+        userToken,
+        time: [moment().year(), moment().month(), moment().date()]
       }, (err, doc) => {
         console.log(doc)
       })
@@ -62,12 +64,20 @@ export const authLoad = () => {
     dispatch(settingLoad())
     db.findOne({ _id: 1 }, (err, doc) => {
       if (doc !== null) {
-        dispatch(authTokenLoad(doc))
-        dispatch(userInfoGET())
-        dispatch(recentListGET())
-        dispatch(redHeartListGET())
-        dispatch(trashListGET())
-        dispatch(playlistGET('new'))
+        let now = [moment().year(), moment().month(), moment().date()],
+          fromNow = moment(doc.time).diff(now, 'days')
+
+        if (fromNow === 80) {
+          db.remove({ _id: 1 })
+          dispatch(playlistGET('new'))
+        } else {
+          dispatch(authTokenLoad(doc))
+          dispatch(userInfoGET())
+          dispatch(recentListGET())
+          dispatch(redHeartListGET())
+          dispatch(trashListGET())
+          dispatch(playlistGET('new'))
+        }
       } else {
         dispatch(playlistGET('new'))
       }
