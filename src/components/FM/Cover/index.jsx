@@ -219,6 +219,7 @@ class Cover extends Component {
         src={cover}
         size='medium'
         shape='rounded'
+        style={{ 'WebkitUserSelect': 'none' }}
       />
     )
   }

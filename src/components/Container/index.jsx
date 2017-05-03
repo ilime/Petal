@@ -43,6 +43,7 @@ class Container extends Component {
               <Sidebar />
             </Grid.Column>
             <Grid.Column as='main' width={14}>
+              <div className='titleBar' title='点住我可以拖动哦～'></div>
               <FM />
               <Route path='/login' component={Login} />
               <Route path='/personal' component={Personal} />

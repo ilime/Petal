@@ -7,7 +7,6 @@ import db from '../../helper/db'
 export const settingLoad = () => {
   return (dispatch, getState) => {
     db.findOne({ setting: 'normal' }, (err, doc) => {
-      console.log(doc)
       if (doc !== null) {
         dispatch(audioVolumeProgressSet(doc.audioVolumeProgress))
         dispatch(audioVolumePinSet(doc.audioVolumePin))
