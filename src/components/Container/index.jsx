@@ -10,6 +10,9 @@ import Sidebar from '../Sidebar/index.jsx'
 import Pattern from '../Pattern/index.jsx'
 import Setting from '../Setting/index.jsx'
 import Personal from '../Personal/index.jsx'
+import Read from '../Read/index.jsx'
+import Music from '../Music/index.jsx'
+import Movie from '../Movie/index.jsx'
 import './index.scss'
 const { remote } = window.require('electron')
 
@@ -47,6 +50,9 @@ class Container extends Component {
               <FM />
               <Route path='/login' component={Login} />
               <Route path='/personal' component={Personal} />
+              <Route path='/read' component={Read} />
+              <Route path='/movie' component={Movie} />
+              <Route path='/music' component={Music} />
             </Grid.Column>
             <aside>
               <div className='petalControl'>
