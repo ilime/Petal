@@ -46,13 +46,9 @@
           border-radius: 50%;
           bottom: .3rem;
           left: 39px;
-          transition-property: width, height, bottom;
-          transition-duration: 1s, 1s, 1s;
 
           &:active {
-            width: 15px;
-            height: 15px;
-            bottom: 0.5rem;
+            transform: scale(1.1);
           }
         }
       }
