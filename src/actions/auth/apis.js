@@ -4,13 +4,29 @@ import axios from 'axios'
 import moment from 'moment'
 
 import {
-  authLoginRequest, authLoginResponse,
-  authLoginFail, authTokenLoad, authLogout
+  authLoginRequest,
+  authLoginResponse,
+  authLoginFail,
+  authTokenLoad,
+  authLogout
 } from './types'
 
-import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/types'
-import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET } from '../fm/apis'
-import { settingLoad } from '../setting/apis'
+import {
+  selectPattern,
+  recentEmpty,
+  redHeartEmpty,
+  trashEmpty
+} from '../fm/types'
+import {
+  playlistGET,
+  recentListGET,
+  redHeartListGET,
+  trashListGET,
+  userInfoGET
+} from '../fm/apis'
+import {
+  settingLoad
+} from '../setting/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 
@@ -62,13 +78,17 @@ export const authPost = (usernameAndPassword, callback) => {
 export const authLoad = () => {
   return (dispatch, getState) => {
     dispatch(settingLoad())
-    db.findOne({ _id: 1 }, (err, doc) => {
+    db.findOne({
+      _id: 1
+    }, (err, doc) => {
       if (doc !== null) {
         let now = [moment().year(), moment().month(), moment().date()],
           fromNow = moment(doc.time).diff(now, 'days')
 
         if (fromNow === 80) {
-          db.remove({ _id: 1 })
+          db.remove({
+            _id: 1
+          })
           dispatch(playlistGET('new'))
         } else {
           dispatch(authTokenLoad(doc))
@@ -86,15 +106,17 @@ export const authLoad = () => {
 }
 
 export const authRemove = (dispatch, callback) => {
-  db.remove({ _id: 1 }, (err, doc) => {
+  db.remove({
+    _id: 1
+  }, (err, doc) => {
+    if (typeof callback === 'function') {
+      callback()
+    }
     dispatch(authLogout())
     dispatch(recentEmpty())
     dispatch(redHeartEmpty())
     dispatch(trashEmpty())
     dispatch(selectPattern)
     dispatch(playlistGET('new'))
-    if (typeof callback === 'function') {
-      callback()
-    }
   })
 }
