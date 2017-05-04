@@ -75,6 +75,7 @@ class Cover extends Component {
       handleRedheartIndexSet } = this.props
 
     if (pattern === 'recent') {
+      if (recentSong.length === 1) { return }
       handlePlayLog(fsid, 'j', 'y')
       if (recentIndex === recentSong.length - 1) {
         handleRecentIndexSet(0)
@@ -84,6 +85,7 @@ class Cover extends Component {
     }
 
     if (pattern === 'redheart') {
+      if (redheartSong.length === 1) { return }
       handlePlayLog(fsid, 'j', 'h')
       if (redheartIndex === redheartSong.length - 1) {
         handleRedheartIndexSet(0)
@@ -99,6 +101,7 @@ class Cover extends Component {
       handleRedheartIndexSet } = this.props
 
     if (pattern === 'recent') {
+      if (recentSong.length === 1) { return }
       handlePlayLog(fsid, 'k', 'y')
       if (recentIndex === 0) {
         handleRecentIndexSet(recentSong.length - 1)
@@ -108,6 +111,7 @@ class Cover extends Component {
     }
 
     if (pattern === 'redheart') {
+      if (redheartSong.length === 1) { return }
       handlePlayLog(fsid, 'k', 'h')
       if (redheartIndex === 0) {
         handleRedheartIndexSet(redheartSong.length - 1)
@@ -172,7 +176,7 @@ class Cover extends Component {
   }
 
   render() {
-    const { pattern } = this.props
+    const { pattern, recentSong, redheartSong } = this.props
     const { controlPanelActive, playing, cover, love, isLoginPopup } = this.state
     const controlPanel = (
       <div>
@@ -193,9 +197,11 @@ class Cover extends Component {
             <Icon name='step forward' size='big' onClick={this.handleSkipSong} />
           </div>}
           {(pattern === 'recent' || pattern === 'redheart') && <div>
-            <Icon name='step backward' size='big' onClick={this.handleSongBackward} />
+            <Icon name='step backward' size='big' onClick={this.handleSongBackward}
+              title={recentSong.length === 1 ? '只有一首歌曲哦～' : ''} />
             <Icon name='heart' size='big' style={{ color: love }} onClick={this.handleLoveSong} />
-            <Icon name='step forward' size='big' onClick={this.handleSongForward} />
+            <Icon name='step forward' size='big' onClick={this.handleSongForward}
+              title={redheartSong.length === 1 ? '只有一首歌曲哦～' : ''} />
           </div>}
         </div>
       </div>
@@ -213,6 +219,7 @@ class Cover extends Component {
         src={cover}
         size='medium'
         shape='rounded'
+        style={{ 'WebkitUserSelect': 'none' }}
       />
     )
   }

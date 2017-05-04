@@ -17,7 +17,8 @@ class Info extends Component {
       singer: '',
       avatar: '',
       albumTitle: '',
-      lc: []
+      lc: [],
+      canScroll: false
     }
   }
 
@@ -55,14 +56,14 @@ class Info extends Component {
 
   lyricOperation = lyric => {
     let newLc = this.handleLyric(lyric)
-    this.setState({ lc: newLc.lyric }, () => {
+    this.setState({ lc: newLc.lyric, canScroll: newLc.canScroll }, () => {
       Array.from(document.querySelector('.lyric').children).some(line => {
         if (line.classList.contains('lyricGreen')) {
           line.classList.remove('lyricGreen')
           return true
         }
       })
-      this.syncLyric(newLc.canScroll)
+      this.syncLyric()
     })
   }
 
@@ -110,19 +111,35 @@ class Info extends Component {
     }
   }
 
-  syncLyric = canScroll => {
-    const audio = document.querySelector('#_audio'),
+  syncLyric = () => {
+    const { pattern, recentSong, redheartSong } = this.props,
+      audio = document.querySelector('#_audio'),
       lyricContainer = document.querySelector('.lyric'),
-      lc = this.state.lc
+      lc = this.state.lc,
+      canScroll = this.state.canScroll
     audio.ontimeupdate = null
     if (canScroll === false) { return }
     let index = 0
 
     audio.ontimeupdate = scrollLyric
 
+    const cycle = () => {
+      console.log('call cycle')
+      audio.ontimeupdate = null
+      audio.onended = null
+      audio.onended = () => {
+        lyricContainer.scrollTop = 0
+        index = 0
+        audio.ontimeupdate = scrollLyric
+      }
+    }
+
     function scrollLyric() {
       if (index === lc.length) {
         audio.removeEventListener('timeupdate', scrollLyric)
+        if ((pattern === 'recent' && recentSong.length === 1) || (pattern === 'redheart' && recentSong.length === 1)) {
+          return cycle()
+        }
         return
       }
       let ct = audio.currentTime

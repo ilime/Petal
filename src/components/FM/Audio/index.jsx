@@ -55,7 +55,7 @@ class Audio extends Component {
   initAudio = () => {
     const audio = document.querySelector('#_audio')
     const currentTime = document.querySelector('.currentTime')
-    audio.volume = 0.3
+    audio.volume = this.props.audioVolumeProgress / 100
     audio.addEventListener('timeupdate',
       this.updateAudioTimeAndProgress(currentTime, audio))
     audio.addEventListener('ended',
@@ -136,7 +136,8 @@ class Audio extends Component {
   endedAudio = audio => {
     return () => {
       const { pattern, fsid, recentIndex, recentSong, redheartIndex, redheartSong, handlePlayLog,
-        handleRecentGo, handleRecentIndexSet, handleRedheartGo, handleRedheartIndexSet } = this.props
+        handleRecentGo, handleRecentIndexSet, handleRedheartGo, handleRedheartIndexSet } = this.props,
+        audio = document.querySelector('#_audio')
 
       if (pattern === 'select') {
         this.props.getPlaylist('end')
@@ -148,6 +149,10 @@ class Audio extends Component {
       }
 
       if (pattern === 'recent') {
+        if (recentSong.length === 1) {
+          audio.play()
+          return
+        }
         handlePlayLog(fsid, 'p', 'y')
         if (recentIndex === recentSong.length - 1) {
           handleRecentIndexSet(0)
@@ -157,6 +162,10 @@ class Audio extends Component {
       }
 
       if (pattern === 'redheart') {
+        if (redheartSong.length === 1) {
+          audio.play()
+          return
+        }
         handlePlayLog(fsid, 'p', 'h')
         if (redheartIndex === redheartSong.length - 1) {
           handleRedheartIndexSet(0)
@@ -168,6 +177,7 @@ class Audio extends Component {
   }
 
   render() {
+    const { audioVolumeProgress, audioVolumePin } = this.props
     const { percent } = this.state
     return (
       <div className='player'>
@@ -183,8 +193,8 @@ class Audio extends Component {
           <div className="volume">
             <Icon name='volume down' />
             <div className='volumeBar'>
-              <div className="volumeProgress"></div>
-              <span className='pin'></span>
+              <div className="volumeProgress" style={{ width: audioVolumeProgress + '%' }}></div>
+              <span className='pin' style={{ left: audioVolumePin + 'px' }}></span>
             </div>
             <Icon name='volume up' />
           </div>
@@ -210,7 +220,9 @@ Audio.propTypes = {
   handleRecentGo: PropTypes.func.isRequired,
   handleRedheartGo: PropTypes.func.isRequired,
   handleRecentIndexSet: PropTypes.func.isRequired,
-  handleRedheartIndexSet: PropTypes.func.isRequired
+  handleRedheartIndexSet: PropTypes.func.isRequired,
+  audioVolumeProgress: PropTypes.number.isRequired,
+  audioVolumePin: PropTypes.number.isRequired
 }
 
 const mapStateToProps = state => {
@@ -222,7 +234,9 @@ const mapStateToProps = state => {
     redheartSong: state.fmReducer.redheart,
     recentIndex: state.fmReducer.recentIndex,
     redheartIndex: state.fmReducer.redheartIndex,
-    fsid: state.fmReducer.fsid
+    fsid: state.fmReducer.fsid,
+    audioVolumeProgress: state.settingReducer.audioVolumeProgress,
+    audioVolumePin: state.settingReducer.audioVolumePin
   }
 }
 

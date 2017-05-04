@@ -2,7 +2,6 @@
   position: relative;
   top: 4rem;
   left: 2rem;
-  -webkit-app-region: no-drag;
 
   .songProgress {
     width: 93%;
@@ -45,7 +44,7 @@
           background-color: seagreen;
           border-radius: 50%;
           bottom: .3rem;
-          left: 39px;
+          // left: 39px;
 
           &:active {
             transform: scale(1.1);
@@ -55,10 +54,14 @@
 
       .volumeProgress {
         position: absolute;
-        width: 30%;
+        // width: 30%;
         height: 2px;
         background: seagreen;
       }
     }
   }
+}
+
+.ui.progress .bar {
+  min-width: 0px !important;
 }

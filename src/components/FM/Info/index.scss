@@ -1,6 +1,5 @@
 .songTitleAndSinger {
   display: flex;
-  -webkit-app-region: no-drag;
   justify-content: space-between;
 
   #title {
@@ -18,7 +17,6 @@
   overflow-y: scroll;
   height: 250px;
   color: grey;
-  -webkit-app-region: no-drag;
   &::-webkit-scrollbar { 
     display: none; 
   }

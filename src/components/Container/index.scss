@@ -1,3 +1,5 @@
+@import '../../static/_base';
+
 #app {
   overflow-x: hidden;
   overflow-y: hidden;
@@ -10,10 +12,19 @@
   text-align: center;
   padding: 0;
   margin-left: 1rem;
+  user-select: none;
 }
 
 .outside {
   position: relative;
+}
+
+.titleBar {
+  position: relative;
+  height: 2rem;
+  width: 685px;
+  right: 1rem;
+  -webkit-app-region: drag;
 }
 
 .petalControl {

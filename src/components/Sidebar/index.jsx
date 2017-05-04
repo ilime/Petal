@@ -27,16 +27,22 @@ class Sidebar extends Component {
           </NavLink>
         </li>
         <li>
-          <Icon name='book' size='large' color='grey' />
-          <span>图书</span>
+          <NavLink to='/read' activeClassName='selected'>
+            <Icon name='book' size='large' color='grey' />
+            <span>读书</span>
+          </NavLink>
         </li>
         <li>
-          <Icon name='video' size='large' color='grey' />
-          <span>电影</span>
+          <NavLink to='/movie' activeClassName='selected'>
+            <Icon name='video' size='large' color='grey' />
+            <span>电影</span>
+          </NavLink>
         </li>
         <li>
-          <Icon name='music' size='large' color='grey' />
-          <span>音乐</span>
+          <NavLink to='/music' activeClassName='selected'>
+            <Icon name='music' size='large' color='grey' />
+            <span>音乐</span>
+          </NavLink>
         </li>
         <li id='logIn'>
           {_id === 0 ?

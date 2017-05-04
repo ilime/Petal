@@ -1,7 +1,7 @@
 'use strict'
 
 import 'babel-polyfill'
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import url from 'url'
 import installExtension, {
   REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS
@@ -34,10 +34,59 @@ const createWindow = () => {
   mainWindow.on('close', () => { mainWindow = null })
 }
 
+const template = [
+  {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'delete' },
+      { role: 'selectall' }
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forcereload' }
+    ]
+  },
+  {
+    role: 'window',
+    submenu: [
+      {role: 'minimize'}
+    ]
+  },
+  {
+    label: 'Related',
+    submenu: [
+      {
+        label: 'Author',
+        click() { require('electron').shell.openExternal('https://github.com/SandStorms') }
+      }
+    ]
+  }
+]
+
 app.on('ready', () => {
   if (process.platform === 'darwin') {
     app.dock.setIcon('./resources/petal.png')
+    template.unshift({
+      label: app.getName(),
+      submenu: [
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'hide', },
+        { type: 'separator' },
+        { role: 'quit' }
+      ]
+    })
   }
   createWindow()
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 })
 app.on('window-all-closed', () => { app.quit() })
