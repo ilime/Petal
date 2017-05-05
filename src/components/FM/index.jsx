@@ -9,7 +9,6 @@ import Cover from './Cover/index.jsx'
 import Audio from './Audio/index.jsx'
 import Info from './Info/index.jsx'
 import { playlistGET } from '../../actions/fm/apis'
-import './index.scss'
 
 class FM extends Component {
   render() {

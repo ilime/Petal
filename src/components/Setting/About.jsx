@@ -3,8 +3,6 @@
 import React, { Component } from 'react'
 import { Divider, Image } from 'semantic-ui-react'
 
-import './index.scss'
-
 export default class About extends Component {
   openInDefaultBrowser = (url) => {
     return () => {

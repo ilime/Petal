@@ -10,7 +10,6 @@ import {
   recentIndexSet, redheartIndexSet
 } from '../../../actions/fm/types'
 import { nextSong, playlistGET, playLog } from '../../../actions/fm/apis'
-import './index.scss'
 
 class Audio extends Component {
   constructor(props) {

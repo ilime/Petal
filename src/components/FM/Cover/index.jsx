@@ -12,7 +12,6 @@ import {
   recentIndexSet, redheartIndexSet
 } from '../../../actions/fm/types'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
-import './index.scss'
 
 class Cover extends Component {
   constructor(props) {

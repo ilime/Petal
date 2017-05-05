@@ -8,7 +8,6 @@ import { Link, NavLink, withRouter } from 'react-router-dom'
 
 import { authLoad } from '../../actions/auth/apis'
 import { playlistGET } from '../../actions/fm/apis'
-import './index.scss'
 
 class Sidebar extends Component {
   componentDidMount() {

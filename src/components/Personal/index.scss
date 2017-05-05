@@ -8,3 +8,13 @@
     height: 420px;
   }
 }
+
+.songlistItem {
+  position: relative;
+
+  .itemControl {
+    position: absolute;
+    bottom: .4rem;
+    right: 1rem;
+  }
+}

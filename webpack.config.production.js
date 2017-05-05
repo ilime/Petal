@@ -3,9 +3,15 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const OUTPUT_PATH = path.resolve(__dirname, 'bundle')
+const OUTPUT_PATH = path.resolve(__dirname, 'app')
 const SRC_PATH = path.resolve(__dirname, 'src')
 const STYLE_PATH = path.resolve(__dirname, 'src/static')
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const extractScss = new ExtractTextPlugin({
+  filename: 'style.css'
+})
 
 const config = {
   entry: {
@@ -14,7 +20,7 @@ const config = {
   },
   output: {
     path: OUTPUT_PATH,
-    filename: '[name].bundle.js'
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -25,13 +31,18 @@ const config = {
         loader: 'babel-loader',
         options: {
           presets: ['es2015', 'react', 'stage-2'],
-          cacheDirectory: true
         }
       },
       {
         test: /\.scss$/,
         include: STYLE_PATH,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: extractScss.extract({
+          use: [{
+            loader: 'css-loader'
+          }, {
+            loader: 'sass-loader'
+          }]
+        })
       }
     ]
   },
@@ -39,11 +50,16 @@ const config = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       miniChunks: Infinity
+    }),
+    extractScss,
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
     })
   ],
-  node: {
-    fs: 'empty'
-  }
+  target: 'electron-renderer'
 }
 
 module.exports = config

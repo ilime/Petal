@@ -3,6 +3,7 @@
 import 'babel-polyfill'
 import { app, BrowserWindow, Menu } from 'electron'
 import url from 'url'
+import fs from 'fs'
 import installExtension, {
   REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS
 } from 'electron-devtools-installer'
@@ -17,7 +18,7 @@ const createWindow = () => {
   })
 
   mainWindow.loadURL(url.format({
-    pathname: __dirname + '/../index.html',
+    pathname: __dirname + '/index.html',
     protocol: 'file:',
     slashes: true
   }))
@@ -52,13 +53,14 @@ const template = [
     label: 'View',
     submenu: [
       { role: 'reload' },
-      { role: 'forcereload' }
+      { role: 'forcereload' },
+      { role: 'toggledevtools' }
     ]
   },
   {
     role: 'window',
     submenu: [
-      {role: 'minimize'}
+      { role: 'minimize' }
     ]
   },
   {
@@ -72,9 +74,24 @@ const template = [
   }
 ]
 
+const createDB = () => {
+  fs.open(app.getPath('home') + '/.petal.db', 'r', (err, fd) => {
+    if (err) {
+      fs.writeFile(app.getPath('home') + '/.petal.db', '', err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('The file was saved!')
+        }
+      })
+    } else {
+      console.log('file exist.')
+    }
+  })
+}
+
 app.on('ready', () => {
   if (process.platform === 'darwin') {
-    app.dock.setIcon('./resources/petal.png')
     template.unshift({
       label: app.getName(),
       submenu: [
@@ -86,7 +103,9 @@ app.on('ready', () => {
       ]
     })
   }
+  createDB()
   createWindow()
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 })
+
 app.on('window-all-closed', () => { app.quit() })

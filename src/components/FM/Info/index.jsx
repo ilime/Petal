@@ -7,7 +7,6 @@ import { Header, Image } from 'semantic-ui-react'
 
 import { songLyricGET } from '../../../actions/fm/apis'
 import { songLyricResponse } from '../../../actions/fm/types'
-import './index.scss'
 
 class Info extends Component {
   constructor(props) {

@@ -7,7 +7,6 @@ import { Header, Image, Form, Grid, Button, Dimmer, Loader, Message } from 'sema
 
 import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/types'
 import { authPost } from '../../actions/auth/apis'
-import './index.scss'
 
 class Login extends Component {
   constructor(props) {

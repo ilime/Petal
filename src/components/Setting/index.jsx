@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 
 import Main from './Main.jsx'
 import About from './About.jsx'
-import './index.scss'
 
 class Setting extends Component {
   constructor(props) {

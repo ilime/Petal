@@ -2,7 +2,7 @@
 
 const path = require('path')
 
-const OUTPUT_PATH = path.resolve(__dirname, 'bundle')
+const OUTPUT_PATH = path.resolve(__dirname, '')
 
 const config = {
   entry: {
@@ -10,7 +10,7 @@ const config = {
   },
   output: {
     path: OUTPUT_PATH,
-    filename: '[name].bundle.js'
+    filename: '[name].js'
   },
   module: {
     rules: [

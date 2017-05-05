@@ -1,11 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Dancing+Script');
 
+body {
+  font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif !important;
+}
+
 .comingSoon {
-	height: 400px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	h1 {
-		font-family: 'Dancing Script', cursive;
-	}
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    font-family: 'Dancing Script', cursive;
+  }
 }

@@ -13,8 +13,9 @@ import Personal from '../Personal/index.jsx'
 import Read from '../Read/index.jsx'
 import Music from '../Music/index.jsx'
 import Movie from '../Movie/index.jsx'
-import './index.scss'
 const { remote } = window.require('electron')
+
+import '../../static/app.scss'
 
 class Container extends Component {
   constructor(props) {
