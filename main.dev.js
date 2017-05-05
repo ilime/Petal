@@ -75,8 +75,10 @@ const template = [
 ]
 
 const createDB = () => {
-  fs.open(app.getPath('home') + '/.petal.db', 'r', (err, fd) => {
-    if (err) {
+  fs.stat(app.getPath('home') + '/.petal.db', (err, stat) => {
+    if (err === null) {
+      console.log('file exist.')
+    } else if (err === 'ENOENT') {
       fs.writeFile(app.getPath('home') + '/.petal.db', '', err => {
         if (err) {
           console.log(err)
@@ -85,7 +87,7 @@ const createDB = () => {
         }
       })
     } else {
-      console.log('file exist.')
+      console.log('error: ' + err.code)
     }
   })
 }
