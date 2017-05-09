@@ -1,6 +1,6 @@
 # Petal ![petal32x32.png](/build/icons/32x32.png)
 
-![dependencies](https://david-dm.org/SandStorms/Petal.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/SandStorms/Petal.svg?branch=dev)](https://travis-ci.org/SandStorms/Petal) ![dependencies](https://david-dm.org/SandStorms/Petal.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 :hibiscus: [Douban.FM](https://douban.fm) Client With Extra - - -
 

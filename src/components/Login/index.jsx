@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Image, Form, Grid, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
+import { shell } from 'electron'
 
 import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/types'
 import { authPost } from '../../actions/auth/apis'
@@ -29,7 +30,6 @@ class Login extends Component {
 
   openInDefaultBrowser = (url) => {
     return () => {
-      const shell = window.require('electron').shell
       shell.openExternal(url)
     }
   }

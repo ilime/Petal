@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react'
 import { Divider, Image } from 'semantic-ui-react'
+import { shell } from 'electron'
 
 export default class About extends Component {
   openInDefaultBrowser = (url) => {
     return () => {
-      const shell = window.require('electron').shell
       shell.openExternal(url)
     }
   }

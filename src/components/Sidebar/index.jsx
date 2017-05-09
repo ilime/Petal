@@ -6,14 +6,7 @@ import { connect } from 'react-redux'
 import { Icon, Image } from 'semantic-ui-react'
 import { Link, NavLink, withRouter } from 'react-router-dom'
 
-import { authLoad } from '../../actions/auth/apis'
-import { playlistGET } from '../../actions/fm/apis'
-
-class Sidebar extends Component {
-  componentDidMount() {
-    this.props.handleAuthLoad()
-  }
-
+export class Sidebar extends Component {
   render() {
     const { _id, userToken, icon } = this.props
 
@@ -60,7 +53,6 @@ class Sidebar extends Component {
 }
 
 Sidebar.PropTypes = {
-  handleAuthLoad: PropTypes.func.isRequired,
   _id: PropTypes.number.isRequired,
   userToken: PropTypes.object.isRequired,
   icon: PropTypes.string.isRequired
@@ -74,14 +66,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleAuthLoad: () => dispatch(authLoad())
-  }
-}
-
 export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Sidebar))
-

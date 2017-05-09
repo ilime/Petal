@@ -1,8 +1,11 @@
 'use strict'
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Grid, Icon } from 'semantic-ui-react'
 import { HashRouter as Router, Route } from 'react-router-dom'
+import { remote } from 'electron'
 
 import FM from '../FM/index.jsx'
 import Login from '../Login/index.jsx'
@@ -13,7 +16,7 @@ import Personal from '../Personal/index.jsx'
 import Read from '../Read/index.jsx'
 import Music from '../Music/index.jsx'
 import Movie from '../Movie/index.jsx'
-const { remote } = window.require('electron')
+import { authLoad } from '../../actions/auth/apis'
 
 import '../../static/app.scss'
 
@@ -25,6 +28,8 @@ class Container extends Component {
       settingOpen: false
     }
   }
+
+  componentDidMount() { this.props.handleAuthLoad() }
 
   handleAppMinimize = () => { remote.getCurrentWindow().minimize() }
 
@@ -90,4 +95,17 @@ class Container extends Component {
   }
 }
 
-export default Container
+Container.PropTypes = {
+  handleAuthLoad: PropTypes.func.isRequired
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleAuthLoad: () => dispatch(authLoad())
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Container)

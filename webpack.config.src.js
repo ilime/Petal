@@ -41,6 +41,7 @@ const config = {
       miniChunks: Infinity
     })
   ],
+  target: 'electron-renderer',
   node: {
     fs: 'empty'
   }

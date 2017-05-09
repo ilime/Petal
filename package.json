@@ -12,7 +12,7 @@
     "dev:mainWatch": "webpack --config webpack.config.main.js --progress --watch",
     "bundle:pro": "webpack --config webpack.config.production.js --progress",
     "dist": "build",
-    "test": "jest"
+    "test": "jest --silent"
   },
   "repository": {
     "type": "git",
@@ -25,40 +25,6 @@
   ],
   "author": "SandStorms",
   "license": "MIT",
-  "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.0.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "css-loader": "^0.28.1",
-    "electron": "^1.6.8",
-    "electron-builder": "^17.1.2",
-    "electron-devtools-installer": "^2.2.0",
-    "eslint": "^3.19.0",
-    "eslint-plugin-react": "^6.10.3",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "jest": "^19.0.2",
-    "node-sass": "^4.5.2",
-    "sass-loader": "^6.0.3",
-    "style-loader": "^0.17.0",
-    "webpack": "^2.5.0"
-  },
-  "dependencies": {
-    "axios": "^0.16.1",
-    "moment": "^2.18.1",
-    "nedb": "^1.8.0",
-    "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-redux": "^5.0.4",
-    "react-router-dom": "^4.1.1",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "^0.68.2"
-  },
   "build": {
     "appId": "org.sandstorms.petal",
     "dmg": {
@@ -80,5 +46,42 @@
       }
     },
     "win": {}
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.0",
+    "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.1",
+    "electron": "^1.6.8",
+    "electron-builder": "^17.1.2",
+    "electron-devtools-installer": "^2.2.0",
+    "enzyme": "^2.8.2",
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^6.10.3",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "jest": "^19.0.2",
+    "node-sass": "^4.5.2",
+    "react-test-renderer": "^15.5.4",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.17.0",
+    "webpack": "^2.5.0"
+  },
+  "dependencies": {
+    "axios": "^0.16.1",
+    "moment": "^2.18.1",
+    "nedb": "^1.8.0",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "semantic-ui-react": "^0.68.2"
   }
 }
