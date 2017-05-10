@@ -14,15 +14,23 @@ Go to [release page](https://github.com/SandStorms/Petal/releases)
 
 # How to develop
 
-- git clone git@github.com:SandStorms/Petal.git && cd Petal/
-- npm install && npm run bundle:src+main
-- npm start
+```
+git clone git@github.com:SandStorms/Petal.git && cd Petal/
+npm install && npm run bundle:src+main
+npm start
+```
+# How to build
+
+```
+chmod +x build.sh
+./build.sh
+```
 
 # How to contribute
 
-Pull a request and open a issue to discribe your changes
+Pull a request and open a issue to describe your changes
 
-> Note: see .eslintrc.json and follow the code style
+> Note: view .eslintrc.json and follow the code style
 
 # License
 
