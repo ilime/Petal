@@ -45,7 +45,7 @@ const authFixedParams = {
 }
 
 export const authPost = (usernameAndPassword, callback) => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(authLoginRequest())
     return axios({
       method: 'POST',
@@ -62,7 +62,7 @@ export const authPost = (usernameAndPassword, callback) => {
       db.insert({
         _id: 1,
         userToken,
-        time: [moment().year(), moment().month(), moment().date()]
+        time: [moment().year(), moment().month() + 1, moment().date()]
       }, (err, doc) => {
         console.log(doc)
       })
@@ -76,15 +76,16 @@ export const authPost = (usernameAndPassword, callback) => {
 }
 
 export const authLoad = () => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(settingLoad())
     db.findOne({
       _id: 1
     }, (err, doc) => {
       if (doc !== null) {
-        let now = [moment().year(), moment().month(), moment().date()],
+        let now = [moment().year(), moment().month() + 1, moment().date()],
           fromNow = moment(doc.time).diff(now, 'days')
 
+        console.log('token storage time ' + fromNow + ' day(s)')
         if (fromNow === 80) {
           db.remove({
             _id: 1
@@ -108,7 +109,8 @@ export const authLoad = () => {
 export const authRemove = (dispatch, callback) => {
   db.remove({
     _id: 1
-  }, (err, doc) => {
+  }, (err, numRemoved) => {
+    console.log('token remove: num(' + numRemoved + ')')
     if (typeof callback === 'function') {
       callback()
     }

@@ -75,15 +75,15 @@ const template = [
 ]
 
 const createDB = () => {
-  fs.stat(app.getPath('home') + '/.petal.db', (err, stat) => {
+  fs.stat(app.getPath('home') + '/.petal.db', (err, stats) => {
     if (err === null) {
-      console.log('file exist.')
+      console.log('db file existd.')
     } else if (err === 'ENOENT') {
       fs.writeFile(app.getPath('home') + '/.petal.db', '', err => {
         if (err) {
           console.log(err)
         } else {
-          console.log('The file was saved!')
+          console.log('db file created!')
         }
       })
     } else {

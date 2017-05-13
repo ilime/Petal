@@ -74,7 +74,7 @@ SongList.PropTypes = {
   handleActionLog: PropTypes.func.isRequired
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     handleRecentIndexSet: index => dispatch(recentIndexSet(index)),
     handleRedheartIndexSet: index => dispatch(redheartIndexSet(index)),

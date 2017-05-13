@@ -18,7 +18,7 @@ RedHeart.PropTypes = {
   redheart: PropTypes.array.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     redheart: state.fmReducer.redheart
   }

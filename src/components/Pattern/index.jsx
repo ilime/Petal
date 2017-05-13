@@ -74,7 +74,7 @@ Pattern.PropTypes = {
   playedNum: PropTypes.number.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
     pattern: state.fmReducer.pattern,
@@ -83,7 +83,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     switchToSelect: () => dispatch(selectPattern),
     switchToRecent: () => dispatch(recentPattern),

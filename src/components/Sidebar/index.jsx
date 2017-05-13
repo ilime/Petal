@@ -8,7 +8,7 @@ import { Link, NavLink, withRouter } from 'react-router-dom'
 
 export class Sidebar extends Component {
   render() {
-    const { _id, userToken, icon } = this.props
+    const { _id, icon } = this.props
 
     return (
       <ul className='navigation'>
@@ -58,7 +58,7 @@ Sidebar.PropTypes = {
   icon: PropTypes.string.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
     userToken: state.authReducer.userToken,

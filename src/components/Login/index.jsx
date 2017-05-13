@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Header, Image, Form, Grid, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
+import { Header, Image, Form, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
 import { shell } from 'electron'
 
 import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/types'
@@ -41,7 +41,7 @@ class Login extends Component {
   handleLoginSubmit = (e) => {
     e.preventDefault()
     const { username, password } = this.state
-    const { handleAuthPost, handleAuthLoginFail, loginFail } = this.props
+    const { handleAuthPost, handleAuthLoginFail } = this.props
 
     if (username === '' || password === '') {
       handleAuthLoginFail('账号或密码不能为空')
@@ -89,7 +89,7 @@ Login.PropTypes = {
   handleRemoveLoginFailMessage: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     isFetching: state.authReducer.isFetching,
     loginFail: state.authReducer.loginFail,
@@ -97,7 +97,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     handleAuthPost: (usernameAndPassword, callback) => dispatch(authPost(usernameAndPassword, callback)),
     handleAuthLoginFail: message => dispatch(authLoginFail(message)),

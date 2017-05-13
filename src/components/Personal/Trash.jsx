@@ -18,7 +18,7 @@ Trash.PropTypes = {
   trash: PropTypes.array.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     trash: state.fmReducer.trash.songs
   }

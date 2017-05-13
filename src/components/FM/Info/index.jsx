@@ -123,7 +123,6 @@ class Info extends Component {
     audio.ontimeupdate = scrollLyric
 
     const cycle = () => {
-      console.log('call cycle')
       audio.ontimeupdate = null
       audio.onended = null
       audio.onended = () => {
@@ -136,7 +135,7 @@ class Info extends Component {
     function scrollLyric() {
       if (index === lc.length) {
         audio.removeEventListener('timeupdate', scrollLyric)
-        if ((pattern === 'recent' && recentSong.length === 1) || (pattern === 'redheart' && recentSong.length === 1)) {
+        if ((pattern === 'recent' && recentSong.length === 1) || (pattern === 'redheart' && redheartSong.length === 1)) {
           return cycle()
         }
         return
@@ -207,7 +206,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     lyricByRecentOrRedheart: (sid, ssid) => {
       songLyricGET(sid, ssid).then(response => {

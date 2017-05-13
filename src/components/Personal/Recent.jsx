@@ -18,7 +18,7 @@ Recent.PropTypes = {
   recent: PropTypes.array.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     recent: state.fmReducer.recent.songs
   }

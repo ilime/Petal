@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Button, Progress } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -132,14 +132,14 @@ Main.PropTypes = {
   audioVolumeProgress: PropTypes.number.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
     audioVolumeProgress: state.settingReducer.audioVolumeProgress
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     handleAuthRemove: callback => authRemove(dispatch, callback)
   }

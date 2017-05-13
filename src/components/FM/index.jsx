@@ -8,7 +8,6 @@ import { Grid, Dimmer, Loader } from 'semantic-ui-react'
 import Cover from './Cover/index.jsx'
 import Audio from './Audio/index.jsx'
 import Info from './Info/index.jsx'
-import { playlistGET } from '../../actions/fm/apis'
 
 class FM extends Component {
   render() {
