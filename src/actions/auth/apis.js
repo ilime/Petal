@@ -30,8 +30,9 @@ import {
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 
-const AUTH_URL = 'https://www.douban.com/service/auth2/token'
+const AUTH_URL = 'https://www.douban.com/service/auth2/token' // Auth Url
 
+// Fixed params for logining
 const authFixedParams = {
   alt: 'json',
   apikey: '02646d3fb69a52ff072d47bf23cef8fd',
@@ -44,6 +45,20 @@ const authFixedParams = {
   udid: '8ff78b4d03654c0dbc63d318fc7a065289a90af2'
 }
 
+/**
+ * Deal with logining request, need username and password, POST method
+ * usernameAndPassword => {
+ *   'username': '',
+ *   'password': '' 
+ * }
+ * 
+ * The callback function will execute after db store userToken
+ * for example, handle redirect
+ * 
+ * @param {Object} usernameAndPassword - username and password
+ * @param {Function} callback - callback function defined
+ * @returns {Function} - a thunk func which return Axios login request
+ */
 export const authPost = (usernameAndPassword, callback) => {
   return dispatch => {
     dispatch(authLoginRequest())
@@ -75,6 +90,11 @@ export const authPost = (usernameAndPassword, callback) => {
   }
 }
 
+/**
+ * Deal with loading user info from db file
+ * 
+ * @returns {Function} - a thunk function
+ */
 export const authLoad = () => {
   return dispatch => {
     dispatch(settingLoad())
@@ -85,6 +105,7 @@ export const authLoad = () => {
         let now = [moment().year(), moment().month() + 1, moment().date()],
           fromNow = moment(doc.time).diff(now, 'days')
 
+        // remove user info when already logined 80 days
         console.log('token storage time ' + fromNow + ' day(s)')
         if (fromNow === 80) {
           db.remove({
@@ -106,6 +127,12 @@ export const authLoad = () => {
   }
 }
 
+/**
+ * Deal with Loging out
+ * 
+ * @param {any} dispatch - dispatch function
+ * @param {any} callback - callback function defined
+ */
 export const authRemove = (dispatch, callback) => {
   db.remove({
     _id: 1

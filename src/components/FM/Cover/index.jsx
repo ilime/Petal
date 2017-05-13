@@ -46,6 +46,16 @@ class Cover extends Component {
     }
   }
 
+  /**
+   * Set cover.Do following:
+   * 
+   * 1. set song picture
+   * 2. set current state, user already liked it?
+   * 
+   * @param {Object} song
+   * @param {string} pattern
+   * @memberof Cover
+   */
   setCover = (song, pattern) => {
     this.setState({
       playing: true,
@@ -57,6 +67,11 @@ class Cover extends Component {
   handleControlShow = () => this.setState({ controlPanelActive: true })
   handleControlHide = () => this.setState({ controlPanelActive: false })
 
+  /**
+   * Play or paused current song
+   * 
+   * @memberof Cover
+   */
   handleAudioPlay = () => {
     const audio = document.querySelector('#_audio')
     if (audio.paused) {
@@ -128,6 +143,16 @@ class Cover extends Component {
     this.props.getPlayList('trash')
   }
 
+  /**
+   * Handle like current song.Must login.
+   * Now apply with three patterns
+   * 
+   * 1. select
+   * 2. recent
+   * 3. redheart
+   * 
+   * @memberof Cover
+   */
   handleLoveSong = () => {
     const { _id, pattern, getPlayList, handlePlayLog, fsid } = this.props
     if (_id === 0) { return }

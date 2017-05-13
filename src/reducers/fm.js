@@ -19,20 +19,20 @@ import {
 } from '../actions/fm/types'
 
 const fmReducer = (state = {
-  isFetching: false,
+  isFetching: false, // playlist loading, true is loading
   pattern: 'select',
-  recentIndex: -1,
-  redheartIndex: -1,
+  recentIndex: -1, // recent songs current index, init -1
+  redheartIndex: -1, // redheart songs current index, init -1
   playlist: {},
   type: '',
-  sid: '',
-  ssid: '',
-  fsid: '',
-  song: [],
+  sid: '', // playlist song sid
+  ssid: '', // playlist song ssid
+  fsid: '', // recent or redheart songs sid
+  song: [], // playlis songs array
   lyric: {},
-  recent: {},
-  redheart: [],
-  trash: {}
+  recent: {}, // recent list
+  redheart: [], // redheart list
+  trash: {} // trash list
 }, action) => {
   switch (action.type) {
     case PLAYLIST_LOADING:

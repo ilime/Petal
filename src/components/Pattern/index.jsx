@@ -10,6 +10,15 @@ import { selectPattern, recentPattern, redheartPattern } from '../../actions/fm/
 import { playlistGET } from '../../actions/fm/apis'
 
 class Pattern extends Component {
+  /**
+   * Handle switch pattern
+   * 
+   * 1. select
+   * 2. recent
+   * 3. redheart
+   * 
+   * @memberof Pattern
+   */
   handleSwitchPattern = (e, { name }) => {
     const { pattern } = this.props
 

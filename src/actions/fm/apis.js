@@ -17,8 +17,9 @@ import { userInfo } from '../auth/types'
 
 import oToFd from '../../helper/objToFormD'
 
-const FM_ROOT_URL = 'https://api.douban.com/v2/fm'
+const FM_ROOT_URL = 'https://api.douban.com/v2/fm' // Root Url
 
+// Fixed params for fm's operations
 const fixedParams = {
   alt: 'json',
   apikey: '02646d3fb69a52ff072d47bf23cef8fd',
@@ -29,6 +30,17 @@ const fixedParams = {
   version: '116'
 }
 
+/**
+ * Douban.Fm playlist types
+ * 
+ * 1. new => new playlist, used when play pattern switch, app init and so on
+ * 2. playing => when current playlist finished, continue get playlist
+ * 3. skip => skip current playlist
+ * 4. trash => trash current song, log it into trash list
+ * 5. rate => like current song, log it into redheart list
+ * 6. unrate => unlike current song, remove it from redheart list
+ * 7. end => use when song ended, log current song into recent list
+ */
 const playlistTypes = {
   new: playlistNewRequest,
   playing: playlistPlayingRequest,
@@ -39,6 +51,7 @@ const playlistTypes = {
   end: playlistEndRequest
 }
 
+// Playlist url without type and sid
 const playlistOriginUrl = FM_ROOT_URL
   + '/playlist?'
   + Object.entries(fixedParams)
@@ -47,6 +60,13 @@ const playlistOriginUrl = FM_ROOT_URL
     }, '')
   + 'channel=-10&formats=acc&kbps=128&pt=0.0'
 
+/**
+ * get lyric through the song's sid and album's ssid
+ * 
+ * @param {string} sid 
+ * @param {string} ssid 
+ * @returns {Axios} - Axios instance
+ */
 export const songLyricGET = (sid, ssid) => {
   return axios.get(FM_ROOT_URL
     + '/lyric?'
@@ -55,12 +75,19 @@ export const songLyricGET = (sid, ssid) => {
   )
 }
 
+/**
+ * Core function, get playlist
+ * 
+ * @param {string} type - playlist type
+ * @returns - a thunk function which handle playlist operation
+ */
 export const playlistGET = type => {
   return (dispatch, getState) => {
+    // loading before get playlist songs
     if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
       dispatch(playlistLoading())
     }
-    dispatch(playlistTypes[type]())
+    dispatch(playlistTypes[type]()) // dispatch action according playlistTypes
     axios(Object.assign(
       {
         method: 'GET',
@@ -68,6 +95,7 @@ export const playlistGET = type => {
         + '&type=' + getState().fmReducer.type
         + '&sid=' + getState().fmReducer.sid
       },
+      // is login
       getState().authReducer._id === 1 &&
       { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }
     )).then(response => {
@@ -77,6 +105,7 @@ export const playlistGET = type => {
         sid = song[0].sid,
         ssid = song[0].ssid
       delete playlist.song
+      // if type is rate or unrate, the next similar song will add into current songs array
       if (type === 'rate') {
         dispatch(redHeartRateNextSongAppend(song))
       } else if (type === 'unrate') {
@@ -95,6 +124,11 @@ export const playlistGET = type => {
   }
 }
 
+/**
+ * Play next song in current songs array, if array's length not= 1
+ * 
+ * @returns - a thunk function
+ */
 export const nextSong = () => {
   return (dispatch, getState) => {
     dispatch(playlistNextSong())
@@ -106,6 +140,7 @@ export const nextSong = () => {
   }
 }
 
+// Recent list url
 const recentOriginUrl = FM_ROOT_URL
   + '/recent_played_tracks?'
   + Object.entries(fixedParams)
@@ -128,6 +163,7 @@ export const recentListGET = () => {
   }
 }
 
+// Redheart list url
 const redHeartSidsOriginUrl = FM_ROOT_URL
   + '/redheart/basic?'
   + Object.entries(fixedParams)
@@ -162,6 +198,7 @@ export const redHeartListGET = () => {
   }
 }
 
+// Trash list url
 const trashOriginUrl = FM_ROOT_URL
   + '/banned_songs?'
   + Object.entries(fixedParams)
@@ -184,7 +221,7 @@ export const trashListGET = () => {
   }
 }
 
-const PLAY_LOG_URL = 'https://api.douban.com/v2/fm/play_log'
+const PLAY_LOG_URL = 'https://api.douban.com/v2/fm/play_log' // handle play log, used in recent or redheart list
 
 export const playLog = (sid, type, play_source) => {
   return (dispatch, getState) => {
@@ -208,7 +245,7 @@ export const playLog = (sid, type, play_source) => {
   }
 }
 
-const ACTION_LOG_URL = 'https://api.douban.com/v2/fm/action_log'
+const ACTION_LOG_URL = 'https://api.douban.com/v2/fm/action_log' // handle action, used in trash list
 
 export const actionLog = (sid, type, play_source) => {
   return (dispatch, getState) => {

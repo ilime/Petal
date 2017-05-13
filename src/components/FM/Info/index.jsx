@@ -56,6 +56,7 @@ class Info extends Component {
   lyricOperation = lyric => {
     let newLc = this.handleLyric(lyric)
     this.setState({ lc: newLc.lyric, canScroll: newLc.canScroll }, () => {
+      // cancel highlight when receive next lyric
       Array.from(document.querySelector('.lyric').children).some(line => {
         if (line.classList.contains('lyricGreen')) {
           line.classList.remove('lyricGreen')
@@ -66,9 +67,27 @@ class Info extends Component {
     })
   }
 
+  /**
+   * Handle lyric parsing.
+   * Associated:
+   * https://github.com/SandStorms/Petal/issues/1
+   * 
+   * the lyric will parse to:
+   * [
+   *   [lyric1, time1],
+   *   [lyric2, time2],
+   *   [lyric3, time3],
+   *   ...
+   * ]
+   * 
+   * Then you can highlight one line via time1,2,3... when song playing
+   * api: audio.ontimeupdate
+   * 
+   * @memberof Info
+   */
   handleLyric = (lyric) => {
     let result = []
-    const pattern = /\[\d{2}:\d{2}([\.\:]\d{2,3})?\]/g
+    const pattern = /\[\d{2}:\d{2}([\.\:]\d{2,3})?\]/g //lyric pattern
     if (lyric === '暂无歌词') {
       result.push(lyric)
     }
@@ -110,6 +129,12 @@ class Info extends Component {
     }
   }
 
+  /**
+   * Sync lyric.
+   * Handle lyric rolling
+   * 
+   * @memberof Info
+   */
   syncLyric = () => {
     const { pattern, recentSong, redheartSong } = this.props,
       audio = document.querySelector('#_audio'),
@@ -122,6 +147,13 @@ class Info extends Component {
 
     audio.ontimeupdate = scrollLyric
 
+    /**
+     * If pattern is recent or redheart and the song array only has one song, cycle it
+     * Note: audio.onended = null，it's too violent to set it to null
+     * will rewrite in the future
+     * 
+     * @returns
+     */
     const cycle = () => {
       audio.ontimeupdate = null
       audio.onended = null
@@ -132,6 +164,11 @@ class Info extends Component {
       }
     }
 
+    /**
+     * Handle lyric scrolling.
+     * 
+     * @returns 
+     */
     function scrollLyric() {
       if (index === lc.length) {
         audio.removeEventListener('timeupdate', scrollLyric)
@@ -147,7 +184,7 @@ class Info extends Component {
         if (index > 0) {
           lines[index - 1].classList.remove('lyricGreen')
           if (index > 3) {
-            lyricContainer.scrollTop += lines[index - 1].clientHeight + 14
+            lyricContainer.scrollTop += lines[index - 1].clientHeight + 14 // 14 is padding
           }
         }
         index++

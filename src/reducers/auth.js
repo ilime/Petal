@@ -8,10 +8,10 @@ import {
 } from '../actions/auth/types'
 
 const authReducer = (state = {
-  isFetching: false,
+  isFetching: false, // login loading, true is loading
   loginFail: false,
   loginFailMessage: '',
-  _id: 0,
+  _id: 0, // if _id === 1, use is login
   userToken: {},
   userInfo: {}
 }, action) => {

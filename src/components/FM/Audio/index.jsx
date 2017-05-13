@@ -41,6 +41,13 @@ class Audio extends Component {
     }
   }
 
+  /**
+   * Handle next song
+   * This function will reset .currentTime, set song url,
+   * reset lyric scrollbar to top
+   * 
+   * @memberof Audio
+   */
   nextAudio = song => {
     const audio = document.querySelector('#_audio')
     const lyricContainer = document.querySelector('.lyric')
@@ -51,6 +58,11 @@ class Audio extends Component {
     lyricContainer.scrollTop = 0
   }
 
+  /**
+   * Init Audio
+   * 
+   * @memberof Audio
+   */
   initAudio = () => {
     const audio = document.querySelector('#_audio')
     const currentTime = document.querySelector('.currentTime')
@@ -69,12 +81,23 @@ class Audio extends Component {
     this.volumeSlider('.volumeBar', audio)
   }
 
+  /**
+   * Format time, the result is m:ss/m:ss
+   * 
+   * @memberof Audio
+   * @return {string} - the formated time
+   */
   formatTime = time => {
     let min = Math.floor(time / 60)
     let sec = Math.floor(time % 60)
     return min + ':' + (sec < 10 ? '0' + sec : sec)
   }
 
+  /**
+   * set the volume slider, adjust the volume
+   * 
+   * @memberof Audio
+   */
   volumeSlider = (name, audio) => {
     let range = document.querySelector(name),
       slider = range.children[1],
@@ -132,11 +155,19 @@ class Audio extends Component {
     }
   }
 
+  /**
+   * Song ended.Do following:
+   * 
+   * 1. log current song into recent list
+   * 2. if pattern is select, nextSong or getPlaylist(type => 'playing')
+   * 3. if pattern is recent or redheart, get next song in array with index
+   * 
+   * @memberof Audio
+   */
   endedAudio = audio => {
     return () => {
       const { pattern, fsid, recentIndex, recentSong, redheartIndex, redheartSong, handlePlayLog,
-        handleRecentGo, handleRecentIndexSet, handleRedheartGo, handleRedheartIndexSet } = this.props,
-        audio = document.querySelector('#_audio')
+        handleRecentGo, handleRecentIndexSet, handleRedheartGo, handleRedheartIndexSet } = this.props
 
       if (pattern === 'select') {
         this.props.getPlaylist('end')
