@@ -4,10 +4,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Image, Form, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
-import { shell } from 'electron'
 
 import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/types'
 import { authPost } from '../../actions/auth/apis'
+import { openInDefaultBrowser } from '../../helper/electron'
 
 class Login extends Component {
   constructor(props) {
@@ -25,12 +25,6 @@ class Login extends Component {
   componentWillUnmount() {
     if (this.props.history.location.pathname === '/') {
       document.querySelector('.fmRegion').style.display = 'block'
-    }
-  }
-
-  openInDefaultBrowser = (url) => {
-    return () => {
-      shell.openExternal(url)
     }
   }
 
@@ -74,7 +68,7 @@ class Login extends Component {
             <Button fluid color='green' className='loginSubmitBtn' onClick={this.handleLoginSubmit}>登 录</Button>
           </Form>
         </Dimmer.Dimmable>
-        <p className='loginExtra'>没有豆瓣账号? <span onClick={this.openInDefaultBrowser('https://www.douban.com')}>去注册</span></p>
+        <p className='loginExtra'>没有豆瓣账号? <span onClick={openInDefaultBrowser('https://www.douban.com')}>去注册</span></p>
       </article>
     )
   }

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Grid, Icon } from 'semantic-ui-react'
 import { HashRouter as Router, Route } from 'react-router-dom'
-import { remote } from 'electron'
 
 import FM from '../FM/index.jsx'
 import Login from '../Login/index.jsx'
@@ -17,6 +16,7 @@ import Read from '../Read/index.jsx'
 import Music from '../Music/index.jsx'
 import Movie from '../Movie/index.jsx'
 import { authLoad } from '../../actions/auth/apis'
+import { appMinimize, appQuit } from '../../helper/electron'
 
 import '../../static/app.scss'
 
@@ -30,10 +30,6 @@ class Container extends Component {
   }
 
   componentDidMount() { this.props.handleAuthLoad() }
-
-  handleAppMinimize = () => { remote.getCurrentWindow().minimize() }
-
-  handleAppQuit = () => { remote.app.quit() }
 
   handlePatternOpen = () => { this.setState({ patternOpen: true }) }
 
@@ -62,10 +58,10 @@ class Container extends Component {
             </Grid.Column>
             <aside>
               <div className='petalControl'>
-                <div className='miniButton' onClick={this.handleAppMinimize}>
+                <div className='miniButton' onClick={appMinimize}>
                   <span>－</span>
                 </div>
-                <div className='quitButton' onClick={this.handleAppQuit}>
+                <div className='quitButton' onClick={appQuit}>
                   <span>×</span>
                 </div>
               </div>
