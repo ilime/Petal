@@ -20,19 +20,19 @@ npm run bundle:pro
 # check main.js exists
 if [ -e main.js ]
 then
-		echo "main.js exists, do you want to bundle it again? (enter Y/N)"
-		read YES_OR_NO
-		if [ "$YES_OR_NO" == "Y" ]
-		then
-				echo "--- npm run build:main ---"
-				npm run bundle:main
-		else
-				echo "the input is N or others, go to next step"
-		fi
+    echo "main.js exists, do you want to bundle it again? (enter Y/N)"
+    read YES_OR_NO
+    if [ "$YES_OR_NO" == "Y" ]
+    then
+        echo "--- npm run build:main ---"
+        npm run bundle:main
+    else
+        echo "the input is N or others, go to next step"
+    fi
 else
-		echo "there is no main.js, run bundle"
-		echo "--- npm run build:main ---"
-		npm run bundle:main
+    echo "there is no main.js, run bundle"
+    echo "--- npm run build:main ---"
+    npm run bundle:main
 fi
 
 # copy main.js into app/
