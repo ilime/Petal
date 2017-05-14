@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Icon } from 'semantic-ui-react'
+import { Grid, Icon, Label } from 'semantic-ui-react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
 import FM from '../FM/index.jsx'
@@ -16,7 +16,8 @@ import Read from '../Read/index.jsx'
 import Music from '../Music/index.jsx'
 import Movie from '../Movie/index.jsx'
 import { authLoad } from '../../actions/auth/apis'
-import { appMinimize, appQuit } from '../../helper/electron'
+import { openInDefaultBrowser, appMinimize, appQuit } from '../../helper/electron'
+import checkUpdate from '../../helper/updateCheck'
 
 import '../../static/app.scss'
 
@@ -25,11 +26,17 @@ class Container extends Component {
     super(props)
     this.state = {
       pattern: false,
-      settingOpen: false
+      settingOpen: false,
+      checkUpdateDisplay: 0
     }
   }
 
-  componentDidMount() { this.props.handleAuthLoad() }
+  componentDidMount() {
+    const { handleAuthLoad, mainVersion, secondaryVersion } = this.props
+    handleAuthLoad()
+    checkUpdate(mainVersion, secondaryVersion,
+      display => this.setState({ checkUpdateDisplay: display }))
+  }
 
   handlePatternOpen = () => { this.setState({ patternOpen: true }) }
 
@@ -40,6 +47,7 @@ class Container extends Component {
   handleSettingClose = () => { this.setState({ settingOpen: false }) }
 
   render() {
+    const { checkUpdateDisplay } = this.state
     return (
       <Router>
         <Grid>
@@ -65,6 +73,14 @@ class Container extends Component {
                   <span>×</span>
                 </div>
               </div>
+              {checkUpdateDisplay === 1 &&
+                <Label
+                  as='a'
+                  className='checkUpdate'
+                  content='新的版本更新:)'
+                  color='green'
+                  size='mini'
+                  onClick={openInDefaultBrowser('https://github.com/SandStorms/Petal/releases')} />}
               <Icon className='petalPattern'
                 name='options'
                 size='large'
@@ -92,7 +108,16 @@ class Container extends Component {
 }
 
 Container.PropTypes = {
-  handleAuthLoad: PropTypes.func.isRequired
+  handleAuthLoad: PropTypes.func.isRequired,
+  mainVersion: PropTypes.number.isRequired,
+  secondaryVersion: PropTypes.number.isRequired
+}
+
+const mapStateToProps = state => {
+  return {
+    mainVersion: state.settingReducer.mainVersion,
+    secondaryVersion: state.settingReducer.secondaryVersion
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -102,6 +127,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Container)

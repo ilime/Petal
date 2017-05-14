@@ -103,7 +103,7 @@ export const authLoad = () => {
     }, (err, doc) => {
       if (doc !== null) {
         let now = [moment().year(), moment().month() + 1, moment().date()],
-          fromNow = moment(doc.time).diff(now, 'days')
+          fromNow = moment(now).diff(doc.time, 'days')
 
         // remove user info when already logined 80 days
         console.log('token storage time ' + fromNow + ' day(s)')
