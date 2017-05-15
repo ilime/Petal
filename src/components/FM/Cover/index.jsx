@@ -12,6 +12,7 @@ import {
   recentIndexSet, redheartIndexSet
 } from '../../../actions/fm/types'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
+import patternSwitch from '../../../helper/patternSwitch'
 
 class Cover extends Component {
   constructor(props) {
@@ -25,24 +26,35 @@ class Cover extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pattern, song, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
+    const { _id, pattern, song, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
 
     if (pattern === 'select' && song[0] !== this.props.song[0]) {
       this.setCover(song[0])
     }
 
-    if (pattern === 'recent' && (recentIndex !== this.props.recentIndex || pattern !== this.props.pattern)) {
-      this.setCover(recentSong[recentIndex])
-      this.props.setFsid(recentSong[recentIndex].sid)
-    }
+    patternSwitch.bind(this)(
+      this.props.pattern,
+      pattern,
+      recentSong,
+      redheartSong,
+      this.props.recentIndex,
+      recentIndex,
+      this.props.redheartIndex,
+      redheartIndex,
+      this.switchHelper
+    )
 
-    if (pattern === 'redheart' && (redheartIndex !== this.props.redheartIndex || pattern !== this.props.pattern)) {
-      this.setCover(redheartSong[redheartIndex], pattern)
-      this.props.setFsid(redheartSong[redheartIndex].sid)
-    }
-
-    if (this.props._id === 1 && nextProps._id === 0) {
+    if (_id === 0 && this.props._id === 1) {
       this.setState({ love: 'white' })
+    }
+  }
+
+  switchHelper = (pattern, nextPattern) => {
+    return (songs, index, nextIndex) => {
+      if (nextIndex !== index || nextPattern !== pattern) {
+        this.setCover(songs[nextIndex], nextPattern)
+        this.props.setFsid(songs[nextIndex].sid)
+      }
     }
   }
 

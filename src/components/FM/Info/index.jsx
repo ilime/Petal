@@ -7,6 +7,7 @@ import { Header, Image } from 'semantic-ui-react'
 
 import { songLyricGET } from '../../../actions/fm/apis'
 import { songLyricResponse } from '../../../actions/fm/types'
+import patternSwitch from '../../../helper/patternSwitch'
 
 class Info extends Component {
   constructor(props) {
@@ -28,16 +29,28 @@ class Info extends Component {
       this.setInfo(song[0])
     }
 
-    if (pattern === 'recent' && (recentIndex !== this.props.recentIndex || pattern !== this.props.pattern)) {
-      this.setInfo(recentSong[recentIndex], pattern)
-    }
-
-    if (pattern === 'redheart' && (redheartIndex !== this.props.redheartIndex || pattern !== this.props.pattern)) {
-      this.setInfo(redheartSong[redheartIndex], pattern)
-    }
+    patternSwitch.bind(this)(
+      this.props.pattern,
+      pattern,
+      recentSong,
+      redheartSong,
+      this.props.recentIndex,
+      recentIndex,
+      this.props.redheartIndex,
+      redheartIndex,
+      this.switchHelper
+    )
 
     if (lyric !== this.props.lyric) {
       this.lyricOperation(lyric.lyric)
+    }
+  }
+
+  switchHelper = (pattern, nextPattern) => {
+    return (songs, index, nextIndex) => {
+      if (nextIndex !== index || nextPattern !== pattern) {
+        this.setInfo(songs[nextIndex], nextPattern)
+      }
     }
   }
 

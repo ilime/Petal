@@ -10,6 +10,7 @@ import {
   recentIndexSet, redheartIndexSet
 } from '../../../actions/fm/types'
 import { nextSong, playlistGET, playLog } from '../../../actions/fm/apis'
+import patternSwitch from '../../../helper/patternSwitch'
 
 class Audio extends Component {
   constructor(props) {
@@ -26,18 +27,28 @@ class Audio extends Component {
   componentWillReceiveProps(nextProps) {
     const { pattern, song, type, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
 
-    if (pattern === 'select' && song !== this.props.song) {
-      if (type !== 'r' && type != 'u') {
-        this.nextAudio(song[0])
+    if (pattern === 'select' && song !== this.props.song && type !== 'r' && type != 'u') {
+      this.nextAudio(song[0])
+    }
+
+    patternSwitch.bind(this)(
+      this.props.pattern,
+      pattern,
+      recentSong,
+      redheartSong,
+      this.props.recentIndex,
+      recentIndex,
+      this.props.redheartIndex,
+      redheartIndex,
+      this.switchHelper
+    )
+  }
+
+  switchHelper = (pattern, nextPattern) => {
+    return (songs, index, nextIndex) => {
+      if (nextIndex !== index || nextPattern !== pattern) {
+        this.nextAudio(songs[nextIndex])
       }
-    }
-
-    if (pattern === 'recent' && (recentIndex !== this.props.recentIndex || pattern !== this.props.pattern)) {
-      this.nextAudio(recentSong[recentIndex])
-    }
-
-    if (pattern === 'redheart' && (redheartIndex !== this.props.redheartIndex || pattern !== this.props.pattern)) {
-      this.nextAudio(redheartSong[redheartIndex])
     }
   }
 

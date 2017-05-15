@@ -10,6 +10,21 @@ import { selectPattern, recentPattern, redheartPattern } from '../../actions/fm/
 import { playlistGET } from '../../actions/fm/apis'
 
 class Pattern extends Component {
+  constructor(props) {
+    super(props)
+    this._patterns = new Map([
+      ['select', () => {
+        props.switchToSelect()
+        props.getPlaylist('new')
+      }],
+      ['recent', () => {
+        props.switchToRecent()
+      }],
+      ['redheart', () => {
+        props.switchToRedheart()
+      }]
+    ])
+  }
   /**
    * Handle switch pattern
    * 
@@ -22,18 +37,7 @@ class Pattern extends Component {
   handleSwitchPattern = (e, { name }) => {
     const { pattern } = this.props
 
-    if (name === 'select' && pattern !== 'select') {
-      this.props.switchToSelect()
-      this.props.getPlaylist('new')
-    }
-
-    if (name === 'recent' && pattern !== 'recent') {
-      this.props.switchToRecent()
-    }
-
-    if (name === 'redheart' && pattern !== 'redheart') {
-      this.props.switchToRedheart()
-    }
+    if (pattern !== name) { this._patterns.get(name)() }
 
     this.props.handleClose()
   }
