@@ -1,0 +1,104 @@
+@mixin patelRotate($a-n, $t-o, $d) {
+  animation: $a-n $d linear infinite normal;
+  transform-origin: $t-o;
+}
+
+.openFlex {
+  -webkit-app-region: drag;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.openAnimation {
+  width: 150px;
+  height: 150px;
+  animation: bounce 1s linear infinite;
+}
+
+.openFont {
+  path {
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation-name: draw;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+  }
+}
+
+.petalPetal {
+  @include patelRotate(gogo, 50% 64%, 8s)
+}
+
+.petalCenter {
+  @include patelRotate(gogo, 50% 55%, 4s)
+}
+
+.petalCircle {
+    @include patelRotate(backback, 50% 50%, 4s)
+}
+
+.petalPetal2 {
+  @include patelRotate(backback, 50% 36%, 8s)
+}
+
+.petalPetal3 {
+  @include patelRotate(backback, 48% 36%, 8s)
+}
+
+@keyframes gogo {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+  
+  50% {
+    opacity: 1;
+  }
+  
+  100% {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes backback {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+  
+  50% {
+    opacity: 1;
+  }
+  
+  100% {
+    transform: rotate(-360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke: black;
+  }
+  to {
+    stroke: seagreen;
+    stroke-dashoffset: 0;
+  }
+}

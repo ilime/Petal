@@ -51,7 +51,7 @@ class Login extends Component {
     return (
       <article className='loginRegion'>
         <Header as='h1' textAlign='center' className='loginHeader'>
-          <Image src='./resources/petal.png' size='huge' />
+          <Image src='./resources/petal.svg' size='huge' />
           <span className='appTitle'>Petal</span>
         </Header>
         <Dimmer.Dimmable dimmed>

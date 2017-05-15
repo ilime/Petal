@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Grid, Icon, Label } from 'semantic-ui-react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
+import Loading from '../Loading/index.jsx'
 import FM from '../FM/index.jsx'
 import Login from '../Login/index.jsx'
 import Sidebar from '../Sidebar/index.jsx'
@@ -25,17 +26,11 @@ class Container extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       pattern: false,
       settingOpen: false,
-      checkUpdateDisplay: 0
+      checkUpdateDisplay: 0,
     }
-  }
-
-  componentDidMount() {
-    const { handleAuthLoad, mainVersion, secondaryVersion } = this.props
-    handleAuthLoad()
-    checkUpdate(mainVersion, secondaryVersion,
-      display => this.setState({ checkUpdateDisplay: display }))
   }
 
   handlePatternOpen = () => { this.setState({ patternOpen: true }) }
@@ -46,11 +41,21 @@ class Container extends Component {
 
   handleSettingClose = () => { this.setState({ settingOpen: false }) }
 
+  handleLoadingOver = () => {
+    setTimeout(() => {
+      this.setState({ loading: false })
+      const { handleAuthLoad, mainVersion, secondaryVersion } = this.props
+      handleAuthLoad()
+      checkUpdate(mainVersion, secondaryVersion,
+        display => this.setState({ checkUpdateDisplay: display }))
+    }, 5000)
+  }
+
   render() {
-    const { checkUpdateDisplay } = this.state
+    const { loading, checkUpdateDisplay } = this.state
     return (
-      <Router>
-        <Grid>
+      loading ? <Loading end={this.handleLoadingOver} /> : <Router>
+        <Grid >
           <Grid.Row className='outside'>
             <Grid.Column as='nav' width={2} id='sidebarColumn'>
               <Sidebar />
@@ -101,8 +106,8 @@ class Container extends Component {
               open={this.state.settingOpen}
               handleClose={this.handleSettingClose} />
           </Grid.Row>
-        </Grid>
-      </Router>
+        </Grid >
+      </Router >
     )
   }
 }
