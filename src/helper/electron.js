@@ -1,6 +1,6 @@
 'use strict'
 
-import { shell, remote } from 'electron'
+import { shell, remote, ipcRenderer } from 'electron'
 
 /**
  * Open url in default broswer.
@@ -41,4 +41,10 @@ export function isOnline(callback) {
       }
     }), 5000)
   }
+}
+
+export function onReceiveFromMainProcess(channel, f) {
+  ipcRenderer.on(channel, (e, message) => {
+    f()
+  })
 }

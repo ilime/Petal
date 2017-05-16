@@ -58,9 +58,56 @@ const template = [
     ]
   },
   {
-    role: 'window',
+    label: 'Window',
     submenu: [
       { role: 'minimize' }
+    ]
+  },
+  {
+    label: 'Operate',
+    submenu: [
+      {
+        label: 'pause',
+        accelerator: 'Space',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('pause')
+        }
+      },
+      {
+        label: 'love',
+        accelerator: 'CmdOrCtrl+l',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('love')
+        }
+      },
+      {
+        label: 'trash',
+        accelerator: 'CmdOrCtrl+t',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('trash')
+        }
+      },
+      {
+        label: 'skip',
+        accelerator: 'CmdOrCtrl+k',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('skip')
+        }
+      },
+      {
+        label: 'forward',
+        accelerator: 'CmdOrCtrl+Right',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('forward')
+        }
+      },
+      {
+        label: 'backword',
+        accelerator: 'CmdOrCtrl+Left',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('backword')
+        }
+      }
     ]
   },
   {

@@ -13,6 +13,7 @@ import {
 } from '../../../actions/fm/types'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
 import patternSwitch from '../../../helper/patternSwitch'
+import { onReceiveFromMainProcess } from '../../../helper/electron'
 
 class Cover extends Component {
   constructor(props) {
@@ -23,6 +24,15 @@ class Cover extends Component {
       love: 'white',
       isLoginPopup: false
     }
+  }
+
+  componentDidMount() {
+    onReceiveFromMainProcess('pause', this.handleAudioPlay)
+    onReceiveFromMainProcess('love', this.handleLoveSong)
+    onReceiveFromMainProcess('trash', this.handleTrashSong)
+    onReceiveFromMainProcess('skip', this.handleSkipSong)
+    onReceiveFromMainProcess('forward', this.handleSongForward)
+    onReceiveFromMainProcess('backword', this.handleSongBackward)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,6 +110,10 @@ class Cover extends Component {
       handlePlayLog, handleRecentGo, handleRedheartGo, handleRecentIndexSet,
       handleRedheartIndexSet } = this.props
 
+    if (pattern === 'select') {
+      return
+    }
+
     if (pattern === 'recent') {
       if (recentSong.length === 1) { return }
       handlePlayLog(fsid, 'j', 'y')
@@ -126,6 +140,10 @@ class Cover extends Component {
       handlePlayLog, handleRecentBack, handleRedheartBack, handleRecentIndexSet,
       handleRedheartIndexSet } = this.props
 
+    if (pattern === 'select') {
+      return
+    }
+
     if (pattern === 'recent') {
       if (recentSong.length === 1) { return }
       handlePlayLog(fsid, 'k', 'y')
@@ -148,7 +166,9 @@ class Cover extends Component {
   }
 
   handleSkipSong = () => {
-    this.props.getPlayList('skip')
+    if (this.props.pattern === 'select') {
+      this.props.getPlayList('skip')
+    }
   }
 
   handleTrashSong = () => {
@@ -167,7 +187,10 @@ class Cover extends Component {
    */
   handleLoveSong = () => {
     const { _id, pattern, getPlayList, handlePlayLog, fsid } = this.props
-    if (_id === 0) { return }
+    if (_id === 0) {
+      this.handleLoveIsLoginPopupOpen()
+      return
+    }
     const { love } = this.state
 
     if (love === 'white') {
@@ -198,12 +221,10 @@ class Cover extends Component {
   }
 
   handleLoveIsLoginPopupOpen = () => {
-    if (this.props._id === 0) {
-      this.setState({ isLoginPopup: true })
-      this.PopupTimeout = setTimeout(() => {
-        this.setState({ isLoginPopup: false })
-      }, 3000)
-    }
+    this.setState({ isLoginPopup: true })
+    this.PopupTimeout = setTimeout(() => {
+      this.setState({ isLoginPopup: false })
+    }, 3000)
   }
 
   handleLoveIsLoginPopupClose = () => {
@@ -227,7 +248,6 @@ class Cover extends Component {
               position='bottom center'
               on='click'
               open={isLoginPopup}
-              onOpen={this.handleLoveIsLoginPopupOpen}
               onClose={this.handleLoveIsLoginPopupClose} />
             <Icon name='trash' size='big' onClick={this.handleTrashSong} />
             <Icon name='step forward' size='big' onClick={this.handleSkipSong} />
