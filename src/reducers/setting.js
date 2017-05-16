@@ -4,7 +4,7 @@ import { AUDIO_VOLUME_PROGRESS_SET, AUDIO_VOLUME_PIN_SET } from '../actions/sett
 
 const settingReducer = (state = {
   mainVersion: 1,
-  secondaryVersion: 0,
+  secondaryVersion: 1,
   audioVolumeProgress: 30,
   audioVolumePin: 39
 }, action) => {
