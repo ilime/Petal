@@ -172,7 +172,9 @@ class Cover extends Component {
   }
 
   handleTrashSong = () => {
-    this.props.getPlayList('trash')
+    if (this.props.pattern === 'select') {
+      this.props.getPlayList('trash')
+    }
   }
 
   /**

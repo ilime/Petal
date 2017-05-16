@@ -142,10 +142,10 @@ export const authRemove = (dispatch, callback) => {
       callback()
     }
     dispatch(authLogout())
+    dispatch(selectPattern)
+    dispatch(playlistGET('new'))
     dispatch(recentEmpty())
     dispatch(redHeartEmpty())
     dispatch(trashEmpty())
-    dispatch(selectPattern)
-    dispatch(playlistGET('new'))
   })
 }

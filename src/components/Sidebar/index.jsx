@@ -42,7 +42,7 @@ export class Sidebar extends Component {
               <Icon name='user circle' size='large' color='grey' />
               <span>登录</span>
             </NavLink> :
-            <Link to='/personal/recent'>
+            <Link to='/personal'>
               <Image src={icon} avatar className='userAvatar' />
             </Link>
           }

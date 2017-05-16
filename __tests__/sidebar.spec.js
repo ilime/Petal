@@ -20,6 +20,6 @@ describe('<Sidebar />', () => {
 
   test('login navlink change', () => {
     let wrapperWithId = shallow(<Sidebar id={1} />)
-    expect(wrapperWithId.find(Link).props().to).toMatch('/personal/recent')
+    expect(wrapperWithId.find(Link).props().to).toMatch('/personal')
   })
 })

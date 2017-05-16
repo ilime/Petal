@@ -2,9 +2,11 @@
 
 import React, { Component } from 'react'
 import { isOnline } from '../../helper/electron'
+import { withRouter } from 'react-router-dom'
 
-export default class Loading extends Component {
+class Loading extends Component {
   componentDidMount() {
+    this.props.history.push('/')
     isOnline(this.props.end)
   }
 
@@ -67,3 +69,5 @@ export default class Loading extends Component {
     )
   }
 }
+
+export default withRouter(Loading)

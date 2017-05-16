@@ -54,60 +54,61 @@ class Container extends Component {
   render() {
     const { loading, checkUpdateDisplay } = this.state
     return (
-      loading ? <Loading end={this.handleLoadingOver} /> : <Router>
-        <Grid >
-          <Grid.Row className='outside'>
-            <Grid.Column as='nav' width={2} id='sidebarColumn'>
-              <Sidebar />
-            </Grid.Column>
-            <Grid.Column as='main' width={14}>
-              <div className='titleBar' title='点住我可以拖动哦～'></div>
-              <FM />
-              <Route path='/login' component={Login} />
-              <Route path='/personal' component={Personal} />
-              <Route path='/read' component={Read} />
-              <Route path='/movie' component={Movie} />
-              <Route path='/music' component={Music} />
-            </Grid.Column>
-            <aside>
-              <div className='petalControl'>
-                <div className='miniButton' onClick={appMinimize}>
-                  <span>－</span>
+      <Router>
+        {loading ? <Loading end={this.handleLoadingOver} /> :
+          <Grid >
+            <Grid.Row className='outside'>
+              <Grid.Column as='nav' width={2} id='sidebarColumn'>
+                <Sidebar />
+              </Grid.Column>
+              <Grid.Column as='main' width={14}>
+                <div className='titleBar' title='点住我可以拖动哦～'></div>
+                <FM />
+                <Route path='/login' component={Login} />
+                <Route path='/personal' component={Personal} />
+                <Route path='/read' component={Read} />
+                <Route path='/movie' component={Movie} />
+                <Route path='/music' component={Music} />
+              </Grid.Column>
+              <aside>
+                <div className='petalControl'>
+                  <div className='miniButton' onClick={appMinimize}>
+                    <span>－</span>
+                  </div>
+                  <div className='quitButton' onClick={appQuit}>
+                    <span>×</span>
+                  </div>
                 </div>
-                <div className='quitButton' onClick={appQuit}>
-                  <span>×</span>
-                </div>
-              </div>
-              {checkUpdateDisplay === 1 &&
-                <Label
-                  as='a'
-                  className='checkUpdate'
-                  content='新的版本更新:)'
-                  color='green'
-                  size='mini'
-                  onClick={openInDefaultBrowser('https://github.com/SandStorms/Petal/releases')} />}
-              <Icon className='petalPattern'
-                name='options'
-                size='large'
-                color='grey'
-                link
-                onClick={this.handlePatternOpen} />
-              <Icon className='petalSetting'
-                name='setting'
-                size='large'
-                color='grey'
-                link
-                onClick={this.handleSettingOpen} />
-            </aside>
-            <Pattern
-              open={this.state.patternOpen}
-              handleClose={this.handlePatternClose} />
-            <Setting
-              open={this.state.settingOpen}
-              handleClose={this.handleSettingClose} />
-          </Grid.Row>
-        </Grid >
-      </Router >
+                {checkUpdateDisplay === 1 &&
+                  <Label
+                    as='a'
+                    className='checkUpdate'
+                    content='新的版本更新:)'
+                    color='green'
+                    size='mini'
+                    onClick={openInDefaultBrowser('https://github.com/SandStorms/Petal/releases')} />}
+                <Icon className='petalPattern'
+                  name='options'
+                  size='large'
+                  color='grey'
+                  link
+                  onClick={this.handlePatternOpen} />
+                <Icon className='petalSetting'
+                  name='setting'
+                  size='large'
+                  color='grey'
+                  link
+                  onClick={this.handleSettingOpen} />
+              </aside>
+              <Pattern
+                open={this.state.patternOpen}
+                handleClose={this.handlePatternClose} />
+              <Setting
+                open={this.state.settingOpen}
+                handleClose={this.handleSettingClose} />
+            </Grid.Row>
+          </Grid>}
+      </Router>
     )
   }
 }
