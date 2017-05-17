@@ -7,15 +7,11 @@ const OUTPUT_PATH = path.resolve(__dirname, 'app')
 const SRC_PATH = path.resolve(__dirname, 'src')
 const STYLE_PATH = path.resolve(__dirname, 'src/static')
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
-const extractScss = new ExtractTextPlugin({
-  filename: 'style.css'
-})
+const ExtractSass = require('extract-text-webpack-plugin')
 
 const config = {
   entry: {
-    vendor: ['react', 'react-dom'],
+    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'semantic-ui-react', 'prop-types'],
     app: './src/app'
   },
   output: {
@@ -36,12 +32,8 @@ const config = {
       {
         test: /\.scss$/,
         include: STYLE_PATH,
-        use: extractScss.extract({
-          use: [{
-            loader: 'css-loader'
-          }, {
-            loader: 'sass-loader'
-          }]
+        use: ExtractSass.extract({
+          use: ['css-loader', 'sass-loader']
         })
       }
     ]
@@ -51,10 +43,10 @@ const config = {
       name: 'vendor',
       miniChunks: Infinity
     }),
-    extractScss,
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false
+    new ExtractSass({
+      filename: 'style.css'
     }),
+    new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })

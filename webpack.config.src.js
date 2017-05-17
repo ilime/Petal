@@ -9,7 +9,7 @@ const STYLE_PATH = path.resolve(__dirname, 'src/static')
 
 const config = {
   entry: {
-    vendor: ['react', 'react-dom'],
+    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'semantic-ui-react', 'prop-types'],
     app: './src/app'
   },
   output: {
@@ -41,10 +41,7 @@ const config = {
       miniChunks: Infinity
     })
   ],
-  target: 'electron-renderer',
-  node: {
-    fs: 'empty'
-  }
+  target: 'electron-renderer'
 }
 
 module.exports = config

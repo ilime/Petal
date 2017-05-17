@@ -26,8 +26,7 @@ const config = {
   },
   target: 'electron-main',
   node: {
-    __dirname: false,
-    __filename: false
+    __dirname: false
   }
 }
 
