@@ -21,7 +21,7 @@ export const TRASH_LIST = 'TRASH_LIST'
 export const TRASH_EMPTY = 'TRASH_EMPTY'
 export const SELECT_PATTERN = 'SELECT_PATTERN'
 export const RECENT_PATTERN = 'RECENT_PATTERN'
-export const REDHEART_PATTERH = 'REDHEART_PATTERN'
+export const REDHEART_PATTERN = 'REDHEART_PATTERN'
 export const FSID_SET = 'FSID_SET'
 export const RECENT_GO = 'RECENT_GO'
 export const RECENT_BACK = 'RECENT_BACK'
@@ -158,7 +158,7 @@ export const selectPattern = { type: SELECT_PATTERN }
 
 export const recentPattern = { type: RECENT_PATTERN }
 
-export const redheartPattern = { type: REDHEART_PATTERH }
+export const redheartPattern = { type: REDHEART_PATTERN }
 
 export const fsidSet = fsid => {
   return {
