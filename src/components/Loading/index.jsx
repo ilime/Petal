@@ -57,11 +57,11 @@ class Loading extends Component {
               <path d="M250 80 L 290 80" />
 
               <path d="M109 140 L115 153 L121 140" />
-              <path d="M134 140 L134 155" />
+              <path d="M134 140 L134 156" />
               <path d="M142 152 L142 155" />
-              <path d="M150 140 L150 155" />
-              <path d="M158 152 L158 155" />
-              <path d="M164 147 L176 147" />
+              <path d="M148 142 L158 142 158 148 150 150 148 155 160 155" />
+              <path d="M164 152 L164 155" />
+              <path d="M170 147 L182 147" />
             </svg>
           </div>
         </div>
