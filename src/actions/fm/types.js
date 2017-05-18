@@ -18,6 +18,7 @@ export const RECENT_EMPTY = 'RECENT_EMPTY'
 export const RED_HEART_LIST = 'RED_HEART_LIST'
 export const RED_HEART_EMPTY = 'RED_HEART_EMPTY'
 export const TRASH_LIST = 'TRASH_LIST'
+export const TRASH_REMOVE = 'TRASH_REMOVE' 
 export const TRASH_EMPTY = 'TRASH_EMPTY'
 export const SELECT_PATTERN = 'SELECT_PATTERN'
 export const RECENT_PATTERN = 'RECENT_PATTERN'
@@ -145,6 +146,13 @@ export const trashList = trash => {
   return {
     type: TRASH_LIST,
     trash
+  }
+}
+
+export const trashRemove = index => {
+  return {
+    type: TRASH_REMOVE,
+    index
   }
 }
 

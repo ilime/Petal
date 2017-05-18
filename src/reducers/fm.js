@@ -10,7 +10,7 @@ import {
   RED_HEART_RATE_NEXT_SONG_APPEND, RED_HEART_UN_RATE_NEXT_SONG_APPEND,
   PLAYLIST_END_REQUEST, RECENT_LIST,
   RECENT_EMPTY, RED_HEART_LIST,
-  RED_HEART_EMPTY, TRASH_LIST,
+  RED_HEART_EMPTY, TRASH_LIST, TRASH_REMOVE,
   TRASH_EMPTY, SELECT_PATTERN,
   RECENT_PATTERN, REDHEART_PATTERN,
   FSID_SET, RECENT_GO,
@@ -66,6 +66,13 @@ const fmReducer = (state = {
     RED_HEART_LIST, (state, action) => updateObject(state, { redheart: action.redheart }),
     RED_HEART_EMPTY, state => updateObject(state, { redheart: [] }),
     TRASH_LIST, (state, action) => updateObject(state, { trash: action.trash }),
+    TRASH_REMOVE, (state, action) => updateObject(state, {
+      trash: {
+        start: state.trash.start,
+        total: state.trash.total - 1,
+        songs: state.trash.songs.slice(0, action.index).concat(state.trash.songs.slice(action.index + 1))
+      }
+    }),
     TRASH_EMPTY, state => updateObject(state, { trash: {} }),
     SELECT_PATTERN, state => updateObject(state, { pattern: 'select' }),
     RECENT_PATTERN, state => updateObject(state, { pattern: 'recent', recentIndex: 0 }),

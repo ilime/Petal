@@ -5,8 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Item, Icon } from 'semantic-ui-react'
 
-import { recentIndexSet } from '../../actions/fm/types'
-import { redheartIndexSet } from '../../actions/fm/types'
+import { recentIndexSet, redheartIndexSet, trashRemove } from '../../actions/fm/types'
 import { actionLog } from '../../actions/fm/apis'
 
 class SongList extends Component {
@@ -20,10 +19,10 @@ class SongList extends Component {
     handleRedheartIndexSet(index)
   }
 
-  handleTrashRemove = (e, sid) => {
+  handleTrashRemove = (e, index, sid) => {
     e.preventDefault()
     this.props.handleActionLog(sid, 'z', 'i')
-    e.target.parentNode.parentNode.remove()
+    this.props.handleStateTrashRemove(index)
   }
 
   render() {
@@ -58,7 +57,7 @@ class SongList extends Component {
                   name='trash'
                   color='grey'
                   link
-                  onClick={e => this.handleTrashRemove(e, song.sid)} />
+                  onClick={e => this.handleTrashRemove(e, index, song.sid)} />
               </div>}
             </div>
           </Item>
@@ -71,6 +70,7 @@ class SongList extends Component {
 SongList.PropTypes = {
   handleRecentIndexSet: PropTypes.func.isRequired,
   handleRedheartIndexSet: PropTypes.func.isRequired,
+  handleStateTrashRemove: PropTypes.func.isRequired,
   handleActionLog: PropTypes.func.isRequired
 }
 
@@ -78,6 +78,7 @@ const mapDispatchToProps = dispatch => {
   return {
     handleRecentIndexSet: index => dispatch(recentIndexSet(index)),
     handleRedheartIndexSet: index => dispatch(redheartIndexSet(index)),
+    handleStateTrashRemove: index => dispatch(trashRemove(index)),
     handleActionLog: (sid, type, play_source) => dispatch(actionLog(sid, type, play_source))
   }
 }
