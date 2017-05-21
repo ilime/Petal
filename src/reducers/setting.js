@@ -6,7 +6,7 @@ import { updateObject } from '../helper/copy'
 
 const settingReducer = (state = {
   mainVersion: 1,
-  secondaryVersion: 2,
+  secondaryVersion: 3,
   audioVolumeProgress: 30,
   audioVolumePin: 39
 }, action) => {
