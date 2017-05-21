@@ -48,3 +48,7 @@ export function onReceiveFromMainProcess(channel, f) {
     f()
   })
 }
+
+export function renderProcessSend(channel, arg) {
+  ipcRenderer.send(channel, arg)
+}

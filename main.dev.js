@@ -1,7 +1,7 @@
 'use strict'
 
 import 'babel-polyfill'
-import { app, BrowserWindow, Menu } from 'electron'
+import { app, BrowserWindow, Menu, TouchBar, ipcMain } from 'electron'
 import url from 'url'
 import fs from 'fs'
 import installExtension, {
@@ -9,6 +9,91 @@ import installExtension, {
 } from 'electron-devtools-installer'
 
 let mainWindow = null
+
+const { TouchBarButton } = TouchBar
+
+const touchBarState = {
+  pause: false,
+  isRate: false
+}
+
+const pauseAndStart = new TouchBarButton({
+  icon: __dirname + '/resources/pause.png',
+  click: () => {
+    mainWindow.webContents.send('pause')
+  }
+})
+
+ipcMain.on('touchBarPauseAndStart', (event, arg) => {
+  if (arg === true) {
+    pauseAndStart.icon = __dirname + '/resources/pause.png'
+    touchBarState.pause = false
+  } else {
+    pauseAndStart.icon = __dirname + '/resources/play.png'
+    touchBarState.pause = true
+  }
+})
+
+const rateAndUnrate = new TouchBarButton({
+  icon: __dirname + '/resources/unrate.png',
+  click: () => {
+    mainWindow.webContents.send('love')
+  }
+})
+
+ipcMain.on('touchBarRateColor', (event, arg) => {
+  if (arg === 'red') {
+    touchBarState.isRate = true
+    rateAndUnrate.icon = __dirname + '/resources/rate.png'
+  }
+
+  if (arg === 'white') {
+    touchBarState.isRate = false
+    rateAndUnrate.icon = __dirname + '/resources/unrate.png'
+  }
+})
+
+const playlistTouchBar = new TouchBar([
+  new TouchBarButton({
+    icon: __dirname + '/resources/trash.png',
+    click: () => { mainWindow.webContents.send('trash') }
+  }),
+  pauseAndStart,
+  new TouchBarButton({
+    icon: __dirname + '/resources/skip.png',
+    click: () => { mainWindow.webContents.send('skip') }
+  }),
+  rateAndUnrate
+])
+
+const songListTouchBar = new TouchBar([
+  new TouchBarButton({
+    icon: __dirname + '/resources/backword.png',
+    click: () => { mainWindow.webContents.send('backword') }
+  }),
+  pauseAndStart,
+  new TouchBarButton({
+    icon: __dirname + '/resources/forward.png',
+    click: () => { mainWindow.webContents.send('forward') }
+  }),
+  rateAndUnrate
+])
+
+ipcMain.on('patternSwitch', (event, arg) => {
+  switch (arg) {
+    case 'select':
+      mainWindow.setTouchBar(playlistTouchBar)
+      break
+    case 'recent':
+      mainWindow.setTouchBar(songListTouchBar)
+      break
+    case 'redheart':
+      mainWindow.setTouchBar(songListTouchBar)
+      break
+    default:
+      mainWindow.setTouchBar(playlistTouchBar)
+  }
+})
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -140,6 +225,8 @@ const createDB = () => {
 }
 
 app.on('ready', () => {
+  createDB()
+  createWindow()
   if (process.platform === 'darwin') {
     template.unshift({
       label: app.getName(),
@@ -151,9 +238,10 @@ app.on('ready', () => {
         { role: 'quit' }
       ]
     })
+    setTimeout(() => {
+      mainWindow.setTouchBar(playlistTouchBar)
+    }, 6000)
   }
-  createDB()
-  createWindow()
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 })
 

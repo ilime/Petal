@@ -7,16 +7,19 @@ import { Item, Icon } from 'semantic-ui-react'
 
 import { recentIndexSet, redheartIndexSet, trashRemove } from '../../actions/fm/types'
 import { actionLog } from '../../actions/fm/apis'
+import { renderProcessSend } from '../../helper/electron'
 
 class SongList extends Component {
   handleRecentPlay = index => {
     const { handleRecentIndexSet } = this.props
     handleRecentIndexSet(index)
+    renderProcessSend('patternSwitch', 'recent')
   }
 
   handleRedheartPlay = index => {
     const { handleRedheartIndexSet } = this.props
     handleRedheartIndexSet(index)
+    renderProcessSend('patternSwitch', 'redheart')
   }
 
   handleTrashRemove = (e, index, sid) => {

@@ -13,7 +13,7 @@ import {
 } from '../../../actions/fm/types'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
 import patternSwitch from '../../../helper/patternSwitch'
-import { onReceiveFromMainProcess } from '../../../helper/electron'
+import { onReceiveFromMainProcess, renderProcessSend } from '../../../helper/electron'
 
 class Cover extends Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class Cover extends Component {
     )
 
     if (_id === 0 && this.props._id === 1) {
-      this.setState({ love: 'white' })
+      this.setState({ love: 'white' }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
     }
   }
 
@@ -83,7 +83,7 @@ class Cover extends Component {
       playing: true,
       cover: song.picture,
       love: pattern === 'redheart' ? 'red' : (song.like === 1 ? 'red' : 'white')
-    })
+    }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
   }
 
   handleControlShow = () => this.setState({ controlPanelActive: true })
@@ -98,10 +98,10 @@ class Cover extends Component {
     const audio = document.querySelector('#_audio')
     if (audio.paused) {
       audio.play()
-      this.setState({ playing: true })
+      this.setState({ playing: true }, () => { renderProcessSend('touchBarPauseAndStart', this.state.playing) })
     } else {
       audio.pause()
-      this.setState({ playing: false })
+      this.setState({ playing: false }, () => { renderProcessSend('touchBarPauseAndStart', this.state.playing) })
     }
   }
 
@@ -205,7 +205,7 @@ class Cover extends Component {
       if (pattern === 'redheart') {
         handlePlayLog(fsid, 'r', 'h')
       }
-      this.setState({ love: 'red' })
+      this.setState({ love: 'red' }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
     }
 
     if (love === 'red') {
@@ -218,7 +218,7 @@ class Cover extends Component {
       if (pattern === 'redheart') {
         handlePlayLog(fsid, 'u', 'h')
       }
-      this.setState({ love: 'white' })
+      this.setState({ love: 'white' }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
     }
   }
 

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 
 import { selectPattern, recentPattern, redheartPattern } from '../../actions/fm/types'
 import { playlistGET } from '../../actions/fm/apis'
+import { renderProcessSend } from '../../helper/electron'
 
 class Pattern extends Component {
   constructor(props) {
@@ -37,7 +38,10 @@ class Pattern extends Component {
   handleSwitchPattern = (e, { name }) => {
     const { pattern } = this.props
 
-    if (pattern !== name) { this._patterns.get(name)() }
+    if (pattern !== name) { 
+      this._patterns.get(name)()
+      renderProcessSend('patternSwitch', name)
+    }
 
     this.props.handleClose()
   }
