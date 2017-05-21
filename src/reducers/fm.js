@@ -53,7 +53,7 @@ const fmReducer = (state = {
       song: action.song
     }),
     SONG_LYRIC_RESPONSE, (state, action) => updateObject(state, { lyric: action.lyric }),
-    PLAYLIST_NEXT_SONG, state => updateObject({}, state, {
+    PLAYLIST_NEXT_SONG, state => updateObject(state, {
       type: 'continue',
       sid: state.song[1].sid,
       ssid: state.song[1].ssid,
