@@ -83,7 +83,7 @@ class Info extends Component {
   /**
    * Handle lyric parsing.
    * Associated:
-   * https://github.com/SandStorms/Petal/issues/1
+   * https://github.com/3shld/Petal/issues/1
    * 
    * the lyric will parse to:
    * [

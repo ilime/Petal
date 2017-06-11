@@ -15,9 +15,9 @@ export default class About extends Component {
           <p>Petal是一个豆瓣第三方客户端，以FM为主，计划集成豆瓣图书，电影，音乐等功能。</p>
           <p>不得将此应用用于任何非法用途，所有功能均使用豆瓣API构建，<strong>一切权益归豆瓣所有</strong>。</p>
           <p>Petal的维护者是
-            <span onClick={openInDefaultBrowser('https://github.com/SandStorms')}>SandStorms</span>，
+            <span onClick={openInDefaultBrowser('https://github.com/3shld')}>3shld</span>，
             如果有任何使用上的问题，请前往
-            <span onClick={openInDefaultBrowser('https://github.com/SandStorms/Petal/issues')}>仓库下的issue</span>
+            <span onClick={openInDefaultBrowser('https://github.com/3shld/Petal/issues')}>仓库下的issue</span>
             下提出
           </p>
           <div>Icons made by 

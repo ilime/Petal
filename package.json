@@ -16,17 +16,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SandStorms/Petal.git"
+    "url": "https://github.com/3shld/Petal.git"
   },
   "keywords": [
     "Douban.FM",
     "electron",
     "client"
   ],
-  "author": "SandStorms",
+  "author": "3shld",
   "license": "MIT",
   "build": {
-    "appId": "org.sandstorms.petal",
+    "appId": "org.3shld.petal",
     "dmg": {
       "contents": [
         {

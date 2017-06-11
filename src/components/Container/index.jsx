@@ -86,7 +86,7 @@ class Container extends Component {
                     content='新的版本更新:)'
                     color='green'
                     size='mini'
-                    onClick={openInDefaultBrowser('https://github.com/SandStorms/Petal/releases')} />}
+                    onClick={openInDefaultBrowser('https://github.com/3shld/Petal/releases')} />}
                 <Icon className='petalPattern'
                   name='options'
                   size='large'

@@ -200,7 +200,7 @@ const template = [
     submenu: [
       {
         label: 'Author',
-        click() { require('electron').shell.openExternal('https://github.com/SandStorms') }
+        click() { require('electron').shell.openExternal('https://github.com/3shld') }
       }
     ]
   }
