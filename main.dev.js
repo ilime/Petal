@@ -1,5 +1,3 @@
-'use strict'
-
 import 'babel-polyfill'
 import { app, BrowserWindow, Menu, TouchBar, ipcMain } from 'electron'
 import url from 'url'

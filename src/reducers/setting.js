@@ -1,5 +1,3 @@
-'use strict'
-
 import cond from 'redux-cond'
 import { AUDIO_VOLUME_PROGRESS_SET, AUDIO_VOLUME_PIN_SET } from '../actions/setting/types'
 import { updateObject } from '../helper/copy'

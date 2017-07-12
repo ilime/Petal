@@ -1,5 +1,3 @@
-'use strict'
-
 import { shell, remote, ipcRenderer } from 'electron'
 
 /**

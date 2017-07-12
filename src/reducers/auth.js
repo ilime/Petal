@@ -1,5 +1,3 @@
-'use strict'
-
 import cond from 'redux-cond'
 import {
   AUTH_LOGIN_REQUEST, AUTH_LOGIN_RESPONSE,

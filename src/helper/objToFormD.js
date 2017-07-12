@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * Object to FormData
  * View this to get more

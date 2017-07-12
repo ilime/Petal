@@ -1,5 +1,3 @@
-'use strict'
-
 import React, { Component } from 'react'
 import { Grid, Menu } from 'semantic-ui-react'
 import { NavLink, Route } from 'react-router-dom'

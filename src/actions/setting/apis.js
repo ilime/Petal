@@ -1,5 +1,3 @@
-'use strict'
-
 import { audioVolumeProgressSet, audioVolumePinSet } from './types'
 
 import db from '../../helper/db'

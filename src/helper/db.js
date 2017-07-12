@@ -1,5 +1,3 @@
-'use strict'
-
 import Datastore from 'nedb'
 import { remote } from 'electron'
 

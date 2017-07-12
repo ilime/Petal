@@ -1,5 +1,3 @@
-'use strict'
-
 import cond from 'redux-cond'
 import {
   PLAYLIST_LOADING, PLAYLIST_NEW_REQUEST,

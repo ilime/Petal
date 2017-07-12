@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * Handle pattern switch except 'select'
  * 

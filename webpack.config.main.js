@@ -1,5 +1,3 @@
-'use strict'
-
 const path = require('path')
 
 const OUTPUT_PATH = path.resolve(__dirname, '')

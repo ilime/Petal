@@ -1,5 +1,3 @@
-'use strict'
-
 export const AUTH_LOGIN_REQUEST = 'AUTH_LOGIN_REQUEST'
 export const AUTH_LOGIN_RESPONSE = 'AUTH_LOGIN_RESPONSE'
 export const AUTH_LOGIN_FAIL = 'AUTH_LOGIN_FAIL'

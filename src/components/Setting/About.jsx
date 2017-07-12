@@ -1,5 +1,3 @@
-'use strict'
-
 import React, { Component } from 'react'
 import { Divider, Image } from 'semantic-ui-react'
 
