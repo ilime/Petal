@@ -1,12 +1,11 @@
-@import './base';
-
-@import '../components/Container/index';
-@import '../components/Loading/index';
-@import '../components/Sidebar/index';
-@import '../components/FM/index';
-@import '../components/FM/Audio/index';
-@import '../components/FM/Cover/index';
-@import '../components/FM/Info/index';
-@import '../components/Login/index';
-@import '../components/Personal/index';
-@import '../components/Setting/index';
+@import 'base';
+@import 'Container';
+@import 'Loading';
+@import 'Sidebar';
+@import 'FM/index';
+@import 'FM/Audio';
+@import 'FM/Cover';
+@import 'FM/Info';
+@import 'Login';
+@import 'Personal';
+@import 'Setting';
