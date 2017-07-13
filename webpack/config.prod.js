@@ -1,0 +1,1 @@
+const PROD_OUTPUT_PATH = path.resolve(__dirname, 'app')

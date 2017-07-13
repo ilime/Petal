@@ -18,8 +18,6 @@ import { authLoad } from '../../actions/auth/apis'
 import { openInDefaultBrowser, appMinimize, appQuit } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
 
-import '../../static/app.scss'
-
 class Container extends Component {
   constructor(props) {
     super(props)

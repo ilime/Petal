@@ -1,6 +1,4 @@
 node_modules
-bundle
-
 dist
-
-main.js
+bundle/*
+!bundle/resources
