@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Divider, Image } from 'semantic-ui-react'
-
 import { openInDefaultBrowser } from '../../helper/electron'
 
 export default class About extends Component {

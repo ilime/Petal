@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Grid, Menu } from 'semantic-ui-react'
 import { NavLink, Route } from 'react-router-dom'
-
-import Recent from './Recent.jsx'
-import RedHeart from './RedHeart.jsx'
-import Trash from './Trash.jsx'
+import Recent from './Recent'
+import RedHeart from './RedHeart'
+import Trash from './Trash'
 
 class Personal extends Component {
   componentDidMount() {

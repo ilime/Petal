@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Image, Form, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
-
 import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/types'
 import { authPost } from '../../actions/auth/apis'
 import { openInDefaultBrowser } from '../../helper/electron'

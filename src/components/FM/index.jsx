@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Grid, Dimmer, Loader } from 'semantic-ui-react'
-
-import Cover from './Cover/index.jsx'
-import Audio from './Audio/index.jsx'
-import Info from './Info/index.jsx'
+import Cover from './Cover'
+import Audio from './Audio'
+import Info from './Info'
 
 class FM extends Component {
   render() {

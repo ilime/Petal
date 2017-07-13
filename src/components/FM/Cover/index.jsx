@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Image, Icon, Popup } from 'semantic-ui-react'
-
 import {
   fsidSet,
   recentGo, recentBack,

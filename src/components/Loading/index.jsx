@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { isOnline } from '../../helper/electron'
 import { withRouter } from 'react-router-dom'
+import { isOnline } from '../../helper/electron'
 
 class Loading extends Component {
   componentDidMount() {

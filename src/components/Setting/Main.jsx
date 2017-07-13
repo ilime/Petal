@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Menu, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-
 import { authRemove } from '../../actions/auth/apis'
 import { settingStore } from '../../actions/setting/apis'
 

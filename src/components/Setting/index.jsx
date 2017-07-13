@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-
-import Main from './Main.jsx'
-import About from './About.jsx'
+import Main from './Main'
+import About from './About'
 
 class Setting extends Component {
   constructor(props) {

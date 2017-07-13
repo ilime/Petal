@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Item, Icon } from 'semantic-ui-react'
-
 import { recentIndexSet, redheartIndexSet, trashRemove } from '../../actions/fm/types'
 import { actionLog } from '../../actions/fm/apis'
 import { renderProcessSend } from '../../helper/electron'

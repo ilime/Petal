@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Image } from 'semantic-ui-react'
-
 import { songLyricGET } from '../../../actions/fm/apis'
 import { songLyricResponse } from '../../../actions/fm/types'
 import patternSwitch from '../../../helper/patternSwitch'

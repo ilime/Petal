@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
-import SongList from './SongList.jsx'
+import SongList from './SongList'
 
 class Recent extends Component {
   render() {
