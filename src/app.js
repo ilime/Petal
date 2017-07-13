@@ -1,15 +1,16 @@
-import 'babel-polyfill'
-import React from 'react'
-import { render } from 'react-dom'
+import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import Container from './components/Container/index.jsx'
+import Container from './components/Container'
 import configureStore from './store'
 
 const store = configureStore()
 
-render(
-	<Provider store={store}>
-		<Container />
-	</Provider>,
-	document.getElementById('app')
-)
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Container />
+      </Provider>
+    )
+  }
+}

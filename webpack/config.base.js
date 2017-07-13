@@ -1,20 +1,21 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
 const SRC_PATH = path.resolve(__dirname, '../src')
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: {
-    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'semantic-ui-react', 'prop-types'],
-    app: ['./src/app', './src/static/app.scss']
+    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'semantic-ui-react', 'prop-types']
   },
   module: {
     rules: [{
       test: /\.jsx?$/,
       include: SRC_PATH,
       exclude: /node_modules/,
-      use: {
+      use: [{
+        loader: isProd ? '' : 'react-hot-loader/webpack'
+      }, {
         loader: 'babel-loader',
         options: {
           babelrc: false,
@@ -26,7 +27,7 @@ module.exports = {
           ],
           cacheDirectory: true
         }
-      }
+      }]
     }, {
       test: /\.pug$/,
       loader: 'pug-loader'

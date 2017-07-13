@@ -16,6 +16,7 @@ import Movie from '../Movie'
 import { authLoad } from '../../actions/auth/apis'
 import { openInDefaultBrowser, appMinimize, appQuit } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
+import '../../static/app.scss'
 
 class Container extends Component {
   constructor(props) {
@@ -102,7 +103,8 @@ class Container extends Component {
                 open={this.state.settingOpen}
                 handleClose={this.handleSettingClose} />
             </Grid.Row>
-          </Grid>}
+          </Grid>
+          }
       </Router>
     )
   }

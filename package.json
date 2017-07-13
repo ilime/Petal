@@ -5,10 +5,11 @@
   "main": "bundle/main.js",
   "scripts": {
     "start": "electron .",
+    "dev:hot": "webpack-dev-server --config webpack/config.dev.js",
+    "dev:watch": "webpack --config webpack/config.dev.js --progress --watch",
     "bundle:dev": "webpack --config webpack/config.dev.js --progress",
     "bundle:main": "webpack --config webpack/config.electron.js --progress",
     "bundle:dev+main": "npm run bundle:dev && npm run bundle:main",
-    "dev": "webpack --config webpack/config.dev.js --progress --watch",
     "bundle:pro": "webpack --config webpack.config.production.js --progress",
     "dist": "build",
     "test": "jest --silent"
@@ -27,7 +28,8 @@
   "build": {
     "appId": "org.3shld.petal",
     "dmg": {
-      "contents": [{
+      "contents": [
+        {
           "x": 100,
           "y": 180
         },
@@ -67,10 +69,12 @@
     "node-sass": "^4.5.3",
     "pug": "^2.0.0-rc.2",
     "pug-loader": "^2.3.0",
+    "react-hot-loader": "^3.0.0-beta.7",
     "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^2.7.0",
+    "webpack-dev-server": "^2.5.1",
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
