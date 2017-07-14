@@ -24,8 +24,6 @@ module.exports = {
       include: SRC_PATH,
       exclude: /node_modules/,
       use: [{
-        loader: isProd ? '' : 'react-hot-loader/webpack'
-      }, {
         loader: 'babel-loader',
         options: {
           babelrc: false,
