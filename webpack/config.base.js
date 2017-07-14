@@ -6,7 +6,17 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: {
-    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'semantic-ui-react', 'prop-types']
+    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'semantic-ui-react', 'prop-types'],
+    app: isProd ? [
+      'babel-polyfill',
+      './src/entry'
+    ] : [
+      'react-hot-loader/patch',
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+      'babel-polyfill',
+      './src/entry'
+    ]
   },
   module: {
     rules: [{
@@ -45,5 +55,6 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx']
-  }
+  },
+  target: 'electron-renderer'
 }

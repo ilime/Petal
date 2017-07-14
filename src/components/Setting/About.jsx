@@ -17,12 +17,13 @@ export default class About extends Component {
             <span onClick={openInDefaultBrowser('https://github.com/3shld/Petal/issues')}>仓库下的issue</span>
             下提出
           </p>
-          <div>Icons made by 
+          <div>Icons made by
             <span onClick={openInDefaultBrowser('http://www.freepik.com')} title="Freepik"> Freepik </span>
             from <span onClick={openInDefaultBrowser('http://www.flaticon.com')} title="Flaticon">www.flaticon.com</span> is licensed by
-            <span onClick={openInDefaultBrowser('http://creativecommons.org/licenses/by/3.0/')} title="Creative Commons BY 3.0"> CC 3.0 BY</span></div>
+            <span onClick={openInDefaultBrowser('http://creativecommons.org/licenses/by/3.0/')} title="Creative Commons BY 3.0"> CC 3.0 BY</span>
+            </div>
         </div>
-       </div>
+      </div>
     )
   }
 }

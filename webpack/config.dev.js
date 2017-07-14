@@ -7,19 +7,8 @@ const STYLE_PATH = path.resolve(__dirname, '../src/static')
 const port = 3000
 const publicPath = `http://localhost:${port}/bundle/`
 
-module.exports = merge.smartStrategy({
-  entry: 'append'
-})(BaseConfig, {
+module.exports = merge.smart(BaseConfig, {
   devtool: 'eval',
-  entry: {
-    app: [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/only-dev-server',
-      'babel-polyfill',
-      './src/entry'
-    ]
-  },
   output: {
     path: DEV_OUTPUT_PATH,
     filename: '[name].bundle.js',
@@ -42,6 +31,5 @@ module.exports = merge.smartStrategy({
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ],
-  target: 'electron-renderer'
+  ]
 })
