@@ -16,7 +16,7 @@ Go to [release page](https://github.com/3shld/Petal/releases)
 
 ```
 git clone git@github.com:3shld/Petal.git && cd Petal/
-npm install && npm run dev:hot
+npm install && npm run bundle:dev+main && npm run dev:hot
 // Open a new terminal
 npm start
 ```
