@@ -3,11 +3,12 @@ node_js:
   - "node"
 
 install:
-  - npm install
+  - yarn
 
 script:
-  - npm test
+  - yarn test
 
 cache:
+  yarn: true
   directories:
     - node_modules

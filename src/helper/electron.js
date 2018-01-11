@@ -14,7 +14,8 @@ export function openInDefaultBrowser(url) {
 }
 
 export function appMinimize() {
-  remote.getCurrentWindow().minimize()
+  remote.getCurrentWindow()
+    .minimize()
 }
 
 export function appQuit() {
@@ -31,9 +32,10 @@ export function isOnline(callback) {
       message: '检测不到可用网络，是否重新加载？',
       buttons: ['重新加载', '退出Petal'],
       defaultId: 0
-    }, function (index) {
+    }, function(index) {
       if (index === 0) {
-        remote.getCurrentWindow().reload()
+        remote.getCurrentWindow()
+          .reload()
       } else {
         remote.app.quit()
       }

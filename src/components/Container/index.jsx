@@ -10,9 +10,6 @@ import Sidebar from '../Sidebar'
 import Pattern from '../Pattern'
 import Setting from '../Setting'
 import Personal from '../Personal'
-import Read from '../Read'
-import Music from '../Music'
-import Movie from '../Movie'
 import { authLoad } from '../../actions/auth/apis'
 import { openInDefaultBrowser, appMinimize, appQuit } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
@@ -49,10 +46,16 @@ class Container extends Component {
 
   render() {
     const { loading, checkUpdateDisplay } = this.state
-    return (
-      <Router>
-        {loading ? <Loading end={this.handleLoadingOver} /> :
-          <Grid >
+    if (loading) {
+      return (
+        <Router>
+          <Loading end={this.handleLoadingOver} />
+        </Router>
+      )
+    } else {
+      return (
+        <Router>
+          <Grid>
             <Grid.Row className='outside'>
               <Grid.Column as='nav' width={2} id='sidebarColumn'>
                 <Sidebar />
@@ -62,9 +65,6 @@ class Container extends Component {
                 <FM />
                 <Route path='/login' component={Login} />
                 <Route path='/personal' component={Personal} />
-                <Route path='/read' component={Read} />
-                <Route path='/movie' component={Movie} />
-                <Route path='/music' component={Music} />
               </Grid.Column>
               <aside>
                 <div className='petalControl'>
@@ -104,13 +104,13 @@ class Container extends Component {
                 handleClose={this.handleSettingClose} />
             </Grid.Row>
           </Grid>
-          }
-      </Router>
-    )
+        </Router>
+      )
+    }
   }
 }
 
-Container.PropTypes = {
+Container.propTypes = {
   handleAuthLoad: PropTypes.func.isRequired,
   mainVersion: PropTypes.number.isRequired,
   secondaryVersion: PropTypes.number.isRequired

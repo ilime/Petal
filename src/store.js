@@ -6,9 +6,18 @@ import rootReducer from './reducers/index'
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default initialState => {
-  return createStore(
+  const store = createStore(
     rootReducer,
     initialState,
     composeEnhancers(applyMiddleware(thunkMiddleware))
   )
+
+  if (module.hot) {
+    module.hot.accept('./reducers', () => {
+      const nextRootReducer = require('./reducers/index')
+      store.replaceReducer(nextRootReducer)
+    })
+  }
+
+  return store
 }

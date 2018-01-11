@@ -29,7 +29,7 @@ class Cover extends Component {
     onReceiveFromMainProcess('trash', this.handleTrashSong)
     onReceiveFromMainProcess('skip', this.handleSkipSong)
     onReceiveFromMainProcess('forward', this.handleSongForward)
-    onReceiveFromMainProcess('backword', this.handleSongBackward)
+    onReceiveFromMainProcess('backward', this.handleSongBackward)
   }
 
   componentWillReceiveProps(nextProps) {

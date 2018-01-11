@@ -16,8 +16,8 @@
 echo "Build start ..."
 
 # bundle src file
-echo "--- npm run bundle:prod ---"
-npm run bundle:prod &> /dev/null
+echo "--- yarn run bundle:prod ---"
+yarn run bundle:prod &> /dev/null
 
 # check main.js exists
 if [ -e bundle/main.js ]
@@ -26,15 +26,15 @@ then
     read YES_OR_NO
     if [ "$YES_OR_NO" == "Y" ]
     then
-        echo "--- npm run build:main ---"
-        npm run bundle:main &> /dev/null
+        echo "--- yarn run build:main ---"
+        yarn run bundle:main &> /dev/null
     else
         echo "The input is N or others, go to next step"
     fi
 else
     echo "There is no main.js, run bundle"
     echo "--- npm run build:main ---"
-    npm run bundle:main &> /dev/null
+    yarn run bundle:main &> /dev/null
 fi
 
 # copy main.js into app/
@@ -45,11 +45,10 @@ cp -R bundle/resources app
 
 # run build
 echo "Cooking Petal App... ^_^"
-npm run dist &> /dev/null
+yarn run dist
 
 # clear app/
 rm -r app/resources
-rm app/package-lock.json
 rm app/index.html
 rm app/*.css
 rm app/*.js

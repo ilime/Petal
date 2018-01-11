@@ -1,104 +1,72 @@
-@mixin patelRotate($a-n, $t-o, $d) {
-  animation: $a-n $d linear infinite normal;
-  transform-origin: $t-o;
-}
-
-.openFlex {
+.petal-loading-container {
   -webkit-app-region: drag;
-  height: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  >div {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.openAnimation {
-  width: 150px;
-  height: 150px;
+.petal-loading-logo-wrapper {
   animation: bounce 1s linear infinite;
 }
 
-.openFont {
+.petal-loading-logo {
+  width: 180px;
+  height: 180px;
+  animation: gogo 5s linear infinite;
+}
+
+.petal-loading-text {
   path {
-    stroke-width: 3;
+    stroke-width: 10;
     fill: none;
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
     animation-name: draw;
-    animation-duration: 3s;
+    animation-duration: 4s;
     animation-fill-mode: forwards;
     animation-iteration-count: 1;
     animation-timing-function: linear;
   }
 }
 
-.petalPetal {
-  @include patelRotate(gogo, 50% 64%, 8s)
-}
-
-.petalCenter {
-  @include patelRotate(gogo, 50% 55%, 4s)
-}
-
-.petalCircle {
-    @include patelRotate(backback, 50% 50%, 4s)
-}
-
-.petalPetal2 {
-  @include patelRotate(backback, 50% 36%, 8s)
-}
-
-.petalPetal3 {
-  @include patelRotate(backback, 48% 36%, 8s)
-}
-
 @keyframes gogo {
   0% {
     transform: rotate(0deg);
-    opacity: 0;
+    opacity: .6;
   }
-  
+
   50% {
     opacity: 1;
   }
-  
+
   100% {
     transform: rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes backback {
-  0% {
-    transform: rotate(0deg);
-    opacity: 0;
-  }
-  
-  50% {
-    opacity: 1;
-  }
-  
-  100% {
-    transform: rotate(-360deg);
-    opacity: 0;
+    opacity: .6;
   }
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
 
   50% {
-    transform: translateY(-10px);
+    transform: translateY(15px);
   }
 }
 
 @keyframes draw {
   from {
-    stroke: black;
+    stroke: transparent;
   }
   to {
     stroke: seagreen;
+    stroke-width: 1;
+    fill: seagreen;
     stroke-dashoffset: 0;
   }
 }

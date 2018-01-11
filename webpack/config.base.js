@@ -6,7 +6,10 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: {
-    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'semantic-ui-react', 'prop-types'],
+    vendor: ['react', 'react-dom', 'redux',
+      'react-router-dom', 'prop-types', 'react-redux',
+      'semantic-ui-react', 'axios', 'moment'
+    ],
     app: isProd ? [
       'babel-polyfill',
       './src/entry'
@@ -28,9 +31,10 @@ module.exports = {
         options: {
           babelrc: false,
           presets: [
-            'react', ['es2015', {
+            ['env', {
               modules: false
             }],
+            'react',
             'stage-2'
           ],
           cacheDirectory: true
@@ -49,6 +53,9 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'runtime'
     })
   ],
   resolve: {

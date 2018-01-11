@@ -4,8 +4,8 @@ import { NavLink, Link } from 'react-router-dom'
 import { Sidebar } from '../src/components/Sidebar/index.jsx'
 
 describe('<Sidebar />', () => {
-  const wrapper = shallow(<Sidebar />)
-  const toArray = ['/', '/read', '/movie', '/music', '/login']
+  const wrapper = shallow(<Sidebar _id={0} />)
+  const toArray = ['/', '/login']
 
   test('navlink worked as expectly', () => {
     let index = 0
@@ -19,7 +19,7 @@ describe('<Sidebar />', () => {
   })
 
   test('login navlink change', () => {
-    let wrapperWithId = shallow(<Sidebar id={1} />)
+    let wrapperWithId = shallow(<Sidebar _id={1} />)
     expect(wrapperWithId.find(Link).props().to).toMatch('/personal')
   })
 })

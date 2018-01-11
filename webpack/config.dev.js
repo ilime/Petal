@@ -19,7 +19,7 @@ module.exports = merge.smart(BaseConfig, {
       test: /\.jsx?$/,
       loader: 'react-hot-loader/webpack'
     }, {
-      test: /\.(scss|sass)$/,
+      test: /\.scss$/,
       include: STYLE_PATH,
       use: ['style-loader', 'css-loader', 'sass-loader']
     }]
@@ -33,7 +33,6 @@ module.exports = merge.smart(BaseConfig, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     })

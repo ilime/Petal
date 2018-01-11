@@ -16,24 +16,6 @@ export class Sidebar extends Component {
             <span>I'mFM</span>
           </NavLink>
         </li>
-        <li>
-          <NavLink to='/read' activeClassName='selected'>
-            <Icon name='book' size='large' color='grey' />
-            <span>读书</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/movie' activeClassName='selected'>
-            <Icon name='video' size='large' color='grey' />
-            <span>电影</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/music' activeClassName='selected'>
-            <Icon name='music' size='large' color='grey' />
-            <span>音乐</span>
-          </NavLink>
-        </li>
         <li id='logIn'>
           {_id === 0 ?
             <NavLink to='/login' activeClassName='selected'>
@@ -50,16 +32,14 @@ export class Sidebar extends Component {
   }
 }
 
-Sidebar.PropTypes = {
+Sidebar.propTypes = {
   _id: PropTypes.number.isRequired,
-  userToken: PropTypes.object.isRequired,
-  icon: PropTypes.string.isRequired
+  icon: PropTypes.string
 }
 
 const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
-    userToken: state.authReducer.userToken,
     icon: state.authReducer.userInfo.icon
   }
 }

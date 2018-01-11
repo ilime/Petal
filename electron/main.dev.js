@@ -1,10 +1,7 @@
-import 'babel-polyfill'
 import { app, BrowserWindow, Menu, TouchBar, ipcMain } from 'electron'
 import url from 'url'
 import fs from 'fs'
-import installExtension, {
-  REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS
-} from 'electron-devtools-installer'
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
 
 let mainWindow = null
 
@@ -66,8 +63,8 @@ const playlistTouchBar = new TouchBar([
 
 const songListTouchBar = new TouchBar([
   new TouchBarButton({
-    icon: __dirname + '/resources/backword.png',
-    click: () => { mainWindow.webContents.send('backword') }
+    icon: __dirname + '/resources/backward.png',
+    click: () => { mainWindow.webContents.send('backward') }
   }),
   pauseAndStart,
   new TouchBarButton({
@@ -107,107 +104,94 @@ const createWindow = () => {
   }))
 
   if (process.env.NODE_ENV === 'development') {
-    Promise.all([
-      [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].map(tool => installExtension(tool))
-    ]).then(() => {
-      console.log('install dev tools successfully')
-    }).catch(console.log)
+    Promise.all([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].map(tool => installExtension(tool)))
+      .then(() => {
+        console.log('install dev tools successfully')
+      })
+      .catch(console.log)
     mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('close', () => { mainWindow = null })
 }
 
-const template = [
-  {
-    label: 'Edit',
-    submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
-      { type: 'separator' },
-      { role: 'cut' },
-      { role: 'copy' },
-      { role: 'paste' },
-      { role: 'delete' },
-      { role: 'selectall' }
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      { role: 'reload' },
-      { role: 'forcereload' },
-      { role: 'toggledevtools' }
-    ]
-  },
-  {
-    label: 'Window',
-    submenu: [
-      { role: 'minimize' }
-    ]
-  },
-  {
-    label: 'Operate',
-    submenu: [
-      {
-        label: 'pause',
-        accelerator: 'Space',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('pause')
-        }
-      },
-      {
-        label: 'love',
-        accelerator: 'CmdOrCtrl+l',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('love')
-        }
-      },
-      {
-        label: 'trash',
-        accelerator: 'CmdOrCtrl+t',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('trash')
-        }
-      },
-      {
-        label: 'skip',
-        accelerator: 'CmdOrCtrl+k',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('skip')
-        }
-      },
-      {
-        label: 'forward',
-        accelerator: 'CmdOrCtrl+Right',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('forward')
-        }
-      },
-      {
-        label: 'backword',
-        accelerator: 'CmdOrCtrl+Left',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('backword')
-        }
-      }
-    ]
-  },
-  {
-    label: 'Related',
-    submenu: [
-      {
-        label: 'Author',
-        click() { require('electron').shell.openExternal('https://github.com/3shld') }
-      }
-    ]
-  }
-]
+const template = [{
+  label: 'Edit',
+  submenu: [{ role: 'undo' },
+    { role: 'redo' },
+    { type: 'separator' },
+    { role: 'cut' },
+    { role: 'copy' },
+    { role: 'paste' },
+    { role: 'delete' },
+    { role: 'selectall' }
+  ]
+}, {
+  label: 'View',
+  submenu: [
+    { role: 'reload' },
+    { role: 'forcereload' },
+    { role: 'toggledevtools' }
+  ]
+}, {
+  label: 'Window',
+  submenu: [
+    { role: 'minimize' }
+  ]
+}, {
+  label: 'Operate',
+  submenu: [{
+    label: 'pause',
+    accelerator: 'Space',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('pause')
+    }
+  }, {
+    label: 'love',
+    accelerator: 'CmdOrCtrl+l',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('love')
+    }
+  }, {
+    label: 'trash',
+    accelerator: 'CmdOrCtrl+t',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('trash')
+    }
+  }, {
+    label: 'skip',
+    accelerator: 'CmdOrCtrl+k',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('skip')
+    }
+  }, {
+    label: 'forward',
+    accelerator: 'CmdOrCtrl+Right',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('forward')
+    }
+  }, {
+    label: 'backward',
+    accelerator: 'CmdOrCtrl+Left',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('backward')
+    }
+  }]
+}, {
+  label: 'Related',
+  submenu: [{
+    label: 'Author',
+    click() {
+      require('electron')
+        .shell.openExternal('https://github.com/ilime')
+    }
+  }]
+}]
 
 const createDB = () => {
   fs.stat(app.getPath('home') + '/.petal.db', (err, stats) => {
     if (err === null) {
-      console.log('db file existd.')
+      console.log('db file existed.')
     } else if (err === 'ENOENT') {
       fs.writeFile(app.getPath('home') + '/.petal.db', '', err => {
         if (err) {

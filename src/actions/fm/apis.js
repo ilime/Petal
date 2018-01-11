@@ -2,14 +2,22 @@ import axios from 'axios'
 import moment from 'moment'
 
 import {
-  playlistLoading, playlistNewRequest,
-  playlistResponse, songLyricResponse,
-  playlistNextSong, playlistPlayingRequest,
-  playlistSkipRequest, playlistTrashRequest,
-  redHeartRate, redHeartUnRate,
-  redHeartRateNextSongAppend, redHeartUnRateNextSongAppend,
-  playlistEndRequest, recentList,
-  redHeartList, trashList
+  playlistLoading,
+  playlistNewRequest,
+  playlistResponse,
+  songLyricResponse,
+  playlistNextSong,
+  playlistPlayingRequest,
+  playlistSkipRequest,
+  playlistTrashRequest,
+  redHeartRate,
+  redHeartUnRate,
+  redHeartRateNextSongAppend,
+  redHeartUnRateNextSongAppend,
+  playlistEndRequest,
+  recentList,
+  redHeartList,
+  trashList
 } from './types'
 import { userInfo } from '../auth/types'
 
@@ -50,13 +58,13 @@ const playlistTypes = {
 }
 
 // Playlist url without type and sid
-const playlistOriginUrl = FM_ROOT_URL
-  + '/playlist?'
-  + Object.entries(fixedParams)
+const playlistOriginUrl = FM_ROOT_URL +
+  '/playlist?' +
+  Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
-    }, '')
-  + 'channel=-10&formats=acc&kbps=128&pt=0.0'
+    }, '') +
+  'channel=-10&formats=acc&kbps=128&pt=0.0'
 
 /**
  * get lyric through the song's sid and album's ssid
@@ -66,10 +74,10 @@ const playlistOriginUrl = FM_ROOT_URL
  * @returns {Axios} - Axios instance
  */
 export const songLyricGET = (sid, ssid) => {
-  return axios.get(FM_ROOT_URL
-    + '/lyric?'
-    + 'sid=' + sid
-    + '&ssid=' + ssid
+  return axios.get(FM_ROOT_URL +
+    '/lyric?' +
+    'sid=' + sid +
+    '&ssid=' + ssid
   )
 }
 
@@ -86,39 +94,48 @@ export const playlistGET = type => {
       dispatch(playlistLoading())
     }
     dispatch(playlistTypes[type]()) // dispatch action according playlistTypes
-    axios(Object.assign(
-      {
-        method: 'GET',
-        url: playlistOriginUrl
-        + '&type=' + getState().fmReducer.type
-        + '&sid=' + getState().fmReducer.sid
-      },
+    axios(Object.assign({
+      method: 'GET',
+      url: playlistOriginUrl +
+            '&type=' + getState()
+        .fmReducer.type +
+            '&sid=' + getState()
+        .fmReducer.sid
+    },
       // is login
-      getState().authReducer._id === 1 &&
-      { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }
-    )).then(response => {
-      if (type === 'end') { return }
-      let playlist = response.data,
-        song = playlist.song,
-        sid = song[0].sid,
-        ssid = song[0].ssid
-      delete playlist.song
-      // if type is rate or unrate, the next similar song will add into current songs array
-      if (type === 'rate') {
-        dispatch(redHeartRateNextSongAppend(song))
-      } else if (type === 'unrate') {
-        dispatch(redHeartUnRateNextSongAppend(song))
-      } else {
-        dispatch(playlistResponse(playlist, sid, ssid, song))
+    getState()
+      .authReducer._id === 1 && {
+      headers: {
+        'Authorization': 'Bearer ' + getState()
+          .authReducer.userToken.access_token
       }
-      if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
-        return songLyricGET(sid, ssid)
-      }
-    }).then(response => {
-      if (response) {
-        dispatch(songLyricResponse(response.data))
-      }
-    }).catch(console.log)
+    }
+    ))
+      .then(response => {
+        if (type === 'end') { return }
+        let playlist = response.data,
+          song = playlist.song,
+          sid = song[0].sid,
+          ssid = song[0].ssid
+        delete playlist.song
+        // if type is rate or unrate, the next similar song will add into current songs array
+        if (type === 'rate') {
+          dispatch(redHeartRateNextSongAppend(song))
+        } else if (type === 'unrate') {
+          dispatch(redHeartUnRateNextSongAppend(song))
+        } else {
+          dispatch(playlistResponse(playlist, sid, ssid, song))
+        }
+        if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
+          return songLyricGET(sid, ssid)
+        }
+      })
+      .then(response => {
+        if (response) {
+          dispatch(songLyricResponse(response.data))
+        }
+      })
+      .catch(console.log)
   }
 }
 
@@ -130,22 +147,25 @@ export const playlistGET = type => {
 export const nextSong = () => {
   return (dispatch, getState) => {
     dispatch(playlistNextSong())
-    songLyricGET(getState().fmReducer.sid, getState().fmReducer.ssid).then(
-      response => {
-        dispatch(songLyricResponse(response.data))
-      }
-    )
+    songLyricGET(getState()
+      .fmReducer.sid, getState()
+      .fmReducer.ssid)
+      .then(
+        response => {
+          dispatch(songLyricResponse(response.data))
+        }
+      )
   }
 }
 
 // Recent list url
-const recentOriginUrl = FM_ROOT_URL
-  + '/recent_played_tracks?'
-  + Object.entries(fixedParams)
+const recentOriginUrl = FM_ROOT_URL +
+  '/recent_played_tracks?' +
+  Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
-    }, '')
-  + 'limit=100&start=0&type=played'
+    }, '') +
+  'limit=100&start=0&type=played'
 
 export const recentListGET = () => {
   return (dispatch, getState) => {
@@ -153,22 +173,29 @@ export const recentListGET = () => {
       Object.assign({
         method: 'GET',
         url: recentOriginUrl
-      }, getState().authReducer._id === 1 &&
-        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
-    ).then(response => {
-      dispatch(recentList(response.data))
-    }).catch(console.log)
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      })
+    )
+      .then(response => {
+        dispatch(recentList(response.data))
+      })
+      .catch(console.log)
   }
 }
 
 // Redheart list url
-const redHeartSidsOriginUrl = FM_ROOT_URL
-  + '/redheart/basic?'
-  + Object.entries(fixedParams)
+const redHeartSidsOriginUrl = FM_ROOT_URL +
+  '/redheart/basic?' +
+  Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
-    }, '')
-  + 'kbps=128'
+    }, '') +
+  'kbps=128'
 
 export const redHeartListGET = () => {
   return (dispatch, getState) => {
@@ -176,34 +203,48 @@ export const redHeartListGET = () => {
       Object.assign({
         method: 'GET',
         url: redHeartSidsOriginUrl,
-      }, getState().authReducer._id === 1 &&
-        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
-    ).then(response => {
-      let songs = response.data.songs
-      let songsChain = songs.reduce((prev, song) => {
-        return prev + song.sid + '|'
-      }, '').slice(0, -1)
-      return axios(
-        Object.assign({
-          method: 'POST',
-          url: 'https://api.douban.com/v2/fm/songs',
-          data: oToFd(Object.assign(fixedParams, { sids: songsChain }))
-        }, getState().authReducer._id === 1 &&
-          { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }))
-    }).then(response => {
-      dispatch(redHeartList(response.data))
-    }).catch(console.log)
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      })
+    )
+      .then(response => {
+        let songs = response.data.songs
+        let songsChain = songs.reduce((prev, song) => {
+          return prev + song.sid + '|'
+        }, '')
+          .slice(0, -1)
+        return axios(
+          Object.assign({
+            method: 'POST',
+            url: 'https://api.douban.com/v2/fm/songs',
+            data: oToFd(Object.assign(fixedParams, { sids: songsChain }))
+          }, getState()
+            .authReducer._id === 1 && {
+            headers: {
+              'Authorization': 'Bearer ' + getState()
+                .authReducer.userToken.access_token
+            }
+          }))
+      })
+      .then(response => {
+        dispatch(redHeartList(response.data))
+      })
+      .catch(console.log)
   }
 }
 
 // Trash list url
-const trashOriginUrl = FM_ROOT_URL
-  + '/banned_songs?'
-  + Object.entries(fixedParams)
+const trashOriginUrl = FM_ROOT_URL +
+  '/banned_songs?' +
+  Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
-    }, '')
-  + 'limit=50&start=0'
+    }, '') +
+  'limit=50&start=0'
 
 export const trashListGET = () => {
   return (dispatch, getState) => {
@@ -211,11 +252,18 @@ export const trashListGET = () => {
       Object.assign({
         method: 'GET',
         url: trashOriginUrl
-      }, getState().authReducer._id === 1 &&
-        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
-    ).then(response => {
-      dispatch(trashList(response.data))
-    }).catch(console.log)
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      })
+    )
+      .then(response => {
+        dispatch(trashList(response.data))
+      })
+      .catch(console.log)
   }
 }
 
@@ -228,18 +276,24 @@ export const playLog = (sid, type, play_source) => {
         method: 'POST',
         url: PLAY_LOG_URL,
         data: oToFd(Object.assign(fixedParams, {
-          records: '[{"time":"'
-          + moment().format('YYYY-MM-DD HH:m:s')
-          + '","play_mode":"o","v":"4.8.2","sid":"'
-          + sid
-          + '","type":"'
-          + type
-          + '","play_source":"'
-          + play_source
-          + '","pid":"0"}]'
+          records: '[{"time":"' +
+              moment()
+                .format('YYYY-MM-DD HH:m:s') +
+              '","play_mode":"o","v":"4.8.2","sid":"' +
+              sid +
+              '","type":"' +
+              type +
+              '","play_source":"' +
+              play_source +
+              '","pid":"0"}]'
         }))
-      }, getState().authReducer._id === 1 &&
-        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }))
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      }))
   }
 }
 
@@ -252,28 +306,34 @@ export const actionLog = (sid, type, play_source) => {
         method: 'POST',
         url: ACTION_LOG_URL,
         data: oToFd(Object.assign(fixedParams, {
-          records: '[{"time":"'
-          + moment().format('YYYY-MM-DD HH:m:s')
-          + '","play_mode":"o","v":"4.8.2","sid":"'
-          + sid
-          + '","type":"'
-          + type
-          + '","play_source":"'
-          + play_source
-          + '"}]'
+          records: '[{"time":"' +
+              moment()
+                .format('YYYY-MM-DD HH:m:s') +
+              '","play_mode":"o","v":"4.8.2","sid":"' +
+              sid +
+              '","type":"' +
+              type +
+              '","play_source":"' +
+              play_source +
+              '"}]'
         }))
-      }, getState().authReducer._id === 1 &&
-        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } }))
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      }))
   }
 }
 
-const userInfoOriginUrl = FM_ROOT_URL
-  + '/user_info?'
-  + Object.entries(fixedParams)
+const userInfoOriginUrl = FM_ROOT_URL +
+  '/user_info?' +
+  Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
-    }, '')
-  + 'avatar_size=large'
+    }, '') +
+  'avatar_size=large'
 
 export const userInfoGET = () => {
   return (dispatch, getState) => {
@@ -281,10 +341,17 @@ export const userInfoGET = () => {
       Object.assign({
         method: 'GET',
         url: userInfoOriginUrl
-      }, getState().authReducer._id === 1 &&
-        { headers: { 'Authorization': 'Bearer ' + getState().authReducer.userToken.access_token } })
-    ).then(response => {
-      dispatch(userInfo(response.data))
-    }).catch(console.log)
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      })
+    )
+      .then(response => {
+        dispatch(userInfo(response.data))
+      })
+      .catch(console.log)
   }
 }

@@ -62,30 +62,36 @@ export const authPost = (usernameAndPassword, callback) => {
   return dispatch => {
     dispatch(authLoginRequest())
     return axios({
-      method: 'POST',
-      url: AUTH_URL,
-      data: oToFd(Object.assign(authFixedParams, usernameAndPassword)),
-    }).then(response => {
-      const userToken = response.data
-      dispatch(authLoginResponse(userToken))
-      dispatch(userInfoGET())
-      dispatch(recentListGET())
-      dispatch(redHeartListGET())
-      dispatch(trashListGET())
-      dispatch(playlistGET('new'))
-      db.insert({
-        _id: 1,
-        userToken,
-        time: [moment().year(), moment().month() + 1, moment().date()]
-      }, (err, doc) => {
-        console.log(doc)
+        method: 'POST',
+        url: AUTH_URL,
+        data: oToFd(Object.assign(authFixedParams, usernameAndPassword)),
       })
-      if (typeof callback === 'function') {
-        callback()
-      }
-    }).catch(() => {
-      dispatch(authLoginFail('请检查账号或密码是否正确'))
-    })
+      .then(response => {
+        const userToken = response.data
+        dispatch(authLoginResponse(userToken))
+        dispatch(userInfoGET())
+        dispatch(recentListGET())
+        dispatch(redHeartListGET())
+        dispatch(trashListGET())
+        dispatch(playlistGET('new'))
+        db.insert({
+          _id: 1,
+          userToken,
+          time: [moment()
+            .year(), moment()
+            .month() + 1, moment()
+            .date()
+          ]
+        }, (err, doc) => {
+          console.log(doc)
+        })
+        if (typeof callback === 'function') {
+          callback()
+        }
+      })
+      .catch(() => {
+        dispatch(authLoginFail('请检查账号或密码是否正确'))
+      })
   }
 }
 
@@ -101,8 +107,13 @@ export const authLoad = () => {
       _id: 1
     }, (err, doc) => {
       if (doc !== null) {
-        let now = [moment().year(), moment().month() + 1, moment().date()],
-          fromNow = moment(now).diff(doc.time, 'days')
+        let now = [moment()
+          .year(), moment()
+          .month() + 1, moment()
+          .date()
+        ]
+        let fromNow = moment(now)
+          .diff(doc.time, 'days')
 
         // remove user info when already logined 80 days
         console.log('token storage time ' + fromNow + ' day(s)')

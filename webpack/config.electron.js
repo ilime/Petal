@@ -4,7 +4,7 @@ const MAINJS_OUTPUT_PATH = path.resolve(__dirname, '../bundle')
 
 module.exports = {
   entry: {
-    main: './main.dev'
+    main: './electron/main.dev'
   },
   output: {
     path: MAINJS_OUTPUT_PATH,

@@ -1,6 +1,4 @@
-import cond, {
-  shallowCopy
-} from 'redux-cond'
+import cond, { shallowCopy } from 'redux-cond'
 import {
   PLAYLIST_LOADING,
   PLAYLIST_NEW_REQUEST,

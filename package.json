@@ -1,96 +1,98 @@
 {
-  "name": "Petal",
+  "name": "PetalDev",
   "version": "1.3.0",
   "description": "Douban.FM Client With Extra - - -",
   "main": "bundle/main.js",
   "scripts": {
-    "start": "electron .",
-    "dev:hot": "webpack-dev-server --config webpack/config.dev.js",
-    "dev:watch": "webpack --config webpack/config.dev.js --progress --watch",
+    "start": "cross-env NODE_ENV=development electron .",
+    "dev:hot": "cross-env NODE_ENV=development webpack-dev-server --config webpack/config.dev.js",
     "bundle:main": "webpack --config webpack/config.electron.js --progress",
     "bundle:dev": "cross-env NODE_ENV=development webpack --config webpack/config.dev.js --progress",
     "bundle:dev+main": "npm run bundle:dev && npm run bundle:main",
     "bundle:prod": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js --progress",
     "bundle:prod+main": "npm run bundle:prod && npm run bundle:main",
-    "dist": "build",
-    "test": "jest --silent"
+    "dist": "electron-builder",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/3shld/Petal.git"
+    "url": "https://github.com/ilime/Petal.git"
   },
   "keywords": [
     "Douban.FM",
     "electron",
     "client"
   ],
-  "author": "3shld",
+  "author": "ilime",
   "license": "MIT",
   "build": {
-    "appId": "org.3shld.petal",
+    "appId": "org.ilime.petal",
     "dmg": {
       "contents": [
         {
-          "x": 100,
-          "y": 180
+          "x": 150,
+          "y": 260
         },
         {
-          "x": 300,
-          "y": 180,
+          "x": 390,
+          "y": 260,
           "type": "link",
           "path": "/Applications"
         }
       ],
       "window": {
-        "width": 400,
-        "height": 280
+        "width": 540,
+        "height": 380
       }
     },
     "win": {}
   },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./setupTests.js"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-jest": "^20.0.3",
+    "babel-eslint": "^8.1.0",
+    "babel-jest": "^22.0.3",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
-    "electron": "^1.8.1",
-    "electron-builder": "^17.5.0",
+    "electron-builder": "^19.49.0",
     "electron-devtools-installer": "^2.2.1",
-    "enzyme": "^2.9.1",
-    "eslint": "^3.19.0",
-    "eslint-plugin-react": "^7.4.0",
-    "extract-text-webpack-plugin": "^2.1.2",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.14.0",
+    "eslint-plugin-react": "^7.5.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
-    "jest": "^20.0.3",
-    "node-sass": "^4.6.0",
+    "jest": "^22.0.3",
+    "node-sass": "^4.7.1",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
-    "react-hot-loader": "^3.1.1",
-    "react-test-renderer": "^15.6.2",
+    "react-hot-loader": "^3.1.3",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.18.2",
-    "webpack": "^2.7.0",
+    "style-loader": "^0.19.1",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.4",
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
-    "axios": "^0.16.2",
-    "moment": "^2.19.1",
+    "axios": "^0.17.1",
+    "moment": "^2.19.2",
     "nedb": "^1.8.0",
     "prop-types": "^15.6.0",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.1",
     "redux-cond": "^1.1.0",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "^0.68.5"
+    "semantic-ui-react": "^0.77.1"
   }
 }
