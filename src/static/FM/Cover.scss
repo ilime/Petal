@@ -1,35 +1,47 @@
-.cover {
-  position: relative;
-  top: 2rem;
-  left: 2rem;
+@import '../common';
 
-  img {
-    width: 300px !important;
-    height: 300px !important;
+.petal-cover {
+  user-select: none;
+
+  .info {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+
+    .artist {
+      img {
+        height: 35px !important;
+      }
+    }
   }
-}
 
-.musicPause {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 5rem;
-  height: 5rem;
-  border: 3px solid seagreen;
-  border-radius: 50%;
-  margin: 0 auto;
-  cursor: pointer;
-
-  i {
-    margin-left: .5rem;
+  .cover {
+    img {
+      width: 250px !important;
+      height: 250px !important;
+    }
   }
-}
 
-.heartTrashForward {
-  margin-top: 2rem;
-  
-  i {
-    margin: 0 .9rem;
+  .play-pause {
+    @include VHCenter();
+    width: 5rem;
+    height: 5rem;
+    border: 3px solid $petal-green;
+    border-radius: 50%;
+    margin: 0 auto;
     cursor: pointer;
+
+    i {
+      margin-left: .3rem;
+    }
+  }
+
+  .heart-trash-forward {
+    margin-top: 2rem;
+
+    i {
+      margin: 0 .9rem;
+      cursor: pointer;
+    }
   }
 }

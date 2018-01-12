@@ -6,14 +6,11 @@ import {
   playlistNewRequest,
   playlistResponse,
   songLyricResponse,
-  playlistNextSong,
   playlistPlayingRequest,
   playlistSkipRequest,
   playlistTrashRequest,
   redHeartRate,
   redHeartUnRate,
-  redHeartRateNextSongAppend,
-  redHeartUnRateNextSongAppend,
   playlistEndRequest,
   recentList,
   redHeartList,
@@ -27,13 +24,18 @@ const FM_ROOT_URL = 'https://api.douban.com/v2/fm' // Root Url
 
 // Fixed params for fm's operations
 const fixedParams = {
-  alt: 'json',
-  apikey: '02646d3fb69a52ff072d47bf23cef8fd',
-  app_name: 'radio_iphone',
-  client: 's:mobile|y:iOS 10.3.1|f:116|d:8ff78b4d03654c0dbc63d318fc7a065289a90af2|e:iPhone6,2|m:appstore',
-  douban_udid: '826390ea40bf43b0ee04d44a233b2511fcd76a8b',
-  udid: '8ff78b4d03654c0dbc63d318fc7a065289a90af2',
-  version: '116'
+  formats: null,
+  apikey: '02f7751a55066bcb08e65f4eff134361',
+  kbps: 128,
+  version: 651,
+  audio_patch_version: 4,
+  app_name: 'radio_android',
+  pb: 128,
+  user_accept_play_third_party: 0,
+  client: 's%3Amobile%7Cv%3A4.6.11%7Cy%3Aandroid+7.1.1%7Cf%3A651%7Cm%3AXiaomi%7Cd%3Acf9aed3a0bc54032661c6f84d220b1f28d3722ec%7Ce%3Axiaomi_mi_6',
+  from: '',
+  udid: 'cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
+  push_device_id: '3ec7f0336d3a0e6db6b07b9f9a2c1f304f3ef154'
 }
 
 /**
@@ -64,7 +66,7 @@ const playlistOriginUrl = FM_ROOT_URL +
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
     }, '') +
-  'channel=-10&formats=acc&kbps=128&pt=0.0'
+  'channel=-10&pt=0.0'
 
 /**
  * get lyric through the song's sid and album's ssid
@@ -112,49 +114,15 @@ export const playlistGET = type => {
     }
     ))
       .then(response => {
-        if (type === 'end') { return }
+        if (type === 'end' || type === 'rate' || type === 'unrate') { return }
         let playlist = response.data,
-          song = playlist.song,
-          sid = song[0].sid,
-          ssid = song[0].ssid
-        delete playlist.song
+          song = playlist.song[0],
+          sid = song.sid,
+          ssid = song.ssid
         // if type is rate or unrate, the next similar song will add into current songs array
-        if (type === 'rate') {
-          dispatch(redHeartRateNextSongAppend(song))
-        } else if (type === 'unrate') {
-          dispatch(redHeartUnRateNextSongAppend(song))
-        } else {
-          dispatch(playlistResponse(playlist, sid, ssid, song))
-        }
-        if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
-          return songLyricGET(sid, ssid)
-        }
-      })
-      .then(response => {
-        if (response) {
-          dispatch(songLyricResponse(response.data))
-        }
+        dispatch(playlistResponse(sid, ssid, song))
       })
       .catch(console.log)
-  }
-}
-
-/**
- * Play next song in current songs array, if array's length not= 1
- * 
- * @returns - a thunk function
- */
-export const nextSong = () => {
-  return (dispatch, getState) => {
-    dispatch(playlistNextSong())
-    songLyricGET(getState()
-      .fmReducer.sid, getState()
-      .fmReducer.ssid)
-      .then(
-        response => {
-          dispatch(songLyricResponse(response.data))
-        }
-      )
   }
 }
 

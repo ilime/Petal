@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Icon, Label } from 'semantic-ui-react'
+import { Icon, Label } from 'semantic-ui-react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import Loading from '../Loading'
 import FM from '../FM'
 import Login from '../Login'
 import Sidebar from '../Sidebar'
-import Pattern from '../Pattern'
-import Setting from '../Setting'
 import Personal from '../Personal'
 import { authLoad } from '../../actions/auth/apis'
-import { openInDefaultBrowser, appMinimize, appQuit } from '../../helper/electron'
+import { openInDefaultBrowser, rendererProcessSend } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
 import '../../static/app.scss'
 
@@ -20,27 +18,24 @@ class Container extends Component {
     super(props)
     this.state = {
       loading: true,
-      pattern: false,
-      settingOpen: false,
-      checkUpdateDisplay: 0,
+      checkUpdateDisplay: 0
     }
   }
 
-  handlePatternOpen = () => { this.setState({ patternOpen: true }) }
-
-  handlePatternClose = () => { this.setState({ patternOpen: false }) }
-
-  handleSettingOpen = () => { this.setState({ settingOpen: true }) }
-
-  handleSettingClose = () => { this.setState({ settingOpen: false }) }
+  componentDidMount() {
+    window.onbeforeunload = () => {
+      rendererProcessSend('reInitWindowSize')
+    }
+  }
 
   handleLoadingOver = () => {
+    const { handleAuthLoad, mainVersion, secondaryVersion } = this.props
+
     setTimeout(() => {
       this.setState({ loading: false })
-      const { handleAuthLoad, mainVersion, secondaryVersion } = this.props
+      rendererProcessSend('resizeWindowAfterLoading')
       handleAuthLoad()
-      checkUpdate(mainVersion, secondaryVersion,
-        display => this.setState({ checkUpdateDisplay: display }))
+      checkUpdate(mainVersion, secondaryVersion, display => this.setState({ checkUpdateDisplay: display }))
     }, 5000)
   }
 
@@ -55,55 +50,29 @@ class Container extends Component {
     } else {
       return (
         <Router>
-          <Grid>
-            <Grid.Row className='outside'>
-              <Grid.Column as='nav' width={2} id='sidebarColumn'>
-                <Sidebar />
-              </Grid.Column>
-              <Grid.Column as='main' width={14}>
-                <div className='titleBar' title='点住我可以拖动哦～'></div>
-                <FM />
-                <Route path='/login' component={Login} />
-                <Route path='/personal' component={Personal} />
-              </Grid.Column>
-              <aside>
-                <div className='petalControl'>
-                  <div className='miniButton' onClick={appMinimize}>
-                    <span>－</span>
-                  </div>
-                  <div className='quitButton' onClick={appQuit}>
-                    <span>×</span>
-                  </div>
+          <main className="petal-container">
+            <article className="petal-sidebar-container">
+              <Sidebar />
+            </article>
+            <article className="petal-routes-container">
+              <section className="titlebar">
+                <div className="more-options">
+                  {checkUpdateDisplay === 1 &&
+                    <Label
+                      as="a"
+                      className="checkupdate"
+                      content='新的版本更新:)'
+                      color="green"
+                      size="mini"
+                      onClick={openInDefaultBrowser('https://github.com/ilime/Petal/releases')} />}
+                  <Icon name="cube" color="grey" />
                 </div>
-                {checkUpdateDisplay === 1 &&
-                  <Label
-                    as='a'
-                    className='checkUpdate'
-                    content='新的版本更新:)'
-                    color='green'
-                    size='mini'
-                    onClick={openInDefaultBrowser('https://github.com/3shld/Petal/releases')} />}
-                <Icon className='petalPattern'
-                  name='options'
-                  size='large'
-                  color='grey'
-                  link
-                  onClick={this.handlePatternOpen} />
-                <Icon className='petalSetting'
-                  name='setting'
-                  size='large'
-                  color='grey'
-                  link
-                  onClick={this.handleSettingOpen} />
-              </aside>
-              <Pattern
-                open={this.state.patternOpen}
-                handleClose={this.handlePatternClose} />
-              <Setting
-                open={this.state.settingOpen}
-                handleClose={this.handleSettingClose} />
-            </Grid.Row>
-          </Grid>
+              </section>
+              <FM />
+              <Route path='/login' component={Login} />
+              <Route path='/personal' component={Personal} />
+            </article>
+          </main>
         </Router>
       )
     }

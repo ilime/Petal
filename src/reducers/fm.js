@@ -4,14 +4,11 @@ import {
   PLAYLIST_NEW_REQUEST,
   PLAYLIST_RESPONSE,
   SONG_LYRIC_RESPONSE,
-  PLAYLIST_NEXT_SONG,
   PLAYLIST_PLAYING_REQUEST,
   PLAYLIST_SKIP_REQUEST,
   PLAYLIST_TRASH_REQUEST,
   RED_HEART_RATE,
   RED_HEART_UNRATE,
-  RED_HEART_RATE_NEXT_SONG_APPEND,
-  RED_HEART_UN_RATE_NEXT_SONG_APPEND,
   PLAYLIST_END_REQUEST,
   RECENT_LIST,
   RECENT_EMPTY,
@@ -37,12 +34,11 @@ const fmReducer = (state = {
   pattern: 'select',
   recentIndex: -1, // recent songs current index, init -1
   redheartIndex: -1, // redheart songs current index, init -1
-  playlist: {},
   type: '',
   sid: '', // playlist song sid
   ssid: '', // playlist song ssid
   fsid: '', // recent or redheart songs sid
-  song: [], // playlis songs array
+  song: {},
   lyric: {},
   recent: {}, // recent list
   redheart: [], // redheart list
@@ -75,25 +71,12 @@ const fmReducer = (state = {
     }),
     PLAYLIST_RESPONSE, (state, action) => shallowCopy(state, {
       isFetching: false,
-      playlist: action.playlist,
       sid: action.sid,
       ssid: action.ssid,
       song: action.song
     }),
     SONG_LYRIC_RESPONSE, (state, action) => shallowCopy(state, {
       lyric: action.lyric
-    }),
-    PLAYLIST_NEXT_SONG, state => shallowCopy(state, {
-      type: 'continue',
-      sid: state.song[1].sid,
-      ssid: state.song[1].ssid,
-      song: state.song.slice(1)
-    }),
-    RED_HEART_RATE_NEXT_SONG_APPEND, (state, action) => shallowCopy(state, {
-      song: state.song.concat(action.song)
-    }),
-    RED_HEART_UN_RATE_NEXT_SONG_APPEND, (state, action) => shallowCopy(state, {
-      song: state.song.slice(0, -1).concat(action.song)
     }),
     RECENT_LIST, (state, action) => shallowCopy(state, {
       recent: action.recent

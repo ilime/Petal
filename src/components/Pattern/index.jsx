@@ -5,7 +5,7 @@ import { Modal, Header, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { selectPattern, recentPattern, redheartPattern } from '../../actions/fm/types'
 import { playlistGET } from '../../actions/fm/apis'
-import { renderProcessSend } from '../../helper/electron'
+import { rendererProcessSend } from '../../helper/electron'
 
 class Pattern extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class Pattern extends Component {
 
     if (pattern !== name) { 
       this._patterns.get(name)()
-      renderProcessSend('patternSwitch', name)
+      rendererProcessSend('patternSwitch', name)
     }
 
     this.props.handleClose()

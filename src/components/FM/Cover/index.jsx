@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Dimmer, Image, Icon, Popup } from 'semantic-ui-react'
+import { Dimmer, Image, Icon, Popup, Header } from 'semantic-ui-react'
 import {
   fsidSet,
   recentGo, recentBack,
@@ -10,14 +10,21 @@ import {
 } from '../../../actions/fm/types'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
 import patternSwitch from '../../../helper/patternSwitch'
-import { onReceiveFromMainProcess, renderProcessSend } from '../../../helper/electron'
+import { onReceiveFromMainProcess, rendererProcessSend } from '../../../helper/electron'
 
 class Cover extends Component {
   constructor(props) {
     super(props)
     this.state = {
       playing: true,
-      cover: '',
+      song: {
+        title: '',
+        singers: [{
+          avatar: ''
+        }],
+        artist: '',
+        picture: ''
+      },
       love: 'white',
       isLoginPopup: false
     }
@@ -35,8 +42,8 @@ class Cover extends Component {
   componentWillReceiveProps(nextProps) {
     const { _id, pattern, song, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
 
-    if (pattern === 'select' && song[0] !== this.props.song[0]) {
-      this.setCover(song[0])
+    if (pattern === 'select' && song !== this.props.song) {
+      this.setCover(song)
     }
 
     patternSwitch.bind(this)(
@@ -52,7 +59,7 @@ class Cover extends Component {
     )
 
     if (_id === 0 && this.props._id === 1) {
-      this.setState({ love: 'white' }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
+      this.setState({ love: 'white' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
     }
   }
 
@@ -78,9 +85,9 @@ class Cover extends Component {
   setCover = (song, pattern) => {
     this.setState({
       playing: true,
-      cover: song.picture,
+      song,
       love: pattern === 'redheart' ? 'red' : (song.like === 1 ? 'red' : 'white')
-    }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
+    }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
   }
 
   handleControlShow = () => this.setState({ controlPanelActive: true })
@@ -95,10 +102,10 @@ class Cover extends Component {
     const audio = document.querySelector('#_audio')
     if (audio.paused) {
       audio.play()
-      this.setState({ playing: true }, () => { renderProcessSend('touchBarPauseAndStart', this.state.playing) })
+      this.setState({ playing: true }, () => { rendererProcessSend('touchBarPauseAndStart', this.state.playing) })
     } else {
       audio.pause()
-      this.setState({ playing: false }, () => { renderProcessSend('touchBarPauseAndStart', this.state.playing) })
+      this.setState({ playing: false }, () => { rendererProcessSend('touchBarPauseAndStart', this.state.playing) })
     }
   }
 
@@ -163,15 +170,11 @@ class Cover extends Component {
   }
 
   handleSkipSong = () => {
-    if (this.props.pattern === 'select') {
-      this.props.getPlayList('skip')
-    }
+    this.props.getPlayList('skip')
   }
 
   handleTrashSong = () => {
-    if (this.props.pattern === 'select') {
-      this.props.getPlayList('trash')
-    }
+    this.props.getPlayList('trash')
   }
 
   /**
@@ -202,7 +205,7 @@ class Cover extends Component {
       if (pattern === 'redheart') {
         handlePlayLog(fsid, 'r', 'h')
       }
-      this.setState({ love: 'red' }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
+      this.setState({ love: 'red' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
     }
 
     if (love === 'red') {
@@ -215,7 +218,7 @@ class Cover extends Component {
       if (pattern === 'redheart') {
         handlePlayLog(fsid, 'u', 'h')
       }
-      this.setState({ love: 'white' }, () => { renderProcessSend('touchBarRateColor', this.state.love) })
+      this.setState({ love: 'white' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
     }
   }
 
@@ -233,13 +236,13 @@ class Cover extends Component {
 
   render() {
     const { pattern, recentSong, redheartSong } = this.props
-    const { controlPanelActive, playing, cover, love, isLoginPopup } = this.state
+    const { controlPanelActive, playing, love, isLoginPopup, song } = this.state
     const controlPanel = (
       <div>
-        <div className='musicPause' onClick={this.handleAudioPlay}>
+        <div className='play-pause' onClick={this.handleAudioPlay}>
           <Icon name={playing ? 'pause' : 'play'} size='large' />
         </div>
-        <div className='heartTrashForward'>
+        <div className='heart-trash-forward'>
           {pattern === 'select' && <div>
             <Popup
               trigger={<Icon name='heart' size='big' style={{ color: love }} onClick={this.handleLoveSong} />}
@@ -263,26 +266,39 @@ class Cover extends Component {
     )
 
     return (
-      <Dimmer.Dimmable
-        className='cover'
-        as={Image}
-        blurring={true}
-        dimmed={controlPanelActive}
-        dimmer={{ active: controlPanelActive, content: controlPanel }}
-        onMouseEnter={this.handleControlShow}
-        onMouseLeave={this.handleControlHide}
-        src={cover}
-        size='medium'
-        shape='rounded'
-        style={{ 'WebkitUserSelect': 'none' }}
-      />
+      <div className="petal-cover">
+        <div className="info">
+          <div className="title">
+            <Header as="h3">
+              {song.title.length > 20 ? song.title.substring(0, 17) + '...' : song.title}
+              <Header.Subheader>
+                {song.artist}
+              </Header.Subheader>
+            </Header>
+          </div>
+          <div className="artist">
+            <Image src={song.singers[0].avatar} size='mini' circular />
+          </div>
+        </div>
+        <Dimmer.Dimmable
+          className="cover"
+          as={Image}
+          blurring={true}
+          dimmed={controlPanelActive}
+          dimmer={{ active: controlPanelActive, content: controlPanel }}
+          onMouseEnter={this.handleControlShow}
+          onMouseLeave={this.handleControlHide}
+          src={song.picture}
+          rounded
+        />
+      </div>
     )
   }
 }
 
 Cover.propTypes = {
   pattern: PropTypes.string.isRequired,
-  song: PropTypes.array.isRequired,
+  song: PropTypes.object.isRequired,
   recentSong: PropTypes.array,
   redheartSong: PropTypes.array,
   recentIndex: PropTypes.number.isRequired,

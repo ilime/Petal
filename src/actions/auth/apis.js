@@ -27,7 +27,7 @@ import {
 } from '../setting/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
-import { renderProcessSend } from '../../helper/electron'
+import { rendererProcessSend } from '../../helper/electron'
 
 const AUTH_URL = 'https://www.douban.com/service/auth2/token' // Auth Url
 
@@ -133,7 +133,7 @@ export const authLoad = () => {
       } else {
         dispatch(playlistGET('new'))
       }
-      renderProcessSend('patternSwitch', 'select')
+      rendererProcessSend('patternSwitch', 'select')
     })
   }
 }
@@ -154,7 +154,7 @@ export const authRemove = (dispatch, callback) => {
     }
     dispatch(authLogout())
     dispatch(selectPattern)
-    renderProcessSend('patternSwitch', 'select')
+    rendererProcessSend('patternSwitch', 'select')
     dispatch(playlistGET('new'))
     dispatch(recentEmpty())
     dispatch(redHeartEmpty())

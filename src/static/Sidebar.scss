@@ -1,58 +1,88 @@
-.navigation {
-  list-style: none;
-  padding: 0;
-  li {
-    position: relative;
-    margin: .8rem auto .5rem;
-    width: 55%;
-    height: 3.5rem;
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 100%;
-      bottom: 0;
-      background: #2e963d;
-      height: 3px;
-      transition-property: right;
-      transition-duration: 0.3s;
-      transition-timing-function: ease-out;
-    }
-    &:hover {
-      cursor: pointer;
-      &::after {
-        right: 0;
-      }
-    }
-    a {
-      display: block;
-      width: 100%;
-      color: grey !important;
-      span {
-        display: block;
-        margin-top: .3rem;
-      }
-    }
-  }
+@import './common';
+
+.petal-sidebar {
+  height: 100vh;
 }
 
-.selected {
-  i.grey.large.icon {
-    color: #2e963d !important;
+.petal-app-control {
+  display: flex;
+  height: 24px;
+
+  div {
+    @include VHCenter();
+    flex: 1;
   }
+
   span {
-    color: #2e963d;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    color: $petal-black;
+
+    &:hover {
+      border: 1px solid $petal-black;
+    }
+  }
+
+  .quit {
+    background: rgb(239, 107, 96);
+
+    &:hover {
+      &:before {
+        position: relative;
+        content: '×';
+        left: 1px;
+        bottom: 4px;
+      }
+    }
+  }
+
+  .hide {
+    background: rgb(247, 195, 81);
+
+    &:hover {
+      &:before {
+        position: relative;
+        content: '–';
+        left: 1px;
+        bottom: 5px;
+      }
+    }
   }
 }
 
-#logIn {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  bottom: .1rem;
+.petal-sidebar-itemlist {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
+  height: calc(100vh - 24px - 5px);
 
-  .ui.avatar.image.userAvatar {
-    width: 3rem;
-    height: 3rem;
+  li {
+    padding: 5px;
+    padding-right: 0;
+  }
+
+  .auth {
+    position: absolute;
+    bottom: 5px;
+  }
+
+  .selected {
+    &:after {
+      position: absolute;
+      right: 1px;
+      content: '';
+      display: inline-block;
+      width: 2px;      
+      height: 22px;
+      background: $petal-green;
+    }
+
+    i.grey.large.icon {
+      color: $petal-green !important;
+    }
   }
 }

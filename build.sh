@@ -17,7 +17,7 @@ echo "Build start ..."
 
 # bundle src file
 echo "--- yarn run bundle:prod ---"
-yarn run bundle:prod &> /dev/null
+yarn run bundle:prod
 
 # check main.js exists
 if [ -e bundle/main.js ]
@@ -27,14 +27,14 @@ then
     if [ "$YES_OR_NO" == "Y" ]
     then
         echo "--- yarn run build:main ---"
-        yarn run bundle:main &> /dev/null
+        yarn run bundle:main
     else
         echo "The input is N or others, go to next step"
     fi
 else
     echo "There is no main.js, run bundle"
     echo "--- npm run build:main ---"
-    yarn run bundle:main &> /dev/null
+    yarn run bundle:main
 fi
 
 # copy main.js into app/

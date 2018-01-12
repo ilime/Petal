@@ -1,0 +1,9 @@
+$petal-black: rgba(0, 0, 0, .9);
+$petal-grey: #767676;
+$petal-green: seagreen;
+
+@mixin VHCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

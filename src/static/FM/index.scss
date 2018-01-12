@@ -1,5 +1,10 @@
-.fmRegion {
-  width: 680px;
-  height: 400px;
-  top: 1rem;
+@import '../common';
+
+.fm-region {
+  @include VHCenter();
+  flex-direction: column;
+}
+
+.fm-dimmer {
+  background: transparent !important;
 }

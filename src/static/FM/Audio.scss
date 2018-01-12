@@ -1,67 +1,63 @@
-.player {
-  position: relative;
-  top: 4rem;
-  left: 2rem;
+@import '../common';
 
-  .songProgress {
-    width: 93%;
-  }
+.petal-player {
+  margin-top: 1rem;
 
-  .st-vo {
-    display: flex;
+  .ui.progress {
+    margin-bottom: 1em;
 
-    .startAndEnd {
-      flex: none;
-      width: 6rem;
-      color: grey;
-    }
-
-    .volume {
-      position: relative;
-      flex: 1;
-
-      i.volume.up {
-        position: absolute;
-        right: 1.6rem;
-        top: .1rem;
-      }
-      
-      .volumeBar {
-        position: absolute;
-        width: 165px;
-        height: 2px;
-        background: grey;
-        left: 1.8rem;
-        bottom: .5rem;
-
-        .pin {
-          display: block;
-          position: relative;
-          z-index: 2;
-          cursor: pointer;
-          width: 10px;
-          height: 10px;
-          background-color: seagreen;
-          border-radius: 50%;
-          bottom: .3rem;
-          // left: 39px;
-
-          &:active {
-            transform: scale(1.1);
-          }
-        }
-      }
-
-      .volumeProgress {
-        position: absolute;
-        // width: 30%;
-        height: 2px;
-        background: seagreen;
-      }
+    .bar {
+      background: $petal-green;
+      min-width: 0px !important;
     }
   }
 }
 
-.ui.progress .bar {
-  min-width: 0px !important;
+.petal-player .player-bar {
+  display: flex;
+
+  .player-time {
+    color: $petal-grey;
+  }
+
+  .player-volume {
+    display: flex;
+    position: relative;
+    padding-left: 1rem;
+
+    i.volume.up.icon {
+      margin: 0 0 0 .25rem;
+    }
+
+    .volume-bar {
+      position: relative;
+      top: 8px;
+      right: 1px;
+      width: 138px;
+      height: 2px;
+      background: $petal-grey;
+      cursor: pointer;
+
+      .progress {
+        position: absolute;
+        height: 2px;
+        background: $petal-green;
+      }
+
+      .pin {
+        display: block;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+        width: 8px;
+        height: 8px;
+        background-color: $petal-green;
+        border-radius: 50%;
+        bottom: 3px;
+        &:active {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
 }

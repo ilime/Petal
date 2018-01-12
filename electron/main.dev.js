@@ -90,11 +90,21 @@ ipcMain.on('patternSwitch', (event, arg) => {
   }
 })
 
+ipcMain.on('resizeWindowAfterLoading', () => {
+  mainWindow.setSize(330, 500)
+})
+
+ipcMain.on('reInitWindowSize', () => {
+  mainWindow.setSize(330, 330)
+})
+
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    height: 500,
+    width: 330,
+    height: 330,
     resizable: false,
-    frame: false
+    frame: false,
+    show: false
   })
 
   mainWindow.loadURL(url.format({
@@ -112,7 +122,9 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools()
   }
 
-  mainWindow.on('close', () => { mainWindow = null })
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
 }
 
 const template = [{
@@ -226,5 +238,3 @@ app.on('ready', () => {
   }
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 })
-
-app.on('window-all-closed', () => { app.quit() })

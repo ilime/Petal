@@ -5,7 +5,7 @@ import { Sidebar } from '../src/components/Sidebar/index.jsx'
 
 describe('<Sidebar />', () => {
   const wrapper = shallow(<Sidebar _id={0} />)
-  const toArray = ['/', '/login']
+  const toArray = ['/', '/pattern', '/setting', '/login']
 
   test('navlink worked as expectly', () => {
     let index = 0

@@ -44,11 +44,11 @@ export function isOnline(callback) {
 }
 
 export function onReceiveFromMainProcess(channel, f) {
-  ipcRenderer.on(channel, (e, message) => {
+  ipcRenderer.on(channel, () => {
     f()
   })
 }
 
-export function renderProcessSend(channel, arg) {
+export function rendererProcessSend(channel, arg) {
   ipcRenderer.send(channel, arg)
 }

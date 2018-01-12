@@ -1,10 +1,12 @@
-.petal-loading-container {
+@import './common';
+
+.petal-loading {
   -webkit-app-region: drag;
   >div {
-    height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include VHCenter();
+  }
+  div:first-child {
+    height: 220px;
   }
 }
 
@@ -20,7 +22,7 @@
 
 .petal-loading-text {
   path {
-    stroke-width: 10;
+    stroke-width: 1;
     fill: none;
     stroke-dasharray: 800;
     stroke-dashoffset: 800;
@@ -65,7 +67,6 @@
   }
   to {
     stroke: seagreen;
-    stroke-width: 1;
     fill: seagreen;
     stroke-dashoffset: 0;
   }

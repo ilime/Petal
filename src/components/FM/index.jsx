@@ -1,33 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 import Cover from './Cover'
 import Audio from './Audio'
-import Info from './Info'
 
 class FM extends Component {
   render() {
     const { isFetching } = this.props
     return (
-      <Dimmer.Dimmable dimmed className='fmRegion'>
-        <Dimmer active={isFetching} inverted>
-          <Loader>加载中</Loader>
-        </Dimmer>
-        <article>
-          <Grid>
-            <Grid.Row columns={2}>
-              <Grid.Column>
-                <Cover />
-                <Audio />
-              </Grid.Column>
-              <Grid.Column>
-                <Info />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </article>
-      </Dimmer.Dimmable>
+      <article className='fm-region'>
+        <Dimmer.Dimmable dimmed>
+          <Dimmer className="fm-dimmer" active={isFetching} inverted>
+            <Loader>加载中</Loader>
+          </Dimmer>
+          <Cover />
+          <Audio />
+        </Dimmer.Dimmable>
+      </article>
     )
   }
 }

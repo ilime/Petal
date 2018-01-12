@@ -1,90 +1,36 @@
-#app {
-  overflow-x: hidden;
-  overflow-y: hidden;
+@import './common';
+
+.petal-container {
+  display: flex;
 }
 
-#sidebarColumn {
-  background: #f1faf1;
-  width: 9% !important;
-  height: 500px;
-  text-align: center;
-  padding: 0;
-  margin-left: 1rem;
-  user-select: none;
+.petal-sidebar-container {
+  flex: none;
+  width: 40px;
 }
 
-.outside {
-  position: relative;
-}
+.petal-routes-container {
+  flex: 1;
 
-.titleBar {
-  position: relative;
-  height: 2rem;
-  width: 685px;
-  right: 1rem;
-  -webkit-app-region: drag;
-}
+  .titlebar {
+    position: relative;
+    height: 24px;
+    -webkit-app-region: drag;
+  }
 
-.petalControl {
-  position: absolute;
-  right: 1.6rem;
-  top: 1.2rem;
-  z-index: 2147483647;
-  color: #565656;
-  &:hover {
+  .more-options {
+    position: absolute;
+    top: 3px;
+    right: -2px;
     cursor: pointer;
-    div {
-      span {
-        display: block;
-      }
+
+    i {
+      font-size: 1.2em;
+    }
+
+    .checkupdate {
+      position: relative;
+      top: -3px;
     }
   }
-
-  div {    
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    span {
-      position: absolute;
-      display: none;
-      top: -1.3px;
-      height: 100%;
-    }
-  }
-  div + div {
-    margin-left: 7px;
-  }
-
-  .miniButton {
-    background-color: #fbbd08;
-    span {
-      left: -0.7px;
-    }
-  }
-
-  .quitButton {
-    background-color: #f44336;
-    span {
-      left: 21.4px;
-    }
-  }
-}
-
-.checkUpdate {
-  position: absolute;
-  right: 4.6rem;
-  bottom: 1.2rem;
-}
-
-.petalPattern {
-  position: absolute;
-  right: 2.6rem;
-  bottom: 1.2rem;
-}
-
-.petalSetting {
-  position: absolute;
-  right: .8rem;
-  bottom: 1.2rem;
 }
