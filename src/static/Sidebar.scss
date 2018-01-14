@@ -68,6 +68,12 @@
   .auth {
     position: absolute;
     bottom: 5px;
+
+    .ui.avatar.image {
+      width: 21px !important;
+      height: 21px !important;
+      user-select: none;
+    }
   }
 
   .selected {

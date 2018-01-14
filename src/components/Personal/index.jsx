@@ -1,57 +1,71 @@
 import React, { Component } from 'react'
-import { Grid, Menu } from 'semantic-ui-react'
-import { NavLink, Route } from 'react-router-dom'
-import Recent from './Recent'
-import RedHeart from './RedHeart'
-import Trash from './Trash'
+import PropTypes from 'prop-types'
+import { Header, Item, Button } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { authRemove } from '../../actions/auth/apis'
 
 class Personal extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   componentDidMount() {
-    document.querySelector('.fmRegion').style.display = 'none'
+    document.querySelector('.fm-region').style.display = 'none'
   }
 
   componentWillUnmount() {
     if (this.props.history.location.pathname === '/') {
-      document.querySelector('.fmRegion').style.display = 'block'
+      document.querySelector('.fm-region').style.display = 'flex'
     }
   }
 
+  handleAuthRemoveWrapper = () => {
+    this.props.handleAuthRemove(() => this.props.history.push('/'))
+  }
+
   render() {
-    const { match } = this.props
+    const { userInfo } = this.props
 
     return (
-      <article className='personal'>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={5}>
-              <Menu pointing secondary vertical>
-                <NavLink
-                  to={`${match.url}/recent`}
-                  className='item'>
-                  最近播放
-                </NavLink>
-                <NavLink
-                  to={`${match.url}/redHeart`}
-                  className='item'>
-                  红心列表
-                </NavLink>
-                <NavLink
-                  to={`${match.url}/trash`}
-                  className='item'>
-                  不再播放
-                </NavLink>
-              </Menu>
-            </Grid.Column>
-            <Grid.Column width={11} className='songlist'>
-              <Route path={`${match.url}/recent`} component={Recent} />
-              <Route path={`${match.url}/redHeart`} component={RedHeart} />
-              <Route path={`${match.url}/trash`} component={Trash} />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+      <article className="petal-personal">
+        <Header as='h2'>档案</Header>
+        <Item.Group unstackable>
+          <Item>
+            <Item.Image className="avatar-icon" size='tiny' src={userInfo.icon} />
+            <Item.Content>
+              <Item.Header as='a'>{userInfo.name}</Item.Header>
+              <Item.Meta>
+                <p>已听 {userInfo.played_num} 首</p>
+                <p>红心 {userInfo.liked_num} 首</p>
+                <p>垃圾桶 {userInfo.banned_num} 首</p>
+              </Item.Meta>
+            </Item.Content>
+          </Item>
+        </Item.Group>
+        <Button fluid negative onClick={this.handleAuthRemoveWrapper}>退出登录</Button>
       </article>
     )
   }
 }
 
-export default Personal
+Personal.propTypes = {
+  userInfo: PropTypes.object.isRequired,
+  handleAuthRemove: PropTypes.func
+}
+
+const mapStateToProps = state => {
+  return {
+    userInfo: state.authReducer.userInfo
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleAuthRemove: callback => authRemove(dispatch, callback)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Personal)

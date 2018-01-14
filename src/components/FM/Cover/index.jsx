@@ -2,15 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Image, Icon, Popup, Header } from 'semantic-ui-react'
-import {
-  fsidSet,
-  recentGo, recentBack,
-  redheartGo, redheartBack,
-  recentIndexSet, redheartIndexSet
-} from '../../../actions/fm/types'
-import { playlistGET, playLog } from '../../../actions/fm/apis'
-import patternSwitch from '../../../helper/patternSwitch'
 import { onReceiveFromMainProcess, rendererProcessSend } from '../../../helper/electron'
+import { playlistGET, playLog } from '../../../actions/fm/apis'
+import { songListGo, songListBack, songListIndexSet } from '../../../actions/fm/actions'
 
 class Cover extends Component {
   constructor(props) {
@@ -40,35 +34,32 @@ class Cover extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { _id, pattern, song, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
+    const { _id, pattern, songListIndex, song } = nextProps
 
     if (pattern === 'select' && song !== this.props.song) {
-      this.setCover(song)
+      this.setCover(song, pattern)
     }
 
-    patternSwitch.bind(this)(
-      this.props.pattern,
-      pattern,
-      recentSong,
-      redheartSong,
-      this.props.recentIndex,
-      recentIndex,
-      this.props.redheartIndex,
-      redheartIndex,
-      this.switchHelper
-    )
+    if (pattern === 'redheart' && this.props.pattern !== 'redheart') {
+      this.setCover(this.props.redheartSong[songListIndex], pattern)
+    }
+
+    if (pattern === 'recent' && this.props.pattern !== 'recent') {
+      this.setCover(this.props.recentSong[songListIndex], pattern)
+    }
+
+    if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
+      if (pattern === 'redheart') {
+        this.setCover(this.props.redheartSong[songListIndex], pattern)
+      }
+
+      if (pattern === 'recent') {
+        this.setCover(this.props.recentSong[songListIndex], pattern)
+      }
+    }
 
     if (_id === 0 && this.props._id === 1) {
       this.setState({ love: 'white' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
-    }
-  }
-
-  switchHelper = (pattern, nextPattern) => {
-    return (songs, index, nextIndex) => {
-      if (nextIndex !== index || nextPattern !== pattern) {
-        this.setCover(songs[nextIndex], nextPattern)
-        this.props.setFsid(songs[nextIndex].sid)
-      }
     }
   }
 
@@ -110,61 +101,53 @@ class Cover extends Component {
   }
 
   handleSongForward = () => {
-    const { pattern, fsid, recentIndex, recentSong, redheartIndex, redheartSong,
-      handlePlayLog, handleRecentGo, handleRedheartGo, handleRecentIndexSet,
-      handleRedheartIndexSet } = this.props
+    const { pattern, recentSong, redheartSong, songListIndex } = this.props
 
     if (pattern === 'select') {
       return
     }
 
     if (pattern === 'recent') {
-      if (recentSong.length === 1) { return }
-      handlePlayLog(fsid, 'j', 'y')
-      if (recentIndex === recentSong.length - 1) {
-        handleRecentIndexSet(0)
+      this.props.handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
+      if (songListIndex === recentSong.length - 1) {
+        this.props.handleSongListIndexSet(0)
       } else {
-        handleRecentGo()
+        this.props.handleSongListGo()
       }
     }
 
     if (pattern === 'redheart') {
-      if (redheartSong.length === 1) { return }
-      handlePlayLog(fsid, 'j', 'h')
-      if (redheartIndex === redheartSong.length - 1) {
-        handleRedheartIndexSet(0)
+      this.props.handlePlayLog(redheartSong[songListIndex].sid, 's', 'h')
+      if (songListIndex === redheartSong.length - 1) {
+        this.props.handleSongListIndexSet(0)
       } else {
-        handleRedheartGo()
+        this.props.handleSongListGo()
       }
     }
   }
 
   handleSongBackward = () => {
-    const { pattern, fsid, recentIndex, recentSong, redheartIndex, redheartSong,
-      handlePlayLog, handleRecentBack, handleRedheartBack, handleRecentIndexSet,
-      handleRedheartIndexSet } = this.props
+    const { pattern, recentSong, redheartSong, songListIndex } = this.props
 
     if (pattern === 'select') {
       return
     }
 
     if (pattern === 'recent') {
-      if (recentSong.length === 1) { return }
-      handlePlayLog(fsid, 'k', 'y')
-      if (recentIndex === 0) {
-        handleRecentIndexSet(recentSong.length - 1)
+      this.props.handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
+      if (songListIndex === 0) {
+        this.props.handleSongListIndexSet(recentSong.length - 1)
       } else {
-        handleRecentBack()
+        this.props.handleSongListBack()
       }
     }
 
     if (pattern === 'redheart') {
-      if (redheartSong.length === 1) { return }
-      handlePlayLog(fsid, 'k', 'h')
-      if (redheartIndex === 0) {
-        handleRedheartIndexSet(redheartSong.length - 1)
+      this.props.handlePlayLog(redheartSong[songListIndex].sid, 's', 'h')
+      if (songListIndex === 0) {
+        this.props.handleSongListIndexSet(redheartSong.length - 1)
       } else {
-        handleRedheartBack()
+        this.props.handleSongListBack()
       }
     }
   }
@@ -188,23 +171,26 @@ class Cover extends Component {
    * @memberof Cover
    */
   handleLoveSong = () => {
-    const { _id, pattern, getPlayList, handlePlayLog, fsid } = this.props
+    const { _id, pattern, getPlayList, recentSong, redheartSong, songListIndex } = this.props
+    const { love } = this.state
     if (_id === 0) {
       this.handleLoveIsLoginPopupOpen()
       return
     }
-    const { love } = this.state
 
     if (love === 'white') {
       if (pattern === 'select') {
         getPlayList('rate')
       }
+
       if (pattern === 'recent') {
-        handlePlayLog(fsid, 'r', 'y')
+        this.props.handlePlayLog(recentSong[songListIndex].sid, 'r', 'y')
       }
+
       if (pattern === 'redheart') {
-        handlePlayLog(fsid, 'r', 'h')
+        this.props.handlePlayLog(redheartSong[songListIndex].sid, 'r', 'h')
       }
+
       this.setState({ love: 'red' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
     }
 
@@ -212,12 +198,15 @@ class Cover extends Component {
       if (pattern === 'select') {
         getPlayList('unrate')
       }
+
       if (pattern === 'recent') {
-        handlePlayLog(fsid, 'u', 'y')
+        this.props.handlePlayLog(recentSong[songListIndex].sid, 'u', 'y')
       }
+
       if (pattern === 'redheart') {
-        handlePlayLog(fsid, 'u', 'h')
+        this.props.handlePlayLog(redheartSong[songListIndex].sid, 'u', 'h')
       }
+
       this.setState({ love: 'white' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
     }
   }
@@ -235,7 +224,7 @@ class Cover extends Component {
   }
 
   render() {
-    const { pattern, recentSong, redheartSong } = this.props
+    const { pattern } = this.props
     const { controlPanelActive, playing, love, isLoginPopup, song } = this.state
     const controlPanel = (
       <div>
@@ -255,24 +244,22 @@ class Cover extends Component {
             <Icon name='step forward' size='big' onClick={this.handleSkipSong} />
           </div>}
           {(pattern === 'recent' || pattern === 'redheart') && <div>
-            <Icon name='step backward' size='big' onClick={this.handleSongBackward}
-              title={recentSong.length === 1 ? '只有一首歌曲哦～' : ''} />
+            <Icon name='step backward' size='big' onClick={this.handleSongBackward} />
             <Icon name='heart' size='big' style={{ color: love }} onClick={this.handleLoveSong} />
-            <Icon name='step forward' size='big' onClick={this.handleSongForward}
-              title={redheartSong.length === 1 ? '只有一首歌曲哦～' : ''} />
+            <Icon name='step forward' size='big' onClick={this.handleSongForward} />
           </div>}
         </div>
       </div>
     )
 
     return (
-      <div className="petal-cover">
+      <article className="petal-cover">
         <div className="info">
           <div className="title">
             <Header as="h3">
               {song.title.length > 20 ? song.title.substring(0, 17) + '...' : song.title}
               <Header.Subheader>
-                {song.artist}
+                {song.artist.length > 20 ? song.artist.substring(0, 17) + '...' : song.artist}
               </Header.Subheader>
             </Header>
           </div>
@@ -291,7 +278,7 @@ class Cover extends Component {
           src={song.picture}
           rounded
         />
-      </div>
+      </article>
     )
   }
 }
@@ -301,19 +288,13 @@ Cover.propTypes = {
   song: PropTypes.object.isRequired,
   recentSong: PropTypes.array,
   redheartSong: PropTypes.array,
-  recentIndex: PropTypes.number.isRequired,
-  redheartIndex: PropTypes.number.isRequired,
   getPlayList: PropTypes.func.isRequired,
   _id: PropTypes.number.isRequired,
-  fsid: PropTypes.string.isRequired,
-  setFsid: PropTypes.func.isRequired,
-  handlePlayLog: PropTypes.func.isRequired,
-  handleRecentGo: PropTypes.func.isRequired,
-  handleRecentBack: PropTypes.func.isRequired,
-  handleRedheartGo: PropTypes.func.isRequired,
-  handleRedheartBack: PropTypes.func.isRequired,
-  handleRecentIndexSet: PropTypes.func.isRequired,
-  handleRedheartIndexSet: PropTypes.func.isRequired
+  songListIndex: PropTypes.number.isRequired,
+  handleSongListGo: PropTypes.func,
+  handleSongListBack: PropTypes.func,
+  handleSongListIndexSet: PropTypes.func,
+  handlePlayLog: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -323,23 +304,17 @@ const mapStateToProps = state => {
     _id: state.authReducer._id,
     recentSong: state.fmReducer.recent.songs,
     redheartSong: state.fmReducer.redheart,
-    recentIndex: state.fmReducer.recentIndex,
-    redheartIndex: state.fmReducer.redheartIndex,
-    fsid: state.fmReducer.fsid
+    songListIndex: state.fmReducer.songListIndex
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getPlayList: (type) => dispatch(playlistGET(type)),
-    setFsid: sid => dispatch(fsidSet(sid)),
-    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source)),
-    handleRecentGo: () => dispatch(recentGo),
-    handleRecentBack: () => dispatch(recentBack),
-    handleRedheartGo: () => dispatch(redheartGo),
-    handleRedheartBack: () => dispatch(redheartBack),
-    handleRecentIndexSet: index => dispatch(recentIndexSet(index)),
-    handleRedheartIndexSet: index => dispatch(redheartIndexSet(index))
+    handleSongListGo: () => dispatch(songListGo),
+    handleSongListBack: () => dispatch(songListBack),
+    handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
+    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source))
   }
 }
 

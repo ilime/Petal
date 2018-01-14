@@ -1,47 +1,22 @@
 import axios from 'axios'
 import moment from 'moment'
 
-import {
-  authLoginRequest,
-  authLoginResponse,
-  authLoginFail,
-  authTokenLoad,
-  authLogout
-} from './types'
-
-import {
-  selectPattern,
-  recentEmpty,
-  redHeartEmpty,
-  trashEmpty
-} from '../fm/types'
-import {
-  playlistGET,
-  recentListGET,
-  redHeartListGET,
-  trashListGET,
-  userInfoGET
-} from '../fm/apis'
-import {
-  settingLoad
-} from '../setting/apis'
+import * as actions from './actions'
+import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/actions'
+import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET } from '../fm/apis'
+import { settingLoad } from '../setting/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 import { rendererProcessSend } from '../../helper/electron'
 
-const AUTH_URL = 'https://www.douban.com/service/auth2/token' // Auth Url
+const AUTH_URL = 'https://www.douban.com/service/auth2/token?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec' // Auth Url
 
 // Fixed params for logining
 const authFixedParams = {
-  alt: 'json',
-  apikey: '02646d3fb69a52ff072d47bf23cef8fd',
-  client_id: '02646d3fb69a52ff072d47bf23cef8fd',
-  client_secret: 'cde5d61429abcd7c',
-  device_id: '8ff78b4d03654c0dbc63d318fc7a065289a90af2',
-  douban_udid: '826390ea40bf43b0ee04d44a233b2511fcd76a8b',
+  client_id: '02f7751a55066bcb08e65f4eff134361',
+  client_secret: '63cf04ebd7b0ff3b',
   grant_type: 'password',
-  redirect_uri: 'http://www.douban.com/mobile/fm',
-  udid: '8ff78b4d03654c0dbc63d318fc7a065289a90af2'
+  redirect_uri: 'http://douban.fm',
 }
 
 /**
@@ -60,15 +35,19 @@ const authFixedParams = {
  */
 export const authPost = (usernameAndPassword, callback) => {
   return dispatch => {
-    dispatch(authLoginRequest())
+    dispatch(actions.authLoginRequest())
     return axios({
-        method: 'POST',
-        url: AUTH_URL,
-        data: oToFd(Object.assign(authFixedParams, usernameAndPassword)),
-      })
+      method: 'POST',
+      url: AUTH_URL,
+      data: oToFd(Object.assign(authFixedParams, usernameAndPassword)),
+    })
       .then(response => {
-        const userToken = response.data
-        dispatch(authLoginResponse(userToken))
+        const data = response.data
+        const userToken = {
+          access_token: data.access_token,
+          douban_user_name: data.douban_user_name
+        }
+        dispatch(actions.authLoginResponse(userToken))
         dispatch(userInfoGET())
         dispatch(recentListGET())
         dispatch(redHeartListGET())
@@ -77,11 +56,8 @@ export const authPost = (usernameAndPassword, callback) => {
         db.insert({
           _id: 1,
           userToken,
-          time: [moment()
-            .year(), moment()
-            .month() + 1, moment()
-            .date()
-          ]
+          time: moment()
+            .valueOf()
         }, (err, doc) => {
           console.log(doc)
         })
@@ -90,7 +66,7 @@ export const authPost = (usernameAndPassword, callback) => {
         }
       })
       .catch(() => {
-        dispatch(authLoginFail('请检查账号或密码是否正确'))
+        dispatch(actions.authLoginFail('请检查账号或密码是否正确'))
       })
   }
 }
@@ -107,23 +83,20 @@ export const authLoad = () => {
       _id: 1
     }, (err, doc) => {
       if (doc !== null) {
-        let now = [moment()
-          .year(), moment()
-          .month() + 1, moment()
-          .date()
-        ]
+        let now = moment()
+          .valueOf()
         let fromNow = moment(now)
           .diff(doc.time, 'days')
 
-        // remove user info when already logined 80 days
+        // remove user info when already logined 60 days
         console.log('token storage time ' + fromNow + ' day(s)')
-        if (fromNow === 80) {
+        if (fromNow === 60) {
           db.remove({
             _id: 1
           })
           dispatch(playlistGET('new'))
         } else {
-          dispatch(authTokenLoad(doc))
+          dispatch(actions.authTokenLoad(doc))
           dispatch(userInfoGET())
           dispatch(recentListGET())
           dispatch(redHeartListGET())
@@ -152,7 +125,7 @@ export const authRemove = (dispatch, callback) => {
     if (typeof callback === 'function') {
       callback()
     }
-    dispatch(authLogout())
+    dispatch(actions.authLogout())
     dispatch(selectPattern)
     rendererProcessSend('patternSwitch', 'select')
     dispatch(playlistGET('new'))

@@ -12,7 +12,7 @@ class Loading extends Component {
 
   render() {
     return (
-      <div className="petal-loading">
+      <article className="petal-loading">
         <div>
           <div className="petal-loading-logo-wrapper">
             <img src="./resources/petal.svg" alt="logo" className="petal-loading-logo" />
@@ -26,7 +26,7 @@ class Loading extends Component {
             </g>
           </svg>
         </div>
-      </div >
+      </article>
     )
   }
 }

@@ -1,97 +1,26 @@
-.mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(0,0,0,.85);
-  z-index: 5000;
-}
-.layer {
-  position: absolute;
-  left: 95px;
-  top: 40px;
-  width: 675px;
-  height: 420px;
-  background: #fff;
-  z-index: 100000;
-  border: 1px solid #2e963d;
-  border-radius: 5px;
-  overflow: hidden;
-  .layer-content section {
-    height: 384px;
-    display: none;
-  }
-  .layer-content section.active {
-    display: block;
-    transition: all 0s ease;
-    animation: switch 600ms ease;
-  }
-}
-@keyframes switch {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.layer-nav {
-  color: #7b8b8e;
-  font-size: 0;
-  ul {
-    padding: 0;
-    margin: 0;
-    font-size: 1rem;
-    text-align: center;
-    list-style: none;
-    li {
-      display: inline-block;
-      padding: .5rem 1.2rem;
-      width: 50%;
-      cursor: pointer;
-      background: #fff;
-      border-bottom: 1px solid #2e963d;
-    }
-    li.active {
-      background: #2e963d;
-      color: #fff;
-      animation: switch 600ms ease;
-    }
+@import './common';
+
+.petal-setting {
+  padding: 0 10px;
+
+  .ui.segment.active.tab {
+    height: 412px;
   }
 }
 
-.petalSettingMain {
-  position: relative;
-  top: 2rem;
-  width: 600px;
-  margin: 0 auto;
-
-  .settingItem {
-    display: flex;
-    align-items: center;
-
-    div.label {
-      flex: 1
-    }
-
-    div.content {
-      flex: 5
-    }
+.petal-setting-main {
+  .save {
+    margin-top: 1rem;
   }
 }
 
-.petalAbout {
-  position: relative;
-  top: 3rem;
-}
+.petal-setting-about {
+  .content {
+    margin-top: 1rem;
+  }
 
-.aboutUs {
-  text-align: center;
-  margin-top: 1rem;
-  
   span {
-    color:#2ebd59;
+    color: $petal-green;
     cursor: pointer;
   }
 }

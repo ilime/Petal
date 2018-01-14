@@ -1,20 +1,32 @@
-.personal {
-  position: relative;
-  top: 1rem;
-  height: 440px;
+.petal-personal {
+  padding: 5px 10px;
 
-  .songlist {
-    overflow-y: scroll;
-    height: 420px;
+  .ui.tiny.image.avatar-icon {
+    width: 100px !important;
+    height: 100px !important; 
   }
 }
 
-.songlistItem {
-  position: relative;
+.petal-personal-songlist {
+  padding: 5px 10px;
+  height: calc(100vh - 24px);
+  overflow-y: scroll;
 
-  .itemControl {
-    position: absolute;
-    bottom: .4rem;
-    right: 1rem;
+  .ui.unstackable.items {
+    .item {
+      .ui.tiny.image {
+        width: 80px !important;
+        height: 80px !important;
+
+        img {
+          width: 80px !important;
+          height: 80px !important;
+        }
+      }
+    }
   }
+}
+
+.petal-personal-songlist::-webkit-scrollbar {
+  display: none;
 }

@@ -1,48 +1,33 @@
 import React, { Component } from 'react'
+import { Tab } from 'semantic-ui-react'
 import Main from './Main'
 import About from './About'
+
+const panes = [
+  { menuItem: '设置', render: () => <Tab.Pane attached={false}><Main /></Tab.Pane> },
+  { menuItem: '关于', render: () => <Tab.Pane attached={false}><About /></Tab.Pane> },
+]
 
 class Setting extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      activeItem: 'setting'
+  }
+
+  componentDidMount() {
+    document.querySelector('.fm-region').style.display = 'none'
+  }
+
+  componentWillUnmount() {
+    if (this.props.history.location.pathname === '/') {
+      document.querySelector('.fm-region').style.display = 'flex'
     }
   }
 
-  changeFocus = (e, name) => {
-    e.stopPropagation()
-    this.setState({ activeItem: name })
-  }
-
-  stopProp = e => { e.stopPropagation() }
-
   render() {
-    const { activeItem } = this.state
-    const Tab = ({ name, active, onClick, activeClass }) => (
-      <li className={active ? (activeClass ? activeClass : 'active') : ''} onClick={onClick}>{name}</li>
-    )
-
     return (
-      <div className='mask'
-        style={{ 'display': this.props.open ? 'block' : 'none' }}>
-        <div className='layer'>
-          <nav className='layer-nav'>
-            <ul>
-              <Tab name='设置' active={activeItem === 'setting'} onClick={e => this.changeFocus(e, 'setting')} />
-              <Tab name='关于' active={activeItem === 'about'} onClick={e => this.changeFocus(e, 'about')} />
-            </ul>
-          </nav>
-          <article className="layer-content">
-            <section className={activeItem === 'setting' ? 'active' : ''} onClick={this.stopProp}>
-              <Main handleClose={this.props.handleClose} />
-            </section>
-            <section className={activeItem === 'about' ? 'active' : ''} onClick={this.stopProp}>
-              <About />
-            </section>
-          </article>
-        </div>
-      </div>
+      <article className="petal-setting">
+        <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+      </article>
     )
   }
 }

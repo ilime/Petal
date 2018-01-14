@@ -1,0 +1,20 @@
+@import './common';
+
+.petal-pattern {
+  padding: 5px 10px;
+
+  .default-MHz {
+    .ui.button {
+      margin-bottom: 5px;
+
+      img {
+        width: 14px !important;
+        height: 14px !important;
+      }
+    }
+
+    .ui.button.selected {
+      color: $petal-green !important;
+    }
+  }
+}

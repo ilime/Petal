@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Modal, Header, Button, Icon } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import { selectPattern, recentPattern, redheartPattern } from '../../actions/fm/types'
+import { Icon, Header, Button, Image } from 'semantic-ui-react'
+import { selectPattern, recentPattern, redheartPattern } from '../../actions/fm/actions'
 import { playlistGET } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
@@ -23,6 +22,17 @@ class Pattern extends Component {
       }]
     ])
   }
+
+  componentDidMount() {
+    document.querySelector('.fm-region').style.display = 'none'
+  }
+
+  componentWillUnmount() {
+    if (this.props.history.location.pathname === '/') {
+      document.querySelector('.fm-region').style.display = 'flex'
+    }
+  }
+
   /**
    * Handle switch pattern
    * 
@@ -32,68 +42,44 @@ class Pattern extends Component {
    * 
    * @memberof Pattern
    */
-  handleSwitchPattern = (e, { name }) => {
+  handleSwitchPattern = name => {
     const { pattern } = this.props
 
-    if (pattern !== name) { 
+    if (pattern !== name) {
       this._patterns.get(name)()
       rendererProcessSend('patternSwitch', name)
     }
-
-    this.props.handleClose()
   }
 
   render() {
-    const { _id, pattern, likedNum, playedNum } = this.props
+    const { _id, avatar, pattern } = this.props
 
     return (
-      <Modal
-        open={this.props.open}
-        basic
-        size='small'
-        dimmer
-      >
-        <Header icon='signal' content='播放模式控制' />
-        <Modal.Content>
-          <Button name='select' inverted active={pattern === 'select'} onClick={this.handleSwitchPattern}>豆瓣精选</Button>
-          {_id === 0 ?
-            <Link to='login'>
-              <Button basic onClick={this.props.handleClose} inverted color='red'>登录后解锁更多模式</Button>
-            </Link>
-            :
-            <div style={{ 'display': 'inline' }}>
-              {playedNum !== 0
-                ? <Button name='recent' inverted active={pattern === 'recent'} onClick={this.handleSwitchPattern}>最近播放</Button>
-                : <Button negative>没有最近播放</Button>}
-              {likedNum !== 0
-                ? <Button name='redheart' inverted active={pattern === 'redheart'} onClick={this.handleSwitchPattern}>红心歌曲</Button>
-                : <Button negative>没有红心歌曲</Button>}
-            </div>}
-        </Modal.Content>
-        <Modal.Actions>
-          <Button basic onClick={this.props.handleClose} inverted color='green'>
-            <Icon name='checkmark' /> 关闭
-          </Button>
-        </Modal.Actions>
-      </Modal>
+      <article className="petal-pattern">
+        <Header as="h2">兆赫</Header>
+        <div className="default-MHz">
+          <Button basic className={pattern === 'select' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('select')}><Icon name='leaf' /> 豆瓣精选 MHz</Button>
+          {_id === 1 && <Button basic className={pattern === 'redheart' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('redheart')}><Icon name='heart' /> 红心</Button>}
+          {_id === 1 && <Button basic className={pattern === 'recent' ? 'selected': ''} onClick={() => this.handleSwitchPattern('recent')}><Icon name='history' /> 最近收听</Button>}
+          {_id === 1 && <Button basic><Image src={avatar} avatar /> 我的私人 MHz</Button>}
+        </div>
+      </article >
     )
   }
 }
 
-Pattern.PropTypes = {
+Pattern.propTypes = {
   _id: PropTypes.number.isRequired,
+  avatar: PropTypes.string,
   pattern: PropTypes.string.isRequired,
-  getPlaylist: PropTypes.func.isRequired,
-  likedNum: PropTypes.number.isRequired,
-  playedNum: PropTypes.number.isRequired
+  getPlaylist: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
-    pattern: state.fmReducer.pattern,
-    likedNum: state.authReducer.userInfo.liked_num,
-    playedNum: state.authReducer.userInfo.played_num
+    avatar: state.authReducer.userInfo.icon,
+    pattern: state.fmReducer.pattern
   }
 }
 

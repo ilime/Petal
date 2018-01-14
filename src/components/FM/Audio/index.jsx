@@ -2,12 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
-import {
-  recentGo, redheartGo,
-  recentIndexSet, redheartIndexSet
-} from '../../../actions/fm/types'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
-import patternSwitch from '../../../helper/patternSwitch'
+import { songListGo, songListIndexSet } from '../../../actions/fm/actions'
 
 class Audio extends Component {
   constructor(props) {
@@ -22,29 +18,27 @@ class Audio extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pattern, song, type, recentSong, recentIndex, redheartSong, redheartIndex } = nextProps
+    const { pattern, songListIndex, song, type } = nextProps
 
     if (pattern === 'select' && song !== this.props.song && type !== 'r' && type !== 'u') {
       this.nextAudio(song)
     }
 
-    patternSwitch.bind(this)(
-      this.props.pattern,
-      pattern,
-      recentSong,
-      redheartSong,
-      this.props.recentIndex,
-      recentIndex,
-      this.props.redheartIndex,
-      redheartIndex,
-      this.switchHelper
-    )
-  }
+    if (pattern === 'redheart' && this.props.pattern !== 'redheart') {
+      this.nextAudio(this.props.redheartSong[songListIndex])
+    }
 
-  switchHelper = (pattern, nextPattern) => {
-    return (songs, index, nextIndex) => {
-      if (nextIndex !== index || nextPattern !== pattern) {
-        this.nextAudio(songs[nextIndex])
+    if (pattern === 'recent' && this.props.pattern !== 'recent') {
+      this.nextAudio(this.props.recentSong[songListIndex])
+    }
+
+    if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
+      if (pattern === 'redheart') {
+        this.nextAudio(this.props.redheartSong[songListIndex])
+      }
+
+      if (pattern === 'recent') {
+        this.nextAudio(this.props.recentSong[songListIndex])
       }
     }
   }
@@ -57,11 +51,9 @@ class Audio extends Component {
    * @memberof Audio
    */
   nextAudio = song => {
-    const audio = document.querySelector('#_audio')
-
-    audio.currentTime = 0
-    audio.src = song.url
-    audio.load()
+    this.audio.currentTime = 0
+    this.audio.src = song.url
+    this.audio.load()
   }
 
   /**
@@ -75,7 +67,7 @@ class Audio extends Component {
     const currentTime = document.querySelector('.currenttime')
 
     audio.addEventListener('timeupdate', this.updateAudioTimeAndProgress(currentTime, audio))
-    audio.addEventListener('ended', this.endedAudio(audio))
+    audio.addEventListener('ended', this.endedAudio)
     audio.addEventListener('loadedmetadata', () => {
       const totalTime = document.querySelector('.totaltime')
       totalTime.textContent = this.formatTime(audio.duration)
@@ -109,6 +101,10 @@ class Audio extends Component {
       volumeProgress = range.children[0],
       slider = range.children[1],
       mouseDown = false
+
+    audio.volume = this.props.audioVolume / 100
+    slider.style.left = this.props.audioVolume + '%'
+    volumeProgress.style.width = this.props.audioVolume + '%'
 
     range.addEventListener('mousedown', function (e) {
       mouseDown = true
@@ -152,11 +148,13 @@ class Audio extends Component {
 
   updateAudioTimeAndProgress = (currentTimeElement, audio) => {
     return () => {
-      let currentTime = audio.currentTime
-      currentTimeElement.textContent = this.formatTime(currentTime)
-      this.setState({
-        percent: currentTime / audio.duration * 100
-      })
+      if (!isNaN(audio.duration)) {
+        let currentTime = audio.currentTime
+        currentTimeElement.textContent = this.formatTime(currentTime)
+        this.setState({
+          percent: currentTime / audio.duration * 100
+        })
+      }
     }
   }
 
@@ -169,40 +167,25 @@ class Audio extends Component {
    * 
    * @memberof Audio
    */
-  endedAudio = audio => {
-    return () => {
-      const { pattern, fsid, recentIndex, recentSong, redheartIndex, redheartSong, handlePlayLog,
-        handleRecentGo, handleRecentIndexSet, handleRedheartGo, handleRedheartIndexSet } = this.props
+  endedAudio = () => {
+    const { pattern, recentSong, redheartSong, songListIndex } = this.props
 
-      if (pattern === 'select') {
-        this.props.getPlaylist('playing')
-        this.props.getPlaylist('end')
+    if (pattern === 'select') {
+      this.props.getPlaylist('playing')
+      this.props.getPlaylist('end')
+    } else if (pattern === 'recent') {
+      this.props.handlePlayLog(recentSong[songListIndex].sid, 'p', 'y')
+      if (songListIndex === recentSong.length - 1) {
+        this.props.handleSongListIndexSet(0)
+      } else {
+        this.props.handleSongListGo()
       }
-
-      if (pattern === 'recent') {
-        if (recentSong.length === 1) {
-          audio.play()
-          return
-        }
-        handlePlayLog(fsid, 'p', 'y')
-        if (recentIndex === recentSong.length - 1) {
-          handleRecentIndexSet(0)
-        } else {
-          handleRecentGo()
-        }
-      }
-
-      if (pattern === 'redheart') {
-        if (redheartSong.length === 1) {
-          audio.play()
-          return
-        }
-        handlePlayLog(fsid, 'p', 'h')
-        if (redheartIndex === redheartSong.length - 1) {
-          handleRedheartIndexSet(0)
-        } else {
-          handleRedheartGo()
-        }
+    } else if (pattern === 'redheart') {
+      this.props.handlePlayLog(redheartSong[songListIndex].sid, 'p', 'h')
+      if (songListIndex === redheartSong.length - 1) {
+        this.props.handleSongListIndexSet(0)
+      } else {
+        this.props.handleSongListGo()
       }
     }
   }
@@ -210,7 +193,7 @@ class Audio extends Component {
   render() {
     const { percent } = this.state
     return (
-      <div className='petal-player'>
+      <article className='petal-player'>
         <Progress percent={percent} size='tiny' />
         <div className='player-bar'>
           <div className="player-time">
@@ -228,49 +211,43 @@ class Audio extends Component {
           </div>
         </div>
         <audio id='_audio' preload='none'></audio>
-      </div>
+      </article>
     )
   }
 }
 
 Audio.propTypes = {
   pattern: PropTypes.string.isRequired,
+  songListIndex: PropTypes.number,
   song: PropTypes.object.isRequired,
   recentSong: PropTypes.array,
   redheartSong: PropTypes.array,
-  recentIndex: PropTypes.number.isRequired,
-  redheartIndex: PropTypes.number.isRequired,
   getPlaylist: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
-  fsid: PropTypes.string.isRequired,
-  handlePlayLog: PropTypes.func.isRequired,
-  handleRecentGo: PropTypes.func.isRequired,
-  handleRedheartGo: PropTypes.func.isRequired,
-  handleRecentIndexSet: PropTypes.func.isRequired,
-  handleRedheartIndexSet: PropTypes.func.isRequired
+  audioVolume: PropTypes.number.isRequired,
+  handleSongListGo: PropTypes.func,
+  handleSongListIndexSet: PropTypes.func,
+  handlePlayLog: PropTypes.func
 }
 
 const mapStateToProps = state => {
   return {
     pattern: state.fmReducer.pattern,
+    songListIndex: state.fmReducer.songListIndex,
     song: state.fmReducer.song,
     type: state.fmReducer.type,
     recentSong: state.fmReducer.recent.songs,
     redheartSong: state.fmReducer.redheart,
-    recentIndex: state.fmReducer.recentIndex,
-    redheartIndex: state.fmReducer.redheartIndex,
-    fsid: state.fmReducer.fsid
+    audioVolume: state.settingReducer.volume
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getPlaylist: type => dispatch(playlistGET(type)),
-    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source)),
-    handleRecentGo: () => dispatch(recentGo),
-    handleRedheartGo: () => dispatch(redheartGo),
-    handleRecentIndexSet: index => dispatch(recentIndexSet(index)),
-    handleRedheartIndexSet: index => dispatch(redheartIndexSet(index))
+    handleSongListGo: () => dispatch(songListGo),
+    handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
+    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source))
   }
 }
 

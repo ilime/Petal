@@ -1,34 +1,29 @@
-.loginRegion {
+@import './common';
+
+.petal-login {
   margin-top: 6rem;
-}
 
-.ui.header.loginHeader {
-  margin-bottom: 2rem;
-}
+  .login-header {
+    padding-right: 12px;
 
-.appTitle {
-  position: relative;
-  top: .6rem;
-  left: 1rem;
-  font: 2.4rem 'Dancing Script', cursive;
-}
+    span {
+      position: relative;
+      top: 5px;
+      left: 5px;
+    }
+  }
 
-.loginFormContent {
-  margin: 0rem auto;
-  width: 380px !important;
-}
+  .login-form {
+    padding: 0 10px;
+  }
 
-.ui.button.loginSubmitBtn {
-  margin-bottom: 1.5rem;
-  border-radius: 1.2rem;
-}
-
-.loginExtra {
-  color: #2e2f33;
-  text-align: center;
-  margin-bottom: 2rem;
-  span {
-    color: #2ebd59;
-    cursor: pointer;
+  .login-extra {
+    color: $petal-black;
+    text-align: center;
+    margin-top: 1rem;
+    span {
+      color: $petal-green;
+      cursor: pointer;
+    }
   }
 }

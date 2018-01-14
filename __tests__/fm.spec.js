@@ -1,6 +1,6 @@
 import fmReducer from '../src/reducers/fm'
 
-const typeSpec = [
+const typeSpecs = [
   ['PLAYLIST_NEW_REQUEST', 'n'],
   ['PLAYLIST_PLAYING_REQUEST', 'p'],
   ['PLAYLIST_SKIP_REQUEST', 's'],
@@ -23,7 +23,7 @@ describe('fmReducer', () => {
 
   // type test
   test('new', () => {
-    typeSpec.map(t => {
+    typeSpecs.map(t => {
       expect(fmReducer({ type: '' }, { type: t[0] }))
         .toEqual({ type: t[1] })
     })
@@ -35,11 +35,11 @@ describe('fmReducer', () => {
       .toEqual({ pattern: 'select' })
   })
   test('recent pattern', () => {
-    expect(fmReducer({ pattern: 'select', recentIndex: -1 }, { type: 'RECENT_PATTERN' }))
-      .toEqual({ pattern: 'recent', recentIndex: 0 })
+    expect(fmReducer({ pattern: 'select' }, { type: 'RECENT_PATTERN' }))
+      .toEqual({ pattern: 'recent', songListIndex: 0 })
   })
   test('redheart pattern', () => {
-    expect(fmReducer({ pattern: 'select', redheartIndex: -1 }, { type: 'REDHEART_PATTERN' }))
-      .toEqual({ pattern: 'redheart', redheartIndex: 0 })
+    expect(fmReducer({ pattern: 'select' }, { type: 'REDHEART_PATTERN' }))
+      .toEqual({ pattern: 'redheart', songListIndex: 0 })
   })
 })

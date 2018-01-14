@@ -1,16 +1,9 @@
-export const AUDIO_VOLUME_PROGRESS_SET = 'AUDIO_VOLUME_PROGRESS_SET'
-export const AUDIO_VOLUME_PIN_SET = 'ADUIO_VOLUME_PIN_SET'
+const AUDIO_VOLUME_SET = 'AUDIO_VOLUME_SET'
+const SETTING_SAVE_SUCCESS = 'SETTING_SAVE_SUCCESS'
+const SETTING_SAVE_SUCCESS_RESET = 'SETTING_SAVE_SUCCESS_RESET'
 
-export const audioVolumeProgressSet = width => {
-  return {
-    type: AUDIO_VOLUME_PROGRESS_SET,
-    width
-  }
-}
-
-export const audioVolumePinSet = left => {
-  return {
-    type: AUDIO_VOLUME_PIN_SET,
-    left
-  }
+export {
+  AUDIO_VOLUME_SET,
+  SETTING_SAVE_SUCCESS,
+  SETTING_SAVE_SUCCESS_RESET
 }

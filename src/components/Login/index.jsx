@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Image, Form, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
-import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/types'
+import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/actions'
 import { authPost } from '../../actions/auth/apis'
 import { openInDefaultBrowser } from '../../helper/electron'
 
@@ -16,12 +16,12 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    document.querySelector('.fmRegion').style.display = 'none'
+    document.querySelector('.fm-region').style.display = 'none'
   }
 
   componentWillUnmount() {
     if (this.props.history.location.pathname === '/') {
-      document.querySelector('.fmRegion').style.display = 'block'
+      document.querySelector('.fm-region').style.display = 'flex'
     }
   }
 
@@ -46,32 +46,32 @@ class Login extends Component {
     const { username, password } = this.state
 
     return (
-      <article className='loginRegion'>
-        <Header as='h1' textAlign='center' className='loginHeader'>
+      <article className='petal-login'>
+        <Header as='h1' textAlign='center' className='login-header'>
           <Image src='./resources/petal.svg' size='huge' />
-          <span className='appTitle'>Petal</span>
+          <span>Petal</span> 
         </Header>
         <Dimmer.Dimmable dimmed>
           <Dimmer active={isFetching} inverted>
             <Loader>加载中</Loader>
           </Dimmer>
-          <Form className='loginFormContent'>
+          <Form className="login-form">
             {loginFail && <Message size='small' negative onDismiss={this.props.handleRemoveLoginFailMessage}>
               <Message.Header>登录失败</Message.Header>
               <p>{loginFailMessage}</p>
             </Message>}
             <Form.Input name='username' value={username} onChange={this.handleInputChange} placeholder='豆瓣账号' />
             <Form.Input type='password' name='password' value={password} onChange={this.handleInputChange} placeholder='密码' />
-            <Button fluid color='green' className='loginSubmitBtn' onClick={this.handleLoginSubmit}>登 录</Button>
+            <Button fluid color='green' onClick={this.handleLoginSubmit}>登 录</Button>
           </Form>
         </Dimmer.Dimmable>
-        <p className='loginExtra'>没有豆瓣账号? <span onClick={openInDefaultBrowser('https://www.douban.com')}>去注册</span></p>
+        <p className='login-extra'>没有豆瓣账号? <span onClick={openInDefaultBrowser('https://www.douban.com')}>去注册</span></p>
       </article>
     )
   }
 }
 
-Login.PropTypes = {
+Login.propTypes = {
   handleAuthPost: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   loginFail: PropTypes.bool.isRequired,

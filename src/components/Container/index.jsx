@@ -5,9 +5,14 @@ import { Icon, Label } from 'semantic-ui-react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import Loading from '../Loading'
 import FM from '../FM'
-import Login from '../Login'
 import Sidebar from '../Sidebar'
-import Personal from '../Personal'
+import Setting from '../Setting'
+import Login from '../Login'
+import RedHeart from '../Personal/RedHeart'
+import Recent from '../Personal/Recent'
+import Trash from '../Personal/Trash'
+import Pattern from '../Pattern/index'
+import Personal from '../Personal/index'
 import { authLoad } from '../../actions/auth/apis'
 import { openInDefaultBrowser, rendererProcessSend } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
@@ -69,8 +74,13 @@ class Container extends Component {
                 </div>
               </section>
               <FM />
-              <Route path='/login' component={Login} />
-              <Route path='/personal' component={Personal} />
+              <Route path="/setting" component={Setting} />
+              <Route path="/login" component={Login} />
+              <Route path="/redHeartList" component={RedHeart} />
+              <Route path="/recentList" component={Recent} />
+              <Route path="/trashList" component={Trash} />
+              <Route path="/pattern" component={Pattern} />
+              <Route path="/personal" component={Personal} />
             </article>
           </main>
         </Router>

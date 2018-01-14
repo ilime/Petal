@@ -1,22 +1,8 @@
 import axios from 'axios'
 import moment from 'moment'
 
-import {
-  playlistLoading,
-  playlistNewRequest,
-  playlistResponse,
-  songLyricResponse,
-  playlistPlayingRequest,
-  playlistSkipRequest,
-  playlistTrashRequest,
-  redHeartRate,
-  redHeartUnRate,
-  playlistEndRequest,
-  recentList,
-  redHeartList,
-  trashList
-} from './types'
-import { userInfo } from '../auth/types'
+import * as actions from './actions'
+import { userInfo } from '../auth/actions'
 
 import oToFd from '../../helper/objToFormD'
 
@@ -24,16 +10,12 @@ const FM_ROOT_URL = 'https://api.douban.com/v2/fm' // Root Url
 
 // Fixed params for fm's operations
 const fixedParams = {
-  formats: null,
   apikey: '02f7751a55066bcb08e65f4eff134361',
-  kbps: 128,
   version: 651,
   audio_patch_version: 4,
   app_name: 'radio_android',
-  pb: 128,
   user_accept_play_third_party: 0,
   client: 's%3Amobile%7Cv%3A4.6.11%7Cy%3Aandroid+7.1.1%7Cf%3A651%7Cm%3AXiaomi%7Cd%3Acf9aed3a0bc54032661c6f84d220b1f28d3722ec%7Ce%3Axiaomi_mi_6',
-  from: '',
   udid: 'cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
   push_device_id: '3ec7f0336d3a0e6db6b07b9f9a2c1f304f3ef154'
 }
@@ -50,13 +32,13 @@ const fixedParams = {
  * 7. end => use when song ended, log current song into recent list
  */
 const playlistTypes = {
-  new: playlistNewRequest,
-  playing: playlistPlayingRequest,
-  skip: playlistSkipRequest,
-  trash: playlistTrashRequest,
-  rate: redHeartRate,
-  unrate: redHeartUnRate,
-  end: playlistEndRequest
+  new: actions.playlistNewRequest,
+  playing: actions.playlistPlayingRequest,
+  skip: actions.playlistSkipRequest,
+  trash: actions.playlistTrashRequest,
+  rate: actions.redHeartRate,
+  unrate: actions.redHeartUnRate,
+  end: actions.playlistEndRequest
 }
 
 // Playlist url without type and sid
@@ -66,7 +48,7 @@ const playlistOriginUrl = FM_ROOT_URL +
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
     }, '') +
-  'channel=-10&pt=0.0'
+  'channel=-10&pt=0.0&format=null&kbps=128&pb=128&from='
 
 /**
  * get lyric through the song's sid and album's ssid
@@ -75,13 +57,13 @@ const playlistOriginUrl = FM_ROOT_URL +
  * @param {string} ssid 
  * @returns {Axios} - Axios instance
  */
-export const songLyricGET = (sid, ssid) => {
-  return axios.get(FM_ROOT_URL +
-    '/lyric?' +
-    'sid=' + sid +
-    '&ssid=' + ssid
-  )
-}
+// export const songLyricGET = (sid, ssid) => {
+//   return axios.get(FM_ROOT_URL +
+//     '/lyric?' +
+//     'sid=' + sid +
+//     '&ssid=' + ssid
+//   )
+// }
 
 /**
  * Core function, get playlist
@@ -93,7 +75,7 @@ export const playlistGET = type => {
   return (dispatch, getState) => {
     // loading before get playlist songs
     if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
-      dispatch(playlistLoading())
+      dispatch(actions.playlistLoading())
     }
     dispatch(playlistTypes[type]()) // dispatch action according playlistTypes
     axios(Object.assign({
@@ -120,7 +102,7 @@ export const playlistGET = type => {
           sid = song.sid,
           ssid = song.ssid
         // if type is rate or unrate, the next similar song will add into current songs array
-        dispatch(playlistResponse(sid, ssid, song))
+        dispatch(actions.playlistResponse(sid, ssid, song))
       })
       .catch(console.log)
   }
@@ -133,7 +115,7 @@ const recentOriginUrl = FM_ROOT_URL +
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
     }, '') +
-  'limit=100&start=0&type=played'
+  'limit=100&kbps=128'
 
 export const recentListGET = () => {
   return (dispatch, getState) => {
@@ -150,7 +132,7 @@ export const recentListGET = () => {
       })
     )
       .then(response => {
-        dispatch(recentList(response.data))
+        dispatch(actions.recentList(response.data))
       })
       .catch(console.log)
   }
@@ -162,8 +144,7 @@ const redHeartSidsOriginUrl = FM_ROOT_URL +
   Object.entries(fixedParams)
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
-    }, '') +
-  'kbps=128'
+    }, '')
 
 export const redHeartListGET = () => {
   return (dispatch, getState) => {
@@ -188,8 +169,8 @@ export const redHeartListGET = () => {
         return axios(
           Object.assign({
             method: 'POST',
-            url: 'https://api.douban.com/v2/fm/songs',
-            data: oToFd(Object.assign(fixedParams, { sids: songsChain }))
+            url: 'https://api.douban.com/v2/fm/songs?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
+            data: oToFd(Object.assign(JSON.parse(JSON.stringify(fixedParams)), { sids: songsChain, kbps: 128 }))
           }, getState()
             .authReducer._id === 1 && {
             headers: {
@@ -199,7 +180,7 @@ export const redHeartListGET = () => {
           }))
       })
       .then(response => {
-        dispatch(redHeartList(response.data))
+        dispatch(actions.redHeartList(response.data))
       })
       .catch(console.log)
   }
@@ -212,7 +193,7 @@ const trashOriginUrl = FM_ROOT_URL +
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
     }, '') +
-  'limit=50&start=0'
+  'limit=20&start=0&kbps=128'
 
 export const trashListGET = () => {
   return (dispatch, getState) => {
@@ -229,25 +210,38 @@ export const trashListGET = () => {
       })
     )
       .then(response => {
-        dispatch(trashList(response.data))
+        dispatch(actions.trashList(response.data))
       })
       .catch(console.log)
   }
 }
 
-const PLAY_LOG_URL = 'https://api.douban.com/v2/fm/play_log' // handle play log, used in recent or redheart list
+const PLAY_LOG_URL = 'https://api.douban.com/v2/fm/play_log?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec' // handle play log, used in recent or redheart list
 
+/**
+ * 
+ * type: r, play_source: h => redheart list rate
+ * type: u, play_source: h => redheart list unrate
+ * type: p, play_source: h => redheart list playing
+ * type: s, play_source: h => redheart list skip
+ * 
+ * play_source: y => recent list
+ * 
+ * @param {*} sid 
+ * @param {*} type 
+ * @param {*} play_source 
+ */
 export const playLog = (sid, type, play_source) => {
   return (dispatch, getState) => {
     return axios(
       Object.assign({
         method: 'POST',
         url: PLAY_LOG_URL,
-        data: oToFd(Object.assign(fixedParams, {
+        data: oToFd(Object.assign(JSON.parse(JSON.stringify(fixedParams)), {
           records: '[{"time":"' +
               moment()
                 .format('YYYY-MM-DD HH:m:s') +
-              '","play_mode":"o","v":"4.8.2","sid":"' +
+              '","play_mode":"o","sid":"' +
               sid +
               '","type":"' +
               type +
@@ -265,26 +259,13 @@ export const playLog = (sid, type, play_source) => {
   }
 }
 
-const ACTION_LOG_URL = 'https://api.douban.com/v2/fm/action_log' // handle action, used in trash list
-
-export const actionLog = (sid, type, play_source) => {
+export const removeTrashSong = (sid) => {
   return (dispatch, getState) => {
     return axios(
       Object.assign({
         method: 'POST',
-        url: ACTION_LOG_URL,
-        data: oToFd(Object.assign(fixedParams, {
-          records: '[{"time":"' +
-              moment()
-                .format('YYYY-MM-DD HH:m:s') +
-              '","play_mode":"o","v":"4.8.2","sid":"' +
-              sid +
-              '","type":"' +
-              type +
-              '","play_source":"' +
-              play_source +
-              '"}]'
-        }))
+        url: 'https://api.douban.com/v2/fm/unban_song?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
+        data: oToFd(Object.assign(JSON.parse(JSON.stringify(fixedParams)), { sid }))
       }, getState()
         .authReducer._id === 1 && {
         headers: {

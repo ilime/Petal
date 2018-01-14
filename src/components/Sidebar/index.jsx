@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Image } from 'semantic-ui-react'
-import { Link, NavLink, withRouter } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { appMinimize, appQuit } from '../../helper/electron'
 
 export class Sidebar extends Component {
   render() {
-    const { _id, icon } = this.props
+    const { _id, avatar } = this.props
 
     return (
       <nav className="petal-sidebar">
@@ -30,6 +30,27 @@ export class Sidebar extends Component {
               <Icon name='options' size='large' color='grey' />
             </NavLink>
           </li>
+          {
+            _id === 1 && <li>
+              <NavLink exact to='/redHeartList' activeClassName='selected'>
+                <Icon name='heart outline' size='large' color='grey' />
+              </NavLink>
+            </li>
+          }
+          {
+            _id === 1 && <li>
+              <NavLink exact to='/recentList' activeClassName='selected'>
+                <Icon name='history' size='large' color='grey' />
+              </NavLink>
+            </li>
+          }
+          {
+            _id === 1 && <li>
+              <NavLink exact to='/trashList' activeClassName='selected'>
+                <Icon name='trash outline' size='large' color='grey' />
+              </NavLink>
+            </li>
+          }
           <li>
             <NavLink exact to='/setting' activeClassName='selected'>
               <Icon name='setting' size='large' color='grey' />
@@ -40,9 +61,9 @@ export class Sidebar extends Component {
               <NavLink to='/login' activeClassName='selected'>
                 <Icon name='spy' size='large' color='grey' />
               </NavLink> :
-              <Link to='/personal'>
-                <Image src={icon} avatar className='userAvatar' />
-              </Link>
+              <NavLink to='/personal' activeClassName='selected'>
+                <Image src={avatar} avatar />
+              </NavLink>
             }
           </li>
         </ul>
@@ -53,13 +74,13 @@ export class Sidebar extends Component {
 
 Sidebar.propTypes = {
   _id: PropTypes.number.isRequired,
-  icon: PropTypes.string
+  avatar: PropTypes.string
 }
 
 const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
-    icon: state.authReducer.userInfo.icon
+    avatar: state.authReducer.userInfo.icon
   }
 }
 

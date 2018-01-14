@@ -1,89 +1,53 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Item, Icon } from 'semantic-ui-react'
-import { recentIndexSet, redheartIndexSet, trashRemove } from '../../actions/fm/types'
-import { actionLog } from '../../actions/fm/apis'
-import { rendererProcessSend } from '../../helper/electron'
+import { Item, Header } from 'semantic-ui-react'
+
+const typeRender = {
+  'recent': '最近收听',
+  'redheart': '红心',
+  'trash': '垃圾桶'
+}
+
+const tipRender = {
+  'recent': '你还没有收听过歌曲哦～',
+  'redheart': '这里没有你喜欢的歌曲吗？',
+  'trash': '这里没有你不喜欢的歌曲！'
+}
 
 class SongList extends Component {
-  handleRecentPlay = index => {
-    const { handleRecentIndexSet } = this.props
-    handleRecentIndexSet(index)
-    rendererProcessSend('patternSwitch', 'recent')
-  }
-
-  handleRedheartPlay = index => {
-    const { handleRedheartIndexSet } = this.props
-    handleRedheartIndexSet(index)
-    rendererProcessSend('patternSwitch', 'redheart')
-  }
-
-  handleTrashRemove = (e, index, sid) => {
-    e.preventDefault()
-    this.props.handleActionLog(sid, 'z', 'i')
-    this.props.handleStateTrashRemove(index)
-  }
-
   render() {
     const { songArray, type } = this.props
+    const title = typeRender[type]
 
     return (
-      <Item.Group>
-        {songArray.length > 0 && songArray.map((song, index) => {
-          return <Item key={index} className='songlistItem'>
-            <Item.Image size='tiny' src={song.picture} />
-
-            <Item.Content>
-              <Item.Header as='a'>{song.title}</Item.Header>
-              <Item.Description>
-                {song.singers.reduce((prev, singer) => {
-                  return prev + '/' + singer.name
-                }, '').slice(1)}
-              </Item.Description>
-              <Item.Extra>
-                {song.albumtitle + ' - ' + song.public_time}
-              </Item.Extra>
-            </Item.Content>
-            <div className='itemControl'>
-              {type === 'recent' && <div>
-                <Icon name='play' color='grey' link onClick={() => this.handleRecentPlay(index)} />
-              </div>}
-              {type === 'redheart' && <div>
-                <Icon name='play' color='grey' link onClick={() => this.handleRedheartPlay(index)} />
-              </div>}
-              {type === 'trash' && <div>
-                <Icon title='移除'
-                  name='trash'
-                  color='grey'
-                  link
-                  onClick={e => this.handleTrashRemove(e, index, song.sid)} />
-              </div>}
-            </div>
-          </Item>
-        })}
-      </Item.Group>
+      <article className="petal-personal-songlist">
+        <Header as="h2">{title}</Header>
+        {songArray.length === 0 ?
+          <p>{tipRender[type]}</p>
+          : < Item.Group divided unstackable>
+            {songArray.map((song, index) => {
+              return <Item key={index}>
+                <Item.Image size='tiny' src={song.picture} />
+                <Item.Content>
+                  <Item.Header>{song.title}</Item.Header>
+                  <Item.Meta>{song.artist}</Item.Meta>
+                  <Item.Extra>{`${song.albumtitle} - ${song.public_time}`}</Item.Extra>
+                </Item.Content>
+              </Item>
+            })}
+          </Item.Group>}
+      </article>
     )
   }
 }
 
-SongList.PropTypes = {
-  handleRecentIndexSet: PropTypes.func.isRequired,
-  handleRedheartIndexSet: PropTypes.func.isRequired,
-  handleStateTrashRemove: PropTypes.func.isRequired,
-  handleActionLog: PropTypes.func.isRequired
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    handleRecentIndexSet: index => dispatch(recentIndexSet(index)),
-    handleRedheartIndexSet: index => dispatch(redheartIndexSet(index)),
-    handleStateTrashRemove: index => dispatch(trashRemove(index)),
-    handleActionLog: (sid, type, play_source) => dispatch(actionLog(sid, type, play_source))
-  }
+SongList.propTypes = {
+  songArray: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired
 }
 
 export default connect(
   null,
-  mapDispatchToProps
+  null
 )(SongList)

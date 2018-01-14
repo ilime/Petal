@@ -1,10 +1,13 @@
 @import './common';
 
 .petal-loading {
+  user-select: none;
   -webkit-app-region: drag;
+
   >div {
     @include VHCenter();
   }
+
   div:first-child {
     height: 220px;
   }
