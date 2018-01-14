@@ -50,6 +50,7 @@ class Pattern extends Component {
       rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', name)
     }
+    this.props.history.push('/')
   }
 
   render() {
@@ -61,7 +62,7 @@ class Pattern extends Component {
         <div className="default-MHz">
           <Button basic className={pattern === 'select' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('select')}><Icon name='leaf' /> 豆瓣精选 MHz</Button>
           {_id === 1 && <Button basic className={pattern === 'redheart' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('redheart')}><Icon name='heart' /> 红心</Button>}
-          {_id === 1 && <Button basic className={pattern === 'recent' ? 'selected': ''} onClick={() => this.handleSwitchPattern('recent')}><Icon name='history' /> 最近收听</Button>}
+          {_id === 1 && <Button basic className={pattern === 'recent' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('recent')}><Icon name='history' /> 最近收听</Button>}
           {_id === 1 && <Button basic><Image src={avatar} avatar /> 我的私人 MHz</Button>}
         </div>
       </article >

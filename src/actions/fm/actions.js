@@ -109,9 +109,10 @@ export const redheartPattern = { type: types.REDHEART_PATTERN }
 
 export const songListGo = { type: types.SONGLIST_GO }
 export const songListBack = { type: types.SONGLIST_BACK }
-export const songListIndexSet = index => {
+export const songListIndexSet = (index, pattern = null) => {
   return {
     type: types.SONGLIST_INDEX_SET,
-    index
+    index,
+    pattern
   }
 }

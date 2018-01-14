@@ -1,3 +1,5 @@
+@import './common';
+
 .petal-personal {
   padding: 5px 10px;
 
@@ -21,6 +23,12 @@
         img {
           width: 80px !important;
           height: 80px !important;
+        }
+      }
+
+      .extra {
+        .ui.mini.basic.icon.button:hover {
+          color: $petal-green !important;
         }
       }
     }

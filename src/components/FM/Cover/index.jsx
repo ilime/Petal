@@ -38,23 +38,28 @@ class Cover extends Component {
 
     if (pattern === 'select' && song !== this.props.song) {
       this.setCover(song, pattern)
+      return
     }
 
     if (pattern === 'redheart' && this.props.pattern !== 'redheart') {
       this.setCover(this.props.redheartSong[songListIndex], pattern)
+      return
     }
 
     if (pattern === 'recent' && this.props.pattern !== 'recent') {
       this.setCover(this.props.recentSong[songListIndex], pattern)
+      return
     }
 
     if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
       if (pattern === 'redheart') {
         this.setCover(this.props.redheartSong[songListIndex], pattern)
+        return
       }
 
       if (pattern === 'recent') {
         this.setCover(this.props.recentSong[songListIndex], pattern)
+        return
       }
     }
 

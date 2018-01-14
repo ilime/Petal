@@ -83,8 +83,7 @@ export const playlistGET = type => {
       url: playlistOriginUrl +
             '&type=' + getState()
         .fmReducer.type +
-            '&sid=' + getState()
-        .fmReducer.sid
+            '&sid=' + (type !== 'new' ? getState().fmReducer.sid : '')
     },
       // is login
     getState()

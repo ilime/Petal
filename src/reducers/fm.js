@@ -84,6 +84,7 @@ const fmReducer = (state = {
       songListIndex: state.songListIndex - 1
     }),
     types.SONGLIST_INDEX_SET, (state, action) => shallowCopy(state, {
+      pattern: action.pattern ? action.pattern : state.pattern,
       songListIndex: action.index
     })
   )(state, action)

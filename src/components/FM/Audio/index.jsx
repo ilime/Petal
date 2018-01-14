@@ -22,23 +22,28 @@ class Audio extends Component {
 
     if (pattern === 'select' && song !== this.props.song && type !== 'r' && type !== 'u') {
       this.nextAudio(song)
+      return
     }
 
     if (pattern === 'redheart' && this.props.pattern !== 'redheart') {
       this.nextAudio(this.props.redheartSong[songListIndex])
+      return
     }
 
     if (pattern === 'recent' && this.props.pattern !== 'recent') {
       this.nextAudio(this.props.recentSong[songListIndex])
+      return
     }
 
     if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
       if (pattern === 'redheart') {
         this.nextAudio(this.props.redheartSong[songListIndex])
+        return
       }
 
       if (pattern === 'recent') {
         this.nextAudio(this.props.recentSong[songListIndex])
+        return
       }
     }
   }
