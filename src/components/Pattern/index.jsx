@@ -47,6 +47,7 @@ class Pattern extends Component {
 
     if (pattern !== name) {
       this._patterns.get(name)()
+      rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', name)
     }
   }

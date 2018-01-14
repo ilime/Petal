@@ -38,7 +38,6 @@ class Container extends Component {
 
     setTimeout(() => {
       this.setState({ loading: false })
-      rendererProcessSend('resizeWindowAfterLoading')
       handleAuthLoad()
       checkUpdate(mainVersion, secondaryVersion, display => this.setState({ checkUpdateDisplay: display }))
     }, 5000)

@@ -52,6 +52,7 @@ export const authPost = (usernameAndPassword, callback) => {
         dispatch(recentListGET())
         dispatch(redHeartListGET())
         dispatch(trashListGET())
+        rendererProcessSend('touchBarResetPause')
         dispatch(playlistGET('new'))
         db.insert({
           _id: 1,
@@ -106,6 +107,8 @@ export const authLoad = () => {
       } else {
         dispatch(playlistGET('new'))
       }
+      rendererProcessSend('resizeWindowAfterLoading')
+      rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', 'select')
     })
   }
@@ -127,6 +130,7 @@ export const authRemove = (dispatch, callback) => {
     }
     dispatch(actions.authLogout())
     dispatch(selectPattern)
+    rendererProcessSend('touchBarResetPause')
     rendererProcessSend('patternSwitch', 'select')
     dispatch(playlistGET('new'))
     dispatch(recentEmpty())
