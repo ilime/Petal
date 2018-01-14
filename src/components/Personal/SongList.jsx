@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { Item, Header, Button, Icon, Confirm } from 'semantic-ui-react'
 import { songListIndexSet } from '../../actions/fm/actions'
 import { removeTrashSong, trashListGET } from '../../actions/fm/apis'
+import { rendererProcessSend } from '../../helper/electron'
 
 const typeRender = {
   'recent': '最近收听',
@@ -35,6 +36,8 @@ class SongList extends Component {
   handleSongListIndexSetWrapper = (index, pattern) => {
     return () => {
       this.props.handleSongListIndexSet(index, pattern)
+      rendererProcessSend('touchBarResetPause')
+      rendererProcessSend('patternSwitch', pattern)
       this.props.history.push('/')
     }
   }
