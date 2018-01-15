@@ -16,9 +16,9 @@ Go to [release page](https://github.com/ilime/Petal/releases)
 
 ```
 git clone git@github.com:ilime/Petal.git && cd Petal/
-npm install && npm run bundle:dev+main && npm run dev:hot
+yarn && yarn run bundle:dev+main && yarn run dev:hot
 // Open a new terminal
-npm start
+yarn start
 ```
 # How to build
 
