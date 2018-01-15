@@ -40,6 +40,12 @@ ipcMain.on('patternSwitch', (event, arg) => {
     case 'redheart':
       mainWindow.setTouchBar(tb.songListTouchBar)
       break
+    case 'daily':
+      mainWindow.setTouchBar(tb.songListTouchBar)
+      break
+    // case 'sheet':
+    //   mainWindow.setTouchBar(tb.songListTouchBar)
+    //   break
     default:
       mainWindow.setTouchBar(tb.playlistTouchBar)
   }

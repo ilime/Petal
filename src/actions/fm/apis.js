@@ -118,7 +118,7 @@ const appChannelOriginUrl = FM_ROOT_URL +
       return previous + key + '=' + value + '&'
     }, '')
 
-export const appChannelGet = () => {
+export const appChannelGET = () => {
   return (dispatch, getState) => {
     return axios(
       Object.assign({
@@ -135,6 +135,35 @@ export const appChannelGet = () => {
       .then(response => {
         let data = response.data.groups
         dispatch(actions.appChannel(data.slice(1, data.length - 1)))
+      })
+      .catch(console.log)
+  }
+}
+
+const dailyOriginUrl = FM_ROOT_URL +
+  '/songlist/user_daily/?' +
+  Object.entries(fixedParams)
+    .reduce((previous, [key, value]) => {
+      return previous + key + '=' + value + '&'
+    }, '') +
+  'kbps=128'
+
+export const dailyListGET = () => {
+  return (dispatch, getState) => {
+    return axios(
+      Object.assign({
+        method: 'GET',
+        url: dailyOriginUrl
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      })
+    )
+      .then(response => {
+        dispatch(actions.dailyList(response.data))
       })
       .catch(console.log)
   }
@@ -256,8 +285,12 @@ const PLAY_LOG_URL = 'https://api.douban.com/v2/fm/play_log?udid=cf9aed3a0bc5403
  * type: u, play_source: h => redheart list unrate
  * type: p, play_source: h => redheart list playing
  * type: s, play_source: h => redheart list skip
+ * type: j, play_source: h => redheart list forward
+ * type: k, play_source: h => redheart list backward
  * 
  * play_source: y => recent list
+ * play_source: d => daily list
+ * play_source: n => sheet list
  * 
  * @param {*} sid 
  * @param {*} type 

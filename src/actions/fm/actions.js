@@ -106,6 +106,8 @@ export const trashEmpty = () => {
 export const selectPattern = { type: types.SELECT_PATTERN }
 export const recentPattern = { type: types.RECENT_PATTERN }
 export const redheartPattern = { type: types.REDHEART_PATTERN }
+export const sheetPattern = { type: types.SHEET_PATTERN }
+export const dailyPattern = { type: types.DAILY_PATTERN }
 
 export const songListGo = { type: types.SONGLIST_GO }
 export const songListBack = { type: types.SONGLIST_BACK }
@@ -127,5 +129,26 @@ export const appChannelSet = id => {
   return {
     type: types.APP_CHANNEL_SET,
     id
+  }
+}
+export const appChannelReset = { type: types.APP_CHANNEL_RESET }
+
+export const dailyList = daily => {
+  return {
+    type: types.DAILY_LIST,
+    daily
+  }
+}
+
+export const dailyEmpty = () => {
+  return {
+    type: types.DAILY_EMPTY
+  }
+}
+
+export const sheetSet = list => {
+  return {
+    type: types.SHEET_SET,
+    list
   }
 }

@@ -14,7 +14,9 @@ const fmReducer = (state = {
   // lyric: {},
   recent: {}, // recent list
   redheart: [], // redheart list
-  trash: {} // trash list
+  trash: {}, // trash list
+  daily: {}, // daliy list
+  sheet: []
 }, action) => {
   return cond(
     types.PLAYLIST_LOADING, state => shallowCopy(state, {
@@ -80,6 +82,14 @@ const fmReducer = (state = {
       pattern: 'redheart',
       songListIndex: 0
     }),
+    types.DAILY_PATTERN, state => shallowCopy(state, {
+      pattern: 'daily',
+      songListIndex: 0
+    }),
+    types.SHEET_PATTERN, state => shallowCopy(state, {
+      pattern: 'sheet',
+      songListIndex: 0
+    }),
     types.SONGLIST_GO, state => shallowCopy(state, {
       songListIndex: state.songListIndex + 1
     }),
@@ -96,6 +106,15 @@ const fmReducer = (state = {
     }),
     types.APP_CHANNEL, (state, action) => shallowCopy(state, {
       channels: action.chls
+    }),
+    types.DAILY_LIST, (state, action) => shallowCopy(state, {
+      daily: action.daily
+    }),
+    types.DAILY_EMPTY, state => shallowCopy(state, {
+      daily: {}
+    }),
+    types.SHEET_SET, (state, action) => shallowCopy(state, {
+      sheet: action.list
     })
   )(state, action)
 }

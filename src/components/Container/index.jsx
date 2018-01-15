@@ -13,6 +13,7 @@ import Recent from '../Personal/Recent'
 import Trash from '../Personal/Trash'
 import Pattern from '../Pattern/index'
 import Personal from '../Personal/index'
+import Sheet from '../Sheet/index'
 import { authLoad } from '../../actions/auth/apis'
 import { openInDefaultBrowser, rendererProcessSend } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
@@ -79,6 +80,7 @@ class Container extends Component {
               <Route path="/trashList" component={Trash} />
               <Route path="/pattern" component={Pattern} />
               <Route path="/personal" component={Personal} />
+              <Route path="/sheet" component={Sheet} />
             </article>
           </main>
         </Router>

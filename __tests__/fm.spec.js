@@ -32,7 +32,7 @@ describe('fmReducer', () => {
   // pattern test
   test('select pattern', () => {
     expect(fmReducer({ pattern: '' }, { type: 'SELECT_PATTERN' }))
-      .toEqual({ pattern: 'select' })
+      .toEqual({ pattern: 'select', channelId: -10 })
   })
   test('recent pattern', () => {
     expect(fmReducer({ pattern: 'select' }, { type: 'RECENT_PATTERN' }))

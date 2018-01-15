@@ -1,0 +1,15 @@
+@import './common';
+
+.petal-sheet {
+  padding: 5px 10px;
+  height: calc(100vh - 24px);
+  overflow-y: scroll;
+
+  .ui.items >.item >.content.daily-content {
+    margin-left: 10px;
+  }
+}
+
+.petal-sheet::-webkit-scrollbar {
+  display: none;
+}

@@ -35,6 +35,14 @@ class Audio extends Component {
       return
     }
 
+    if (pattern === 'daily' && this.props.pattern !== 'daily') {
+      this.nextAudio(this.props.dailySong[songListIndex])
+    }
+
+    // if (pattern === 'sheet' && this.props.pattern !== 'sheet') {
+    //   this.nextAudio(this.props.sheetSong[songListIndex])
+    // }
+
     if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
       if (pattern === 'redheart') {
         this.nextAudio(this.props.redheartSong[songListIndex])
@@ -45,6 +53,16 @@ class Audio extends Component {
         this.nextAudio(this.props.recentSong[songListIndex])
         return
       }
+
+      if (pattern === 'daily') {
+        this.nextAudio(this.props.dailySong[songListIndex])
+        return
+      }
+
+      // if (pattern === 'sheet') {
+      //   this.nextAudio(this.props.sheetSong[songListIndex])
+      //   return
+      // }
     }
   }
 
@@ -173,7 +191,7 @@ class Audio extends Component {
    * @memberof Audio
    */
   endedAudio = () => {
-    const { pattern, recentSong, redheartSong, songListIndex } = this.props
+    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
 
     if (pattern === 'select') {
       this.props.getPlaylist('playing')
@@ -188,6 +206,13 @@ class Audio extends Component {
     } else if (pattern === 'redheart') {
       this.props.handlePlayLog(redheartSong[songListIndex].sid, 'p', 'h')
       if (songListIndex === redheartSong.length - 1) {
+        this.props.handleSongListIndexSet(0)
+      } else {
+        this.props.handleSongListGo()
+      }
+    } else if (pattern === 'daily') {
+      this.props.handlePlayLog(dailySong[songListIndex].sid, 'p', 'd')
+      if (songListIndex === dailySong.length - 1) {
         this.props.handleSongListIndexSet(0)
       } else {
         this.props.handleSongListGo()
@@ -227,6 +252,8 @@ Audio.propTypes = {
   song: PropTypes.object.isRequired,
   recentSong: PropTypes.array,
   redheartSong: PropTypes.array,
+  dailySong: PropTypes.array,
+  // sheetSong: PropTypes.array,
   getPlaylist: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   audioVolume: PropTypes.number.isRequired,
@@ -243,6 +270,8 @@ const mapStateToProps = state => {
     type: state.fmReducer.type,
     recentSong: state.fmReducer.recent.songs,
     redheartSong: state.fmReducer.redheart,
+    dailySong: state.fmReducer.daily.songs,
+    // sheetSong: state.fmReducer.sheet,
     audioVolume: state.settingReducer.volume
   }
 }

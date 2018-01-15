@@ -51,6 +51,16 @@ class Cover extends Component {
       return
     }
 
+    if (pattern === 'daily' && this.props.pattern !== 'daily') {
+      this.setCover(this.props.dailySong[songListIndex], pattern)
+      return
+    }
+
+    // if (pattern === 'sheet' && this.props.pattern !== 'sheet') {
+    //   this.setCover(this.props.sheetSong[songListIndex], pattern)
+    //   return
+    // }
+
     if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
       if (pattern === 'redheart') {
         this.setCover(this.props.redheartSong[songListIndex], pattern)
@@ -61,6 +71,16 @@ class Cover extends Component {
         this.setCover(this.props.recentSong[songListIndex], pattern)
         return
       }
+
+      if (pattern === 'daily') {
+        this.setCover(this.props.dailySong[songListIndex], pattern)
+        return
+      }
+
+      // if (pattern === 'sheet') {
+      //   this.setCover(this.props.sheetSong[songListIndex], pattern)
+      //   return
+      // }
     }
 
     if (_id === 0 && this.props._id === 1) {
@@ -106,14 +126,14 @@ class Cover extends Component {
   }
 
   handleSongForward = () => {
-    const { pattern, recentSong, redheartSong, songListIndex } = this.props
+    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
 
     if (pattern === 'select') {
       return
     }
 
     if (pattern === 'recent') {
-      this.props.handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
+      this.props.handlePlayLog(recentSong[songListIndex].sid, 'j', 'y')
       if (songListIndex === recentSong.length - 1) {
         this.props.handleSongListIndexSet(0)
       } else {
@@ -122,24 +142,42 @@ class Cover extends Component {
     }
 
     if (pattern === 'redheart') {
-      this.props.handlePlayLog(redheartSong[songListIndex].sid, 's', 'h')
+      this.props.handlePlayLog(redheartSong[songListIndex].sid, 'j', 'h')
       if (songListIndex === redheartSong.length - 1) {
         this.props.handleSongListIndexSet(0)
       } else {
         this.props.handleSongListGo()
       }
     }
+
+    if (pattern === 'daily') {
+      this.props.handlePlayLog(dailySong[songListIndex].sid, 'j', 'd')
+      if (songListIndex === dailySong.length - 1) {
+        this.props.handleSongListIndexSet(0)
+      } else {
+        this.props.handleSongListGo()
+      }
+    }
+
+    // if (pattern === 'sheet') {
+    //   this.props.handlePlayLog(sheetSong[songListIndex].sid, 'j', 'n')
+    //   if (songListIndex === sheetSong.length - 1) {
+    //     this.props.handleSongListIndexSet(0)
+    //   } else {
+    //     this.props.handleSongListGo()
+    //   }
+    // }
   }
 
   handleSongBackward = () => {
-    const { pattern, recentSong, redheartSong, songListIndex } = this.props
+    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
 
     if (pattern === 'select') {
       return
     }
 
     if (pattern === 'recent') {
-      this.props.handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
+      this.props.handlePlayLog(recentSong[songListIndex].sid, 'k', 'y')
       if (songListIndex === 0) {
         this.props.handleSongListIndexSet(recentSong.length - 1)
       } else {
@@ -148,13 +186,31 @@ class Cover extends Component {
     }
 
     if (pattern === 'redheart') {
-      this.props.handlePlayLog(redheartSong[songListIndex].sid, 's', 'h')
+      this.props.handlePlayLog(redheartSong[songListIndex].sid, 'k', 'h')
       if (songListIndex === 0) {
         this.props.handleSongListIndexSet(redheartSong.length - 1)
       } else {
         this.props.handleSongListBack()
       }
     }
+
+    if (pattern === 'daily') {
+      this.props.handlePlayLog(dailySong[songListIndex].sid, 'k', 'd')
+      if (songListIndex === 0) {
+        this.props.handleSongListIndexSet(dailySong.length - 1)
+      } else {
+        this.props.handleSongListBack()
+      }
+    }
+
+    // if (pattern === 'sheet') {
+    //   this.props.handlePlayLog(sheetSong[songListIndex].sid, 'k', 'n')
+    //   if (songListIndex === 0) {
+    //     this.props.handleSongListIndexSet(sheetSong.length - 1)
+    //   } else {
+    //     this.props.handleSongListBack()
+    //   }
+    // }
   }
 
   handleSkipSong = () => {
@@ -176,7 +232,7 @@ class Cover extends Component {
    * @memberof Cover
    */
   handleLoveSong = () => {
-    const { _id, pattern, getPlayList, recentSong, redheartSong, songListIndex } = this.props
+    const { _id, pattern, getPlayList, recentSong, redheartSong, dailySong, songListIndex } = this.props
     const { love } = this.state
     if (_id === 0) {
       this.handleLoveIsLoginPopupOpen()
@@ -196,6 +252,14 @@ class Cover extends Component {
         this.props.handlePlayLog(redheartSong[songListIndex].sid, 'r', 'h')
       }
 
+      if (pattern === 'daily') {
+        this.props.handlePlayLog(dailySong[songListIndex].sid, 'r', 'd')
+      }
+
+      // if (pattern === 'sheet') {
+      //   this.props.handlePlayLog(sheetSong[songListIndex].sid, 'r', 'n')
+      // }
+
       this.setState({ love: 'red' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
     }
 
@@ -211,6 +275,14 @@ class Cover extends Component {
       if (pattern === 'redheart') {
         this.props.handlePlayLog(redheartSong[songListIndex].sid, 'u', 'h')
       }
+
+      if (pattern === 'daily') {
+        this.props.handlePlayLog(dailySong[songListIndex].sid, 'u', 'd')
+      }
+
+      // if (pattern === 'sheet') {
+      //   this.props.handlePlayLog(sheetSong[songListIndex].sid, 'u', 'n')
+      // }
 
       this.setState({ love: 'white' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
     }
@@ -248,7 +320,7 @@ class Cover extends Component {
             <Icon name='trash' size='big' onClick={this.handleTrashSong} />
             <Icon name='step forward' size='big' onClick={this.handleSkipSong} />
           </div>}
-          {(pattern === 'recent' || pattern === 'redheart') && <div>
+          {(pattern === 'recent' || pattern === 'redheart' || pattern === 'daily') && <div>
             <Icon name='step backward' size='big' onClick={this.handleSongBackward} />
             <Icon name='heart' size='big' style={{ color: love }} onClick={this.handleLoveSong} />
             <Icon name='step forward' size='big' onClick={this.handleSongForward} />
@@ -293,6 +365,8 @@ Cover.propTypes = {
   song: PropTypes.object.isRequired,
   recentSong: PropTypes.array,
   redheartSong: PropTypes.array,
+  dailySong: PropTypes.array,
+  // sheetSong: PropTypes.array,
   getPlayList: PropTypes.func.isRequired,
   _id: PropTypes.number.isRequired,
   songListIndex: PropTypes.number.isRequired,
@@ -309,6 +383,8 @@ const mapStateToProps = state => {
     _id: state.authReducer._id,
     recentSong: state.fmReducer.recent.songs,
     redheartSong: state.fmReducer.redheart,
+    dailySong: state.fmReducer.daily.songs,
+    // sheetSong: state.fmReducer.sheet,
     songListIndex: state.fmReducer.songListIndex
   }
 }

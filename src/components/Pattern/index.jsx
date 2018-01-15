@@ -50,9 +50,7 @@ class Pattern extends Component {
   }
 
   handleAppChannelSetWrapper = id => {
-    if (this.props.channelId === id) {
-      return
-    } else {
+    if (!(this.props.channelId === id && this.props.pattern === 'select')) {
       this.props.handleAppChannelSet(id)
       this.props.getPlaylist('new')
     }
@@ -66,16 +64,16 @@ class Pattern extends Component {
       <article className="petal-pattern">
         <Header as="h2">兆赫</Header>
         <div className="default-MHz">
-          <Button basic className={(pattern === 'select' && channelId === -10) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(-10)}><Icon name='leaf' /> 豆瓣精选 MHz</Button>
-          {_id === 1 && <Button basic className={pattern === 'redheart' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('redheart')}><Icon name='heart' /> 红心</Button>}
-          {_id === 1 && <Button basic className={pattern === 'recent' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('recent')}><Icon name='history' /> 最近收听</Button>}
-          {_id === 1 && <Button basic className={(pattern === 'select' && channelId === 0) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(0)}><Image src={avatar} avatar /> 我的私人 MHz</Button>}
+          <Button basic className={(pattern === 'select' && channelId === -10) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(-10)}><Icon name='leaf' />豆瓣精选 MHz</Button>
+          {_id === 1 && <Button basic className={pattern === 'redheart' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('redheart')}><Icon name='heart' />红心</Button>}
+          {_id === 1 && <Button basic className={pattern === 'recent' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('recent')}><Icon name='history' />最近收听</Button>}
+          {_id === 1 && <Button basic className={(pattern === 'select' && channelId === 0) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(0)}><Image src={avatar} avatar />我的私人 MHz</Button>}
         </div>
         {channels.length > 0 && channels.map(channel => {
           return <div key={channel.group_name} style={{ marginTop: '10px' }}>
             <Header as='h5' dividing>{channel.group_name}</Header>
             {channel.chls.length > 0 && channel.chls.map(c => {
-              return <Button key={c.name} basic className={(pattern === 'select' && channelId === c.id) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(c.id)} title={c.intro}>{c.name}</Button>
+              return <Button key={c.name} basic className={(pattern === 'select' && channelId === c.id) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(c.id)} title={c.intro}><Image src={c.cover} avatar />{c.name}</Button>
             })}
           </div>
         })}

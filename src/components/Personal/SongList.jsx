@@ -36,7 +36,7 @@ class SongList extends Component {
   handleSongListIndexSetWrapper = (index, pattern) => {
     return () => {
       const { songListIndex, handlePlayLog, recentSong, redheartSong } = this.props
-      if (index !== songListIndex || pattern !== this.props.pattern) {
+      if (index !== songListIndex && pattern === this.props.pattern) {
         if (this.props.pattern === 'recent') {
           handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
         }

@@ -6,7 +6,7 @@ import { Sidebar } from '../src/components/Sidebar/index.jsx'
 describe('<Sidebar />', () => {
   const wrapper = shallow(<Sidebar _id={0} />)
   const withoutAuthRoutes = ['/', '/pattern', '/setting', '/login']
-  const authRoutes = ['/', '/pattern', '/redHeartList', '/recentList', '/trashList', '/setting', '/personal']
+  const authRoutes = ['/', '/pattern', '/sheet', '/redHeartList', '/recentList', '/trashList', '/setting', '/personal']
 
   test('navlink worked as expectly', () => {
     let index = 0

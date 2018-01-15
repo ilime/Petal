@@ -31,6 +31,14 @@ export class Sidebar extends Component {
             </NavLink>
           </li>
           {
+            _id === 1 &&
+            <li>
+              <NavLink exact to='/sheet' activeClassName='selected'>
+                <Icon name='lab' size='large' color='grey' />
+              </NavLink>
+            </li>
+          }
+          {
             _id === 1 && <li>
               <NavLink exact to='/redHeartList' activeClassName='selected'>
                 <Icon name='heart outline' size='large' color='grey' />
@@ -65,6 +73,9 @@ export class Sidebar extends Component {
                 <Image src={avatar} avatar />
               </NavLink>
             }
+          </li>
+          <li>
+            <Icon name='cube' size='large' color='grey' link />
           </li>
         </ul>
       </nav>

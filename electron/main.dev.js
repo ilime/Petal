@@ -34,9 +34,9 @@ app.on('ready', () => {
         { role: 'quit' }
       ]
     })
+    setTimeout(() => {
+      mainWindow.setTouchBar(playlistTouchBar)
+    }, 8000)
   }
-  setTimeout(() => {
-    mainWindow.setTouchBar(playlistTouchBar)
-  }, 8000)
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 })

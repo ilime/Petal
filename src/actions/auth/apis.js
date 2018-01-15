@@ -2,8 +2,8 @@ import axios from 'axios'
 import moment from 'moment'
 
 import * as actions from './actions'
-import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/actions'
-import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET, appChannelGet } from '../fm/apis'
+import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty, dailyEmpty } from '../fm/actions'
+import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET, appChannelGET, dailyListGET } from '../fm/apis'
 import { settingLoad } from '../setting/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
@@ -48,13 +48,18 @@ export const authPost = (usernameAndPassword, callback) => {
           douban_user_name: data.douban_user_name
         }
         dispatch(actions.authLoginResponse(userToken))
+        dispatch(selectPattern)
+        rendererProcessSend('touchBarResetPause')
+        rendererProcessSend('patternSwitch', 'select')
+        dispatch(playlistGET('new'))
+
+        dispatch(appChannelGET())
         dispatch(userInfoGET())
-        dispatch(appChannelGet())
+
+        dispatch(dailyListGET())
         dispatch(recentListGET())
         dispatch(redHeartListGET())
         dispatch(trashListGET())
-        rendererProcessSend('touchBarResetPause')
-        dispatch(playlistGET('new'))
         db.insert({
           _id: 1,
           userToken,
@@ -81,8 +86,6 @@ export const authPost = (usernameAndPassword, callback) => {
 export const authLoad = () => {
   return dispatch => {
     dispatch(settingLoad())
-    dispatch(appChannelGet())
-    dispatch(playlistGET('new'))
     db.findOne({
       _id: 1
     }, (err, doc) => {
@@ -100,15 +103,23 @@ export const authLoad = () => {
           })
         } else {
           dispatch(actions.authTokenLoad(doc))
+
+          dispatch(playlistGET('new'))
+
+          dispatch(appChannelGET())
           dispatch(userInfoGET())
+
+          dispatch(dailyListGET())
           dispatch(recentListGET())
           dispatch(redHeartListGET())
           dispatch(trashListGET())
         }
+      } else {
+        dispatch(playlistGET('new'))
+        dispatch(appChannelGET())
       }
     })
     rendererProcessSend('resizeWindowAfterLoading')
-    rendererProcessSend('touchBarResetPause')
     rendererProcessSend('patternSwitch', 'select')
   }
 }
@@ -132,6 +143,9 @@ export const authRemove = (dispatch, callback) => {
     rendererProcessSend('touchBarResetPause')
     rendererProcessSend('patternSwitch', 'select')
     dispatch(playlistGET('new'))
+
+    dispatch(appChannelGET())
+    dispatch(dailyEmpty())
     dispatch(recentEmpty())
     dispatch(redHeartEmpty())
     dispatch(trashEmpty())

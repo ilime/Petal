@@ -29,9 +29,7 @@ chmod +x build.sh
 
 # How to contribute
 
-Pull a request and open a issue to describe your changes
-
-> Note: view .eslintrc.json, .editorConfig and follow the code style
+Pull a request or open an issue to describe your changes or problems
 
 # License
 
