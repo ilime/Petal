@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Item, Header, Button, Icon, Confirm } from 'semantic-ui-react'
 import { songListIndexSet } from '../../actions/fm/actions'
-import { removeTrashSong, trashListGET } from '../../actions/fm/apis'
+import { removeTrashSong, trashListGET, playLog } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
 const typeRender = {
@@ -35,6 +35,16 @@ class SongList extends Component {
 
   handleSongListIndexSetWrapper = (index, pattern) => {
     return () => {
+      const { songListIndex, handlePlayLog, recentSong, redheartSong } = this.props
+      if (index !== songListIndex || pattern !== this.props.pattern) {
+        if (this.props.pattern === 'recent') {
+          handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
+        }
+        if (this.props.pattern === 'redheart') {
+          handlePlayLog(redheartSong[songListIndex].sid, 's', 'h')
+        }
+      }
+
       this.props.handleSongListIndexSet(index, pattern)
       rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', pattern)
@@ -83,21 +93,36 @@ class SongList extends Component {
 
 SongList.propTypes = {
   songArray: PropTypes.array.isRequired,
+  songListIndex: PropTypes.number.isRequired,
+  pattern: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   handleSongListIndexSet: PropTypes.func,
   handleRemoveTrashSong: PropTypes.func,
-  handleTrashListGET: PropTypes.func
+  handleTrashListGET: PropTypes.func,
+  recentSong: PropTypes.array,
+  redheartSong: PropTypes.array,
+  handlePlayLog: PropTypes.func
+}
+
+const mapStateToProps = state => {
+  return {
+    pattern: state.fmReducer.pattern,
+    recentSong: state.fmReducer.recent.songs,
+    redheartSong: state.fmReducer.redheart,
+    songListIndex: state.fmReducer.songListIndex
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     handleSongListIndexSet: (index, pattern) => dispatch(songListIndexSet(index, pattern)),
     handleRemoveTrashSong: sid => dispatch(removeTrashSong(sid)),
-    handleTrashListGET: () => dispatch(trashListGET())
+    handleTrashListGET: () => dispatch(trashListGET()),
+    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source))
   }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(SongList))

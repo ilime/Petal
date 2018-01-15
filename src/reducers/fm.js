@@ -4,6 +4,8 @@ import * as types from '../actions/fm/types'
 const fmReducer = (state = {
   isFetching: false, // playlist loading, true is loading
   pattern: 'select',
+  channelId: -10,
+  channels: [],
   songListIndex: 0,
   type: '',
   sid: '', // playlist song sid
@@ -86,6 +88,12 @@ const fmReducer = (state = {
     types.SONGLIST_INDEX_SET, (state, action) => shallowCopy(state, {
       pattern: action.pattern ? action.pattern : state.pattern,
       songListIndex: action.index
+    }),
+    types.APP_CHANNEL_SET, (state, action) => shallowCopy(state, {
+      channelId: action.id
+    }),
+    types.APP_CHANNEL, (state, action) => shallowCopy(state, {
+      channels: action.chls
     })
   )(state, action)
 }

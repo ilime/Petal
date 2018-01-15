@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import * as actions from './actions'
 import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty } from '../fm/actions'
-import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET } from '../fm/apis'
+import { playlistGET, recentListGET, redHeartListGET, trashListGET, userInfoGET, appChannelGet } from '../fm/apis'
 import { settingLoad } from '../setting/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
@@ -49,6 +49,7 @@ export const authPost = (usernameAndPassword, callback) => {
         }
         dispatch(actions.authLoginResponse(userToken))
         dispatch(userInfoGET())
+        dispatch(appChannelGet())
         dispatch(recentListGET())
         dispatch(redHeartListGET())
         dispatch(trashListGET())
@@ -80,6 +81,8 @@ export const authPost = (usernameAndPassword, callback) => {
 export const authLoad = () => {
   return dispatch => {
     dispatch(settingLoad())
+    dispatch(appChannelGet())
+    dispatch(playlistGET('new'))
     db.findOne({
       _id: 1
     }, (err, doc) => {
@@ -95,22 +98,18 @@ export const authLoad = () => {
           db.remove({
             _id: 1
           })
-          dispatch(playlistGET('new'))
         } else {
           dispatch(actions.authTokenLoad(doc))
           dispatch(userInfoGET())
           dispatch(recentListGET())
           dispatch(redHeartListGET())
           dispatch(trashListGET())
-          dispatch(playlistGET('new'))
         }
-      } else {
-        dispatch(playlistGET('new'))
       }
-      rendererProcessSend('resizeWindowAfterLoading')
-      rendererProcessSend('touchBarResetPause')
-      rendererProcessSend('patternSwitch', 'select')
     })
+    rendererProcessSend('resizeWindowAfterLoading')
+    rendererProcessSend('touchBarResetPause')
+    rendererProcessSend('patternSwitch', 'select')
   }
 }
 

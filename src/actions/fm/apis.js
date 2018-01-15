@@ -48,7 +48,7 @@ const playlistOriginUrl = FM_ROOT_URL +
     .reduce((previous, [key, value]) => {
       return previous + key + '=' + value + '&'
     }, '') +
-  'channel=-10&pt=0.0&format=null&kbps=128&pb=128&from='
+  'pt=0.0&format=null&kbps=128&pb=128&from='
 
 /**
  * get lyric through the song's sid and album's ssid
@@ -81,9 +81,12 @@ export const playlistGET = type => {
     axios(Object.assign({
       method: 'GET',
       url: playlistOriginUrl +
+            '&channel=' + getState()
+        .fmReducer.channelId +
             '&type=' + getState()
         .fmReducer.type +
-            '&sid=' + (type !== 'new' ? getState().fmReducer.sid : '')
+            '&sid=' + (type !== 'new' ? getState()
+        .fmReducer.sid : '')
     },
       // is login
     getState()
@@ -102,6 +105,35 @@ export const playlistGET = type => {
           ssid = song.ssid
         // if type is rate or unrate, the next similar song will add into current songs array
         dispatch(actions.playlistResponse(sid, ssid, song))
+      })
+      .catch(console.log)
+  }
+}
+
+// app channel
+const appChannelOriginUrl = FM_ROOT_URL +
+  '/app_channels?' +
+  Object.entries(fixedParams)
+    .reduce((previous, [key, value]) => {
+      return previous + key + '=' + value + '&'
+    }, '')
+
+export const appChannelGet = () => {
+  return (dispatch, getState) => {
+    return axios(
+      Object.assign({
+        method: 'GET',
+        url: appChannelOriginUrl
+      }, getState()
+        .authReducer._id === 1 && {
+        headers: {
+          'Authorization': 'Bearer ' + getState()
+            .authReducer.userToken.access_token
+        }
+      })
+    )
+      .then(response => {
+        dispatch(actions.appChannel(response.data))
       })
       .catch(console.log)
   }

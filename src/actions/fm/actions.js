@@ -116,3 +116,16 @@ export const songListIndexSet = (index, pattern = null) => {
     pattern
   }
 }
+
+export const appChannel = chls => {
+  return {
+    type: types.APP_CHANNEL,
+    chls
+  }
+}
+export const appChannelSet = id => {
+  return {
+    type: types.APP_CHANNEL_SET,
+    id
+  }
+}
