@@ -14,9 +14,9 @@ const typeRender = {
 }
 
 const tipRender = {
-  'recent': '你还没有收听过歌曲哦～',
-  'redheart': '这里没有你喜欢的歌曲吗？',
-  'trash': '这里没有你不喜欢的歌曲！'
+  'recent': '你还没有收听过歌曲。',
+  'redheart': '这里没有你喜欢的歌曲。',
+  'trash': '这里没有你不喜欢的歌曲。'
 }
 
 class SongList extends Component {

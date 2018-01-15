@@ -69,7 +69,8 @@ const fmReducer = (state = {
       trash: {}
     }),
     types.SELECT_PATTERN, state => shallowCopy(state, {
-      pattern: 'select'
+      pattern: 'select',
+      channelId: -10
     }),
     types.RECENT_PATTERN, state => shallowCopy(state, {
       pattern: 'recent',
@@ -90,6 +91,7 @@ const fmReducer = (state = {
       songListIndex: action.index
     }),
     types.APP_CHANNEL_SET, (state, action) => shallowCopy(state, {
+      pattern: 'select',
       channelId: action.id
     }),
     types.APP_CHANNEL, (state, action) => shallowCopy(state, {

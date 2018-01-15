@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon, Label } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import Loading from '../Loading'
 import FM from '../FM'
@@ -69,7 +69,6 @@ class Container extends Component {
                       color="green"
                       size="mini"
                       onClick={openInDefaultBrowser('https://github.com/ilime/Petal/releases')} />}
-                  <Icon name="cube" color="grey" />
                 </div>
               </section>
               <FM />

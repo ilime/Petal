@@ -133,7 +133,8 @@ export const appChannelGet = () => {
       })
     )
       .then(response => {
-        dispatch(actions.appChannel(response.data))
+        let data = response.data.groups
+        dispatch(actions.appChannel(data.slice(1, data.length - 1)))
       })
       .catch(console.log)
   }
