@@ -1,4 +1,4 @@
-import { Tray, Menu } from 'electron'
+import { Tray, Menu, app } from 'electron'
 import { mainWindow } from './win'
 
 let appIcon = null
@@ -25,7 +25,7 @@ const contextMenu = Menu.buildFromTemplate([{
 }, {
   label: 'Quit',
   click() {
-    mainWindow.quit()
+    app.quit()
   }
 }])
 
