@@ -24,7 +24,7 @@ class Container extends Component {
     super(props)
     this.state = {
       loading: true,
-      checkUpdateDisplay: 0
+      checkUpdateDisplay: false
     }
   }
 
@@ -62,7 +62,7 @@ class Container extends Component {
             <article className="petal-routes-container">
               <section className="titlebar">
                 <div className="more-options">
-                  {checkUpdateDisplay === 1 &&
+                  {checkUpdateDisplay &&
                     <Label
                       as="a"
                       className="checkupdate"

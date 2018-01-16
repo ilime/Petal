@@ -26,6 +26,7 @@
   "author": "Yue Yang <g1enyy0ung@gmail.com> (http://g1eny0ung.site)",
   "license": "MIT",
   "devDependencies": {
+    "axios-mock-adapter": "^1.10.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.0",
     "babel-jest": "^22.0.3",
