@@ -6,7 +6,7 @@
 
 # Screenshot
 
-![petal-screenshot.png](bundle/resources/petal-screenshot.png)
+![petal-screenshot.png](petal-screenshot.png)
 
 # Use it
 
