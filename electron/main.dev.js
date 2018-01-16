@@ -1,8 +1,9 @@
-import { app, Menu } from 'electron'
+import { app } from 'electron'
 import fs from 'fs'
-import { mainWindow, createWindow } from './win'
-import { playlistTouchBar } from './touchbar'
-import template from './template'
+import { createWindow } from './win'
+import createMenu from './menu'
+import createTray from './tray'
+import { createTouchBar } from './touchbar'
 import './ipc'
 
 const createDB = () => {
@@ -23,20 +24,7 @@ const createDB = () => {
 app.on('ready', () => {
   createDB()
   createWindow()
-  if (process.platform === 'darwin') {
-    template.unshift({
-      label: app.getName(),
-      submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { role: 'hide', },
-        { type: 'separator' },
-        { role: 'quit' }
-      ]
-    })
-    setTimeout(() => {
-      mainWindow.setTouchBar(playlistTouchBar)
-    }, 8000)
-  }
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  createMenu()
+  createTray()
+  createTouchBar()
 })

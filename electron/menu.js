@@ -1,3 +1,5 @@
+import { app, Menu } from 'electron'
+
 const template = [{
   label: 'Edit',
   submenu: [{ role: 'undo' },
@@ -63,12 +65,33 @@ const template = [{
 }, {
   label: 'Related',
   submenu: [{
-    label: 'Author',
+    label: 'Repo',
     click() {
       require('electron')
         .shell.openExternal('https://github.com/ilime')
     }
+  }, {
+    label: 'Author',
+    click() {
+      require('electron')
+        .shell.openExternal('https://github.com/g1eny0ung')
+    }
   }]
 }]
 
-export default template
+export default function createMenu() {
+  if (process.platform === 'darwin') {
+    template.unshift({
+      label: app.getName(),
+      submenu: [
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'hide', },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' }
+      ]
+    })
+  }
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+}

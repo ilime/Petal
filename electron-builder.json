@@ -1,0 +1,25 @@
+ {
+   "appId": "org.ilime.petal",
+   "mac": {
+     "category": "public.app-category.music",
+     "target": "dmg"
+   },
+   "dmg": {
+     "contents": [{
+         "x": 150,
+         "y": 260
+       },
+       {
+         "x": 390,
+         "y": 260,
+         "type": "link",
+         "path": "/Applications"
+       }
+     ],
+     "window": {
+       "width": 540,
+       "height": 380
+     }
+   },
+   "win": {}
+ }

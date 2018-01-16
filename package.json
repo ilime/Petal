@@ -11,7 +11,7 @@
     "bundle:dev+main": "npm run bundle:dev && npm run bundle:main",
     "bundle:prod": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js --progress",
     "bundle:prod+main": "npm run bundle:prod && npm run bundle:main",
-    "dist": "electron-builder",
+    "dist": "electron-builder --config electron-builder.json",
     "test": "jest"
   },
   "repository": {
@@ -25,28 +25,6 @@
   ],
   "author": "Yue Yang <g1enyy0ung@gmail.com> (http://g1eny0ung.site)",
   "license": "MIT",
-  "build": {
-    "appId": "org.ilime.petal",
-    "dmg": {
-      "contents": [
-        {
-          "x": 150,
-          "y": 260
-        },
-        {
-          "x": 390,
-          "y": 260,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ],
-      "window": {
-        "width": 540,
-        "height": 380
-      }
-    },
-    "win": {}
-  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.0",
