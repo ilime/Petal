@@ -131,7 +131,6 @@ export const appChannelSet = id => {
     id
   }
 }
-export const appChannelReset = { type: types.APP_CHANNEL_RESET }
 
 export const dailyList = daily => {
   return {

@@ -32,7 +32,6 @@ export const SONGLIST_BACK = 'SONGLIST_BACK'
 
 export const APP_CHANNEL = 'APP_CHANNEL'
 export const APP_CHANNEL_SET = 'APP_CHANNEL_SET'
-export const APP_CHANNEL_RESET = 'APP_CHANNEL_RESET'
 
 export const DAILY_LIST = 'DAILY_LIST'
 export const DAILY_EMPTY = 'DAILY_EMPTY'
