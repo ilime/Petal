@@ -53,6 +53,8 @@ class Pattern extends Component {
     if (!(this.props.channelId === id && this.props.pattern === 'select')) {
       this.props.handleAppChannelSet(id)
       this.props.getPlaylist('new')
+      rendererProcessSend('touchBarResetPause')
+      rendererProcessSend('patternSwitch', 'select')
     }
     this.props.history.push('/')
   }
