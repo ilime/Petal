@@ -2,8 +2,8 @@ import cond, { shallowCopy } from 'redux-cond'
 import * as types from '../actions/setting/types'
 
 const settingReducer = (state = {
-  mainVersion: 1,
-  secondaryVersion: 3,
+  mainVersion: 2,
+  secondaryVersion: 0,
   volume: 20,
   saveSuccess: false
 }, action) => {
