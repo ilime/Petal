@@ -28,8 +28,7 @@ class SongList extends Component {
   show = sid => this.setState({ open: true, sid })
   handleConfirm = () => {
     this.setState({ open: false })
-    this.props.handleRemoveTrashSong(this.state.sid)
-    this.props.handleTrashListGET()
+    this.props.handleRemoveTrashSong(this.state.sid, () => this.props.handleTrashListGET())
   }
   handleCancel = () => this.setState({ open: false })
 
@@ -116,7 +115,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     handleSongListIndexSet: (index, pattern) => dispatch(songListIndexSet(index, pattern)),
-    handleRemoveTrashSong: sid => dispatch(removeTrashSong(sid)),
+    handleRemoveTrashSong: (sid, callback) => dispatch(removeTrashSong(sid, callback)),
     handleTrashListGET: () => dispatch(trashListGET()),
     handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source))
   }

@@ -194,25 +194,31 @@ class Audio extends Component {
     const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
 
     if (pattern === 'select') {
-      this.props.getPlaylist('playing')
       this.props.getPlaylist('end')
+      this.props.getPlaylist('playing')
     } else if (pattern === 'recent') {
       this.props.handlePlayLog(recentSong[songListIndex].sid, 'p', 'y')
-      if (songListIndex === recentSong.length - 1) {
+      if (recentSong.length === 1) {
+        this.audio.load()
+      } else if (songListIndex === recentSong.length - 1) {
         this.props.handleSongListIndexSet(0)
       } else {
         this.props.handleSongListGo()
       }
     } else if (pattern === 'redheart') {
       this.props.handlePlayLog(redheartSong[songListIndex].sid, 'p', 'h')
-      if (songListIndex === redheartSong.length - 1) {
+      if (redheartSong.length === 1) {
+        this.audio.load()
+      } else if (songListIndex === redheartSong.length - 1) {
         this.props.handleSongListIndexSet(0)
       } else {
         this.props.handleSongListGo()
       }
     } else if (pattern === 'daily') {
       this.props.handlePlayLog(dailySong[songListIndex].sid, 'p', 'd')
-      if (songListIndex === dailySong.length - 1) {
+      if (dailySong.length === 1) {
+        this.audio.load()
+      } else if (songListIndex === dailySong.length - 1) {
         this.props.handleSongListIndexSet(0)
       } else {
         this.props.handleSongListGo()

@@ -324,7 +324,7 @@ export const playLog = (sid, type, play_source) => {
   }
 }
 
-export const removeTrashSong = (sid) => {
+export const removeTrashSong = (sid, callback) => {
   return (dispatch, getState) => {
     return axios(
       Object.assign({
@@ -338,6 +338,11 @@ export const removeTrashSong = (sid) => {
             .authReducer.userToken.access_token
         }
       }))
+      .then(() => {
+        if (typeof callback === 'function') {
+          callback()
+        }
+      })
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon, Header, Button, Image } from 'semantic-ui-react'
+import { Icon, Header, Button, Image, Popup } from 'semantic-ui-react'
 import { selectPattern, recentPattern, redheartPattern, appChannelSet } from '../../actions/fm/actions'
 import { playlistGET } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
@@ -9,6 +9,9 @@ import { rendererProcessSend } from '../../helper/electron'
 class Pattern extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      songlistEmpty: ''
+    }
     this._patterns = new Map([
       ['recent', () => {
         props.switchToRecent()
@@ -39,7 +42,10 @@ class Pattern extends Component {
    * @memberof Pattern
    */
   handleSwitchPattern = name => {
-    const { pattern } = this.props
+    const { pattern, recentSong, redheartSong } = this.props
+
+    if (name === 'recent' && recentSong.length === 0) return
+    if (name === 'redheart' && redheartSong.length === 0) return
 
     if (pattern !== name) {
       this._patterns.get(name)()
@@ -59,6 +65,22 @@ class Pattern extends Component {
     this.props.history.push('/')
   }
 
+  handleOpen = (pattern) => {
+    const { recentSong, redheartSong } = this.props
+    if ((pattern === 'recent' && recentSong.length === 0) || (pattern === 'redheart' && redheartSong.length === 0)) {
+      this.setState({ songlistEmpty: pattern })
+
+      this.timeout = setTimeout(() => {
+        this.setState({ songlistEmpty: '' })
+      }, 3000)
+    }
+  }
+
+  handleClose = () => {
+    this.setState({ songlistEmpty: '' })
+    clearTimeout(this.timeout)
+  }
+
   render() {
     const { _id, avatar, pattern, channelId, channels } = this.props
 
@@ -66,10 +88,41 @@ class Pattern extends Component {
       <article className="petal-pattern">
         <Header as="h2">兆赫</Header>
         <div className="default-MHz">
-          <Button basic className={(pattern === 'select' && channelId === -10) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(-10)}><Icon name='leaf' />豆瓣精选 MHz</Button>
-          {_id === 1 && <Button basic className={pattern === 'redheart' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('redheart')}><Icon name='heart' />红心</Button>}
-          {_id === 1 && <Button basic className={pattern === 'recent' ? 'selected' : ''} onClick={() => this.handleSwitchPattern('recent')}><Icon name='history' />最近收听</Button>}
-          {_id === 1 && <Button basic className={(pattern === 'select' && channelId === 0) ? 'selected' : ''} onClick={() => this.handleAppChannelSetWrapper(0)}><Image src={avatar} avatar />我的私人 MHz</Button>}
+          <Button
+            basic
+            className={(pattern === 'select' && channelId === -10) ? 'selected' : ''}
+            onClick={() => this.handleAppChannelSetWrapper(-10)}><Icon name='leaf' />豆瓣精选 MHz</Button>
+          {_id === 1 &&
+            <Popup
+              trigger={<Button
+                basic
+                className={pattern === 'redheart' ? 'selected' : ''}
+                onClick={() => this.handleSwitchPattern('redheart')}><Icon name='heart' />红心</Button>}
+              content={'当前红心为空。'}
+              on='hover'
+              open={this.state.songlistEmpty === 'redheart'}
+              onClose={this.handleClose}
+              onOpen={() => this.handleOpen('redheart')}
+              position='top left'
+            />}
+          {_id === 1 &&
+            <Popup
+              trigger={<Button
+                basic
+                className={pattern === 'recent' ? 'selected' : ''}
+                onClick={() => this.handleSwitchPattern('recent')}><Icon name='history' />最近收听</Button>}
+              content={'当前最近收听为空。'}
+              on='hover'
+              open={this.state.songlistEmpty === 'recent'}
+              onClose={this.handleClose}
+              onOpen={() => this.handleOpen('recent')}
+              position='top left'
+            />}
+          {_id === 1 &&
+            <Button
+              basic
+              className={(pattern === 'select' && channelId === 0) ? 'selected' : ''}
+              onClick={() => this.handleAppChannelSetWrapper(0)}><Image src={avatar} avatar />我的私人 MHz</Button>}
         </div>
         {channels.length > 0 && channels.map(channel => {
           return <div key={channel.group_name} style={{ marginTop: '10px' }}>
@@ -91,6 +144,8 @@ Pattern.propTypes = {
   getPlaylist: PropTypes.func.isRequired,
   channelId: PropTypes.number,
   channels: PropTypes.array,
+  recentSong: PropTypes.array,
+  redheartSong: PropTypes.array,
   handleAppChannelSet: PropTypes.func
 }
 
@@ -100,7 +155,9 @@ const mapStateToProps = state => {
     avatar: state.authReducer.userInfo.icon,
     pattern: state.fmReducer.pattern,
     channelId: state.fmReducer.channelId,
-    channels: state.fmReducer.channels
+    channels: state.fmReducer.channels,
+    recentSong: state.fmReducer.recent.songs,
+    redheartSong: state.fmReducer.redheart
   }
 }
 
