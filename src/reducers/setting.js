@@ -3,7 +3,7 @@ import * as types from '../actions/setting/types'
 
 const settingReducer = (state = {
   mainVersion: 2,
-  secondaryVersion: 1,
+  secondaryVersion: 2,
   volume: 20,
   saveSuccess: false
 }, action) => {
