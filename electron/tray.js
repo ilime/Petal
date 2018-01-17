@@ -16,7 +16,7 @@ const contextMenu = Menu.buildFromTemplate([{
 }, {
   type: 'separator'
 }, {
-  label: 'Top Window',
+  label: 'Attach To Menu',
   type: 'checkbox',
   checked: false,
   click() { windowTopSwitch() }
@@ -35,7 +35,12 @@ function windowTopSwitch() {
   let currentItem = contextMenu.items[2]
 
   if (currentItem.checked === true) {
-    mainWindow.setPosition(appIconRect.x - mainWindowRect.width / 2 + appIconRect.width / 2, appIconRect.y)
+    if (process.platform === 'darwin') {
+      mainWindow.setPosition(appIconRect.x - mainWindowRect.width / 2 + appIconRect.width / 2, appIconRect.y)
+    }
+    if (process.platform === 'win32') {
+      mainWindow.setPosition(appIconRect.x - mainWindowRect.width / 2 + appIconRect.width / 2, appIconRect.y - mainWindowRect.height)
+    }
   } else {
     mainWindow.center()
   }
