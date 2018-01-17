@@ -102,6 +102,7 @@ class Audio extends Component {
       audio.play()
     })
     this.initVolume(audio)
+    this.setVolume(this.props.audioVolume)
   }
 
   /**
