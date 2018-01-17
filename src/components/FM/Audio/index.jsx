@@ -18,7 +18,11 @@ class Audio extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pattern, songListIndex, song, type } = nextProps
+    const { pattern, songListIndex, song, type, audioVolume } = nextProps
+
+    if (audioVolume !== this.props.audioVolume) {
+      this.setVolume(audioVolume)
+    }
 
     if (pattern === 'select' && song !== this.props.song && type !== 'r' && type !== 'u') {
       this.nextAudio(song)
@@ -74,7 +78,6 @@ class Audio extends Component {
    * @memberof Audio
    */
   nextAudio = song => {
-    this.audio.currentTime = 0
     this.audio.src = song.url
     this.audio.load()
   }
@@ -113,6 +116,16 @@ class Audio extends Component {
     return min + ':' + (sec < 10 ? '0' + sec : sec)
   }
 
+  setVolume = (volume) => {
+    let range = document.querySelector('.volume-bar'),
+      volumeProgress = range.children[0],
+      slider = range.children[1]
+
+    this.audio.volume = volume / 100
+    slider.style.left = volume + '%'
+    volumeProgress.style.width = volume + '%'
+  }
+
   /**
    * set the volume slider, adjust the volume
    * 
@@ -124,10 +137,6 @@ class Audio extends Component {
       volumeProgress = range.children[0],
       slider = range.children[1],
       mouseDown = false
-
-    audio.volume = this.props.audioVolume / 100
-    slider.style.left = this.props.audioVolume + '%'
-    volumeProgress.style.width = this.props.audioVolume + '%'
 
     range.addEventListener('mousedown', function (e) {
       mouseDown = true
