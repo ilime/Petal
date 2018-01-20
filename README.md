@@ -1,12 +1,13 @@
 <p align="center">
   <img src="build/icons/128x128.png" alt="Petal" />
 </p>
+<h1 align="center">Petal</h1>
 <p align="center">
   <a href="https://travis-ci.org/ilime/Petal"><img src="https://travis-ci.org/ilime/Petal.svg?branch=dev" /></a>
   <img src="https://david-dm.org/ilime/Petal.svg" />
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
 </p>
-<p align="center">:hibiscus: Petal is a <a href="https://douban.fm">Douban.FM</a> Client With Extra - - -</p>
+<p align="center">:hibiscus: <a href="https://douban.fm">Douban.FM</a> Client With Extra - - -</p>
 
 ## Screenshot
 
