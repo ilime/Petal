@@ -13,33 +13,38 @@ const typeSpecs = [
 describe('fmReducer', () => {
   // loading test
   test('fetching', () => {
-    expect(fmReducer({ isFetching: false }, { type: 'PLAYLIST_LOADING' }))
-      .toEqual({ isFetching: true })
+    expect(
+      fmReducer({ isFetching: false }, { type: 'PLAYLIST_LOADING' })
+    ).toEqual({ isFetching: true })
   })
   test('end fetching', () => {
-    expect(fmReducer({ isFetching: true }, { type: 'PLAYLIST_RESPONSE' }))
-      .toEqual({ isFetching: false })
+    expect(
+      fmReducer({ isFetching: true }, { type: 'PLAYLIST_RESPONSE' })
+    ).toEqual({ isFetching: false })
   })
 
   // type test
   test('new', () => {
     typeSpecs.map(t => {
-      expect(fmReducer({ type: '' }, { type: t[0] }))
-        .toEqual({ type: t[1] })
+      expect(fmReducer({ type: '' }, { type: t[0] })).toEqual({ type: t[1] })
     })
   })
 
   // pattern test
   test('select pattern', () => {
-    expect(fmReducer({ pattern: '' }, { type: 'SELECT_PATTERN' }))
-      .toEqual({ pattern: 'select', channelId: -10 })
+    expect(fmReducer({ pattern: '' }, { type: 'SELECT_PATTERN' })).toEqual({
+      pattern: 'select',
+      channelId: -10
+    })
   })
   test('recent pattern', () => {
-    expect(fmReducer({ pattern: 'select' }, { type: 'RECENT_PATTERN' }))
-      .toEqual({ pattern: 'recent', songListIndex: 0 })
+    expect(
+      fmReducer({ pattern: 'select' }, { type: 'RECENT_PATTERN' })
+    ).toEqual({ pattern: 'recent', songListIndex: 0 })
   })
   test('redheart pattern', () => {
-    expect(fmReducer({ pattern: 'select' }, { type: 'REDHEART_PATTERN' }))
-      .toEqual({ pattern: 'redheart', songListIndex: 0 })
+    expect(
+      fmReducer({ pattern: 'select' }, { type: 'REDHEART_PATTERN' })
+    ).toEqual({ pattern: 'redheart', songListIndex: 0 })
   })
 })

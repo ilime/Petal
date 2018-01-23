@@ -14,11 +14,8 @@ class Recent extends Component {
     }
   }
 
-
   render() {
-    return (
-      <SongList songArray={this.props.recent} type='recent' />
-    )
+    return <SongList songArray={this.props.recent} type="recent" />
   }
 }
 
@@ -32,7 +29,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(Recent)
+export default connect(mapStateToProps, null)(Recent)

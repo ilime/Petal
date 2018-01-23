@@ -16,26 +16,18 @@
   "parser": "babel-eslint",
   "rules": {
     "indent": [
-      2,
+      1,
       2,
       {
         "SwitchCase": 1
       }
     ],
-    "quotes": [
-      2,
-      "single"
-    ],
-    "semi": [
-      2,
-      "never"
-    ],
+    "quotes": [2, "single"],
+    "semi": [2, "never"],
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/no-unused-prop-types": 2,
     "react/jsx-no-undef": 2
   },
-  "plugins": [
-    "react"
-  ]
+  "plugins": ["react"]
 }

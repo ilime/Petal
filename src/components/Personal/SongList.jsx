@@ -8,15 +8,15 @@ import { removeTrashSong, trashListGET, playLog } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
 const typeRender = {
-  'recent': '最近收听',
-  'redheart': '红心',
-  'trash': '垃圾桶'
+  recent: '最近收听',
+  redheart: '红心',
+  trash: '垃圾桶'
 }
 
 const tipRender = {
-  'recent': '你还没有收听过歌曲。',
-  'redheart': '这里没有你喜欢的歌曲。',
-  'trash': '这里没有你不喜欢的歌曲。'
+  recent: '你还没有收听过歌曲。',
+  redheart: '这里没有你喜欢的歌曲。',
+  trash: '这里没有你不喜欢的歌曲。'
 }
 
 class SongList extends Component {
@@ -28,13 +28,20 @@ class SongList extends Component {
   show = sid => this.setState({ open: true, sid })
   handleConfirm = () => {
     this.setState({ open: false })
-    this.props.handleRemoveTrashSong(this.state.sid, () => this.props.handleTrashListGET())
+    this.props.handleRemoveTrashSong(this.state.sid, () =>
+      this.props.handleTrashListGET()
+    )
   }
   handleCancel = () => this.setState({ open: false })
 
   handleSongListIndexSetWrapper = (index, pattern) => {
     return () => {
-      const { songListIndex, handlePlayLog, recentSong, redheartSong } = this.props
+      const {
+        songListIndex,
+        handlePlayLog,
+        recentSong,
+        redheartSong
+      } = this.props
       if (index !== songListIndex && pattern === this.props.pattern) {
         if (this.props.pattern === 'recent') {
           handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
@@ -58,32 +65,59 @@ class SongList extends Component {
     return (
       <article className="petal-personal-songlist">
         <Header as="h2">{title}</Header>
-        {songArray.length === 0 ?
+        {songArray.length === 0 ? (
           <p>{tipRender[type]}</p>
-          : < Item.Group divided unstackable>
+        ) : (
+          <Item.Group divided unstackable>
             {songArray.map((song, index) => {
-              return <Item key={index}>
-                <Item.Image size='tiny' src={song.picture} />
-                <Item.Content>
-                  <Item.Header>{song.title}</Item.Header>
-                  <Item.Meta>{song.artist}</Item.Meta>
-                  <Item.Description>{`${song.albumtitle} - ${song.public_time}`}</Item.Description>
-                  <Item.Extra>
-                    {(type === 'redheart' || type === 'recent') && <Button size='mini' basic icon onClick={this.handleSongListIndexSetWrapper(index, type)}><Icon name='play' /></Button>}
-                    {type === 'trash' && <Button size='mini' basic icon onClick={() => this.show(songArray[index].sid)}><Icon name='trash' /></Button>}
-                  </Item.Extra>
-                </Item.Content>
-              </Item>
+              return (
+                <Item key={index}>
+                  <Item.Image size="tiny" src={song.picture} />
+                  <Item.Content>
+                    <Item.Header>{song.title}</Item.Header>
+                    <Item.Meta>{song.artist}</Item.Meta>
+                    <Item.Description>{`${song.albumtitle} - ${
+                      song.public_time
+                    }`}</Item.Description>
+                    <Item.Extra>
+                      {(type === 'redheart' || type === 'recent') && (
+                        <Button
+                          size="mini"
+                          basic
+                          icon
+                          onClick={this.handleSongListIndexSetWrapper(
+                            index,
+                            type
+                          )}
+                        >
+                          <Icon name="play" />
+                        </Button>
+                      )}
+                      {type === 'trash' && (
+                        <Button
+                          size="mini"
+                          basic
+                          icon
+                          onClick={() => this.show(songArray[index].sid)}
+                        >
+                          <Icon name="trash" />
+                        </Button>
+                      )}
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+              )
             })}
-          </Item.Group>}
+          </Item.Group>
+        )}
         <Confirm
           open={this.state.open}
           onCancel={this.handleCancel}
           onConfirm={this.handleConfirm}
-          content='确认从垃圾桶移除此歌曲？'
+          content="确认从垃圾桶移除此歌曲？"
           cancelButton={<Button negative>取消</Button>}
           confirmButton={<Button positive>确认</Button>}
-          size='mini'
+          size="mini"
         />
       </article>
     )
@@ -114,14 +148,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleSongListIndexSet: (index, pattern) => dispatch(songListIndexSet(index, pattern)),
-    handleRemoveTrashSong: (sid, callback) => dispatch(removeTrashSong(sid, callback)),
+    handleSongListIndexSet: (index, pattern) =>
+      dispatch(songListIndexSet(index, pattern)),
+    handleRemoveTrashSong: (sid, callback) =>
+      dispatch(removeTrashSong(sid, callback)),
     handleTrashListGET: () => dispatch(trashListGET()),
-    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source))
+    handlePlayLog: (sid, type, play_source) =>
+      dispatch(playLog(sid, type, play_source))
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(SongList))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(SongList)
+)

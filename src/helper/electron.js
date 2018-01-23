@@ -2,10 +2,10 @@ import { shell, remote, ipcRenderer } from 'electron'
 
 /**
  * Open url in default broswer.
- * 
+ *
  * @export
- * @param {any} url 
- * @returns 
+ * @param {any} url
+ * @returns
  */
 export function openInDefaultBrowser(url) {
   return () => {
@@ -14,8 +14,7 @@ export function openInDefaultBrowser(url) {
 }
 
 export function appMinimize() {
-  remote.getCurrentWindow()
-    .minimize()
+  remote.getCurrentWindow().minimize()
 }
 
 export function appQuit() {
@@ -26,20 +25,26 @@ export function isOnline(callback) {
   if (navigator.onLine) {
     callback()
   } else {
-    setTimeout(() => remote.dialog.showMessageBox({
-      type: 'info',
-      title: '无网络连接',
-      message: '检测不到可用网络，是否重新加载？',
-      buttons: ['重新加载', '退出Petal'],
-      defaultId: 0
-    }, function(index) {
-      if (index === 0) {
-        remote.getCurrentWindow()
-          .reload()
-      } else {
-        remote.app.quit()
-      }
-    }), 5000)
+    setTimeout(
+      () =>
+        remote.dialog.showMessageBox(
+          {
+            type: 'info',
+            title: '无网络连接',
+            message: '检测不到可用网络，是否重新加载？',
+            buttons: ['重新加载', '退出Petal'],
+            defaultId: 0
+          },
+          function(index) {
+            if (index === 0) {
+              remote.getCurrentWindow().reload()
+            } else {
+              remote.app.quit()
+            }
+          }
+        ),
+      5000
+    )
   }
 }
 

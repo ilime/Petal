@@ -15,9 +15,7 @@ class RedHeart extends Component {
   }
 
   render() {
-    return (
-      <SongList songArray={this.props.redheart} type='redheart' />
-    )
+    return <SongList songArray={this.props.redheart} type="redheart" />
   }
 }
 
@@ -31,7 +29,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(RedHeart)
+export default connect(mapStateToProps, null)(RedHeart)

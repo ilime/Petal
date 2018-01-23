@@ -25,6 +25,7 @@ yarn && yarn run bundle:dev+main && yarn run dev:hot
 // Open a new terminal
 yarn start
 ```
+
 ## How to build
 
 ```

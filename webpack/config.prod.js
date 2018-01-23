@@ -14,14 +14,16 @@ module.exports = merge.smart(BaseConfig, {
     filename: `[name].[chunkhash].${APP_SYMBOL}.js`
   },
   module: {
-    rules: [{
-      test: /\.scss$/,
-      include: STYLE_PATH,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: ['css-loader', 'sass-loader']
-      })
-    }]
+    rules: [
+      {
+        test: /\.scss$/,
+        include: STYLE_PATH,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+      }
+    ]
   },
   plugins: [
     new ExtractTextPlugin({

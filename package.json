@@ -5,11 +5,14 @@
   "main": "bundle/main.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development electron .",
-    "dev:hot": "cross-env NODE_ENV=development webpack-dev-server --config webpack/config.dev.js",
+    "dev:hot":
+      "cross-env NODE_ENV=development webpack-dev-server --config webpack/config.dev.js",
     "bundle:main": "webpack --config webpack/config.electron.js --progress",
-    "bundle:dev": "cross-env NODE_ENV=development webpack --config webpack/config.dev.js --progress",
+    "bundle:dev":
+      "cross-env NODE_ENV=development webpack --config webpack/config.dev.js --progress",
     "bundle:dev+main": "npm run bundle:dev && npm run bundle:main",
-    "bundle:prod": "cross-env NODE_ENV=production webpack --config webpack/config.prod.js --progress",
+    "bundle:prod":
+      "cross-env NODE_ENV=production webpack --config webpack/config.prod.js --progress",
     "bundle:prod+main": "npm run bundle:prod && npm run bundle:main",
     "dist": "electron-builder --config electron-builder.json",
     "test": "jest"
@@ -18,11 +21,7 @@
     "type": "git",
     "url": "https://github.com/ilime/Petal.git"
   },
-  "keywords": [
-    "Douban.FM",
-    "electron",
-    "client"
-  ],
+  "keywords": ["Douban.FM", "electron", "client"],
   "author": "Yue Yang <g1enyy0ung@gmail.com> (http://g1eny0ung.site)",
   "license": "MIT",
   "devDependencies": {

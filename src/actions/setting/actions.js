@@ -10,8 +10,4 @@ const audioVolumeSet = volume => {
 const settingSaveSuccess = { type: types.SETTING_SAVE_SUCCESS }
 const settingSaveSuccessReset = { type: types.SETTING_SAVE_SUCCESS_RESET }
 
-export {
-  audioVolumeSet,
-  settingSaveSuccess,
-  settingSaveSuccessReset
-}
+export { audioVolumeSet, settingSaveSuccess, settingSaveSuccessReset }

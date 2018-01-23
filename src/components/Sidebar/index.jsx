@@ -13,66 +13,66 @@ export class Sidebar extends Component {
       <nav className="petal-sidebar">
         <section className="petal-app-control">
           <div>
-            <span className='quit' onClick={appQuit}></span>
+            <span className="quit" onClick={appQuit} />
           </div>
           <div>
-            <span className='hide' onClick={appMinimize}></span>
+            <span className="hide" onClick={appMinimize} />
           </div>
         </section>
-        <ul className='petal-sidebar-itemlist'>
+        <ul className="petal-sidebar-itemlist">
           <li>
-            <NavLink exact to='/' activeClassName='selected'>
-              <Icon name='leaf' size='large' color='grey' />
+            <NavLink exact to="/" activeClassName="selected">
+              <Icon name="leaf" size="large" color="grey" />
             </NavLink>
           </li>
           <li>
-            <NavLink exact to='/pattern' activeClassName='selected'>
-              <Icon name='options' size='large' color='grey' />
+            <NavLink exact to="/pattern" activeClassName="selected">
+              <Icon name="options" size="large" color="grey" />
             </NavLink>
           </li>
-          {
-            _id === 1 &&
+          {_id === 1 && (
             <li>
-              <NavLink exact to='/sheet' activeClassName='selected'>
-                <Icon name='lab' size='large' color='grey' />
+              <NavLink exact to="/sheet" activeClassName="selected">
+                <Icon name="lab" size="large" color="grey" />
               </NavLink>
             </li>
-          }
-          {
-            _id === 1 && <li>
-              <NavLink exact to='/redHeartList' activeClassName='selected'>
-                <Icon name='heart outline' size='large' color='grey' />
+          )}
+          {_id === 1 && (
+            <li>
+              <NavLink exact to="/redHeartList" activeClassName="selected">
+                <Icon name="heart outline" size="large" color="grey" />
               </NavLink>
             </li>
-          }
-          {
-            _id === 1 && <li>
-              <NavLink exact to='/recentList' activeClassName='selected'>
-                <Icon name='history' size='large' color='grey' />
+          )}
+          {_id === 1 && (
+            <li>
+              <NavLink exact to="/recentList" activeClassName="selected">
+                <Icon name="history" size="large" color="grey" />
               </NavLink>
             </li>
-          }
-          {
-            _id === 1 && <li>
-              <NavLink exact to='/trashList' activeClassName='selected'>
-                <Icon name='trash outline' size='large' color='grey' />
+          )}
+          {_id === 1 && (
+            <li>
+              <NavLink exact to="/trashList" activeClassName="selected">
+                <Icon name="trash outline" size="large" color="grey" />
               </NavLink>
             </li>
-          }
+          )}
           <li>
-            <NavLink exact to='/setting' activeClassName='selected'>
-              <Icon name='setting' size='large' color='grey' />
+            <NavLink exact to="/setting" activeClassName="selected">
+              <Icon name="setting" size="large" color="grey" />
             </NavLink>
           </li>
           <li className="auth">
-            {_id === 0 ?
-              <NavLink to='/login' activeClassName='selected'>
-                <Icon name='spy' size='large' color='grey' />
-              </NavLink> :
-              <NavLink to='/personal' activeClassName='selected'>
+            {_id === 0 ? (
+              <NavLink to="/login" activeClassName="selected">
+                <Icon name="spy" size="large" color="grey" />
+              </NavLink>
+            ) : (
+              <NavLink to="/personal" activeClassName="selected">
                 <Image src={avatar} avatar />
               </NavLink>
-            }
+            )}
           </li>
           {/* <li>
             <Icon name='cube' size='large' color='grey' link />
@@ -95,7 +95,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  null
-)(Sidebar))
+export default withRouter(connect(mapStateToProps, null)(Sidebar))

@@ -15,7 +15,10 @@ import Pattern from '../Pattern/index'
 import Personal from '../Personal/index'
 import Sheet from '../Sheet/index'
 import { authLoad } from '../../actions/auth/apis'
-import { openInDefaultBrowser, rendererProcessSend } from '../../helper/electron'
+import {
+  openInDefaultBrowser,
+  rendererProcessSend
+} from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
 import '../../static/app.scss'
 
@@ -40,7 +43,9 @@ class Container extends Component {
     setTimeout(() => {
       this.setState({ loading: false })
       handleAuthLoad()
-      checkUpdate(mainVersion, secondaryVersion, display => this.setState({ checkUpdateDisplay: display }))
+      checkUpdate(mainVersion, secondaryVersion, display =>
+        this.setState({ checkUpdateDisplay: display })
+      )
     }, 5000)
   }
 
@@ -62,14 +67,18 @@ class Container extends Component {
             <article className="petal-routes-container">
               <section className="titlebar">
                 <div className="more-options">
-                  {checkUpdateDisplay &&
+                  {checkUpdateDisplay && (
                     <Label
                       as="a"
                       className="checkupdate"
-                      content='新的版本更新:)'
+                      content="新的版本更新:)"
                       color="green"
                       size="mini"
-                      onClick={openInDefaultBrowser('https://github.com/ilime/Petal/releases')} />}
+                      onClick={openInDefaultBrowser(
+                        'https://github.com/ilime/Petal/releases'
+                      )}
+                    />
+                  )}
                 </div>
               </section>
               <FM />
@@ -108,7 +117,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Container)
+export default connect(mapStateToProps, mapDispatchToProps)(Container)

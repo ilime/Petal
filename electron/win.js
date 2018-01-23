@@ -1,6 +1,9 @@
 import { BrowserWindow } from 'electron'
 import url from 'url'
-import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} from 'electron-devtools-installer'
 
 export let mainWindow = null
 
@@ -13,14 +16,20 @@ export const createWindow = () => {
     show: false
   })
 
-  mainWindow.loadURL(url.format({
-    pathname: __dirname + '/index.html',
-    protocol: 'file:'
-  }))
+  mainWindow.loadURL(
+    url.format({
+      pathname: __dirname + '/index.html',
+      protocol: 'file:'
+    })
+  )
 
   if (process.env.NODE_ENV === 'development') {
     /* eslint-disable */
-    Promise.all([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].map(tool => installExtension(tool)))
+    Promise.all(
+      [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].map(tool =>
+        installExtension(tool)
+      )
+    )
       .then(() => {
         console.log('install dev tools successfully')
       })

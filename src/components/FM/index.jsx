@@ -9,7 +9,7 @@ class FM extends Component {
   render() {
     const { isFetching } = this.props
     return (
-      <article className='fm-region'>
+      <article className="fm-region">
         <Dimmer.Dimmable dimmed>
           <Dimmer className="fm-dimmer" active={isFetching} inverted>
             <Loader>加载中</Loader>
@@ -23,7 +23,7 @@ class FM extends Component {
 }
 
 FM.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => {
@@ -32,7 +32,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(FM)
+export default connect(mapStateToProps, null)(FM)

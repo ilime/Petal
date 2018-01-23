@@ -6,44 +6,58 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: {
-    vendor: ['react', 'react-dom', 'redux',
-      'react-router-dom', 'prop-types', 'react-redux',
-      'semantic-ui-react', 'axios', 'moment'
+    vendor: [
+      'react',
+      'react-dom',
+      'redux',
+      'react-router-dom',
+      'prop-types',
+      'react-redux',
+      'semantic-ui-react',
+      'axios',
+      'moment'
     ],
-    app: isProd ? [
-      'babel-polyfill',
-      './src/entry'
-    ] : [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/only-dev-server',
-      'babel-polyfill',
-      './src/entry'
-    ]
+    app: isProd
+      ? ['babel-polyfill', './src/entry']
+      : [
+        'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:3000',
+        'webpack/hot/only-dev-server',
+        'babel-polyfill',
+        './src/entry'
+      ]
   },
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      include: SRC_PATH,
-      exclude: /node_modules/,
-      use: [{
-        loader: 'babel-loader',
-        options: {
-          babelrc: false,
-          presets: [
-            ['env', {
-              modules: false
-            }],
-            'react',
-            'stage-2'
-          ],
-          cacheDirectory: true
-        }
-      }]
-    }, {
-      test: /\.pug$/,
-      loader: 'pug-loader'
-    }]
+    rules: [
+      {
+        test: /\.jsx?$/,
+        include: SRC_PATH,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              presets: [
+                [
+                  'env',
+                  {
+                    modules: false
+                  }
+                ],
+                'react',
+                'stage-2'
+              ],
+              cacheDirectory: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader'
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -15,14 +15,17 @@ module.exports = merge.smart(BaseConfig, {
     publicPath
   },
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      loader: 'react-hot-loader/webpack'
-    }, {
-      test: /\.scss$/,
-      include: STYLE_PATH,
-      use: ['style-loader', 'css-loader', 'sass-loader']
-    }]
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loader: 'react-hot-loader/webpack'
+      },
+      {
+        test: /\.scss$/,
+        include: STYLE_PATH,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
   },
   devServer: {
     port,

@@ -32,14 +32,27 @@ class Sheet extends Component {
       <article className="petal-sheet">
         <Header as="h2">歌单</Header>
         <Item.Group divided>
-          {_id === 1 && <Item>
-            <Item.Image src={daily.songs[0].picture} label={{ as: 'a', corner: 'right', icon: 'play', onClick: this.handleDailyPlay }} />
-            <Item.Content className="daily-content">
-              <Item.Header>{daily.title}</Item.Header>
-              <Item.Meta><Image avatar src={daily.creator.picture} /> {daily.creator.name}</Item.Meta>
-              <Item.Description>{daily.description}</Item.Description>
-            </Item.Content>
-          </Item>}
+          {_id === 1 && (
+            <Item>
+              <Item.Image
+                src={daily.songs[0].picture}
+                label={{
+                  as: 'a',
+                  corner: 'right',
+                  icon: 'play',
+                  onClick: this.handleDailyPlay
+                }}
+              />
+              <Item.Content className="daily-content">
+                <Item.Header>{daily.title}</Item.Header>
+                <Item.Meta>
+                  <Image avatar src={daily.creator.picture} />{' '}
+                  {daily.creator.name}
+                </Item.Meta>
+                <Item.Description>{daily.description}</Item.Description>
+              </Item.Content>
+            </Item>
+          )}
         </Item.Group>
       </article>
     )
@@ -49,7 +62,7 @@ class Sheet extends Component {
 Sheet.propTypes = {
   _id: PropTypes.number.isRequired,
   pattern: PropTypes.string,
-  daily: PropTypes.object,
+  daily: PropTypes.object
   // switchToSheetPattern: PropTypes.func,
   // handleSheetSet: PropTypes.func
 }
@@ -64,13 +77,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    switchToDailyPattern: () => dispatch(dailyPattern),
+    switchToDailyPattern: () => dispatch(dailyPattern)
     // switchToSheetPattern: () => dispatch(sheetPattern),
     // handleSheetSet: list => dispatch(sheetSet(list))
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sheet)
+export default connect(mapStateToProps, mapDispatchToProps)(Sheet)

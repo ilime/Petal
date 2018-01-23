@@ -6,7 +6,16 @@ import { Sidebar } from '../src/components/Sidebar/index.jsx'
 describe('<Sidebar />', () => {
   const wrapper = shallow(<Sidebar _id={0} />)
   const withoutAuthRoutes = ['/', '/pattern', '/setting', '/login']
-  const authRoutes = ['/', '/pattern', '/sheet', '/redHeartList', '/recentList', '/trashList', '/setting', '/personal']
+  const authRoutes = [
+    '/',
+    '/pattern',
+    '/sheet',
+    '/redHeartList',
+    '/recentList',
+    '/trashList',
+    '/setting',
+    '/personal'
+  ]
 
   test('navlink worked as expectly', () => {
     let index = 0
@@ -16,7 +25,12 @@ describe('<Sidebar />', () => {
   })
 
   test('navlink active class', () => {
-    expect(wrapper.find(NavLink).first().props().activeClassName).toBe('selected')
+    expect(
+      wrapper
+        .find(NavLink)
+        .first()
+        .props().activeClassName
+    ).toBe('selected')
   })
 
   test('after login, navlink change', () => {

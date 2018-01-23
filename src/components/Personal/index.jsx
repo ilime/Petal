@@ -28,12 +28,16 @@ class Personal extends Component {
 
     return (
       <article className="petal-personal">
-        <Header as='h2'>档案</Header>
+        <Header as="h2">档案</Header>
         <Item.Group unstackable>
           <Item>
-            <Item.Image className="avatar-icon" size='tiny' src={userInfo.icon} />
+            <Item.Image
+              className="avatar-icon"
+              size="tiny"
+              src={userInfo.icon}
+            />
             <Item.Content>
-              <Item.Header as='a'>{userInfo.name}</Item.Header>
+              <Item.Header as="a">{userInfo.name}</Item.Header>
               <Item.Meta>
                 <p>已听 {userInfo.played_num} 首</p>
                 <p>红心 {userInfo.liked_num} 首</p>
@@ -42,7 +46,9 @@ class Personal extends Component {
             </Item.Content>
           </Item>
         </Item.Group>
-        <Button fluid negative onClick={this.handleAuthRemoveWrapper}>退出登录</Button>
+        <Button fluid negative onClick={this.handleAuthRemoveWrapper}>
+          退出登录
+        </Button>
       </article>
     )
   }
@@ -65,7 +71,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Personal)
+export default connect(mapStateToProps, mapDispatchToProps)(Personal)

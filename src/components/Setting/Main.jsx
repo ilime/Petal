@@ -19,13 +19,17 @@ class Main extends Component {
 
   handleVolumeUp = () => {
     const { volume } = this.state
-    if (volume === 100) { return }
+    if (volume === 100) {
+      return
+    }
     this.setState({ volume: volume + 10 })
   }
 
   handleVolumeDown = () => {
     const { volume } = this.state
-    if (volume === 0) { return }
+    if (volume === 0) {
+      return
+    }
     this.setState({ volume: volume - 10 })
   }
 
@@ -41,16 +45,28 @@ class Main extends Component {
     return (
       <div className="petal-setting-main">
         <Header as="h5">默认音量: </Header>
-        <Button.Group size='mini'>
-          <Button icon='minus' onClick={this.handleVolumeDown} />
+        <Button.Group size="mini">
+          <Button icon="minus" onClick={this.handleVolumeDown} />
           <Button>{volume + '%'}</Button>
-          <Button icon='plus' onClick={this.handleVolumeUp} />
+          <Button icon="plus" onClick={this.handleVolumeUp} />
         </Button.Group>
-        {saveSuccess &&
-          <Message size='small' positive onDismiss={this.props.handleSaveSuccessReset}>
+        {saveSuccess && (
+          <Message
+            size="small"
+            positive
+            onDismiss={this.props.handleSaveSuccessReset}
+          >
             保存成功
-          </Message>}
-        <Button className="save" content="保存" fluid color="green" size="tiny" onClick={this.handleSettingStore} />
+          </Message>
+        )}
+        <Button
+          className="save"
+          content="保存"
+          fluid
+          color="green"
+          size="tiny"
+          onClick={this.handleSettingStore}
+        />
       </div>
     )
   }
@@ -73,11 +89,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     handleSaveSuccessReset: () => dispatch(settingSaveSuccessReset),
-    handleSettingStore: (volume) => dispatch(settingStore(volume))
+    handleSettingStore: volume => dispatch(settingStore(volume))
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Main)
+export default connect(mapStateToProps, mapDispatchToProps)(Main)

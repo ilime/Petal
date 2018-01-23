@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Header, Image, Form, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
-import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/actions'
+import {
+  Header,
+  Image,
+  Form,
+  Button,
+  Dimmer,
+  Loader,
+  Message
+} from 'semantic-ui-react'
+import {
+  authLoginFail,
+  authRemoveFailMessage
+} from '../../actions/auth/actions'
 import { authPost } from '../../actions/auth/apis'
 import { openInDefaultBrowser } from '../../helper/electron'
 
@@ -29,7 +40,7 @@ class Login extends Component {
     this.setState({ [name]: value })
   }
 
-  handleLoginSubmit = (e) => {
+  handleLoginSubmit = e => {
     e.preventDefault()
     const { username, password } = this.state
     const { handleAuthPost, handleAuthLoginFail } = this.props
@@ -46,26 +57,50 @@ class Login extends Component {
     const { username, password } = this.state
 
     return (
-      <article className='petal-login'>
-        <Header as='h1' textAlign='center' className='login-header'>
-          <Image src='./resources/petal.svg' size='huge' />
-          <span>Petal</span> 
+      <article className="petal-login">
+        <Header as="h1" textAlign="center" className="login-header">
+          <Image src="./resources/petal.svg" size="huge" />
+          <span>Petal</span>
         </Header>
         <Dimmer.Dimmable dimmed>
           <Dimmer active={isFetching} inverted>
             <Loader>加载中</Loader>
           </Dimmer>
           <Form className="login-form">
-            {loginFail && <Message size='small' negative onDismiss={this.props.handleRemoveLoginFailMessage}>
-              <Message.Header>登录失败</Message.Header>
-              <p>{loginFailMessage}</p>
-            </Message>}
-            <Form.Input name='username' value={username} onChange={this.handleInputChange} placeholder='豆瓣账号' />
-            <Form.Input type='password' name='password' value={password} onChange={this.handleInputChange} placeholder='密码' />
-            <Button fluid color='green' onClick={this.handleLoginSubmit}>登 录</Button>
+            {loginFail && (
+              <Message
+                size="small"
+                negative
+                onDismiss={this.props.handleRemoveLoginFailMessage}
+              >
+                <Message.Header>登录失败</Message.Header>
+                <p>{loginFailMessage}</p>
+              </Message>
+            )}
+            <Form.Input
+              name="username"
+              value={username}
+              onChange={this.handleInputChange}
+              placeholder="豆瓣账号"
+            />
+            <Form.Input
+              type="password"
+              name="password"
+              value={password}
+              onChange={this.handleInputChange}
+              placeholder="密码"
+            />
+            <Button fluid color="green" onClick={this.handleLoginSubmit}>
+              登 录
+            </Button>
           </Form>
         </Dimmer.Dimmable>
-        <p className='login-extra'>没有豆瓣账号? <span onClick={openInDefaultBrowser('https://www.douban.com')}>去注册</span></p>
+        <p className="login-extra">
+          没有豆瓣账号?{' '}
+          <span onClick={openInDefaultBrowser('https://www.douban.com')}>
+            去注册
+          </span>
+        </p>
       </article>
     )
   }
@@ -90,13 +125,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleAuthPost: (usernameAndPassword, callback) => dispatch(authPost(usernameAndPassword, callback)),
+    handleAuthPost: (usernameAndPassword, callback) =>
+      dispatch(authPost(usernameAndPassword, callback)),
     handleAuthLoginFail: message => dispatch(authLoginFail(message)),
     handleRemoveLoginFailMessage: () => dispatch(authRemoveFailMessage)
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

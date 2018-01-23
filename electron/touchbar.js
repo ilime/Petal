@@ -27,12 +27,16 @@ export const rateAndUnrate = new TouchBarButton({
 export const playlistTouchBar = new TouchBar([
   new TouchBarButton({
     icon: `${resourcesFolder}trash.png`,
-    click: () => { mainWindow.webContents.send('trash') }
+    click: () => {
+      mainWindow.webContents.send('trash')
+    }
   }),
   pauseAndStart,
   new TouchBarButton({
     icon: `${resourcesFolder}skip.png`,
-    click: () => { mainWindow.webContents.send('skip') }
+    click: () => {
+      mainWindow.webContents.send('skip')
+    }
   }),
   rateAndUnrate
 ])
@@ -40,12 +44,16 @@ export const playlistTouchBar = new TouchBar([
 export const songListTouchBar = new TouchBar([
   new TouchBarButton({
     icon: `${resourcesFolder}backward.png`,
-    click: () => { mainWindow.webContents.send('backward') }
+    click: () => {
+      mainWindow.webContents.send('backward')
+    }
   }),
   pauseAndStart,
   new TouchBarButton({
     icon: `${resourcesFolder}forward.png`,
-    click: () => { mainWindow.webContents.send('forward') }
+    click: () => {
+      mainWindow.webContents.send('forward')
+    }
   }),
   rateAndUnrate
 ])

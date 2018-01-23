@@ -7,12 +7,12 @@ import { createTouchBar } from './touchbar'
 import './ipc'
 
 const createDB = () => {
-  fs.access(app.getPath('home') + '/.petal.db', (err) => {
+  fs.access(app.getPath('home') + '/.petal.db', err => {
     /* eslint-disable */
     if (!err) {
       console.log('db file existed.')
     } else {
-      fs.writeFile(app.getPath('home') + '/.petal.db', '', (err) => {
+      fs.writeFile(app.getPath('home') + '/.petal.db', '', err => {
         if (err) throw err
         console.log('db file created!')
       })

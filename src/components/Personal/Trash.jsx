@@ -15,9 +15,7 @@ class Trash extends Component {
   }
 
   render() {
-    return (
-      <SongList songArray={this.props.trash} type='trash' />
-    )
+    return <SongList songArray={this.props.trash} type="trash" />
   }
 }
 
@@ -31,7 +29,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(Trash)
+export default connect(mapStateToProps, null)(Trash)

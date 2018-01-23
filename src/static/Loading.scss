@@ -4,7 +4,7 @@
   user-select: none;
   -webkit-app-region: drag;
 
-  >div {
+  > div {
     @include VHCenter();
   }
 
@@ -40,7 +40,7 @@
 @keyframes gogo {
   0% {
     transform: rotate(0deg);
-    opacity: .6;
+    opacity: 0.6;
   }
 
   50% {
@@ -49,7 +49,7 @@
 
   100% {
     transform: rotate(360deg);
-    opacity: .6;
+    opacity: 0.6;
   }
 }
 

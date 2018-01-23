@@ -24,7 +24,12 @@ class Audio extends Component {
       this.setVolume(audioVolume)
     }
 
-    if (pattern === 'select' && song !== this.props.song && type !== 'r' && type !== 'u') {
+    if (
+      pattern === 'select' &&
+      song !== this.props.song &&
+      type !== 'r' &&
+      type !== 'u'
+    ) {
       this.nextAudio(song)
       return
     }
@@ -47,7 +52,10 @@ class Audio extends Component {
     //   this.nextAudio(this.props.sheetSong[songListIndex])
     // }
 
-    if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
+    if (
+      songListIndex !== this.props.songListIndex &&
+      pattern === this.props.pattern
+    ) {
       if (pattern === 'redheart') {
         this.nextAudio(this.props.redheartSong[songListIndex])
         return
@@ -74,7 +82,7 @@ class Audio extends Component {
    * Handle next song
    * This function will reset .currentTime, set song url,
    * reset lyric scrollbar to top
-   * 
+   *
    * @memberof Audio
    */
   nextAudio = song => {
@@ -84,7 +92,7 @@ class Audio extends Component {
 
   /**
    * Init Audio
-   * 
+   *
    * @memberof Audio
    */
   initAudio = () => {
@@ -92,7 +100,10 @@ class Audio extends Component {
     this.audio = audio
     const currentTime = document.querySelector('.currenttime')
 
-    audio.addEventListener('timeupdate', this.updateAudioTimeAndProgress(currentTime, audio))
+    audio.addEventListener(
+      'timeupdate',
+      this.updateAudioTimeAndProgress(currentTime, audio)
+    )
     audio.addEventListener('ended', this.endedAudio)
     audio.addEventListener('loadedmetadata', () => {
       const totalTime = document.querySelector('.totaltime')
@@ -107,7 +118,7 @@ class Audio extends Component {
 
   /**
    * Format time, the result is m:ss/m:ss
-   * 
+   *
    * @memberof Audio
    * @return {string} - the formated time
    */
@@ -117,7 +128,7 @@ class Audio extends Component {
     return min + ':' + (sec < 10 ? '0' + sec : sec)
   }
 
-  setVolume = (volume) => {
+  setVolume = volume => {
     let range = document.querySelector('.volume-bar'),
       volumeProgress = range.children[0],
       slider = range.children[1]
@@ -129,24 +140,24 @@ class Audio extends Component {
 
   /**
    * set the volume slider, adjust the volume
-   * 
+   *
    * @memberof Audio
    */
-  initVolume = (audio) => {
+  initVolume = audio => {
     let range = document.querySelector('.volume-bar'),
       rangeRect = range.getBoundingClientRect(),
       volumeProgress = range.children[0],
       slider = range.children[1],
       mouseDown = false
 
-    range.addEventListener('mousedown', function (e) {
+    range.addEventListener('mousedown', function(e) {
       mouseDown = true
       forbidSelect()
       updateSlider(e)
       document.addEventListener('mousemove', updateSlider)
     })
 
-    document.addEventListener('mouseup', function () {
+    document.addEventListener('mouseup', function() {
       mouseDown = false
       restoreSelect()
       document.removeEventListener('mousemove', updateSlider)
@@ -157,7 +168,11 @@ class Audio extends Component {
         let mousePositionX = e.clientX
         let rangeLeft = rangeRect.left
         let rangeWidth = rangeRect.width
-        let percent = Math.round((mousePositionX - rangeLeft - slider.offsetWidth / 2) / rangeWidth * 100)
+        let percent = Math.round(
+          (mousePositionX - rangeLeft - slider.offsetWidth / 2) /
+            rangeWidth *
+            100
+        )
         if (percent > 100) {
           percent = 100
         }
@@ -193,15 +208,21 @@ class Audio extends Component {
 
   /**
    * Song ended.Do following:
-   * 
+   *
    * 1. log current song into recent list
    * 2. if pattern is select, nextSong or getPlaylist(type => 'playing')
    * 3. if pattern is recent or redheart, get next song in array with index
-   * 
+   *
    * @memberof Audio
    */
   endedAudio = () => {
-    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
+    const {
+      pattern,
+      recentSong,
+      redheartSong,
+      dailySong,
+      songListIndex
+    } = this.props
 
     if (pattern === 'select') {
       this.props.getPlaylist('end')
@@ -239,24 +260,24 @@ class Audio extends Component {
   render() {
     const { percent } = this.state
     return (
-      <article className='petal-player'>
-        <Progress percent={percent} size='tiny' />
-        <div className='player-bar'>
+      <article className="petal-player">
+        <Progress percent={percent} size="tiny" />
+        <div className="player-bar">
           <div className="player-time">
-            <span className='currenttime'>0:00</span>
+            <span className="currenttime">0:00</span>
             <span>/</span>
-            <span className='totaltime'>0:00</span>
+            <span className="totaltime">0:00</span>
           </div>
           <div className="player-volume">
-            <Icon name='volume down' />
-            <div className='volume-bar'>
-              <div className="progress"></div>
-              <span className='pin'></span>
+            <Icon name="volume down" />
+            <div className="volume-bar">
+              <div className="progress" />
+              <span className="pin" />
             </div>
-            <Icon name='volume up' />
+            <Icon name="volume up" />
           </div>
         </div>
-        <audio id='_audio' preload='none'></audio>
+        <audio id="_audio" preload="none" />
       </article>
     )
   }
@@ -297,11 +318,9 @@ const mapDispatchToProps = dispatch => {
     getPlaylist: type => dispatch(playlistGET(type)),
     handleSongListGo: () => dispatch(songListGo),
     handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
-    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source))
+    handlePlayLog: (sid, type, play_source) =>
+      dispatch(playLog(sid, type, play_source))
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Audio)
+export default connect(mapStateToProps, mapDispatchToProps)(Audio)

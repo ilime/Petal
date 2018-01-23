@@ -2,9 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Image, Icon, Popup, Header } from 'semantic-ui-react'
-import { onReceiveFromMainProcess, rendererProcessSend } from '../../../helper/electron'
+import {
+  onReceiveFromMainProcess,
+  rendererProcessSend
+} from '../../../helper/electron'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
-import { songListGo, songListBack, songListIndexSet } from '../../../actions/fm/actions'
+import {
+  songListGo,
+  songListBack,
+  songListIndexSet
+} from '../../../actions/fm/actions'
 
 class Cover extends Component {
   constructor(props) {
@@ -13,9 +20,11 @@ class Cover extends Component {
       playing: true,
       song: {
         title: '',
-        singers: [{
-          avatar: ''
-        }],
+        singers: [
+          {
+            avatar: ''
+          }
+        ],
         artist: '',
         picture: ''
       },
@@ -61,7 +70,10 @@ class Cover extends Component {
     //   return
     // }
 
-    if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
+    if (
+      songListIndex !== this.props.songListIndex &&
+      pattern === this.props.pattern
+    ) {
       if (pattern === 'redheart') {
         this.setCover(this.props.redheartSong[songListIndex], pattern)
         return
@@ -84,26 +96,33 @@ class Cover extends Component {
     }
 
     if (_id === 0 && this.props._id === 1) {
-      this.setState({ love: 'white' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
+      this.setState({ love: 'white' }, () => {
+        rendererProcessSend('touchBarRateColor', this.state.love)
+      })
     }
   }
 
   /**
    * Set cover.Do following:
-   * 
+   *
    * 1. set song picture
    * 2. set current state, user already liked it?
-   * 
+   *
    * @param {Object} song
    * @param {string} pattern
    * @memberof Cover
    */
   setCover = (song, pattern) => {
-    this.setState({
-      playing: true,
-      song,
-      love: pattern === 'redheart' ? 'red' : (song.like === 1 ? 'red' : 'white')
-    }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
+    this.setState(
+      {
+        playing: true,
+        song,
+        love: pattern === 'redheart' ? 'red' : song.like === 1 ? 'red' : 'white'
+      },
+      () => {
+        rendererProcessSend('touchBarRateColor', this.state.love)
+      }
+    )
   }
 
   handleControlShow = () => this.setState({ controlPanelActive: true })
@@ -111,22 +130,32 @@ class Cover extends Component {
 
   /**
    * Play or paused current song
-   * 
+   *
    * @memberof Cover
    */
   handleAudioPlay = () => {
     const audio = document.querySelector('#_audio')
     if (audio.paused) {
       audio.play()
-      this.setState({ playing: true }, () => { rendererProcessSend('touchBarPauseAndStart', this.state.playing) })
+      this.setState({ playing: true }, () => {
+        rendererProcessSend('touchBarPauseAndStart', this.state.playing)
+      })
     } else {
       audio.pause()
-      this.setState({ playing: false }, () => { rendererProcessSend('touchBarPauseAndStart', this.state.playing) })
+      this.setState({ playing: false }, () => {
+        rendererProcessSend('touchBarPauseAndStart', this.state.playing)
+      })
     }
   }
 
   handleSongForward = () => {
-    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
+    const {
+      pattern,
+      recentSong,
+      redheartSong,
+      dailySong,
+      songListIndex
+    } = this.props
 
     if (pattern === 'select') {
       return
@@ -170,7 +199,13 @@ class Cover extends Component {
   }
 
   handleSongBackward = () => {
-    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
+    const {
+      pattern,
+      recentSong,
+      redheartSong,
+      dailySong,
+      songListIndex
+    } = this.props
 
     if (pattern === 'select') {
       return
@@ -224,15 +259,23 @@ class Cover extends Component {
   /**
    * Handle like current song.Must login.
    * Now apply with three patterns
-   * 
+   *
    * 1. select
    * 2. recent
    * 3. redheart
-   * 
+   *
    * @memberof Cover
    */
   handleLoveSong = () => {
-    const { _id, pattern, getPlayList, recentSong, redheartSong, dailySong, songListIndex } = this.props
+    const {
+      _id,
+      pattern,
+      getPlayList,
+      recentSong,
+      redheartSong,
+      dailySong,
+      songListIndex
+    } = this.props
     const { love } = this.state
     if (_id === 0) {
       this.handleLoveIsLoginPopupOpen()
@@ -260,7 +303,9 @@ class Cover extends Component {
       //   this.props.handlePlayLog(sheetSong[songListIndex].sid, 'r', 'n')
       // }
 
-      this.setState({ love: 'red' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
+      this.setState({ love: 'red' }, () => {
+        rendererProcessSend('touchBarRateColor', this.state.love)
+      })
     }
 
     if (love === 'red') {
@@ -284,7 +329,9 @@ class Cover extends Component {
       //   this.props.handlePlayLog(sheetSong[songListIndex].sid, 'u', 'n')
       // }
 
-      this.setState({ love: 'white' }, () => { rendererProcessSend('touchBarRateColor', this.state.love) })
+      this.setState({ love: 'white' }, () => {
+        rendererProcessSend('touchBarRateColor', this.state.love)
+      })
     }
   }
 
@@ -305,26 +352,57 @@ class Cover extends Component {
     const { controlPanelActive, playing, love, isLoginPopup, song } = this.state
     const controlPanel = (
       <div>
-        <div className='play-pause' onClick={this.handleAudioPlay}>
-          <Icon name={playing ? 'pause' : 'play'} size='large' />
+        <div className="play-pause" onClick={this.handleAudioPlay}>
+          <Icon name={playing ? 'pause' : 'play'} size="large" />
         </div>
-        <div className='heart-trash-forward'>
-          {pattern === 'select' && <div>
-            <Popup
-              trigger={<Icon name='heart' size='big' style={{ color: love }} onClick={this.handleLoveSong} />}
-              content='想要喜欢歌曲，请先登录'
-              position='bottom center'
-              on='click'
-              open={isLoginPopup}
-              onClose={this.handleLoveIsLoginPopupClose} />
-            <Icon name='trash' size='big' onClick={this.handleTrashSong} />
-            <Icon name='step forward' size='big' onClick={this.handleSkipSong} />
-          </div>}
-          {(pattern === 'recent' || pattern === 'redheart' || pattern === 'daily') && <div>
-            <Icon name='step backward' size='big' onClick={this.handleSongBackward} />
-            <Icon name='heart' size='big' style={{ color: love }} onClick={this.handleLoveSong} />
-            <Icon name='step forward' size='big' onClick={this.handleSongForward} />
-          </div>}
+        <div className="heart-trash-forward">
+          {pattern === 'select' && (
+            <div>
+              <Popup
+                trigger={
+                  <Icon
+                    name="heart"
+                    size="big"
+                    style={{ color: love }}
+                    onClick={this.handleLoveSong}
+                  />
+                }
+                content="想要喜欢歌曲，请先登录"
+                position="bottom center"
+                on="click"
+                open={isLoginPopup}
+                onClose={this.handleLoveIsLoginPopupClose}
+              />
+              <Icon name="trash" size="big" onClick={this.handleTrashSong} />
+              <Icon
+                name="step forward"
+                size="big"
+                onClick={this.handleSkipSong}
+              />
+            </div>
+          )}
+          {(pattern === 'recent' ||
+            pattern === 'redheart' ||
+            pattern === 'daily') && (
+              <div>
+                <Icon
+                  name="step backward"
+                  size="big"
+                  onClick={this.handleSongBackward}
+                />
+                <Icon
+                  name="heart"
+                  size="big"
+                  style={{ color: love }}
+                  onClick={this.handleLoveSong}
+                />
+                <Icon
+                  name="step forward"
+                  size="big"
+                  onClick={this.handleSongForward}
+                />
+              </div>
+            )}
         </div>
       </div>
     )
@@ -334,14 +412,18 @@ class Cover extends Component {
         <div className="info">
           <div className="title">
             <Header as="h3">
-              {song.title.length > 20 ? song.title.substring(0, 17) + '...' : song.title}
+              {song.title.length > 20
+                ? song.title.substring(0, 17) + '...'
+                : song.title}
               <Header.Subheader>
-                {song.artist.length > 20 ? song.artist.substring(0, 17) + '...' : song.artist}
+                {song.artist.length > 20
+                  ? song.artist.substring(0, 17) + '...'
+                  : song.artist}
               </Header.Subheader>
             </Header>
           </div>
           <div className="artist">
-            <Image src={song.singers[0].avatar} size='mini' circular />
+            <Image src={song.singers[0].avatar} size="mini" circular />
           </div>
         </div>
         <Dimmer.Dimmable
@@ -391,15 +473,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPlayList: (type) => dispatch(playlistGET(type)),
+    getPlayList: type => dispatch(playlistGET(type)),
     handleSongListGo: () => dispatch(songListGo),
     handleSongListBack: () => dispatch(songListBack),
     handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
-    handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source))
+    handlePlayLog: (sid, type, play_source) =>
+      dispatch(playLog(sid, type, play_source))
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Cover)
+export default connect(mapStateToProps, mapDispatchToProps)(Cover)

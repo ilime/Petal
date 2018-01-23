@@ -4,8 +4,22 @@ import Main from './Main'
 import About from './About'
 
 const panes = [
-  { menuItem: '设置', render: () => <Tab.Pane attached={false}><Main /></Tab.Pane> },
-  { menuItem: '关于', render: () => <Tab.Pane attached={false}><About /></Tab.Pane> },
+  {
+    menuItem: '设置',
+    render: () => (
+      <Tab.Pane attached={false}>
+        <Main />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: '关于',
+    render: () => (
+      <Tab.Pane attached={false}>
+        <About />
+      </Tab.Pane>
+    )
+  }
 ]
 
 class Setting extends Component {
