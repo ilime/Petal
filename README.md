@@ -6,6 +6,9 @@
   <a href="https://travis-ci.org/ilime/Petal"><img src="https://travis-ci.org/ilime/Petal.svg?branch=dev" /></a>
   <img src="https://david-dm.org/ilime/Petal.svg" />
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
+  <a href="https://gitter.im/ilime/Petal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
+    <img src="https://badges.gitter.im/ilime/Petal.svg" alt="Gitter" />
+  </a>
 </p>
 <p align="center">:hibiscus: <a href="https://douban.fm">Douban.FM</a> Client With Extra - - -</p>
 
