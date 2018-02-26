@@ -14,6 +14,7 @@ import Trash from '../Personal/Trash'
 import Pattern from '../Pattern/index'
 import Personal from '../Personal/index'
 import Sheet from '../Sheet/index'
+import About from '../About/index'
 import { authLoad } from '../../actions/auth/apis'
 import {
   openInDefaultBrowser,
@@ -90,6 +91,7 @@ class Container extends Component {
               <Route path="/pattern" component={Pattern} />
               <Route path="/personal" component={Personal} />
               <Route path="/sheet" component={Sheet} />
+              <Route path="/about" component={About} />
             </article>
           </main>
         </Router>

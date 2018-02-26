@@ -5,8 +5,9 @@
   height: calc(100vh - 24px);
   overflow-y: scroll;
 
-  .ui.items > .item > .content.daily-content {
-    margin-left: 10px;
+  .daily-image > img {
+    width: 250px !important;
+    height: 250px !important;
   }
 }
 

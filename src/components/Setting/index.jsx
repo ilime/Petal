@@ -1,32 +1,8 @@
 import React, { Component } from 'react'
-import { Tab } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 import Main from './Main'
-import About from './About'
-
-const panes = [
-  {
-    menuItem: '设置',
-    render: () => (
-      <Tab.Pane attached={false}>
-        <Main />
-      </Tab.Pane>
-    )
-  },
-  {
-    menuItem: '关于',
-    render: () => (
-      <Tab.Pane attached={false}>
-        <About />
-      </Tab.Pane>
-    )
-  }
-]
 
 class Setting extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     document.querySelector('.fm-region').style.display = 'none'
   }
@@ -40,7 +16,8 @@ class Setting extends Component {
   render() {
     return (
       <article className="petal-setting">
-        <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+        <Header as="h2">设置</Header>
+        <Main />
       </article>
     )
   }

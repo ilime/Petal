@@ -5,7 +5,7 @@ import { Sidebar } from '../src/components/Sidebar/index.jsx'
 
 describe('<Sidebar />', () => {
   const wrapper = shallow(<Sidebar _id={0} />)
-  const withoutAuthRoutes = ['/', '/pattern', '/setting', '/login']
+  const withoutAuthRoutes = ['/', '/pattern', '/setting', '/about', '/login']
   const authRoutes = [
     '/',
     '/pattern',
@@ -14,6 +14,7 @@ describe('<Sidebar />', () => {
     '/recentList',
     '/trashList',
     '/setting',
+    'about',
     '/personal'
   ]
 

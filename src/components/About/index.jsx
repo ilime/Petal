@@ -1,11 +1,22 @@
 import React, { Component } from 'react'
-import { Image } from 'semantic-ui-react'
+import { Header, Image } from 'semantic-ui-react'
 import { openInDefaultBrowser } from '../../helper/electron'
 
 export default class About extends Component {
+  componentDidMount() {
+    document.querySelector('.fm-region').style.display = 'none'
+  }
+
+  componentWillUnmount() {
+    if (this.props.history.location.pathname === '/') {
+      document.querySelector('.fm-region').style.display = 'flex'
+    }
+  }
+
   render() {
     return (
-      <div className="petal-setting-about">
+      <div className="petal-about">
+        <Header as="h2">关于</Header>
         <Image src="./resources/petal.svg" size="tiny" centered />
         <div className="content">
           <p>
@@ -23,7 +34,7 @@ export default class About extends Component {
               豆瓣FM
             </span>。
           </p>
-          <p>不得将此应用用于任何非法用途。</p>
+          <p>不得将此应用用于任何不正当用途。</p>
           <p>
             Petal的维护者是<span
               onClick={openInDefaultBrowser('https://github.com/g1eny0ung')}
@@ -37,9 +48,19 @@ export default class About extends Component {
                 'https://github.com/ilime/Petal/issues'
               )}
             >
-              仓库下的issue
+              仓库下的issues
             </span>下提出。
           </p>
+          <p>
+            使用<span
+              onClick={openInDefaultBrowser(
+                'https://opensource.org/licenses/MIT'
+              )}
+            >
+              MIT
+            </span>许可证。
+          </p>
+          <p>Copyright (c) 2018 ilime。</p>
         </div>
       </div>
     )

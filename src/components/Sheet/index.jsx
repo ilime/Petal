@@ -35,6 +35,7 @@ class Sheet extends Component {
           {_id === 1 && (
             <Item>
               <Item.Image
+                className="daily-image"
                 src={daily.songs[0].picture}
                 label={{
                   as: 'a',
@@ -43,7 +44,7 @@ class Sheet extends Component {
                   onClick: this.handleDailyPlay
                 }}
               />
-              <Item.Content className="daily-content">
+              <Item.Content>
                 <Item.Header>{daily.title}</Item.Header>
                 <Item.Meta>
                   <Image avatar src={daily.creator.picture} />{' '}

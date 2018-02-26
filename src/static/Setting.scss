@@ -1,26 +1,15 @@
-@import './common';
-
 .petal-setting {
-  padding: 0 10px;
+  padding: 5px 10px;
+  height: calc(100vh - 24px);
+  overflow-y: scroll;
+}
 
-  .ui.segment.active.tab {
-    height: 412px;
-  }
+.petal-setting::-webkit-scrollbar {
+  display: none;
 }
 
 .petal-setting-main {
   .save {
     margin-top: 1rem;
-  }
-}
-
-.petal-setting-about {
-  .content {
-    margin-top: 1rem;
-  }
-
-  span {
-    color: $petal-green;
-    cursor: pointer;
   }
 }
