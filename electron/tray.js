@@ -6,7 +6,7 @@ const resourcesFolder = __dirname + '/resources/'
 
 const contextMenu = Menu.buildFromTemplate([
   {
-    label: 'Open',
+    label: '打开',
     click() {
       if (mainWindow.isVisible()) {
         mainWindow.hide()
@@ -19,9 +19,10 @@ const contextMenu = Menu.buildFromTemplate([
     type: 'separator'
   },
   {
-    label: 'Attach To Menu',
+    label: '贴附到状态栏',
     type: 'checkbox',
     checked: false,
+    enabled: process.platform === 'win32' ? false : true,
     click() {
       windowTopSwitch()
     }
@@ -30,7 +31,7 @@ const contextMenu = Menu.buildFromTemplate([
     type: 'separator'
   },
   {
-    label: 'Quit',
+    label: '退出',
     click() {
       app.quit()
     }
@@ -47,12 +48,6 @@ function windowTopSwitch() {
       mainWindow.setPosition(
         appIconRect.x - mainWindowRect.width / 2 + appIconRect.width / 2,
         appIconRect.y
-      )
-    }
-    if (process.platform === 'win32') {
-      mainWindow.setPosition(
-        appIconRect.x - mainWindowRect.width / 2 + appIconRect.width / 2,
-        appIconRect.y - mainWindowRect.height
       )
     }
   } else {
