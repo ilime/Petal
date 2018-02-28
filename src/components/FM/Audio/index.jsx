@@ -80,8 +80,6 @@ class Audio extends Component {
 
   /**
    * Handle next song
-   * This function will reset .currentTime, set song url,
-   * reset lyric scrollbar to top
    *
    * @memberof Audio
    */
@@ -139,7 +137,7 @@ class Audio extends Component {
   }
 
   /**
-   * set the volume slider, adjust the volume
+   * Set the volume slider, adjust the volume
    *
    * @memberof Audio
    */
