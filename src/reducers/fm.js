@@ -18,7 +18,7 @@ const fmReducer = (
     trash: {}, // trash list
     daily: {}, // daliy list
     sheet: [],
-    playtime: ''
+    playtime: '0.0'
   },
   action
 ) => {

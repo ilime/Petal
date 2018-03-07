@@ -71,7 +71,7 @@ export class Sidebar extends Component {
           <li className="auth">
             {_id === 0 ? (
               <NavLink to="/login" activeClassName="selected">
-                <Icon name="spy" size="large" color="grey" />
+                <Icon name="user" size="large" color="grey" />
               </NavLink>
             ) : (
               <NavLink to="/personal" activeClassName="selected">
