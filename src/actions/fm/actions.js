@@ -151,3 +151,10 @@ export const sheetSet = list => {
     list
   }
 }
+
+export const playtimeSet = pt => {
+  return {
+    type: types.PLAYTIME_SET,
+    pt
+  }
+}

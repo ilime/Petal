@@ -37,3 +37,5 @@ export const DAILY_LIST = 'DAILY_LIST'
 export const DAILY_EMPTY = 'DAILY_EMPTY'
 
 export const SHEET_SET = 'SHEET_SET'
+
+export const PLAYTIME_SET = 'PLAYTIME_SET'

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
 import { playlistGET, playLog } from '../../../actions/fm/apis'
-import { songListGo, songListIndexSet } from '../../../actions/fm/actions'
+import { songListGo, songListIndexSet, playtimeSet } from '../../../actions/fm/actions'
 
 class Audio extends Component {
   constructor(props) {
@@ -96,6 +96,7 @@ class Audio extends Component {
   initAudio = () => {
     const audio = document.querySelector('#_audio')
     this.audio = audio
+    this.props.handleAudioSpan(this.audio)
     const currentTime = document.querySelector('.currenttime')
 
     audio.addEventListener(
@@ -222,6 +223,8 @@ class Audio extends Component {
       songListIndex
     } = this.props
 
+    this.props.handlePlaytimeSet(Number.parseFloat(this.audio.currentTime).toFixed(3))
+
     if (pattern === 'select') {
       this.props.getPlaylist('end')
       this.props.getPlaylist('playing')
@@ -294,7 +297,8 @@ Audio.propTypes = {
   audioVolume: PropTypes.number.isRequired,
   handleSongListGo: PropTypes.func,
   handleSongListIndexSet: PropTypes.func,
-  handlePlayLog: PropTypes.func
+  handlePlayLog: PropTypes.func,
+  handlePlaytimeSet: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -317,7 +321,8 @@ const mapDispatchToProps = dispatch => {
     handleSongListGo: () => dispatch(songListGo),
     handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
     handlePlayLog: (sid, type, play_source) =>
-      dispatch(playLog(sid, type, play_source))
+      dispatch(playLog(sid, type, play_source)),
+    handlePlaytimeSet: pt => dispatch(playtimeSet(pt))
   }
 }
 

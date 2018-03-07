@@ -17,7 +17,8 @@ const fmReducer = (
     redheart: [], // redheart list
     trash: {}, // trash list
     daily: {}, // daliy list
-    sheet: []
+    sheet: [],
+    playtime: ''
   },
   action
 ) => {
@@ -174,6 +175,11 @@ const fmReducer = (
     (state, action) =>
       shallowCopy(state, {
         sheet: action.list
+      }),
+    types.PLAYTIME_SET,
+    (state, action) =>
+      shallowCopy(state, {
+        playtime: action.pt
       })
   )(state, action)
 }

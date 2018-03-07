@@ -6,6 +6,16 @@ import Cover from './Cover'
 import Audio from './Audio'
 
 class FM extends Component {
+  state = {
+    audio: undefined
+  }
+
+  handleAudioSpan = audio => {
+    this.setState({
+      audio
+    })
+  }
+
   render() {
     const { isFetching } = this.props
     return (
@@ -14,8 +24,8 @@ class FM extends Component {
           <Dimmer className="fm-dimmer" active={isFetching} inverted>
             <Loader>加载中</Loader>
           </Dimmer>
-          <Cover />
-          <Audio />
+          <Cover audio={this.state.audio} />
+          <Audio handleAudioSpan={this.handleAudioSpan} />
         </Dimmer.Dimmable>
       </article>
     )

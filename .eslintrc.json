@@ -22,6 +22,7 @@
         "SwitchCase": 1
       }
     ],
+    "no-console": [1],
     "quotes": [2, "single"],
     "semi": [2, "never"],
     "react/jsx-uses-react": 2,

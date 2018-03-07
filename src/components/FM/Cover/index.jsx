@@ -10,7 +10,8 @@ import { playlistGET, playLog } from '../../../actions/fm/apis'
 import {
   songListGo,
   songListBack,
-  songListIndexSet
+  songListIndexSet,
+  playtimeSet
 } from '../../../actions/fm/actions'
 
 class Cover extends Component {
@@ -249,10 +250,12 @@ class Cover extends Component {
   }
 
   handleSkipSong = () => {
+    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
     this.props.getPlayList('skip')
   }
 
   handleTrashSong = () => {
+    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
     this.props.getPlayList('trash')
   }
 
@@ -281,6 +284,8 @@ class Cover extends Component {
       this.handleLoveIsLoginPopupOpen()
       return
     }
+
+    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
 
     if (love === 'white') {
       if (pattern === 'select') {
@@ -455,7 +460,8 @@ Cover.propTypes = {
   handleSongListGo: PropTypes.func,
   handleSongListBack: PropTypes.func,
   handleSongListIndexSet: PropTypes.func,
-  handlePlayLog: PropTypes.func
+  handlePlayLog: PropTypes.func,
+  handlePlaytimeSet: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -478,7 +484,8 @@ const mapDispatchToProps = dispatch => {
     handleSongListBack: () => dispatch(songListBack),
     handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
     handlePlayLog: (sid, type, play_source) =>
-      dispatch(playLog(sid, type, play_source))
+      dispatch(playLog(sid, type, play_source)),
+    handlePlaytimeSet: pt => dispatch(playtimeSet(pt))
   }
 }
 

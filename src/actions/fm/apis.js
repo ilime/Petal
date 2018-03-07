@@ -49,7 +49,7 @@ const playlistOriginUrl =
   Object.entries(fixedParams).reduce((previous, [key, value]) => {
     return previous + key + '=' + value + '&'
   }, '') +
-  'pt=0.0&format=null&kbps=128&pb=128&from='
+  'format=null&kbps=128&pb=128&from='
 
 /**
  * get lyric through the song's sid and album's ssid
@@ -85,6 +85,8 @@ export const playlistGET = type => {
           method: 'GET',
           url:
             playlistOriginUrl +
+            '&pt=' +
+            getState().fmReducer.playtime +
             '&channel=' +
             getState().fmReducer.channelId +
             '&type=' +
