@@ -19,10 +19,17 @@ class Extra extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.lyric.lyric) {
-      this.setState({
-        lyric: lyricParsing(nextProps.lyric.lyric)
-      })
+    if (nextProps.lyric.sid !== this.props.lyric.sid) {
+      this.setState(
+        {
+          lyric: lyricParsing(nextProps.lyric.lyric)
+        },
+        () => {
+          if (this.state.lyric.canScroll) {
+            this.handleLyricScroll()
+          }
+        }
+      )
     }
   }
 
@@ -49,14 +56,60 @@ class Extra extends Component {
       this.props.audio.addEventListener('ended', () => {
         if (this.state.lyricAreaDisplay === true) {
           const sti = setInterval(() => {
-            if (this.props.sid !== this.props.lyric.sid) {
-              this.props.handleSongLyricGET()
+            if (sid !== lyric.sid) {
+              handleSongLyricGET()
               clearInterval(sti)
+              this.resetScroll()
             }
           }, 2000)
         }
       })
     }
+  }
+
+  handleLyricScroll = () => {
+    const audio = this.props.audio
+    let height = this.lyricScrollArea.scrollHeight
+    let lyric = this.state.lyric
+    console.log(lyric)
+    let lineHeight = height / lyric.lyricArr.length
+    let prevIndex = 0
+    let index = 0
+    let id
+
+    const scroll = () => {
+      console.log('scroll begin')
+      id = setInterval(() => {
+        if (this.props.sid !== this.props.lyric.sid) {
+          clearInterval(id)
+          console.log('scroll end because skip')
+          this.resetScroll()
+          this.props.handleSongLyricGET()
+        }
+        let time = lyric.lyricArr[index][0]
+        let currentTime = audio.currentTime
+        if (currentTime > time) {
+          lyric.lyricArr[prevIndex].active = false
+          lyric.lyricArr[index].active = true
+          this.setState({
+            lyric
+          })
+          this.lyricScrollArea.scrollTop = lineHeight * index
+          prevIndex = index
+          index++
+        }
+        if (index === lyric.lyricArr.length) {
+          clearInterval(id)
+          console.log('scroll end')
+        }
+      }, 1000)
+    }
+
+    scroll()
+  }
+
+  resetScroll = () => {
+    this.lyricScrollArea.scrollTop = 0
   }
 
   render() {
@@ -80,11 +133,17 @@ class Extra extends Component {
             <Icon link name="download" color="grey" title="下载歌曲" />
           </div>
         </div>
-        <div className="lyric-area" style={{ height: `${lyricAreaHeight}px` }}>
+        <div
+          className="lyric-area"
+          style={{ height: `${lyricAreaHeight}px` }}
+          ref={node => (this.lyricScrollArea = node)}
+        >
           <h5>{this.props.lyric.name}</h5>
           {lyric.lyricArr.length > 0 &&
             lyric.lyricArr.map((line, index) => (
-              <p key={index}>{typeof line === 'string' ? line : line[1]}</p>
+              <p key={index} className={line.active ? 'line-active' : ''}>
+                {typeof line === 'string' ? line : line[1]}
+              </p>
             ))}
         </div>
       </article>
