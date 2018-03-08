@@ -1,0 +1,29 @@
+@import '../common';
+
+.petal-fm-extra {
+  margin-top: 0.5rem;
+  width: 250px;
+
+  .panel {
+    display: flex;
+    justify-content: space-between;
+
+    i.item-active {
+      color: $petal-green !important;
+    }
+  }
+
+  .lyric-area {
+    margin: 5px 2px;
+    overflow: scroll;
+
+    h5 {
+      margin-bottom: 0.2rem;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+      color: $petal-grey;
+    }
+  }
+}

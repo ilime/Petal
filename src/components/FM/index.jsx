@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import Cover from './Cover'
 import Audio from './Audio'
+import Extra from './Extra'
 
 class FM extends Component {
   state = {
@@ -25,6 +26,7 @@ class FM extends Component {
             <Loader>加载中</Loader>
           </Dimmer>
           <Cover audio={this.state.audio} />
+          <Extra audio={this.state.audio} />
           <Audio handleAudioSpan={this.handleAudioSpan} />
         </Dimmer.Dimmable>
       </article>

@@ -69,13 +69,12 @@ export const songLyricGET = () => {
   return (dispatch, getState) => {
     return axios.get(
       songLyricOriginUrl +
-        '/lyric?' +
         'sid=' +
         getState().fmReducer.sid +
         '&ssid=' +
         getState().fmReducer.ssid
     ).then(response => {
-      const lyric = response.data.lyric
+      const lyric = response.data
       dispatch(actions.songLyricResponse(lyric))
     })
   }
