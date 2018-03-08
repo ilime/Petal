@@ -51,6 +51,13 @@ const playlistOriginUrl =
   }, '') +
   'format=null&kbps=128&pb=128&from='
 
+const songLyricOriginUrl =
+  FM_ROOT_URL +
+  '/lyric?' +
+  Object.entries(fixedParams).reduce((previous, [key, value]) => {
+    return previous + key + '=' + value + '&'
+  }, '')
+
 /**
  * get lyric through the song's sid and album's ssid
  *
@@ -58,13 +65,21 @@ const playlistOriginUrl =
  * @param {string} ssid
  * @returns {Axios} - Axios instance
  */
-// export const songLyricGET = (sid, ssid) => {
-//   return axios.get(FM_ROOT_URL +
-//     '/lyric?' +
-//     'sid=' + sid +
-//     '&ssid=' + ssid
-//   )
-// }
+export const songLyricGET = () => {
+  return (dispatch, getState) => {
+    return axios.get(
+      songLyricOriginUrl +
+        '/lyric?' +
+        'sid=' +
+        getState().fmReducer.sid +
+        '&ssid=' +
+        getState().fmReducer.ssid
+    ).then(response => {
+      const lyric = response.data.lyric
+      dispatch(actions.songLyricResponse(lyric))
+    })
+  }
+}
 
 /**
  * Core function, get playlist

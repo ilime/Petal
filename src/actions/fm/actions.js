@@ -45,12 +45,12 @@ export const playlistResponse = (sid, ssid, song) => {
   }
 }
 
-// export const songLyricResponse = lyric => {
-//   return {
-//     type: SONG_LYRIC_RESPONSE,
-//     lyric
-//   }
-// }
+export const songLyricResponse = lyric => {
+  return {
+    type: types.SONG_LYRIC_RESPONSE,
+    lyric
+  }
+}
 
 export const redHeartRate = () => {
   return {
