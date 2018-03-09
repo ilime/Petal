@@ -158,3 +158,6 @@ export const playtimeSet = pt => {
     pt
   }
 }
+
+export const lyricDisplayTrue = { type: types.LYRIC_DISPLAY_TRUE }
+export const lyricDisplayFalse = { type: types.LYRIC_DISPLAY_FALSE }

@@ -6,7 +6,7 @@ import {
   onReceiveFromMainProcess,
   rendererProcessSend
 } from '../../../helper/electron'
-import { playlistGET, playLog } from '../../../actions/fm/apis'
+import { playlistGET, playLog, songLyricGET } from '../../../actions/fm/apis'
 import {
   songListGo,
   songListBack,
@@ -249,14 +249,24 @@ class Cover extends Component {
     // }
   }
 
+  handleLyricUpdated = () => {
+    if (this.props.lyricGlobalDisplay) {
+      this.props.handleSongLyricGET()
+    }
+  }
+
   handleSkipSong = () => {
-    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
-    this.props.getPlayList('skip')
+    this.props.handlePlaytimeSet(
+      Number.parseFloat(this.props.audio.currentTime).toFixed(3)
+    )
+    this.props.getPlayList('skip', this.handleLyricUpdated)
   }
 
   handleTrashSong = () => {
-    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
-    this.props.getPlayList('trash')
+    this.props.handlePlaytimeSet(
+      Number.parseFloat(this.props.audio.currentTime).toFixed(3)
+    )
+    this.props.getPlayList('trash', this.handleLyricUpdated)
   }
 
   /**
@@ -285,7 +295,9 @@ class Cover extends Component {
       return
     }
 
-    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
+    this.props.handlePlaytimeSet(
+      Number.parseFloat(this.props.audio.currentTime).toFixed(3)
+    )
 
     if (love === 'white') {
       if (pattern === 'select') {
@@ -461,7 +473,9 @@ Cover.propTypes = {
   handleSongListBack: PropTypes.func,
   handleSongListIndexSet: PropTypes.func,
   handlePlayLog: PropTypes.func,
-  handlePlaytimeSet: PropTypes.func
+  handlePlaytimeSet: PropTypes.func,
+  lyricGlobalDisplay: PropTypes.bool,
+  handleSongLyricGET: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -473,19 +487,21 @@ const mapStateToProps = state => {
     redheartSong: state.fmReducer.redheart,
     dailySong: state.fmReducer.daily.songs,
     // sheetSong: state.fmReducer.sheet,
-    songListIndex: state.fmReducer.songListIndex
+    songListIndex: state.fmReducer.songListIndex,
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPlayList: type => dispatch(playlistGET(type)),
+    getPlayList: (type, callback) => dispatch(playlistGET(type, callback)),
     handleSongListGo: () => dispatch(songListGo),
     handleSongListBack: () => dispatch(songListBack),
     handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
     handlePlayLog: (sid, type, play_source) =>
       dispatch(playLog(sid, type, play_source)),
-    handlePlaytimeSet: pt => dispatch(playtimeSet(pt))
+    handlePlaytimeSet: pt => dispatch(playtimeSet(pt)),
+    handleSongLyricGET: () => dispatch(songLyricGET())
   }
 }
 

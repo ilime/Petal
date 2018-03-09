@@ -13,6 +13,7 @@ const fmReducer = (
     ssid: '', // playlist song ssid
     song: {},
     lyric: {},
+    lyricDisplay: false,
     recent: {}, // recent list
     redheart: [], // redheart list
     trash: {}, // trash list
@@ -182,6 +183,16 @@ const fmReducer = (
     (state, action) =>
       shallowCopy(state, {
         playtime: action.pt
+      }),
+    types.LYRIC_DISPLAY_TRUE,
+    state =>
+      shallowCopy(state, {
+        lyricDisplay: true
+      }),
+    types.LYRIC_DISPLAY_FALSE,
+    state =>
+      shallowCopy(state, {
+        lyricDisplay: false
       })
   )(state, action)
 }

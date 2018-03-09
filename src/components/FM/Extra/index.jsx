@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon } from 'semantic-ui-react'
 import { songLyricGET } from '../../../actions/fm/apis'
+import {
+  lyricDisplayTrue,
+  lyricDisplayFalse
+} from '../../../actions/fm/actions'
 import lyricParsing from '../../../helper/lyricParsing'
 
 class Extra extends Component {
@@ -20,6 +24,13 @@ class Extra extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.lyric.sid !== this.props.lyric.sid) {
+      console.log(nextProps.lyric)
+      if (this.scrollId) {
+        clearInterval(this.scrollId)
+        this.scrollId = 0
+        console.log('scroll end because skip')
+        this.resetScroll()
+      }
       this.setState(
         {
           lyric: lyricParsing(nextProps.lyric.lyric)
@@ -40,11 +51,13 @@ class Extra extends Component {
         handleSongLyricGET()
       }
 
+      this.props.handleGlobalLyricDisplayTrue()
       this.setState({
         lyricAreaDisplay: true,
         lyricAreaHeight: 80
       })
     } else {
+      this.props.handleGlobalLyricDisplayFalse()
       this.setState({
         lyricAreaDisplay: false,
         lyricAreaHeight: 0
@@ -75,17 +88,10 @@ class Extra extends Component {
     let lineHeight = height / lyric.lyricArr.length
     let prevIndex = 0
     let index = 0
-    let id
 
     const scroll = () => {
       console.log('scroll begin')
-      id = setInterval(() => {
-        if (this.props.sid !== this.props.lyric.sid) {
-          clearInterval(id)
-          console.log('scroll end because skip')
-          this.resetScroll()
-          this.props.handleSongLyricGET()
-        }
+      this.scrollId = setInterval(() => {
         let time = lyric.lyricArr[index][0]
         let currentTime = audio.currentTime
         if (currentTime > time) {
@@ -99,8 +105,8 @@ class Extra extends Component {
           index++
         }
         if (index === lyric.lyricArr.length) {
-          clearInterval(id)
-          console.log('scroll end')
+          clearInterval(this.scrollId)
+          console.log('scroll end normally')
         }
       }, 1000)
     }
@@ -153,7 +159,10 @@ class Extra extends Component {
 
 Extra.propTypes = {
   lyric: PropTypes.object,
-  sid: PropTypes.string
+  sid: PropTypes.string,
+  handleSongLyricGET: PropTypes.func,
+  handleGlobalLyricDisplayTrue: PropTypes.func,
+  handleGlobalLyricDisplayFalse: PropTypes.func
 }
 
 function mapStateToProps(state) {
@@ -165,7 +174,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleSongLyricGET: () => dispatch(songLyricGET())
+    handleSongLyricGET: () => dispatch(songLyricGET()),
+    handleGlobalLyricDisplayTrue: () => dispatch(lyricDisplayTrue),
+    handleGlobalLyricDisplayFalse: () => dispatch(lyricDisplayFalse)
   }
 }
 

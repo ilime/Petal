@@ -65,18 +65,20 @@ const songLyricOriginUrl =
  * @param {string} ssid
  * @returns {Axios} - Axios instance
  */
-export const songLyricGET = () => {
+export const songLyricGET = (sid = null, ssid = null) => {
   return (dispatch, getState) => {
-    return axios.get(
-      songLyricOriginUrl +
-        'sid=' +
-        getState().fmReducer.sid +
-        '&ssid=' +
-        getState().fmReducer.ssid
-    ).then(response => {
-      const lyric = response.data
-      dispatch(actions.songLyricResponse(lyric))
-    })
+    return axios
+      .get(
+        songLyricOriginUrl +
+          'sid=' +
+          (sid === null ? getState().fmReducer.sid : sid) +
+          '&ssid=' +
+          (ssid === null ? getState().fmReducer.ssid : ssid)
+      )
+      .then(response => {
+        const lyric = response.data
+        dispatch(actions.songLyricResponse(lyric))
+      })
   }
 }
 
@@ -86,7 +88,7 @@ export const songLyricGET = () => {
  * @param {string} type - playlist type
  * @returns - a thunk function which handle playlist operation
  */
-export const playlistGET = type => {
+export const playlistGET = (type, callback = null) => {
   return (dispatch, getState) => {
     // loading before get playlist songs
     if (type !== 'rate' && type !== 'unrate' && type !== 'end') {
@@ -127,6 +129,9 @@ export const playlistGET = type => {
           ssid = song.ssid
         // if type is rate or unrate, the next similar song will add into current songs array
         dispatch(actions.playlistResponse(sid, ssid, song))
+        if (callback !== null && typeof callback === 'function') {
+          callback()
+        }
       })
       .catch(console.log)
   }
