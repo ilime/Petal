@@ -3,3 +3,4 @@ node_modules
 dist
 bundle/*
 !bundle/resources
+yarn-error.log

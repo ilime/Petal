@@ -39,12 +39,36 @@ describe('fmReducer', () => {
   })
   test('recent pattern', () => {
     expect(
-      fmReducer({ pattern: 'select' }, { type: 'RECENT_PATTERN' })
-    ).toEqual({ pattern: 'recent', songListIndex: 0 })
+      fmReducer(
+        {
+          pattern: 'select',
+          recent: { songs: [{ sid: 'mock', ssid: 'mock' }] }
+        },
+        { type: 'RECENT_PATTERN' }
+      )
+    ).toHaveProperty('pattern', 'recent')
+    expect(
+      fmReducer(
+        {
+          pattern: 'select',
+          recent: { songs: [{ sid: 'mock', ssid: 'mock' }] }
+        },
+        { type: 'RECENT_PATTERN' }
+      )
+    ).toHaveProperty('songListIndex', 0)
   })
   test('redheart pattern', () => {
     expect(
-      fmReducer({ pattern: 'select' }, { type: 'REDHEART_PATTERN' })
-    ).toEqual({ pattern: 'redheart', songListIndex: 0 })
+      fmReducer(
+        { pattern: 'select', redheart: [{ sid: 'mock', ssid: 'mock' }] },
+        { type: 'REDHEART_PATTERN' }
+      )
+    ).toHaveProperty('pattern', 'redheart')
+    expect(
+      fmReducer(
+        { pattern: 'select', redheart: [{ sid: 'mock', ssid: 'mock' }] },
+        { type: 'REDHEART_PATTERN' }
+      )
+    ).toHaveProperty('songListIndex', 0)
   })
 })
