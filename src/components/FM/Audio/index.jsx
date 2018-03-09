@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
-import { playlistGET, playLog } from '../../../actions/fm/apis'
-import { songListGo, songListIndexSet, playtimeSet } from '../../../actions/fm/actions'
+import { playlistGET, playLog, songLyricGET } from '../../../actions/fm/apis'
+import {
+  songListGo,
+  songListIndexSet,
+  playtimeSet,
+  updateSidSsid
+} from '../../../actions/fm/actions'
 
 class Audio extends Component {
   constructor(props) {
@@ -205,6 +210,12 @@ class Audio extends Component {
     }
   }
 
+  handleLyricUpdated = () => {
+    if (this.props.lyricGlobalDisplay) {
+      this.props.handleSongLyricGET()
+    }
+  }
+
   /**
    * Song ended.Do following:
    *
@@ -223,38 +234,61 @@ class Audio extends Component {
       songListIndex
     } = this.props
 
-    this.props.handlePlaytimeSet(Number.parseFloat(this.audio.currentTime).toFixed(3))
+    this.props.handlePlaytimeSet(
+      Number.parseFloat(this.audio.currentTime).toFixed(3)
+    )
 
     if (pattern === 'select') {
       this.props.getPlaylist('end')
-      this.props.getPlaylist('playing')
+      this.props.getPlaylist('playing', this.handleLyricUpdated)
     } else if (pattern === 'recent') {
       this.props.handlePlayLog(recentSong[songListIndex].sid, 'p', 'y')
       if (recentSong.length === 1) {
         this.audio.load()
       } else if (songListIndex === recentSong.length - 1) {
         this.props.handleSongListIndexSet(0)
+        this.props.handleUpdateSidSsid(recentSong[0].sid, recentSong[0].ssid)
       } else {
         this.props.handleSongListGo()
+        this.props.handleUpdateSidSsid(
+          recentSong[songListIndex + 1].sid,
+          recentSong[songListIndex + 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     } else if (pattern === 'redheart') {
       this.props.handlePlayLog(redheartSong[songListIndex].sid, 'p', 'h')
       if (redheartSong.length === 1) {
         this.audio.load()
       } else if (songListIndex === redheartSong.length - 1) {
         this.props.handleSongListIndexSet(0)
+        this.props.handleUpdateSidSsid(
+          redheartSong[0].sid,
+          redheartSong[0].ssid
+        )
       } else {
         this.props.handleSongListGo()
+        this.props.handleUpdateSidSsid(
+          redheartSong[songListIndex + 1].sid,
+          redheartSong[songListIndex + 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     } else if (pattern === 'daily') {
       this.props.handlePlayLog(dailySong[songListIndex].sid, 'p', 'd')
       if (dailySong.length === 1) {
         this.audio.load()
       } else if (songListIndex === dailySong.length - 1) {
         this.props.handleSongListIndexSet(0)
+        this.props.handleUpdateSidSsid(dailySong[0].sid, dailySong[0].ssid)
       } else {
         this.props.handleSongListGo()
+        this.props.handleUpdateSidSsid(
+          dailySong[songListIndex + 1].sid,
+          dailySong[songListIndex + 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     }
   }
 
@@ -298,7 +332,10 @@ Audio.propTypes = {
   handleSongListGo: PropTypes.func,
   handleSongListIndexSet: PropTypes.func,
   handlePlayLog: PropTypes.func,
-  handlePlaytimeSet: PropTypes.func
+  handlePlaytimeSet: PropTypes.func,
+  lyricGlobalDisplay: PropTypes.bool,
+  handleSongLyricGET: PropTypes.func,
+  handleUpdateSidSsid: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -311,18 +348,21 @@ const mapStateToProps = state => {
     redheartSong: state.fmReducer.redheart,
     dailySong: state.fmReducer.daily.songs,
     // sheetSong: state.fmReducer.sheet,
-    audioVolume: state.settingReducer.volume
+    audioVolume: state.settingReducer.volume,
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPlaylist: type => dispatch(playlistGET(type)),
+    getPlaylist: (type, callback) => dispatch(playlistGET(type, callback)),
     handleSongListGo: () => dispatch(songListGo),
     handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
     handlePlayLog: (sid, type, play_source) =>
       dispatch(playLog(sid, type, play_source)),
-    handlePlaytimeSet: pt => dispatch(playtimeSet(pt))
+    handlePlaytimeSet: pt => dispatch(playtimeSet(pt)),
+    handleSongLyricGET: () => dispatch(songLyricGET()),
+    handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid))
   }
 }
 

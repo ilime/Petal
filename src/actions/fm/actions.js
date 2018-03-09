@@ -161,3 +161,11 @@ export const playtimeSet = pt => {
 
 export const lyricDisplayTrue = { type: types.LYRIC_DISPLAY_TRUE }
 export const lyricDisplayFalse = { type: types.LYRIC_DISPLAY_FALSE }
+
+export const updateSidSsid = (sid, ssid) => {
+  return {
+    type: types.UPDATE_SID_SSID,
+    sid,
+    ssid
+  }
+}

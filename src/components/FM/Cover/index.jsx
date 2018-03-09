@@ -11,7 +11,8 @@ import {
   songListGo,
   songListBack,
   songListIndexSet,
-  playtimeSet
+  playtimeSet,
+  updateSidSsid
 } from '../../../actions/fm/actions'
 
 class Cover extends Component {
@@ -166,27 +167,48 @@ class Cover extends Component {
       this.props.handlePlayLog(recentSong[songListIndex].sid, 'j', 'y')
       if (songListIndex === recentSong.length - 1) {
         this.props.handleSongListIndexSet(0)
+        this.props.handleUpdateSidSsid(recentSong[0].sid, recentSong[0].ssid)
       } else {
         this.props.handleSongListGo()
+        this.props.handleUpdateSidSsid(
+          recentSong[songListIndex + 1].sid,
+          recentSong[songListIndex + 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     }
 
     if (pattern === 'redheart') {
       this.props.handlePlayLog(redheartSong[songListIndex].sid, 'j', 'h')
       if (songListIndex === redheartSong.length - 1) {
         this.props.handleSongListIndexSet(0)
+        this.props.handleUpdateSidSsid(
+          redheartSong[0].sid,
+          redheartSong[0].ssid
+        )
       } else {
         this.props.handleSongListGo()
+        this.props.handleUpdateSidSsid(
+          redheartSong[songListIndex + 1].sid,
+          redheartSong[songListIndex + 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     }
 
     if (pattern === 'daily') {
       this.props.handlePlayLog(dailySong[songListIndex].sid, 'j', 'd')
       if (songListIndex === dailySong.length - 1) {
         this.props.handleSongListIndexSet(0)
+        this.props.handleUpdateSidSsid(dailySong[0].sid, dailySong[0].ssid)
       } else {
         this.props.handleSongListGo()
+        this.props.handleUpdateSidSsid(
+          dailySong[songListIndex + 1].sid,
+          dailySong[songListIndex + 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     }
 
     // if (pattern === 'sheet') {
@@ -216,27 +238,54 @@ class Cover extends Component {
       this.props.handlePlayLog(recentSong[songListIndex].sid, 'k', 'y')
       if (songListIndex === 0) {
         this.props.handleSongListIndexSet(recentSong.length - 1)
+        this.props.handleUpdateSidSsid(
+          recentSong[recentSong.length - 1].sid,
+          recentSong[recentSong.length - 1].ssid
+        )
       } else {
         this.props.handleSongListBack()
+        this.props.handleUpdateSidSsid(
+          recentSong[songListIndex - 1].sid,
+          recentSong[songListIndex - 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     }
 
     if (pattern === 'redheart') {
       this.props.handlePlayLog(redheartSong[songListIndex].sid, 'k', 'h')
       if (songListIndex === 0) {
         this.props.handleSongListIndexSet(redheartSong.length - 1)
+        this.props.handleUpdateSidSsid(
+          redheartSong[redheartSong.length - 1].sid,
+          redheartSong[redheartSong.length - 1].ssid
+        )
       } else {
         this.props.handleSongListBack()
+        this.props.handleUpdateSidSsid(
+          redheartSong[songListIndex - 1].sid,
+          redheartSong[songListIndex - 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     }
 
     if (pattern === 'daily') {
       this.props.handlePlayLog(dailySong[songListIndex].sid, 'k', 'd')
       if (songListIndex === 0) {
         this.props.handleSongListIndexSet(dailySong.length - 1)
+        this.props.handleUpdateSidSsid(
+          dailySong[dailySong.length - 1].sid,
+          dailySong[dailySong.length - 1].ssid
+        )
       } else {
         this.props.handleSongListBack()
+        this.props.handleUpdateSidSsid(
+          dailySong[songListIndex - 1].sid,
+          dailySong[songListIndex - 1].ssid
+        )
       }
+      this.handleLyricUpdated()
     }
 
     // if (pattern === 'sheet') {
@@ -401,25 +450,25 @@ class Cover extends Component {
           {(pattern === 'recent' ||
             pattern === 'redheart' ||
             pattern === 'daily') && (
-              <div>
-                <Icon
-                  name="step backward"
-                  size="big"
-                  onClick={this.handleSongBackward}
-                />
-                <Icon
-                  name="heart"
-                  size="big"
-                  style={{ color: love }}
-                  onClick={this.handleLoveSong}
-                />
-                <Icon
-                  name="step forward"
-                  size="big"
-                  onClick={this.handleSongForward}
-                />
-              </div>
-            )}
+            <div>
+              <Icon
+                name="step backward"
+                size="big"
+                onClick={this.handleSongBackward}
+              />
+              <Icon
+                name="heart"
+                size="big"
+                style={{ color: love }}
+                onClick={this.handleLoveSong}
+              />
+              <Icon
+                name="step forward"
+                size="big"
+                onClick={this.handleSongForward}
+              />
+            </div>
+          )}
         </div>
       </div>
     )
@@ -475,7 +524,8 @@ Cover.propTypes = {
   handlePlayLog: PropTypes.func,
   handlePlaytimeSet: PropTypes.func,
   lyricGlobalDisplay: PropTypes.bool,
-  handleSongLyricGET: PropTypes.func
+  handleSongLyricGET: PropTypes.func,
+  handleUpdateSidSsid: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -501,7 +551,8 @@ const mapDispatchToProps = dispatch => {
     handlePlayLog: (sid, type, play_source) =>
       dispatch(playLog(sid, type, play_source)),
     handlePlaytimeSet: pt => dispatch(playtimeSet(pt)),
-    handleSongLyricGET: () => dispatch(songLyricGET())
+    handleSongLyricGET: () => dispatch(songLyricGET()),
+    handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid))
   }
 }
 

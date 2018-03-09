@@ -117,19 +117,25 @@ const fmReducer = (
     state =>
       shallowCopy(state, {
         pattern: 'recent',
-        songListIndex: 0
+        songListIndex: 0,
+        sid: state.recent.songs[0].sid,
+        ssid: state.recent.songs[0].ssid
       }),
     types.REDHEART_PATTERN,
     state =>
       shallowCopy(state, {
         pattern: 'redheart',
-        songListIndex: 0
+        songListIndex: 0,
+        sid: state.redheart[0].sid,
+        ssid: state.redheart[0].ssid
       }),
     types.DAILY_PATTERN,
     state =>
       shallowCopy(state, {
         pattern: 'daily',
-        songListIndex: 0
+        songListIndex: 0,
+        sid: state.daily.songs[0].sid,
+        ssid: state.daily.songs[0].ssid
       }),
     types.SHEET_PATTERN,
     state =>
@@ -193,6 +199,12 @@ const fmReducer = (
     state =>
       shallowCopy(state, {
         lyricDisplay: false
+      }),
+    types.UPDATE_SID_SSID,
+    (state, action) =>
+      shallowCopy(state, {
+        sid: action.sid,
+        ssid: action.ssid
       })
   )(state, action)
 }

@@ -8,7 +8,7 @@ import {
   redheartPattern,
   appChannelSet
 } from '../../actions/fm/actions'
-import { playlistGET } from '../../actions/fm/apis'
+import { playlistGET, songLyricGET } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
 class Pattern extends Component {
@@ -43,6 +43,12 @@ class Pattern extends Component {
     }
   }
 
+  handleLyricUpdated = () => {
+    if (this.props.lyricGlobalDisplay) {
+      this.props.handleSongLyricGET()
+    }
+  }
+
   /**
    * Handle switch pattern
    *
@@ -60,6 +66,7 @@ class Pattern extends Component {
 
     if (pattern !== name) {
       this._patterns.get(name)()
+      this.handleLyricUpdated()
       rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', name)
     }
@@ -69,7 +76,7 @@ class Pattern extends Component {
   handleAppChannelSetWrapper = id => {
     if (!(this.props.channelId === id && this.props.pattern === 'select')) {
       this.props.handleAppChannelSet(id)
-      this.props.getPlaylist('new')
+      this.props.getPlaylist('new', this.handleLyricUpdated)
       rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', 'select')
     }
@@ -204,7 +211,9 @@ Pattern.propTypes = {
   channels: PropTypes.array,
   recentSong: PropTypes.array,
   redheartSong: PropTypes.array,
-  handleAppChannelSet: PropTypes.func
+  handleAppChannelSet: PropTypes.func,
+  lyricGlobalDisplay: PropTypes.bool,
+  handleSongLyricGET: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -215,7 +224,8 @@ const mapStateToProps = state => {
     channelId: state.fmReducer.channelId,
     channels: state.fmReducer.channels,
     recentSong: state.fmReducer.recent.songs,
-    redheartSong: state.fmReducer.redheart
+    redheartSong: state.fmReducer.redheart,
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay
   }
 }
 
@@ -224,8 +234,9 @@ const mapDispatchToProps = dispatch => {
     switchToSelect: () => dispatch(selectPattern),
     switchToRecent: () => dispatch(recentPattern),
     switchToRedheart: () => dispatch(redheartPattern),
-    getPlaylist: type => dispatch(playlistGET(type)),
-    handleAppChannelSet: id => dispatch(appChannelSet(id))
+    getPlaylist: (type, callback) => dispatch(playlistGET(type, callback)),
+    handleAppChannelSet: id => dispatch(appChannelSet(id)),
+    handleSongLyricGET: () => dispatch(songLyricGET())
   }
 }
 

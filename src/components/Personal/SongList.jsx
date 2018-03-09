@@ -3,8 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Item, Header, Button, Icon, Confirm } from 'semantic-ui-react'
-import { songListIndexSet } from '../../actions/fm/actions'
-import { removeTrashSong, trashListGET, playLog } from '../../actions/fm/apis'
+import { songListIndexSet, updateSidSsid } from '../../actions/fm/actions'
+import {
+  removeTrashSong,
+  trashListGET,
+  playLog,
+  songLyricGET
+} from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
 const typeRender = {
@@ -34,6 +39,12 @@ class SongList extends Component {
   }
   handleCancel = () => this.setState({ open: false })
 
+  handleLyricUpdated = () => {
+    if (this.props.lyricGlobalDisplay) {
+      this.props.handleSongLyricGET()
+    }
+  }
+
   handleSongListIndexSetWrapper = (index, pattern) => {
     return () => {
       const {
@@ -52,6 +63,12 @@ class SongList extends Component {
       }
 
       this.props.handleSongListIndexSet(index, pattern)
+      if (pattern === 'recent') {
+        this.props.handleUpdateSidSsid(recentSong[index].sid, recentSong[index].ssid)
+      } else if (pattern === 'redheart') {
+        this.props.handleUpdateSidSsid(redheartSong[index].sid, redheartSong[index].ssid)
+      }
+      this.handleLyricUpdated()
       rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', pattern)
       this.props.history.push('/')
@@ -134,7 +151,10 @@ SongList.propTypes = {
   handleTrashListGET: PropTypes.func,
   recentSong: PropTypes.array,
   redheartSong: PropTypes.array,
-  handlePlayLog: PropTypes.func
+  handlePlayLog: PropTypes.func,
+  lyricGlobalDisplay: PropTypes.bool,
+  handleSongLyricGET: PropTypes.func,
+  handleUpdateSidSsid: PropTypes.func
 }
 
 const mapStateToProps = state => {
@@ -142,7 +162,8 @@ const mapStateToProps = state => {
     pattern: state.fmReducer.pattern,
     recentSong: state.fmReducer.recent.songs,
     redheartSong: state.fmReducer.redheart,
-    songListIndex: state.fmReducer.songListIndex
+    songListIndex: state.fmReducer.songListIndex,
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay
   }
 }
 
@@ -154,7 +175,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(removeTrashSong(sid, callback)),
     handleTrashListGET: () => dispatch(trashListGET()),
     handlePlayLog: (sid, type, play_source) =>
-      dispatch(playLog(sid, type, play_source))
+      dispatch(playLog(sid, type, play_source)),
+    handleSongLyricGET: () => dispatch(songLyricGET()),
+    handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid))
   }
 }
 

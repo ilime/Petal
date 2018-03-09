@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header, Item, Image } from 'semantic-ui-react'
+import { songLyricGET } from '../../actions/fm/apis'
 import { dailyPattern } from '../../actions/fm/actions'
 import { rendererProcessSend } from '../../helper/electron'
 
@@ -16,12 +17,19 @@ class Sheet extends Component {
     }
   }
 
+  handleLyricUpdated = () => {
+    if (this.props.lyricGlobalDisplay) {
+      this.props.handleSongLyricGET()
+    }
+  }
+
   handleDailyPlay = () => {
     if (this.props.pattern !== 'daily') {
       rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', 'daily')
     }
     this.props.switchToDailyPattern()
+    this.handleLyricUpdated()
     this.props.history.push('/')
   }
 
@@ -63,7 +71,9 @@ class Sheet extends Component {
 Sheet.propTypes = {
   _id: PropTypes.number.isRequired,
   pattern: PropTypes.string,
-  daily: PropTypes.object
+  daily: PropTypes.object,
+  lyricGlobalDisplay: PropTypes.bool,
+  handleSongLyricGET: PropTypes.func
   // switchToSheetPattern: PropTypes.func,
   // handleSheetSet: PropTypes.func
 }
@@ -72,13 +82,15 @@ const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
     pattern: state.fmReducer.pattern,
-    daily: state.fmReducer.daily
+    daily: state.fmReducer.daily,
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    switchToDailyPattern: () => dispatch(dailyPattern)
+    switchToDailyPattern: () => dispatch(dailyPattern),
+    handleSongLyricGET: () => dispatch(songLyricGET())
     // switchToSheetPattern: () => dispatch(sheetPattern),
     // handleSheetSet: list => dispatch(sheetSet(list))
   }

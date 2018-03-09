@@ -28,7 +28,7 @@ class Extra extends Component {
       if (this.scrollId) {
         clearInterval(this.scrollId)
         this.scrollId = 0
-        console.log('scroll end because skip')
+        console.log('scroll end and clear id(skip)')
         this.resetScroll()
       }
       this.setState(
@@ -36,6 +36,7 @@ class Extra extends Component {
           lyric: lyricParsing(nextProps.lyric.lyric)
         },
         () => {
+          this.resetScroll()
           if (this.state.lyric.canScroll) {
             this.handleLyricScroll()
           }
@@ -61,21 +62,6 @@ class Extra extends Component {
       this.setState({
         lyricAreaDisplay: false,
         lyricAreaHeight: 0
-      })
-    }
-
-    if (!this.alreadySetLyricLogicInAudio) {
-      this.alreadySetLyricLogicInAudio = true
-      this.props.audio.addEventListener('ended', () => {
-        if (this.state.lyricAreaDisplay === true) {
-          const sti = setInterval(() => {
-            if (sid !== lyric.sid) {
-              handleSongLyricGET()
-              clearInterval(sti)
-              this.resetScroll()
-            }
-          }, 2000)
-        }
       })
     }
   }
