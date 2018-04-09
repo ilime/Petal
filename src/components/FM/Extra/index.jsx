@@ -8,6 +8,8 @@ import {
   lyricDisplayFalse
 } from '../../../actions/fm/actions'
 import lyricParsing from '../../../helper/lyricParsing'
+import db from '../../../helper/db'
+import { UserMusicPath, fileDownload } from '../../../helper/utils'
 
 class Extra extends Component {
   constructor(props) {
@@ -18,7 +20,8 @@ class Extra extends Component {
         canScroll: false
       },
       lyricAreaDisplay: false,
-      lyricAreaHeight: 0
+      lyricAreaHeight: 0,
+      redheartAlreadyDownload: false
     }
   }
 
@@ -42,6 +45,20 @@ class Extra extends Component {
           }
         }
       )
+    }
+
+    if (
+      (nextProps.pattern === 'redheart' && this.props.pattern !== 'redheart') ||
+      (this.props.pattern === 'redheart' &&
+        nextProps.songListIndex !== this.props.songListIndex)
+    ) {
+      setTimeout(() => {
+        db.findOne({ _id: this.props.sid }, (err, doc) => {
+          this.setState({
+            redheartAlreadyDownload: doc !== null ? true : false
+          })
+        })
+      }, 1000)
     }
   }
 
@@ -104,6 +121,36 @@ class Extra extends Component {
     this.lyricScrollArea.scrollTop = 0
   }
 
+  downloadSong = () => {
+    if (this.state.redheartAlreadyDownload) {
+      return
+    }
+
+    const { sid, redheartSong, songListIndex } = this.props
+    const title = redheartSong[songListIndex].title
+    const artist = redheartSong[songListIndex].artist
+    const name = `${title}-${artist}.${redheartSong[songListIndex].file_ext}`
+
+    db.insert(
+      {
+        _id: sid,
+        title,
+        artist,
+        path: UserMusicPath + '/PETAL豆瓣FM/' + name
+      },
+      () => {
+        fileDownload(
+          redheartSong[songListIndex].url,
+          UserMusicPath + '/PETAL豆瓣FM',
+          name,
+          () => {
+            this.setState({ redheartAlreadyDownload: true })
+          }
+        )
+      }
+    )
+  }
+
   render() {
     const { lyric, lyricAreaDisplay, lyricAreaHeight } = this.state
 
@@ -122,7 +169,20 @@ class Extra extends Component {
           </div>
           <div>
             <Icon link name="share alternate" color="grey" title="分享" />
-            <Icon link name="download" color="grey" title="下载歌曲" />
+            {this.props.pattern === 'redheart' && (
+              <Icon.Group>
+                <Icon
+                  link
+                  name="download"
+                  color="grey"
+                  title="下载歌曲"
+                  onClick={this.downloadSong}
+                />
+                {this.state.redheartAlreadyDownload && (
+                  <Icon corner name="check" color="green" />
+                )}
+              </Icon.Group>
+            )}
           </div>
         </div>
         <div
@@ -148,13 +208,19 @@ Extra.propTypes = {
   sid: PropTypes.string,
   handleSongLyricGET: PropTypes.func,
   handleGlobalLyricDisplayTrue: PropTypes.func,
-  handleGlobalLyricDisplayFalse: PropTypes.func
+  handleGlobalLyricDisplayFalse: PropTypes.func,
+  pattern: PropTypes.string,
+  redheartSong: PropTypes.array,
+  songListIndex: PropTypes.number
 }
 
 function mapStateToProps(state) {
   return {
     lyric: state.fmReducer.lyric,
-    sid: state.fmReducer.sid
+    sid: state.fmReducer.sid,
+    pattern: state.fmReducer.pattern,
+    redheartSong: state.fmReducer.redheart,
+    songListIndex: state.fmReducer.songListIndex
   }
 }
 

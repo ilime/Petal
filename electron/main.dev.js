@@ -21,8 +21,16 @@ const createDB = () => {
   })
 }
 
+function createMusicDir() {
+  const dir = app.getPath('music') + '/PETAL豆瓣FM'
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+}
+
 app.on('ready', () => {
   createDB()
+  createMusicDir()
   createWindow()
   createMenu()
   createTray()
