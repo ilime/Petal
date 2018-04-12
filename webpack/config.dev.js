@@ -1,14 +1,16 @@
 const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const BaseConfig = require('./config.base')
+const baseConfig = require('./config.base')
 const DEV_OUTPUT_PATH = path.resolve(__dirname, '../bundle')
+const SRC_PATH = path.resolve(__dirname, '../src')
 const STYLE_PATH = path.resolve(__dirname, '../src/static')
 const port = 3000
 const publicPath = `http://localhost:${port}/bundle/`
 
-module.exports = merge.smart(BaseConfig, {
-  devtool: 'eval',
+const devConfig = merge(baseConfig, {
+  mode: 'development',
+  devtool: 'inline-source-map',
   output: {
     path: DEV_OUTPUT_PATH,
     filename: '[name].bundle.js',
@@ -18,7 +20,28 @@ module.exports = merge.smart(BaseConfig, {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'react-hot-loader/webpack'
+        include: SRC_PATH,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    modules: false
+                  }
+                ],
+                '@babel/preset-react',
+                '@babel/preset-stage-2'
+              ],
+              plugins: ['react-hot-loader/babel'],
+              cacheDirectory: true
+            }
+          }
+        ]
       },
       {
         test: /\.scss$/,
@@ -33,11 +56,7 @@ module.exports = merge.smart(BaseConfig, {
     contentBase: path.resolve(__dirname, '../bundle'),
     hot: true
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ]
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 })
+
+module.exports = devConfig

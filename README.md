@@ -22,16 +22,16 @@ Go to [release page](https://github.com/ilime/Petal/releases)
 
 ## How to develop
 
-```
+```sh
 git clone git@github.com:ilime/Petal.git && cd Petal/
-yarn && yarn run bundle:dev+main && yarn run dev:hot
+yarn && yarn run bundle:dev+electron-dev && yarn run dev:hot
 // Open a new terminal
 yarn start
 ```
 
 ## How to build
 
-```
+```sh
 chmod +x build.sh
 ./build.sh
 ```

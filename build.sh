@@ -9,36 +9,27 @@
 #   package.json --- already exist
 #   index.html
 #   style.APP_SYMBOL.css
-#   vendor.APP_SYMBOL.js
-#   app.APP_SYMBOL.js
+#   app.[chunkhash].APP_SYMBOL.js
 #   main.js
+#   *.map
 
 echo "Build start ..."
 
 # bundle src file
-echo "--- yarn run bundle:prod ---"
-yarn run bundle:prod
-
-# check main.js exists
-if [ -e bundle/main.js ]
+if [[ ! -e app/index.html ]]
 then
-    echo "main.js exists, do you want to bundle it again? (enter Y/N)"
-    read YES_OR_NO
-    if [ "$YES_OR_NO" == "Y" ]
-    then
-        echo "--- yarn run build:main ---"
-        yarn run bundle:main
-    else
-        echo "The input is N or others, go to next step"
-    fi
-else
-    echo "There is no main.js, run bundle"
-    echo "--- npm run build:main ---"
-    yarn run bundle:main
+    echo "There is no index.html, run script:"
+    echo "--- yarn run bundle:prod ---"
+    yarn run bundle:prod
 fi
 
-# copy main.js into app/
-cp bundle/main.js app
+# check main.js exists
+if [[ ! -e app/main.js ]]
+then
+    echo "There is no main.js, run script:"
+    echo "--- yarn run bundle:electron-prod ---"
+    yarn run bundle:electron-prod
+fi
 
 # copy resources/ into app/
 cp -R bundle/resources app
@@ -52,5 +43,6 @@ rm -r app/resources
 rm app/index.html
 rm app/*.css
 rm app/*.js
+rm app/*.map
 
 echo "--- Finish Build :) ---"
