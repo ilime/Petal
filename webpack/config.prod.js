@@ -50,8 +50,7 @@ const prodConfig = merge(baseConfig, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `style.${APP_SYMBOL}.css`,
-      chunkFilename: '[id].css'
+      filename: `[name].${APP_SYMBOL}.css`
     }),
     new webpack.HashedModuleIdsPlugin()
   ]
