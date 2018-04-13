@@ -109,6 +109,7 @@ class Extra extends Component {
         }
         if (index === lyric.lyricArr.length) {
           clearInterval(this.scrollId)
+          this.scrollId = 0
           console.log('scroll end normally')
         }
       }, 1000)
