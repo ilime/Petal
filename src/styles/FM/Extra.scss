@@ -31,4 +31,8 @@
       color: $petal-green;
     }
   }
+
+  .lyric-area::-webkit-scrollbar {
+    display: none;
+  }
 }

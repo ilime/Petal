@@ -21,7 +21,7 @@ import {
   rendererProcessSend
 } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
-import '../../static/app.scss'
+import '../../styles/app.scss'
 
 class Container extends Component {
   constructor(props) {

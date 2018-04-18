@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const baseConfig = require('./config.base')
 const PROD_OUTPUT_PATH = path.resolve(__dirname, '../app')
 const SRC_PATH = path.resolve(__dirname, '../src')
-const STYLE_PATH = path.resolve(__dirname, '../src/static')
+const STYLE_PATH = path.resolve(__dirname, '../src/styles')
 const APP_SYMBOL = 'Petal'
 
 const prodConfig = merge(baseConfig, {

@@ -4,7 +4,7 @@ const merge = require('webpack-merge')
 const baseConfig = require('./config.base')
 const DEV_OUTPUT_PATH = path.resolve(__dirname, '../bundle')
 const SRC_PATH = path.resolve(__dirname, '../src')
-const STYLE_PATH = path.resolve(__dirname, '../src/static')
+const STYLE_PATH = path.resolve(__dirname, '../src/styles')
 const port = 3000
 const publicPath = `http://localhost:${port}/bundle/`
 
