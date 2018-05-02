@@ -1,4 +1,4 @@
-import { shell, remote, ipcRenderer } from 'electron'
+import { shell, remote, ipcRenderer, clipboard } from 'electron'
 
 /**
  * Open url in default broswer.
@@ -11,6 +11,10 @@ export function openInDefaultBrowser(url) {
   return () => {
     shell.openExternal(url)
   }
+}
+
+export function copyToClipboard(text) {
+  clipboard.writeText(text)
 }
 
 export function appMinimize() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon } from 'semantic-ui-react'
+import { Icon, Popup } from 'semantic-ui-react'
 import { songLyricGET } from '../../../actions/fm/apis'
 import {
   lyricDisplayTrue,
@@ -10,6 +10,7 @@ import {
 import lyricParsing from '../../../helper/lyricParsing'
 import db from '../../../helper/db'
 import { UserMusicPath, fileDownload } from '../../../helper/utils'
+import { copyToClipboard } from '../../../helper/electron'
 
 class Extra extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class Extra extends Component {
       },
       lyricAreaDisplay: false,
       lyricAreaHeight: 0,
-      redheartAlreadyDownload: false
+      redheartAlreadyDownload: false,
+      shareLinkIsOpen: false
     }
   }
 
@@ -152,6 +154,42 @@ class Extra extends Component {
     )
   }
 
+  shareSong = () => {
+    let link
+    const {
+      pattern,
+      song,
+      redheartSong,
+      recentSong,
+      dailySong,
+      songListIndex
+    } = this.props
+    if (pattern === 'select') {
+      link = song.release.link
+    } else if (pattern === 'redheart') {
+      link = redheartSong[songListIndex].release.link
+    } else if (pattern === 'recent') {
+      link = recentSong[songListIndex].release.link
+    } else if (pattern === 'daily') {
+      link = dailySong[songListIndex].release.link
+    }
+
+    copyToClipboard(link)
+  }
+
+  handleSharePopupOpen = () => {
+    this.setState({ shareLinkIsOpen: true })
+
+    this.sharePopupTimeout = setTimeout(() => {
+      this.setState({ shareLinkIsOpen: false })
+    }, 3000)
+  }
+
+  handleSharePopupClose = () => {
+    this.setState({ shareLinkIsOpen: false })
+    clearTimeout(this.sharePopupTimeout)
+  }
+
   render() {
     const { lyric, lyricAreaDisplay, lyricAreaHeight } = this.state
 
@@ -165,11 +203,27 @@ class Extra extends Component {
               name="rocket"
               color="grey"
               onClick={this.showLyric}
-              title="打开歌词"
+              title={lyricAreaDisplay ? '关闭歌词' : '打开歌词'}
             />
           </div>
           <div>
-            <Icon link name="share alternate" color="grey" title="分享" />
+            <Popup
+              trigger={
+                <Icon
+                  link
+                  name="share alternate"
+                  color="grey"
+                  title="分享"
+                  onClick={this.shareSong}
+                />
+              }
+              content="已复制"
+              on="click"
+              open={this.state.shareLinkIsOpen}
+              onOpen={this.handleSharePopupOpen}
+              onClose={this.handleSharePopupClose}
+              position="left center"
+            />
             {this.props.pattern === 'redheart' && (
               <Icon.Group>
                 <Icon
@@ -207,11 +261,14 @@ class Extra extends Component {
 Extra.propTypes = {
   lyric: PropTypes.object,
   sid: PropTypes.string,
+  song: PropTypes.object,
   handleSongLyricGET: PropTypes.func,
   handleGlobalLyricDisplayTrue: PropTypes.func,
   handleGlobalLyricDisplayFalse: PropTypes.func,
   pattern: PropTypes.string,
   redheartSong: PropTypes.array,
+  recentSong: PropTypes.array,
+  dailySong: PropTypes.array,
   songListIndex: PropTypes.number
 }
 
@@ -219,8 +276,11 @@ function mapStateToProps(state) {
   return {
     lyric: state.fmReducer.lyric,
     sid: state.fmReducer.sid,
+    song: state.fmReducer.song,
     pattern: state.fmReducer.pattern,
     redheartSong: state.fmReducer.redheart,
+    recentSong: state.fmReducer.recent.songs,
+    dailySong: state.fmReducer.daily.songs,
     songListIndex: state.fmReducer.songListIndex
   }
 }
