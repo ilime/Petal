@@ -213,7 +213,7 @@ class Extra extends Component {
                   link
                   name="share alternate"
                   color="grey"
-                  title="分享"
+                  title="分享专辑"
                   onClick={this.shareSong}
                 />
               }

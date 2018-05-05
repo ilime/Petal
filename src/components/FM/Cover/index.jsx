@@ -305,6 +305,10 @@ class Cover extends Component {
   }
 
   handleSkipSong = () => {
+    if (this.props.pattern !== 'select') {
+      return
+    }
+
     this.props.handlePlaytimeSet(
       Number.parseFloat(this.props.audio.currentTime).toFixed(3)
     )
@@ -312,6 +316,10 @@ class Cover extends Component {
   }
 
   handleTrashSong = () => {
+    if (this.props.pattern !== 'select') {
+      return
+    }
+
     this.props.handlePlaytimeSet(
       Number.parseFloat(this.props.audio.currentTime).toFixed(3)
     )

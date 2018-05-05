@@ -7,17 +7,42 @@ const resourcesFolder = __dirname + '/resources/'
 const contextMenu = Menu.buildFromTemplate([
   {
     label: '打开',
+    enabled: false,
     click() {
-      if (mainWindow.isVisible()) {
-        mainWindow.hide()
-      } else {
-        mainWindow.show()
-      }
+      mainWindow.show()
+      contextMenu.items[0].enabled = false
+      contextMenu.items[1].enabled = true
     }
   },
   {
-    type: 'separator'
+    label: '隐藏',
+    enabled: true,
+    click() {
+      mainWindow.hide()
+      contextMenu.items[0].enabled = true
+      contextMenu.items[1].enabled = false
+    }
   },
+  { type: 'separator' },
+  {
+    label: '红心',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('love')
+    }
+  },
+  {
+    label: '跳过',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('skip')
+    }
+  },
+  {
+    label: '垃圾桶',
+    click: (menuItem, browserWindow) => {
+      browserWindow.webContents.send('trash')
+    }
+  },
+  { type: 'separator' },
   {
     label: '贴附到状态栏',
     type: 'checkbox',

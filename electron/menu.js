@@ -27,7 +27,7 @@ const template = [
     submenu: [{ role: 'minimize' }]
   },
   {
-    label: 'Operate',
+    label: 'Operation',
     submenu: [
       {
         label: 'Pause',
@@ -44,17 +44,17 @@ const template = [
         }
       },
       {
-        label: 'Trash',
-        accelerator: 'CmdOrCtrl+t',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('trash')
-        }
-      },
-      {
         label: 'Skip',
         accelerator: 'CmdOrCtrl+k',
         click: (menuItem, browserWindow) => {
           browserWindow.webContents.send('skip')
+        }
+      },
+      {
+        label: 'Trash',
+        accelerator: 'CmdOrCtrl+t',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('trash')
         }
       },
       {
@@ -77,13 +77,14 @@ const template = [
     label: 'Related',
     submenu: [
       {
-        label: 'Repo',
+        label: 'Source Code Repo',
         click() {
           require('electron').shell.openExternal('https://github.com/ilime')
         }
       },
+      { type: 'separator' },
       {
-        label: 'Author',
+        label: 'About Author',
         click() {
           require('electron').shell.openExternal('https://github.com/g1eny0ung')
         }
@@ -98,9 +99,6 @@ export default function createMenu() {
       label: app.getName(),
       submenu: [
         { role: 'about' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'unhide' },
         { type: 'separator' },
         { role: 'quit' }
       ]
