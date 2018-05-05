@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Header, Message, Button } from 'semantic-ui-react'
+import { Header, Message, Button, Checkbox } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { settingSaveSuccessReset } from '../../actions/setting/actions'
 import { settingStore } from '../../actions/setting/apis'
@@ -9,7 +9,8 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      volume: this.props.audioVolume
+      volume: this.props.audioVolume,
+      openWithPlaying: this.props.settingOpenWithPlaying
     }
   }
 
@@ -33,14 +34,19 @@ class Main extends Component {
     this.setState({ volume: volume - 10 })
   }
 
+  handleOpenWithPlayingState = () => {
+    this.setState({
+      openWithPlaying: !this.state.openWithPlaying
+    })
+  }
+
   handleSettingStore = () => {
-    const { volume } = this.state
-    this.props.handleSettingStore(volume)
+    this.props.handleSettingStore(this.state)
   }
 
   render() {
     const { saveSuccess } = this.props
-    const { volume } = this.state
+    const { volume, openWithPlaying } = this.state
 
     return (
       <div className="petal-setting-main">
@@ -50,6 +56,14 @@ class Main extends Component {
           <Button>{volume + '%'}</Button>
           <Button icon="plus" onClick={this.handleVolumeUp} />
         </Button.Group>
+        <Header as="h5">其他设置: </Header>
+        <div>
+          <Checkbox
+            label="打开后自动播放"
+            onClick={this.handleOpenWithPlayingState}
+            checked={openWithPlaying}
+          />
+        </div>
         {saveSuccess && (
           <Message
             size="small"
@@ -76,20 +90,22 @@ Main.propTypes = {
   audioVolume: PropTypes.number.isRequired,
   saveSuccess: PropTypes.bool,
   handleSettingStore: PropTypes.func,
-  handleSaveSuccessReset: PropTypes.func
+  handleSaveSuccessReset: PropTypes.func,
+  settingOpenWithPlaying: PropTypes.bool
 }
 
 const mapStateToProps = state => {
   return {
     saveSuccess: state.settingReducer.saveSuccess,
-    audioVolume: state.settingReducer.volume
+    audioVolume: state.settingReducer.volume,
+    settingOpenWithPlaying: state.settingReducer.openWithPlaying
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     handleSaveSuccessReset: () => dispatch(settingSaveSuccessReset),
-    handleSettingStore: volume => dispatch(settingStore(volume))
+    handleSettingStore: state => dispatch(settingStore(state))
   }
 }
 

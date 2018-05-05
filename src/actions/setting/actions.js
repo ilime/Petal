@@ -7,7 +7,19 @@ const audioVolumeSet = volume => {
   }
 }
 
+const openWithPlayingSet = bool => {
+  return {
+    type: types.OPEN_WITH_PLAYING_SET,
+    openWithPlaying: bool
+  }
+}
+
 const settingSaveSuccess = { type: types.SETTING_SAVE_SUCCESS }
 const settingSaveSuccessReset = { type: types.SETTING_SAVE_SUCCESS_RESET }
 
-export { audioVolumeSet, settingSaveSuccess, settingSaveSuccessReset }
+export {
+  audioVolumeSet,
+  openWithPlayingSet,
+  settingSaveSuccess,
+  settingSaveSuccessReset
+}

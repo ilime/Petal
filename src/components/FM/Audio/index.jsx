@@ -13,6 +13,7 @@ import {
 class Audio extends Component {
   constructor(props) {
     super(props)
+    this.firstOpenWithPlayingChange = true
     this.state = {
       percent: 0
     }
@@ -114,7 +115,11 @@ class Audio extends Component {
       totalTime.textContent = this.formatTime(audio.duration)
     })
     audio.addEventListener('canplaythrough', () => {
-      audio.play()
+      if (!this.props.openWithPlaying && this.firstOpenWithPlayingChange) {
+        this.firstOpenWithPlayingChange = false
+      } else {
+        audio.play()
+      }
     })
     this.initVolume(audio)
     this.setVolume(this.props.audioVolume)
@@ -335,7 +340,8 @@ Audio.propTypes = {
   handlePlaytimeSet: PropTypes.func,
   lyricGlobalDisplay: PropTypes.bool,
   handleSongLyricGET: PropTypes.func,
-  handleUpdateSidSsid: PropTypes.func
+  handleUpdateSidSsid: PropTypes.func,
+  openWithPlaying: PropTypes.bool
 }
 
 const mapStateToProps = state => {
@@ -349,7 +355,8 @@ const mapStateToProps = state => {
     dailySong: state.fmReducer.daily.songs,
     // sheetSong: state.fmReducer.sheet,
     audioVolume: state.settingReducer.volume,
-    lyricGlobalDisplay: state.fmReducer.lyricDisplay
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay,
+    openWithPlaying: state.settingReducer.openWithPlaying
   }
 }
 

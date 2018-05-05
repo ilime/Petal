@@ -13,10 +13,10 @@ export class Sidebar extends Component {
       <nav className="petal-sidebar">
         <section className="petal-app-control">
           <div>
-            <span className="quit" onClick={appQuit} />
+            <span className="quit" onClick={appQuit} title="关闭" />
           </div>
           <div>
-            <span className="hide" onClick={appMinimize} />
+            <span className="hide" onClick={appMinimize} title="最小化" />
           </div>
         </section>
         <ul className="petal-sidebar-itemlist">

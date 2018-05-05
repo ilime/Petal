@@ -15,6 +15,7 @@ export const settingLoad = () => {
     db.findOne({ setting: 'normal' }, (err, doc) => {
       if (doc !== null) {
         dispatch(actions.audioVolumeSet(doc.volume))
+        dispatch(actions.openWithPlayingSet(doc.openWithPlaying))
       }
     })
   }
@@ -28,7 +29,7 @@ export const settingLoad = () => {
  *
  * @param {number} volume
  */
-export const settingStore = volume => {
+export const settingStore = state => {
   return dispatch => {
     db.findOne({ setting: 'normal' }, (err, doc) => {
       if (doc !== null) {
@@ -36,14 +37,16 @@ export const settingStore = volume => {
           { setting: 'normal' },
           {
             $set: {
-              volume
+              volume: state.volume,
+              openWithPlaying: state.openWithPlaying
             }
           },
           {},
           (err, numReplaced) => {
             if (err === null) {
               console.log('update setting: ' + numReplaced)
-              dispatch(actions.audioVolumeSet(volume))
+              dispatch(actions.audioVolumeSet(state.volume))
+              dispatch(actions.openWithPlayingSet(state.openWithPlaying))
               dispatch(actions.settingSaveSuccess)
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset)
@@ -55,12 +58,14 @@ export const settingStore = volume => {
         db.insert(
           {
             setting: 'normal',
-            volume
+            volume: state.volume,
+            openWithPlaying: state.openWithPlaying
           },
           (err, doc) => {
             if (err === null) {
               console.log(doc)
-              dispatch(actions.audioVolumeSet(volume))
+              dispatch(actions.audioVolumeSet(state.volume))
+              dispatch(actions.openWithPlayingSet(state.openWithPlaying))
               dispatch(actions.settingSaveSuccess)
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset)

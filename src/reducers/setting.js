@@ -6,6 +6,7 @@ const settingReducer = (
     mainVersion: 2,
     secondaryVersion: 7,
     volume: 20,
+    openWithPlaying: true,
     saveSuccess: false
   },
   action
@@ -15,6 +16,11 @@ const settingReducer = (
     (state, action) =>
       shallowCopy(state, {
         volume: action.volume
+      }),
+    types.OPEN_WITH_PLAYING_SET,
+    (state, action) =>
+      shallowCopy(state, {
+        openWithPlaying: action.openWithPlaying
       }),
     types.SETTING_SAVE_SUCCESS,
     state =>

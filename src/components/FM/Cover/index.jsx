@@ -18,8 +18,9 @@ import {
 class Cover extends Component {
   constructor(props) {
     super(props)
+    this.firstOpenWithPlayingChange = true
     this.state = {
-      playing: true,
+      playing: false,
       song: {
         title: '',
         singers: [
@@ -48,7 +49,15 @@ class Cover extends Component {
     const { _id, pattern, songListIndex, song } = nextProps
 
     if (pattern === 'select' && song !== this.props.song) {
-      this.setCover(song, pattern)
+      if (
+        this.props.openWithPlaying === false &&
+        this.firstOpenWithPlayingChange
+      ) {
+        this.firstOpenWithPlayingChange = false
+        this.setCover(song, pattern, false)
+      } else {
+        this.setCover(song, pattern)
+      }
       return
     }
 
@@ -114,15 +123,16 @@ class Cover extends Component {
    * @param {string} pattern
    * @memberof Cover
    */
-  setCover = (song, pattern) => {
+  setCover = (song, pattern, openWithPlaying = true) => {
     this.setState(
       {
-        playing: true,
+        playing: openWithPlaying ? true : false,
         song,
         love: pattern === 'redheart' ? 'red' : song.like === 1 ? 'red' : 'white'
       },
       () => {
         rendererProcessSend('touchBarRateColor', this.state.love)
+        rendererProcessSend('touchBarPauseAndStart', this.state.playing)
       }
     )
   }
@@ -533,7 +543,8 @@ Cover.propTypes = {
   handlePlaytimeSet: PropTypes.func,
   lyricGlobalDisplay: PropTypes.bool,
   handleSongLyricGET: PropTypes.func,
-  handleUpdateSidSsid: PropTypes.func
+  handleUpdateSidSsid: PropTypes.func,
+  openWithPlaying: PropTypes.bool
 }
 
 const mapStateToProps = state => {
@@ -546,7 +557,8 @@ const mapStateToProps = state => {
     dailySong: state.fmReducer.daily.songs,
     // sheetSong: state.fmReducer.sheet,
     songListIndex: state.fmReducer.songListIndex,
-    lyricGlobalDisplay: state.fmReducer.lyricDisplay
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay,
+    openWithPlaying: state.settingReducer.openWithPlaying
   }
 }
 
