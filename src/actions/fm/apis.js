@@ -11,7 +11,7 @@ const FM_ROOT_URL = 'https://api.douban.com/v2/fm' // Root Url
 // Fixed params for fm's operations
 const fixedParams = {
   apikey: '02f7751a55066bcb08e65f4eff134361',
-  version: 651,
+  version: 652,
   audio_patch_version: 4,
   app_name: 'radio_android',
   user_accept_play_third_party: 0,

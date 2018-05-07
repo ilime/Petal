@@ -230,7 +230,7 @@ class Extra extends Component {
                   link
                   name="download"
                   color="grey"
-                  title="下载歌曲"
+                  title={this.state.redheartAlreadyDownload ? '已下载' : '下载歌曲'}
                   onClick={this.downloadSong}
                 />
                 {this.state.redheartAlreadyDownload && (
