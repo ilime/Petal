@@ -118,6 +118,8 @@ export const authLoad = () => {
             db.remove({
               _id: 1
             })
+            dispatch(playlistGET('new'))
+            dispatch(appChannelGET())
           } else {
             dispatch(actions.authTokenLoad(doc))
 
