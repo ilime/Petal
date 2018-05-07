@@ -34,7 +34,13 @@ const prodConfig = merge(baseConfig, {
                   }
                 ],
                 '@babel/preset-react',
-                '@babel/preset-stage-2'
+                [
+                  '@babel/preset-stage-2',
+                  {
+                    useBuiltIns: true,
+                    decoratorsLegacy: true
+                  }
+                ]
               ],
               cacheDirectory: true
             }
