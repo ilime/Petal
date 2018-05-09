@@ -36,7 +36,8 @@
     "category": "Audio",
     "icon": "./icons",
     "target": [
-      "deb"
+      "deb",
+      "tar.gz"
     ]
   },
   "deb": {
