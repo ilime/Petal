@@ -53,7 +53,7 @@ const contextMenu = Menu.buildFromTemplate([
     label: '贴附到状态栏',
     type: 'checkbox',
     checked: false,
-    enabled: process.platform === 'win32' ? false : true,
+    enabled: (process.platform === 'win32' || process.platform === 'linux') ? false : true,
     click() {
       windowTopSwitch()
     }
