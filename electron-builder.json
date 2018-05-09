@@ -31,5 +31,15 @@
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true
+  },
+  "linux": {
+    "category": "Audio",
+    "icon": "./icons",
+    "target": [
+      "deb"
+    ]
+  },
+  "deb": {
+    "compression": "gz"
   }
 }
