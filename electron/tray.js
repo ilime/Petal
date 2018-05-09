@@ -12,6 +12,9 @@ const contextMenu = Menu.buildFromTemplate([
       mainWindow.show()
       contextMenu.items[0].enabled = false
       contextMenu.items[1].enabled = true
+      if (process.platform === 'linux') {
+        appIcon.setContextMenu(contextMenu)
+      }
     }
   },
   {
@@ -21,6 +24,9 @@ const contextMenu = Menu.buildFromTemplate([
       mainWindow.hide()
       contextMenu.items[0].enabled = true
       contextMenu.items[1].enabled = false
+      if (process.platform === 'linux') {
+        appIcon.setContextMenu(contextMenu)
+      }
     }
   },
   { type: 'separator' },
@@ -83,8 +89,10 @@ function windowTopSwitch() {
 export default function createTray() {
   if (process.platform === 'darwin') {
     appIcon = new Tray(`${resourcesFolder}osx/icon.png`)
-  } else if (process.platform == 'win32') {
+  } else if (process.platform === 'win32') {
     appIcon = new Tray(`${resourcesFolder}win/icon.ico`)
+  } else if (process.platform === 'linux') {
+    appIcon = new Tray(`${resourcesFolder}linux/icon.png`)
   }
   appIcon.setContextMenu(contextMenu)
 }
