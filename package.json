@@ -38,7 +38,7 @@
     "babel-loader": "^8.0.0-beta",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
-    "electron": "^2.0.0",
+    "electron": "1.8.6",
     "electron-builder": "^20.11.1",
     "electron-devtools-installer": "^2.2.4",
     "enzyme": "^3.2.0",
