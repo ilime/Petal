@@ -32,20 +32,20 @@ const contextMenu = Menu.buildFromTemplate([
   { type: 'separator' },
   {
     label: '红心',
-    click: (menuItem, browserWindow) => {
-      browserWindow.webContents.send('love')
+    click() {
+      mainWindow.webContents.send('love')
     }
   },
   {
     label: '跳过',
-    click: (menuItem, browserWindow) => {
-      browserWindow.webContents.send('skip')
+    click() {
+      mainWindow.webContents.send('skip')
     }
   },
   {
     label: '垃圾桶',
-    click: (menuItem, browserWindow) => {
-      browserWindow.webContents.send('trash')
+    click() {
+      mainWindow.webContents.send('trash')
     }
   },
   { type: 'separator' },
@@ -53,7 +53,10 @@ const contextMenu = Menu.buildFromTemplate([
     label: '贴附到状态栏',
     type: 'checkbox',
     checked: false,
-    enabled: (process.platform === 'win32' || process.platform === 'linux') ? false : true,
+    enabled:
+      process.platform === 'win32' || process.platform === 'linux'
+        ? false
+        : true,
     click() {
       windowTopSwitch()
     }

@@ -1,5 +1,7 @@
 import { app, Menu } from 'electron'
 
+import { mainWindow } from './win'
+
 const template = [
   {
     label: 'Edit',
@@ -32,43 +34,43 @@ const template = [
       {
         label: 'Pause',
         accelerator: 'Space',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('pause')
+        click() {
+          mainWindow.webContents.send('pause')
         }
       },
       {
         label: 'Love',
         accelerator: 'CmdOrCtrl+l',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('love')
+        click() {
+          mainWindow.webContents.send('love')
         }
       },
       {
         label: 'Skip',
         accelerator: 'CmdOrCtrl+k',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('skip')
+        click() {
+          mainWindow.webContents.send('skip')
         }
       },
       {
         label: 'Trash',
         accelerator: 'CmdOrCtrl+t',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('trash')
+        click() {
+          mainWindow.webContents.send('trash')
         }
       },
       {
         label: 'Forward',
         accelerator: 'CmdOrCtrl+Right',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('forward')
+        click() {
+          mainWindow.webContents.send('forward')
         }
       },
       {
         label: 'Backward',
         accelerator: 'CmdOrCtrl+Left',
-        click: (menuItem, browserWindow) => {
-          browserWindow.webContents.send('backward')
+        click() {
+          mainWindow.webContents.send('backward')
         }
       }
     ]
@@ -97,11 +99,7 @@ export default function createMenu() {
   if (process.platform === 'darwin') {
     template.unshift({
       label: app.getName(),
-      submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { role: 'quit' }
-      ]
+      submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }]
     })
   }
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
