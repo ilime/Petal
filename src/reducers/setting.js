@@ -4,7 +4,7 @@ import * as types from '../actions/setting/types'
 const settingReducer = (
   state = {
     mainVersion: 2,
-    secondaryVersion: 8,
+    secondaryVersion: 9,
     volume: 20,
     openWithPlaying: true,
     saveSuccess: false
