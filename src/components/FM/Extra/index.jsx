@@ -155,7 +155,7 @@ class Extra extends Component {
   }
 
   shareSong = () => {
-    let link
+    let link, albumtitle, picture
     const {
       pattern,
       song,
@@ -166,15 +166,37 @@ class Extra extends Component {
     } = this.props
     if (pattern === 'select') {
       link = song.release.link
+      albumtitle = song.albumtitle
+      picture = song.picture
     } else if (pattern === 'redheart') {
       link = redheartSong[songListIndex].release.link
+      albumtitle = redheartSong[songListIndex].albumtitle
+      picture = redheartSong[songListIndex].picture
     } else if (pattern === 'recent') {
       link = recentSong[songListIndex].release.link
+      albumtitle = recentSong[songListIndex].albumtitle
+      picture = recentSong[songListIndex].picture
     } else if (pattern === 'daily') {
       link = dailySong[songListIndex].release.link
+      albumtitle = dailySong[songListIndex].albumtitle
+      picture = dailySong[songListIndex].picture
     }
 
     copyToClipboard(link)
+    this.saveShare(albumtitle, link, picture)
+  }
+
+  saveShare = (title, link, picture) => {
+    db.insert(
+      {
+        albumtitle: title,
+        shareLink: link,
+        sharePicture: picture
+      },
+      (err, newDoc) => {
+        console.log('save share: ', newDoc)
+      }
+    )
   }
 
   handleSharePopupOpen = () => {
@@ -230,7 +252,9 @@ class Extra extends Component {
                   link
                   name="download"
                   color="grey"
-                  title={this.state.redheartAlreadyDownload ? '已下载' : '下载歌曲'}
+                  title={
+                    this.state.redheartAlreadyDownload ? '已下载' : '下载歌曲'
+                  }
                   onClick={this.downloadSong}
                 />
                 {this.state.redheartAlreadyDownload && (

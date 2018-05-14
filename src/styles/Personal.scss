@@ -15,11 +15,24 @@
   }
 }
 
-.petal-personal-downloads, .petal-personal-shares {
+.petal-personal-downloads,
+.petal-personal-shares {
   .close-page {
     position: absolute;
     right: 10px;
     top: 25px;
+  }
+}
+
+.petal-personal-shares {
+  .ui.tiny.image.album-picture {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .ui.items > .item > .content > .description {
+    width: 200px;
+    word-wrap: break-word;
   }
 }
 
@@ -49,6 +62,8 @@
   }
 }
 
-.petal-personal-songlist::-webkit-scrollbar {
+.petal-personal-songlist::-webkit-scrollbar,
+.petal-personal-downloads::-webkit-scrollbar,
+.petal-personal-shares::-webkit-scrollbar {
   display: none;
 }
