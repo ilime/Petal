@@ -2,10 +2,23 @@
 
 .petal-personal {
   padding: 5px 10px;
+  height: calc(100vh - 24px);
+  overflow-y: scroll;
 
   .ui.tiny.image.avatar-icon {
     width: 100px !important;
     height: 100px !important;
+  }
+
+  .operations {
+    margin-top: 0.5rem;
+  }
+}
+
+.petal-personal-downloads, .petal-personal-shares {
+  .close-page {
+    position: relative;
+    bottom: 44px;
   }
 }
 
