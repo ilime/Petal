@@ -57,11 +57,3 @@ export const songListTouchBar = new TouchBar([
   }),
   rateAndUnrate
 ])
-
-export function createTouchBar() {
-  if (process.platform === 'darwin') {
-    setTimeout(() => {
-      mainWindow.setTouchBar(playlistTouchBar)
-    }, 8000)
-  }
-}

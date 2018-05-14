@@ -3,7 +3,6 @@ import fs from 'fs'
 import { createWindow } from './win'
 import createMenu from './menu'
 import createTray from './tray'
-import { createTouchBar } from './touchbar'
 import './ipc'
 
 const createDB = () => {
@@ -29,10 +28,17 @@ function createMusicDir() {
 }
 
 app.on('ready', () => {
+  /* eslint-disable */
+  console.log('-------------------------------------')
+  console.log('Node version: ', process.versions.node)
+  console.log('Electron version: ', process.versions.electron)
+  console.log('Chrome version: ', process.versions.chrome)
+  console.log('-------------------------------------')
+  /* eslint-enable */
+
   createDB()
   createMusicDir()
   createWindow()
   createMenu()
   createTray()
-  createTouchBar()
 })
