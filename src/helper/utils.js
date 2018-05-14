@@ -15,4 +15,11 @@ function fileDownload(url, writePath, name, callback) {
   }
 }
 
-export { UserMusicPath, fileDownload }
+function removeFile(path) {
+  fs.unlink(path, err => {
+    if (err) throw err
+    console.log(path, ' was deleted.')
+  })
+}
+
+export { UserMusicPath, fileDownload, removeFile }
