@@ -17,6 +17,7 @@ const fmReducer = (
     recent: {}, // recent list
     redheart: [], // redheart list
     trash: {}, // trash list
+    refreshLoading: false,
     daily: {}, // daliy list
     sheet: [],
     playtime: '0.0'
@@ -80,6 +81,7 @@ const fmReducer = (
     types.RECENT_LIST,
     (state, action) =>
       shallowCopy(state, {
+        refreshLoading: false,
         recent: action.recent
       }),
     types.RECENT_EMPTY,
@@ -90,6 +92,7 @@ const fmReducer = (
     types.RED_HEART_LIST,
     (state, action) =>
       shallowCopy(state, {
+        refreshLoading: false,
         redheart: action.redheart
       }),
     types.RED_HEART_EMPTY,
@@ -100,12 +103,18 @@ const fmReducer = (
     types.TRASH_LIST,
     (state, action) =>
       shallowCopy(state, {
+        refreshLoading: false,
         trash: action.trash
       }),
     types.TRASH_EMPTY,
     state =>
       shallowCopy(state, {
         trash: {}
+      }),
+    types.SONGLIST_REFRESH_LOADING,
+    state =>
+      shallowCopy(state, {
+        refreshLoading: true
       }),
     types.SELECT_PATTERN,
     state =>

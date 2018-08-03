@@ -90,6 +90,10 @@ export const redHeartEmpty = () => {
   }
 }
 
+export const songlistRefreshLoading = {
+  type: types.SONGLIST_REFRESH_LOADING
+}
+
 export const trashList = trash => {
   return {
     type: types.TRASH_LIST,

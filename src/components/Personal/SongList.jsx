@@ -8,7 +8,9 @@ import {
   removeTrashSong,
   trashListGET,
   playLog,
-  songLyricGET
+  songLyricGET,
+  recentListGET,
+  redHeartListGET
 } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
@@ -64,9 +66,15 @@ class SongList extends Component {
 
       this.props.handleSongListIndexSet(index, pattern)
       if (pattern === 'recent') {
-        this.props.handleUpdateSidSsid(recentSong[index].sid, recentSong[index].ssid)
+        this.props.handleUpdateSidSsid(
+          recentSong[index].sid,
+          recentSong[index].ssid
+        )
       } else if (pattern === 'redheart') {
-        this.props.handleUpdateSidSsid(redheartSong[index].sid, redheartSong[index].ssid)
+        this.props.handleUpdateSidSsid(
+          redheartSong[index].sid,
+          redheartSong[index].ssid
+        )
       }
       this.handleLyricUpdated()
       rendererProcessSend('touchBarResetPause')
@@ -75,13 +83,40 @@ class SongList extends Component {
     }
   }
 
+  handleSonglistRefresh = () => {
+    console.log(123)
+    const type = this.props.type
+    switch (type) {
+      case 'recent':
+        this.props.handleRecentListGET()
+        break
+      case 'trash':
+        this.props.handleTrashListGET()
+        break
+      case 'redheart':
+        this.props.handleRedHeartListGET()
+        break
+      default:
+        break
+    }
+  }
+
   render() {
-    const { songArray, type } = this.props
+    const { songArray, type, songlistRefreshLoading } = this.props
     const title = typeRender[type]
 
     return (
       <article className="petal-personal-songlist">
         <Header as="h2">{title}</Header>
+        <Icon
+          className="refresh-button"
+          link
+          loading={songlistRefreshLoading}
+          color="grey"
+          name="refresh"
+          title="刷新"
+          onClick={this.handleSonglistRefresh}
+        />
         {songArray.length === 0 ? (
           <p>{tipRender[type]}</p>
         ) : (
@@ -163,7 +198,8 @@ const mapStateToProps = state => {
     recentSong: state.fmReducer.recent.songs,
     redheartSong: state.fmReducer.redheart,
     songListIndex: state.fmReducer.songListIndex,
-    lyricGlobalDisplay: state.fmReducer.lyricDisplay
+    lyricGlobalDisplay: state.fmReducer.lyricDisplay,
+    songlistRefreshLoading: state.fmReducer.refreshLoading
   }
 }
 
@@ -177,10 +213,13 @@ const mapDispatchToProps = dispatch => {
     handlePlayLog: (sid, type, play_source) =>
       dispatch(playLog(sid, type, play_source)),
     handleSongLyricGET: () => dispatch(songLyricGET()),
-    handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid))
+    handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid)),
+    handleRecentListGET: () => dispatch(recentListGET()),
+    handleRedHeartListGET: () => dispatch(redHeartListGET())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(SongList)
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SongList))

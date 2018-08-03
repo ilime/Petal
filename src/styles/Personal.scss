@@ -37,9 +37,16 @@
 }
 
 .petal-personal-songlist {
+  position: relative;
   padding: 5px 10px;
   height: calc(100vh - 24px);
   overflow-y: scroll;
+
+  .refresh-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
 
   .ui.unstackable.items {
     .item {
