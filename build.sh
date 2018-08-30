@@ -39,10 +39,7 @@ echo "Cooking Petal App... ^_^"
 yarn run dist
 
 # clear app/
-rm -r app/resources
-rm app/index.html
-rm app/*.css
-rm app/*.js
-rm app/*.map
+chmod +x ./clearapp.sh
+./clearapp.sh
 
 echo "--- Finish Build :) ---"

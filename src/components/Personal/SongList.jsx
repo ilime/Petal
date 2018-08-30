@@ -84,7 +84,6 @@ class SongList extends Component {
   }
 
   handleSonglistRefresh = () => {
-    console.log(123)
     const type = this.props.type
     switch (type) {
       case 'recent':
