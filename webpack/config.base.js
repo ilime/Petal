@@ -7,8 +7,7 @@ module.exports = {
       'react-dom',
       'semantic-ui-react',
       'redux',
-      'axios',
-      'moment'
+      'axios'
     ],
     app: './src/entry'
   },

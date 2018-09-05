@@ -1,5 +1,4 @@
 import axios from 'axios'
-import moment from 'moment'
 
 import * as actions from './actions'
 import {
@@ -79,7 +78,7 @@ export const authPost = (usernameAndPassword, callback) => {
           {
             _id: 1,
             userToken,
-            time: moment().valueOf()
+            time: new Date().getTime()
           },
           (err, doc) => {
             console.log(doc)
@@ -109,12 +108,13 @@ export const authLoad = () => {
       },
       (err, doc) => {
         if (doc !== null) {
-          let now = moment().valueOf()
-          let fromNow = moment(now).diff(doc.time, 'days')
+          const now = new Date().getTime()
+          const fromNow = now - doc.time
+          const fromNowDisplay = fromNow / (1000 * 60 * 60 * 24)
 
-          // remove user info when already logined 60 days
-          console.log('token storage time ' + fromNow + ' day(s)')
-          if (fromNow === 60) {
+          // remove user info when already logged 60 days
+          console.log('token storage time ' + fromNowDisplay + ' day(s)')
+          if (fromNow > 5184000000) {
             db.remove({
               _id: 1
             })
