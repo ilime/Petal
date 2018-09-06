@@ -1,5 +1,4 @@
 import axios from 'axios'
-import moment from 'moment'
 
 import * as actions from './actions'
 import { userInfo } from '../auth/actions'
@@ -349,6 +348,12 @@ const PLAY_LOG_URL =
  */
 export const playLog = (sid, type, play_source) => {
   return (dispatch, getState) => {
+    const tzOffset = new Date().getTimezoneOffset() * 60000
+    const time = new Date(Date.now() - tzOffset).toISOString()
+    const timeFormat = `${time.split('T')[0]} ${
+      time.split('T')[1].split('.')[0]
+    }`
+
     return axios(
       Object.assign(
         {
@@ -358,7 +363,7 @@ export const playLog = (sid, type, play_source) => {
             Object.assign(JSON.parse(JSON.stringify(fixedParams)), {
               records:
                 '[{"time":"' +
-                moment().format('YYYY-MM-DD HH:m:s') +
+                timeFormat +
                 '","play_mode":"o","sid":"' +
                 sid +
                 '","type":"' +
