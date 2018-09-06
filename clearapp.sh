@@ -4,3 +4,5 @@ rm app/index.html
 rm app/*.css
 rm app/*.js
 rm app/*.map
+rm -r app/node_modules
+rm app/yarn.lock
