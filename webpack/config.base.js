@@ -2,22 +2,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
-    vendor: [
-      'react',
-      'react-dom',
-      'semantic-ui-react',
-      'redux',
-      'axios'
-    ],
     app: './src/entry'
   },
   optimization: {
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
+        helper: {
+          test: /[\\/]src[\\/]helper[\\/]/,
+          minSize: 0
+        },
         commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
+          name: 'vendors',
           chunks: 'all'
+        },
+        reactVendor: {
+          test: module => /react/.test(module.context),
+          priority: 1
         }
       }
     },

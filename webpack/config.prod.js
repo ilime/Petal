@@ -2,6 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 const baseConfig = require('./config.base')
 const PROD_OUTPUT_PATH = path.resolve(__dirname, '../app')
 const SRC_PATH = path.resolve(__dirname, '../src')
@@ -58,7 +60,8 @@ const prodConfig = merge(baseConfig, {
     new MiniCssExtractPlugin({
       filename: `[name].${APP_SYMBOL}.css`
     }),
-    new webpack.HashedModuleIdsPlugin()
+    new webpack.HashedModuleIdsPlugin(),
+    new BundleAnalyzerPlugin()
   ]
 })
 
