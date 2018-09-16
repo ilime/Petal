@@ -35,15 +35,9 @@ const prodConfig = merge(baseConfig, {
                     modules: false
                   }
                 ],
-                '@babel/preset-react',
-                [
-                  '@babel/preset-stage-2',
-                  {
-                    useBuiltIns: true,
-                    decoratorsLegacy: true
-                  }
-                ]
+                '@babel/preset-react'
               ],
+              plugins: [require('@babel/plugin-proposal-class-properties')],
               cacheDirectory: true
             }
           }
