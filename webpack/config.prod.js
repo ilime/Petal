@@ -55,7 +55,9 @@ const prodConfig = merge(baseConfig, {
       filename: `[name].${APP_SYMBOL}.css`
     }),
     new webpack.HashedModuleIdsPlugin(),
-    new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static'
+    })
   ]
 })
 
