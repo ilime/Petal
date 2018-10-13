@@ -21,6 +21,11 @@ const createDB = () => {
 }
 
 function createMusicDir() {
+  // Patch for below
+  const musicDir = app.getPath('home') + '/Music'
+  if (!fs.existsSync(musicDir)) {
+    fs.mkdirSync(musicDir)
+  }
   const dir = app.getPath('music') + '/PETAL豆瓣FM'
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
