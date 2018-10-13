@@ -178,8 +178,7 @@ class Audio extends Component {
         let rangeLeft = rangeRect.left
         let rangeWidth = rangeRect.width
         let percent = Math.round(
-          (mousePositionX - rangeLeft - slider.offsetWidth / 2) /
-            rangeWidth *
+          ((mousePositionX - rangeLeft - slider.offsetWidth / 2) / rangeWidth) *
             100
         )
         if (percent > 100) {
@@ -209,7 +208,7 @@ class Audio extends Component {
         let currentTime = audio.currentTime
         currentTimeElement.textContent = this.formatTime(currentTime)
         this.setState({
-          percent: currentTime / audio.duration * 100
+          percent: (currentTime / audio.duration) * 100
         })
       }
     }
@@ -317,6 +316,12 @@ class Audio extends Component {
             <Icon name="volume up" />
           </div>
         </div>
+        {/* chrome 66: Autoplay Policy Changes */}
+        <iframe
+          src="./resources/silence.mp3"
+          allow="autoplay"
+          style={{ display: 'none' }}
+        />
         <audio id="_audio" preload="none" />
       </article>
     )
@@ -373,4 +378,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Audio)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Audio)
