@@ -1,5 +1,6 @@
 import { BrowserWindow } from 'electron'
 import url from 'url'
+import db from './db'
 
 export let mainWindow = null
 
@@ -36,6 +37,45 @@ export const createWindow = () => {
   }
 
   mainWindow.once('ready-to-show', () => {
+    setWindowPostionFromDB()
     mainWindow.show()
+  })
+}
+
+function getCurrentWindowPostion() {
+  return mainWindow.getPosition()
+}
+
+export function setWindowPostionFromDB() {
+  db.findOne({ setting: 'normal' }, (err, doc) => {
+    if (doc !== null) {
+      if (doc.restoreLastWinPos) {
+        db.findOne({ window: 'position' }, (err, doc) => {
+          if (doc != null) {
+            mainWindow.setPosition(doc.pos[0], doc.pos[1])
+          }
+        })
+      }
+    }
+  })
+}
+
+export function saveCurrentWindowPosition() {
+  db.findOne({ window: 'position' }, (err, doc) => {
+    if (doc !== null) {
+      db.update(
+        { window: 'position' },
+        {
+          $set: {
+            pos: getCurrentWindowPostion()
+          }
+        }
+      )
+    } else {
+      db.insert({
+        window: 'position',
+        pos: getCurrentWindowPostion()
+      })
+    }
   })
 }

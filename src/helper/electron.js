@@ -1,9 +1,4 @@
 import { shell, remote, ipcRenderer, clipboard } from 'electron'
-import db from './db'
-
-remote.app.on('before-quit', () => {
-  saveCurrentWindowPosition()
-})
 
 /**
  * Open url in default broswer.
@@ -28,38 +23,6 @@ export function appMinimize() {
 
 export function appQuit() {
   remote.app.quit()
-}
-
-function getCurrentWindowPostion() {
-  return remote.getCurrentWindow().getPosition()
-}
-
-export function setWindowPostionFromDB() {
-  db.findOne({ window: 'position' }, (err, doc) => {
-    if (doc != null) {
-      remote.getCurrentWindow().setPosition(doc.pos[0], doc.pos[1])
-    }
-  })
-}
-
-export function saveCurrentWindowPosition() {
-  db.findOne({ window: 'position' }, (err, doc) => {
-    if (doc !== null) {
-      db.update(
-        { window: 'position' },
-        {
-          $set: {
-            pos: getCurrentWindowPostion()
-          }
-        }
-      )
-    } else {
-      db.insert({
-        window: 'position',
-        pos: getCurrentWindowPostion()
-      })
-    }
-  })
 }
 
 export function isOnline(callback) {

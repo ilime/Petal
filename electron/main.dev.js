@@ -1,6 +1,6 @@
 import { app } from 'electron'
 import fs from 'fs'
-import { createWindow } from './win'
+import { createWindow, saveCurrentWindowPosition } from './win'
 import createMenu from './menu'
 import createTray from './tray'
 import './ipc'
@@ -46,4 +46,8 @@ app.on('ready', () => {
   createWindow()
   createMenu()
   createTray()
+})
+
+app.on('before-quit', () => {
+  saveCurrentWindowPosition()
 })

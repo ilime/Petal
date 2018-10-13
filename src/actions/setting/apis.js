@@ -1,7 +1,6 @@
 import * as actions from './actions'
 
 import db from '../../helper/db'
-import { setWindowPostionFromDB } from '../../helper/electron'
 
 /**
  * Deal with Loading user setting
@@ -18,9 +17,6 @@ export const settingLoad = () => {
         dispatch(actions.audioVolumeSet(doc.volume))
         dispatch(actions.openWithPlayingSet(doc.openWithPlaying))
         dispatch(actions.restoreLastWinPos(doc.restoreLastWinPos))
-        if (doc.restoreLastWinPos) {
-          setWindowPostionFromDB()
-        }
       }
     })
   }
