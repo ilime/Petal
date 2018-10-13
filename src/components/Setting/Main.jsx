@@ -10,7 +10,8 @@ class Main extends Component {
     super(props)
     this.state = {
       volume: this.props.audioVolume,
-      openWithPlaying: this.props.settingOpenWithPlaying
+      openWithPlaying: this.props.settingOpenWithPlaying,
+      restoreLastWinPos: this.props.settingRestoreLastWinPos
     }
   }
 
@@ -40,13 +41,19 @@ class Main extends Component {
     })
   }
 
+  handleRestorelastWinPosState = () => {
+    this.setState({
+      restoreLastWinPos: !this.state.restoreLastWinPos
+    })
+  }
+
   handleSettingStore = () => {
     this.props.handleSettingStore(this.state)
   }
 
   render() {
     const { saveSuccess } = this.props
-    const { volume, openWithPlaying } = this.state
+    const { volume, openWithPlaying, restoreLastWinPos } = this.state
 
     return (
       <div className="petal-setting-main">
@@ -58,11 +65,20 @@ class Main extends Component {
         </Button.Group>
         <Header as="h5">其他设置: </Header>
         <div>
-          <Checkbox
-            label="打开后自动播放"
-            onClick={this.handleOpenWithPlayingState}
-            checked={openWithPlaying}
-          />
+          <div>
+            <Checkbox
+              label="打开后自动播放"
+              onClick={this.handleOpenWithPlayingState}
+              checked={openWithPlaying}
+            />
+          </div>
+          <div>
+            <Checkbox
+              label="记住上次窗口位置"
+              onClick={this.handleRestorelastWinPosState}
+              checked={restoreLastWinPos}
+            />
+          </div>
         </div>
         {saveSuccess && (
           <Message
@@ -91,14 +107,16 @@ Main.propTypes = {
   saveSuccess: PropTypes.bool,
   handleSettingStore: PropTypes.func,
   handleSaveSuccessReset: PropTypes.func,
-  settingOpenWithPlaying: PropTypes.bool
+  settingOpenWithPlaying: PropTypes.bool,
+  settingRestoreLastWinPos: PropTypes.bool
 }
 
 const mapStateToProps = state => {
   return {
     saveSuccess: state.settingReducer.saveSuccess,
     audioVolume: state.settingReducer.volume,
-    settingOpenWithPlaying: state.settingReducer.openWithPlaying
+    settingOpenWithPlaying: state.settingReducer.openWithPlaying,
+    settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos
   }
 }
 
@@ -109,4 +127,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main)

@@ -14,12 +14,20 @@ const openWithPlayingSet = bool => {
   }
 }
 
+const restoreLastWinPos = bool => {
+  return {
+    type: types.RESTORE_LAST_WIN_POS,
+    restoreLastWinPos: bool
+  }
+}
+
 const settingSaveSuccess = { type: types.SETTING_SAVE_SUCCESS }
 const settingSaveSuccessReset = { type: types.SETTING_SAVE_SUCCESS_RESET }
 
 export {
   audioVolumeSet,
   openWithPlayingSet,
+  restoreLastWinPos,
   settingSaveSuccess,
   settingSaveSuccessReset
 }

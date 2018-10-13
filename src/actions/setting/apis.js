@@ -1,6 +1,7 @@
 import * as actions from './actions'
 
 import db from '../../helper/db'
+import { setWindowPostionFromDB } from '../../helper/electron'
 
 /**
  * Deal with Loading user setting
@@ -16,6 +17,10 @@ export const settingLoad = () => {
       if (doc !== null) {
         dispatch(actions.audioVolumeSet(doc.volume))
         dispatch(actions.openWithPlayingSet(doc.openWithPlaying))
+        dispatch(actions.restoreLastWinPos(doc.restoreLastWinPos))
+        if (doc.restoreLastWinPos) {
+          setWindowPostionFromDB()
+        }
       }
     })
   }
@@ -38,15 +43,19 @@ export const settingStore = state => {
           {
             $set: {
               volume: state.volume,
-              openWithPlaying: state.openWithPlaying
+              openWithPlaying: state.openWithPlaying,
+              restoreLastWinPos: state.restoreLastWinPos
             }
           },
-          {},
+          {
+            upsert: true
+          },
           (err, numReplaced) => {
             if (err === null) {
               console.log('update setting: ' + numReplaced)
               dispatch(actions.audioVolumeSet(state.volume))
               dispatch(actions.openWithPlayingSet(state.openWithPlaying))
+              dispatch(actions.restoreLastWinPos(state.restoreLastWinPos))
               dispatch(actions.settingSaveSuccess)
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset)
@@ -59,13 +68,15 @@ export const settingStore = state => {
           {
             setting: 'normal',
             volume: state.volume,
-            openWithPlaying: state.openWithPlaying
+            openWithPlaying: state.openWithPlaying,
+            restoreLastWinPos: state.restoreLastWinPos
           },
           (err, doc) => {
             if (err === null) {
               console.log(doc)
               dispatch(actions.audioVolumeSet(state.volume))
               dispatch(actions.openWithPlayingSet(state.openWithPlaying))
+              dispatch(actions.restoreLastWinPos(state.restoreLastWinPos))
               dispatch(actions.settingSaveSuccess)
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset)

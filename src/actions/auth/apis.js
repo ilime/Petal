@@ -17,7 +17,6 @@ import {
   appChannelGET,
   dailyListGET
 } from '../fm/apis'
-import { settingLoad } from '../setting/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 import { rendererProcessSend } from '../../helper/electron'
@@ -101,7 +100,6 @@ export const authPost = (usernameAndPassword, callback) => {
  */
 export const authLoad = () => {
   return dispatch => {
-    dispatch(settingLoad())
     db.findOne(
       {
         _id: 1

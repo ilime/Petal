@@ -15,10 +15,12 @@ import Pattern from '../Pattern/index'
 import Personal from '../Personal/index'
 import Sheet from '../Sheet/index'
 import About from '../About/index'
+import { settingLoad } from '../../actions/setting/apis'
 import { authLoad } from '../../actions/auth/apis'
 import {
   openInDefaultBrowser,
-  rendererProcessSend
+  rendererProcessSend,
+  saveCurrentWindowPosition
 } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
 import '../../styles/app.scss'
@@ -32,8 +34,13 @@ class Container extends Component {
     }
   }
 
+  componentWillMount() {
+    this.props.handleSettingLoad()
+  }
+
   componentDidMount() {
     window.onbeforeunload = () => {
+      saveCurrentWindowPosition()
       rendererProcessSend('reInitWindowSize')
     }
   }
@@ -104,19 +111,22 @@ class Container extends Component {
 Container.propTypes = {
   handleAuthLoad: PropTypes.func.isRequired,
   mainVersion: PropTypes.number.isRequired,
-  secondaryVersion: PropTypes.number.isRequired
+  secondaryVersion: PropTypes.number.isRequired,
+  restoreLastWinPos: PropTypes.bool
 }
 
 const mapStateToProps = state => {
   return {
     mainVersion: state.settingReducer.mainVersion,
-    secondaryVersion: state.settingReducer.secondaryVersion
+    secondaryVersion: state.settingReducer.secondaryVersion,
+    restoreLastWinPos: state.settingReducer.restoreLastWinPos
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleAuthLoad: () => dispatch(authLoad())
+    handleAuthLoad: () => dispatch(authLoad()),
+    handleSettingLoad: () => dispatch(settingLoad())
   }
 }
 
