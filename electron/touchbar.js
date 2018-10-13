@@ -3,11 +3,10 @@ import { mainWindow } from './win'
 
 const { TouchBarButton } = TouchBar
 
-const resourcesFolder = __dirname + '/resources/'
+export const resourcesFolder = __dirname + '/resources/'
 
 export const touchBarState = {
-  pause: false,
-  isRate: false
+  pattern: 0
 }
 
 export const pauseAndStart = new TouchBarButton({
@@ -24,36 +23,33 @@ export const rateAndUnrate = new TouchBarButton({
   }
 })
 
-export const playlistTouchBar = new TouchBar([
-  new TouchBarButton({
-    icon: `${resourcesFolder}trash.png`,
-    click() {
+export const trashOrBackward = new TouchBarButton({
+  icon: `${resourcesFolder}trash.png`,
+  click() {
+    if (touchBarState.pattern === 0) {
       mainWindow.webContents.send('trash')
     }
-  }),
-  pauseAndStart,
-  new TouchBarButton({
-    icon: `${resourcesFolder}skip.png`,
-    click() {
-      mainWindow.webContents.send('skip')
-    }
-  }),
-  rateAndUnrate
-])
-
-export const songListTouchBar = new TouchBar([
-  new TouchBarButton({
-    icon: `${resourcesFolder}backward.png`,
-    click() {
+    if (touchBarState.pattern === 1) {
       mainWindow.webContents.send('backward')
     }
-  }),
-  pauseAndStart,
-  new TouchBarButton({
-    icon: `${resourcesFolder}forward.png`,
-    click() {
+  }
+})
+
+export const skipOrForward = new TouchBarButton({
+  icon: `${resourcesFolder}backward.png`,
+  click() {
+    if (touchBarState.pattern === 0) {
+      mainWindow.webContents.send('skip')
+    }
+    if (touchBarState.pattern === 1) {
       mainWindow.webContents.send('forward')
     }
-  }),
+  }
+})
+
+export default new TouchBar([
+  trashOrBackward,
+  pauseAndStart,
+  skipOrForward,
   rateAndUnrate
 ])

@@ -47,6 +47,7 @@ class Container extends Component {
       checkUpdate(mainVersion, secondaryVersion, display =>
         this.setState({ checkUpdateDisplay: display })
       )
+      rendererProcessSend('setTouchBar')
     }, 5000)
   }
 

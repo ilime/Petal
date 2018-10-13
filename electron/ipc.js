@@ -1,53 +1,49 @@
 import { ipcMain } from 'electron'
 import { mainWindow } from './win'
-import * as tb from './touchbar'
+import t, {
+  resourcesFolder,
+  pauseAndStart,
+  rateAndUnrate,
+  trashOrBackward,
+  skipOrForward,
+  touchBarState
+} from './touchbar'
 
 ipcMain.on('touchBarPauseAndStart', (event, arg) => {
   if (arg === true) {
-    tb.pauseAndStart.icon = __dirname + '/resources/pause.png'
-    tb.touchBarState.pause = false
+    pauseAndStart.icon = `${resourcesFolder}pause.png`
   } else {
-    tb.pauseAndStart.icon = __dirname + '/resources/play.png'
-    tb.touchBarState.pause = true
+    pauseAndStart.icon = `${resourcesFolder}play.png`
   }
 })
 
 ipcMain.on('touchBarResetPause', () => {
-  tb.pauseAndStart.icon = __dirname + '/resources/pause.png'
-  tb.touchBarState.pause = false
+  pauseAndStart.icon = `${resourcesFolder}pause.png`
 })
 
 ipcMain.on('touchBarRateColor', (event, arg) => {
   if (arg === 'red') {
-    tb.touchBarState.isRate = true
-    tb.rateAndUnrate.icon = __dirname + '/resources/rate.png'
+    rateAndUnrate.icon = `${resourcesFolder}rate.png`
   }
 
   if (arg === 'white') {
-    tb.touchBarState.isRate = false
-    tb.rateAndUnrate.icon = __dirname + '/resources/unrate.png'
+    rateAndUnrate.icon = `${resourcesFolder}unrate.png`
   }
 })
 
 ipcMain.on('patternSwitch', (event, arg) => {
   switch (arg) {
     case 'select':
-      mainWindow.setTouchBar(tb.playlistTouchBar)
+      toPlaylist()
       break
     case 'recent':
-      mainWindow.setTouchBar(tb.songListTouchBar)
-      break
     case 'redheart':
-      mainWindow.setTouchBar(tb.songListTouchBar)
-      break
     case 'daily':
-      mainWindow.setTouchBar(tb.songListTouchBar)
+      // case 'sheet':
+      toSonglist()
       break
-    // case 'sheet':
-    //   mainWindow.setTouchBar(tb.songListTouchBar)
-    //   break
     default:
-      mainWindow.setTouchBar(tb.playlistTouchBar)
+      return
   }
 })
 
@@ -58,3 +54,19 @@ ipcMain.on('resizeWindowAfterLoading', () => {
 ipcMain.on('reInitWindowSize', () => {
   mainWindow.setSize(330, 330)
 })
+
+ipcMain.on('setTouchBar', () => {
+  mainWindow.setTouchBar(t)
+})
+
+function toPlaylist() {
+  touchBarState.pattern = 0
+  trashOrBackward.icon = `${resourcesFolder}trash.png`
+  skipOrForward.icon = `${resourcesFolder}skip.png`
+}
+
+function toSonglist() {
+  touchBarState.pattern = 1
+  trashOrBackward.icon = `${resourcesFolder}backward.png`
+  skipOrForward.icon = `${resourcesFolder}forward.png`
+}
