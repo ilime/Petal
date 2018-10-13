@@ -19,8 +19,7 @@ import { settingLoad } from '../../actions/setting/apis'
 import { authLoad } from '../../actions/auth/apis'
 import {
   openInDefaultBrowser,
-  rendererProcessSend,
-  saveCurrentWindowPosition
+  rendererProcessSend
 } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
 import '../../styles/app.scss'
@@ -40,7 +39,6 @@ class Container extends Component {
 
   componentDidMount() {
     window.onbeforeunload = () => {
-      saveCurrentWindowPosition()
       rendererProcessSend('reInitWindowSize')
     }
   }
@@ -111,15 +109,13 @@ class Container extends Component {
 Container.propTypes = {
   handleAuthLoad: PropTypes.func.isRequired,
   mainVersion: PropTypes.number.isRequired,
-  secondaryVersion: PropTypes.number.isRequired,
-  restoreLastWinPos: PropTypes.bool
+  secondaryVersion: PropTypes.number.isRequired
 }
 
 const mapStateToProps = state => {
   return {
     mainVersion: state.settingReducer.mainVersion,
     secondaryVersion: state.settingReducer.secondaryVersion,
-    restoreLastWinPos: state.settingReducer.restoreLastWinPos
   }
 }
 

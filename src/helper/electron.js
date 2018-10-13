@@ -1,6 +1,10 @@
 import { shell, remote, ipcRenderer, clipboard } from 'electron'
 import db from './db'
 
+remote.app.on('before-quit', () => {
+  saveCurrentWindowPosition()
+})
+
 /**
  * Open url in default broswer.
  *
