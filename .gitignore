@@ -1,6 +1,13 @@
 .DS_Store
+
 node_modules
-dist
+
+yarn-error.log
+
 bundle/*
 !bundle/resources
-yarn-error.log
+
+app/*
+!app/package.json
+
+dist
