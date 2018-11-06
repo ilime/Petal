@@ -8,8 +8,9 @@
 #   resources/
 #   package.json --- already exist
 #   index.html
-#   style.APP_SYMBOL.css
+#   app.APP_SYMBOL.css
 #   app.[chunkhash].APP_SYMBOL.js
+#   *.js
 #   main.js
 #   *.map
 
