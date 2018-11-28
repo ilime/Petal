@@ -54,7 +54,7 @@ export class Sidebar extends Component {
           {_id === 1 && (
             <li>
               <NavLink exact to="/trashList" activeClassName="selected">
-                <Icon name="trash outline" size="large" color="grey" />
+                <Icon name="trash alternate outline" size="large" color="grey" />
               </NavLink>
             </li>
           )}
