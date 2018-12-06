@@ -56,7 +56,8 @@ const prodConfig = merge(baseConfig, {
     }),
     new webpack.HashedModuleIdsPlugin(),
     new BundleAnalyzerPlugin({
-      analyzerMode: 'static'
+      analyzerMode: 'static',
+      openAnalyzer: false
     })
   ]
 })
