@@ -4,7 +4,7 @@ import { mainWindow } from './win'
 let appIcon = null
 const resourcesFolder = __dirname + '/resources/'
 
-const contextMenu = Menu.buildFromTemplate([
+export const contextMenu = Menu.buildFromTemplate([
   {
     label: '打开',
     enabled: false,

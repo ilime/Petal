@@ -1,5 +1,6 @@
-import { ipcMain } from 'electron'
+import { app, ipcMain } from 'electron'
 import { mainWindow } from './win'
+import { contextMenu } from './tray'
 import t, {
   resourcesFolder,
   pauseAndStart,
@@ -57,6 +58,16 @@ ipcMain.on('reInitWindowSize', () => {
 
 ipcMain.on('setTouchBar', () => {
   mainWindow.setTouchBar(t)
+})
+
+ipcMain.on('appQuit', () => {
+  if (process.platform === 'darwin') {
+    mainWindow.hide()
+    contextMenu.items[0].enabled = true
+    contextMenu.items[1].enabled = false
+  } else {
+    app.quit()
+  }
 })
 
 function toPlaylist() {

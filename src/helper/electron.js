@@ -22,7 +22,8 @@ export function appMinimize() {
 }
 
 export function appQuit() {
-  remote.app.quit()
+  // remote.app.quit()
+  rendererProcessSend('appQuit')
 }
 
 export function isOnline(callback) {
