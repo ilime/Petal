@@ -4,13 +4,122 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" href="../build/icon.ico">
+    <link rel="shortcut icon" href="./icon.ico" />
     <title>Petal: Douban.FM Client With Extra - - -</title>
   </head>
   <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      color: white;
+      background: black;
+      background: url(./petal-screenshot.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei",
+        "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+      font-weight: 600;
+    }
 
+    a {
+      color: pink;
+      text-decoration: none;
+    }
+
+    .container {
+      position: relative;
+      margin: 0 1rem;
+      padding: 1rem;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .logo-img {
+      width: 200px;
+      height: 200px;
+      animation: petal 10s linear infinite;
+    }
+
+    .download {
+      padding: 0.5rem 1rem;
+      color: white;
+      background: seagreen;
+      border: none;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    @keyframes petal {
+      from {
+        transform: rotate(0deg);
+        opacity: 0.6;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      to {
+        transform: rotate(360deg);
+        opacity: 0.6;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      .container {
+        background: black;
+        border: 3px solid seagreen;
+      }
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 1919px) {
+      .container {
+        left: 15%;
+        bottom: 12%;
+        background: black;
+        border: 3px solid seagreen;
+      }
+    }
+
+    @media screen and (min-width: 1920px) {
+      .container {
+        left: 13%;
+        bottom: 12%;
+      }
+    }
   </style>
   <body>
-    
+    <div class="container">
+      <img class="logo-img" src="./logo.png" alt="logo" />
+      <p>欢迎使用 Petal 。</p>
+      <p>
+        Petal 是一个使用了豆瓣FM移动端API构建的
+        <a href="https://douban.fm/" target="_blank">豆瓣FM</a> 的桌面版，
+      </p>
+      <p>继承了豆瓣FM移动端的部分功能。</p>
+      <p>
+        项目的代码托管在
+        <a href="https://github.com/ilime/Petal" target="_blank">GitHub</a>
+        上面。
+      </p>
+      <p>遵循MIT协议发布。</p>
+      <button class="download" onclick="openDownload()">
+        点击进入下载页面
+      </button>
+    </div>
   </body>
+
+  <script>
+    function openDownload() {
+      var win = window.open(
+        "https://github.com/ilime/Petal/releases",
+        "_blank"
+      );
+    }
+  </script>
 </html>
