@@ -1,3 +1,4 @@
+import './db'
 import { app } from 'electron'
 import fs from 'fs'
 import { createWindow, saveCurrentWindowPosition } from './win'

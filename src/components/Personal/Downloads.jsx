@@ -27,7 +27,7 @@ class Downloads extends Component {
   }
 
   loadDownloads = () => {
-    db.find({ artist: /.*/ }, (err, docs) => {
+    db.find({ usedFor: 'download' }, (err, docs) => {
       this.setState({
         downloads: docs
       })

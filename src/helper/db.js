@@ -1,9 +1,5 @@
-import Datastore from 'nedb'
 import { remote } from 'electron'
 
-const db = new Datastore({
-  filename: remote.app.getPath('home') + '/.petal.db',
-  autoload: true
-})
+const db = remote.getGlobal('db')
 
 export default db

@@ -26,7 +26,7 @@ class Shares extends Component {
   }
 
   loadShares = () => {
-    db.find({ albumtitle: /.*/ }, (err, docs) => {
+    db.find({ usedFor: 'share' }, (err, docs) => {
       this.setState({
         shares: docs
       })

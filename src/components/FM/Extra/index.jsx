@@ -139,7 +139,8 @@ class Extra extends Component {
         _id: sid,
         title,
         artist,
-        path: UserMusicPath + '/PETAL豆瓣FM/' + name
+        path: UserMusicPath + '/PETAL豆瓣FM/' + name,
+        usedFor: 'download'
       },
       () => {
         fileDownload(
@@ -191,7 +192,8 @@ class Extra extends Component {
       {
         albumtitle: title,
         shareLink: link,
-        sharePicture: picture
+        sharePicture: picture,
+        usedFor: 'share'
       },
       (err, newDoc) => {
         console.log('save share: ', newDoc)

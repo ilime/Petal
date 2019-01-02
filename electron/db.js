@@ -6,4 +6,6 @@ const db = new Datastore({
   autoload: true
 })
 
+global.db = db
+
 export default db
