@@ -60,7 +60,7 @@ export default class About extends Component {
               MIT
             </span>许可证。
           </p>
-          <p>Copyright (c) 2018 ilime。</p>
+          <p>Copyright (c) 2019 ilime。</p>
         </div>
       </div>
     )
