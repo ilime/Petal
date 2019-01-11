@@ -116,7 +116,8 @@ class Pattern extends Component {
             }
             onClick={() => this.handleAppChannelSetWrapper(-10)}
           >
-            <Icon name="leaf" />豆瓣精选 MHz
+            <Icon name="leaf" />
+            豆瓣精选 MHz
           </Button>
           {_id === 1 && (
             <Popup
@@ -126,7 +127,8 @@ class Pattern extends Component {
                   className={pattern === 'redheart' ? 'selected' : ''}
                   onClick={() => this.handleSwitchPattern('redheart')}
                 >
-                  <Icon name="heart" />红心
+                  <Icon name="heart" />
+                  红心
                 </Button>
               }
               content={'当前红心为空。'}
@@ -145,7 +147,8 @@ class Pattern extends Component {
                   className={pattern === 'recent' ? 'selected' : ''}
                   onClick={() => this.handleSwitchPattern('recent')}
                 >
-                  <Icon name="history" />最近收听
+                  <Icon name="history" />
+                  最近收听
                 </Button>
               }
               content={'当前最近收听为空。'}
@@ -164,19 +167,20 @@ class Pattern extends Component {
               }
               onClick={() => this.handleAppChannelSetWrapper(0)}
             >
-              <Image src={avatar} avatar />我的私人 MHz
+              <Image src={avatar} avatar />
+              我的私人 MHz
             </Button>
           )}
         </div>
         {channels.length > 0 &&
           channels.map(channel => {
-            return (
-              <div key={channel.group_name} style={{ marginTop: '10px' }}>
-                <Header as="h5" dividing>
-                  {channel.group_name}
-                </Header>
-                {channel.chls.length > 0 &&
-                  channel.chls.map(c => {
+            if (channel.chls.length > 0) {
+              return (
+                <div key={channel.group_name} style={{ marginTop: '10px' }}>
+                  <Header as="h5" dividing>
+                    {channel.group_name}
+                  </Header>
+                  {channel.chls.map(c => {
                     return (
                       <Button
                         key={c.name}
@@ -194,8 +198,9 @@ class Pattern extends Component {
                       </Button>
                     )
                   })}
-              </div>
-            )
+                </div>
+              )
+            }
           })}
       </article>
     )
@@ -240,4 +245,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pattern)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Pattern)

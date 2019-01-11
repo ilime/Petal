@@ -1,4 +1,4 @@
-import cond, { shallowCopy } from 'redux-cond'
+import cond, { shallowCopyHelper as _sch } from 'redux-cond'
 import * as types from '../actions/setting/types'
 
 const settingReducer = (
@@ -15,27 +15,27 @@ const settingReducer = (
   return cond(
     types.AUDIO_VOLUME_SET,
     (state, action) =>
-      shallowCopy(state, {
+      _sch(state, {
         volume: action.volume
       }),
     types.OPEN_WITH_PLAYING_SET,
     (state, action) =>
-      shallowCopy(state, {
+      _sch(state, {
         openWithPlaying: action.openWithPlaying
       }),
     types.RESTORE_LAST_WIN_POS,
     (state, action) =>
-      shallowCopy(state, {
+      _sch(state, {
         restoreLastWinPos: action.restoreLastWinPos
       }),
     types.SETTING_SAVE_SUCCESS,
     state =>
-      shallowCopy(state, {
+      _sch(state, {
         saveSuccess: true
       }),
     types.SETTING_SAVE_SUCCESS_RESET,
     state =>
-      shallowCopy(state, {
+      _sch(state, {
         saveSuccess: false
       })
   )(state, action)

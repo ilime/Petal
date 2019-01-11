@@ -1,5 +1,3 @@
-@import './common';
-
 .petal-pattern {
   padding: 5px 10px;
   height: calc(100vh - 24px);
@@ -11,6 +9,10 @@
     img {
       width: 14px !important;
       height: 14px !important;
+    }
+
+    &:hover {
+      color: $petal-green !important;
     }
   }
 

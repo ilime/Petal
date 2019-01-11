@@ -83,8 +83,8 @@ class Downloads extends Component {
           onCancel={this.handleCancel}
           onConfirm={this.handleConfirm}
           content="确认从下载中移除此歌曲？"
-          cancelButton={<Button negative>取消</Button>}
-          confirmButton={<Button positive>确认</Button>}
+          cancelButton={<Button size="tiny" negative>取消</Button>}
+          confirmButton={<Button size="tiny" positive>确认</Button>}
           size="mini"
         />
       </article>

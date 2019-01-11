@@ -1,4 +1,4 @@
-import cond, { shallowCopy } from 'redux-cond'
+import cond, { shallowCopyHelper as _sch } from 'redux-cond'
 import {
   AUTH_LOGIN_REQUEST,
   AUTH_LOGIN_RESPONSE,
@@ -23,45 +23,45 @@ const authReducer = (
   return cond(
     AUTH_LOGIN_REQUEST,
     state =>
-      shallowCopy(state, {
+      _sch(state, {
         isFetching: true
       }),
     AUTH_LOGIN_RESPONSE,
     (state, action) =>
-      shallowCopy(state, {
+      _sch(state, {
         isFetching: false,
         _id: action._id,
         userToken: action.userToken
       }),
     AUTH_LOGIN_FAIL,
     (state, action) =>
-      shallowCopy(state, {
+      _sch(state, {
         isFetching: false,
         loginFail: true,
         loginFailMessage: action.message
       }),
     AUTH_REMOVE_FAIL_MESSAGE,
     state =>
-      shallowCopy(state, {
+      _sch(state, {
         loginFail: false,
         loginFailMessage: ''
       }),
     AUTH_TOKEN_LOAD,
     state =>
-      shallowCopy(state, {
+      _sch(state, {
         _id: action._id,
         userToken: action.userToken
       }),
     AUTH_LOGOUT,
     state =>
-      shallowCopy(state, {
+      _sch(state, {
         _id: 0,
         userToken: {},
         userInfo: {}
       }),
     USER_INFO,
     (state, action) =>
-      shallowCopy(state, {
+      _sch(state, {
         userInfo: action.userInfo
       })
   )(state, action)

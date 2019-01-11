@@ -495,11 +495,11 @@ class Cover extends Component {
       <article className="petal-cover">
         <div className="info">
           <div className="title">
-            <Header as="h3">
+            <Header as="h3" title={song.title}>
               {song.title.length > 20
                 ? song.title.substring(0, 17) + '...'
                 : song.title}
-              <Header.Subheader>
+              <Header.Subheader title={song.artist}>
                 {song.artist.length > 20
                   ? song.artist.substring(0, 17) + '...'
                   : song.artist}

@@ -224,7 +224,7 @@ class Extra extends Component {
             <Icon
               className={lyricAreaDisplay ? 'item-active' : ''}
               link
-              name="rocket"
+              name="list alternate"
               color="grey"
               onClick={this.showLyric}
               title={lyricAreaDisplay ? '关闭歌词' : '打开歌词'}
