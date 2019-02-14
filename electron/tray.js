@@ -75,7 +75,7 @@ export const contextMenu = Menu.buildFromTemplate([
 function windowTopSwitch() {
   let appIconRect = appIcon.getBounds()
   let mainWindowRect = mainWindow.getBounds()
-  let currentItem = contextMenu.items[2]
+  let currentItem = contextMenu.items[7]
 
   if (currentItem.checked === true) {
     if (process.platform === 'darwin') {
