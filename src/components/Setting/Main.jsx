@@ -36,6 +36,7 @@ class Main extends Component {
   }
 
   handleOpenWithPlayingState = () => {
+    console.log(1)
     this.setState({
       openWithPlaying: !this.state.openWithPlaying
     })
@@ -68,14 +69,14 @@ class Main extends Component {
           <div>
             <Checkbox
               label="打开后自动播放"
-              onClick={this.handleOpenWithPlayingState}
+              onChange={this.handleOpenWithPlayingState}
               checked={openWithPlaying}
             />
           </div>
           <div>
             <Checkbox
               label="记住上次窗口位置"
-              onClick={this.handleRestorelastWinPosState}
+              onChange={this.handleRestorelastWinPosState}
               checked={restoreLastWinPos}
             />
           </div>
