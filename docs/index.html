@@ -17,11 +17,13 @@
       height: 100vh;
       color: white;
       background: black;
-      background: url(./petal-screenshot.png);
-      background-repeat: no-repeat;
+      background: url(./petal-screenshot.png) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
       background-size: cover;
-      font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei",
-        "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, 'Microsoft Yahei',
+        'Hiragino Sans GB', 'Heiti SC', 'WenQuanYi Micro Hei', sans-serif;
       font-weight: 600;
     }
 
@@ -116,10 +118,7 @@
 
   <script>
     function openDownload() {
-      var win = window.open(
-        "https://github.com/ilime/Petal/releases",
-        "_blank"
-      );
+      var win = window.open('https://github.com/ilime/Petal/releases', '_blank')
     }
   </script>
 </html>
