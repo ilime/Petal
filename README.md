@@ -14,7 +14,9 @@
 
 ## Screenshot
 
-![petal-screenshot.png](petal-screenshot.png)
+<p align="center">
+  <img src="petal-screenshot.png" alt="petal-screenshot.png" width="400">
+</p>
 
 ## Use it
 

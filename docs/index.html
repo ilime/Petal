@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="shortcut icon" href="./icon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Pacifico"
+      rel="stylesheet"
+    />
     <title>Petal: Douban.FM Client With Extra - - -</title>
   </head>
   <style>
@@ -14,17 +18,11 @@
       align-items: center;
       margin: 0;
       padding: 0;
-      height: 100vh;
-      color: white;
-      background: black;
-      background: url(./petal-screenshot.png) no-repeat center center fixed;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
+      color: #000;
+      background: #fff;
       font-family: 'Helvetica Neue', Helvetica, Arial, 'Microsoft Yahei',
         'Hiragino Sans GB', 'Heiti SC', 'WenQuanYi Micro Hei', sans-serif;
-      font-weight: 600;
+      font-family: 'Pacifico', cursive;
     }
 
     a {
@@ -34,25 +32,48 @@
 
     .container {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       margin: 0 1rem;
       padding: 1rem;
-      background: rgba(105, 89, 90, 0.7);
       border-radius: 5px;
       text-align: center;
     }
 
+    .container .screenshot {
+      width: 400px;
+    }
+    .container .screenshot img {
+      width: 100%;
+    }
+
+    .title {
+      margin-bottom: 0;
+    }
+    .subtitle {
+      font-size: 0.8rem;
+    }
+
+    #intro {
+      margin-top: 2rem;
+      height: 2rem;
+    }
+
     .logo-img {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       animation: petal 10s linear infinite;
     }
 
     .download {
+      margin-top: 2rem;
       padding: 0.5rem 1rem;
       color: white;
       background: seagreen;
       border: none;
-      font-weight: 600;
+      border-radius: 4px;
+      font-weight: bold;
       outline: none;
       cursor: pointer;
     }
@@ -73,51 +94,77 @@
       }
     }
 
-    @media screen and (max-width: 767px) {
-      .container {
-        border: 3px solid seagreen;
+    @media only screen and (max-width: 767px) {
+      .logo-img {
+        width: 120px;
+        height: 120px;
       }
-    }
 
-    @media screen and (min-width: 768px) and (max-width: 1919px) {
-      .container {
-        left: 15%;
-        bottom: 12%;
-        border: 3px solid seagreen;
-      }
-    }
-
-    @media screen and (min-width: 1920px) {
-      .container {
-        left: 13%;
-        bottom: 12%;
+      .container .screenshot {
+        width: 300px;
       }
     }
   </style>
   <body>
     <div class="container">
-      <img class="logo-img" src="./logo.png" alt="logo" />
-      <p>欢迎使用 Petal 。</p>
-      <p>
-        Petal 是一个使用了豆瓣FM移动端API构建的
-        <a href="https://douban.fm/" target="_blank">豆瓣FM</a> 的桌面版，
-      </p>
-      <p>继承了豆瓣FM移动端的部分功能。</p>
-      <p>
-        项目的代码托管在
-        <a href="https://github.com/ilime/Petal" target="_blank">GitHub</a>
-        上面。
-      </p>
-      <p>遵循MIT协议发布。</p>
-      <button class="download" onclick="openDownload()">
-        点击进入下载页面
-      </button>
+      <header>
+        <img class="logo-img" src="./logo.png" alt="logo" />
+      </header>
+      <h1 class="title">Petal</h1>
+      <span class="subtitle">Douban.FM Client With Extra - - -</span>
+      <div id="intro"></div>
+      <div id="intro-strings">
+        <p>欢迎使用 Petal 。</p>
+        <p>
+          Petal 是一个使用了豆瓣 FM 移动端 API
+        </p>
+        <p>
+          构建的<a href="https://douban.fm/" target="_blank">豆瓣 FM </a>
+          的桌面版。
+        </p>
+        <p>完成了豆瓣 FM 移动端的部分功能。</p>
+        <p>
+          项目的代码托管在<a
+            href="https://github.com/ilime/Petal"
+            target="_blank"
+          >
+            GitHub </a
+          >上面。
+        </p>
+        <p>遵循 MIT 协议发布。</p>
+      </div>
+      <div>
+        <button class="download" onclick="openDownload()">
+          点击下载
+        </button>
+      </div>
+      <div class="screenshot">
+        <img src="petal-screenshot.png" alt="petal-screenshot" />
+      </div>
+      <footer>
+        Create with ❤️ by
+        <img
+          style="width: 18px; vertical-align: sub;"
+          src="ilime.png"
+          alt="ilime"
+        />
+        。
+      </footer>
     </div>
   </body>
 
+  <script src="https://unpkg.com/typed.js@2.0.10/lib/typed.min.js"></script>
   <script>
     function openDownload() {
       var win = window.open('https://github.com/ilime/Petal/releases', '_blank')
     }
+
+    var typed = new Typed('#intro', {
+      stringsElement: '#intro-strings',
+      typeSpeed: 50,
+      backSpeed: 30,
+      loop: true,
+      showCursor: false
+    })
   </script>
 </html>
