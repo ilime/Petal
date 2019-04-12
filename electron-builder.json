@@ -43,8 +43,5 @@
     "category": "Audio",
     "icon": "./icons",
     "target": ["deb", "tar.gz"]
-  },
-  "deb": {
-    "compression": "gz"
   }
 }
