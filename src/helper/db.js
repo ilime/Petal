@@ -1,4 +1,4 @@
-import { remote } from 'electron'
+const { remote } = window.require('electron')
 
 const db = remote.getGlobal('db')
 

@@ -9,18 +9,14 @@ insert_final_newline = true
 indent_style = space
 indent_size = 2
 
-[*.{json}]
+[*.json]
 indent_style = space
 indent_size = 2
 
-[*.{html,pug}]
+[*.html]
 indent_style = space
 indent_size = 2
 
-[*.{css,scss}]
-indent_style = space
-indent_size = 2
-
-[{.babelrc}]
+[*.scss]
 indent_style = space
 indent_size = 2

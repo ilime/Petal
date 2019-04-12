@@ -1,6 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import checkUpdate from '../src/helper/updateCheck'
+import checkUpdate from '../helper/updateCheck'
 
 const mock = new MockAdapter(axios)
 

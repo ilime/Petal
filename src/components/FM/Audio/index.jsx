@@ -321,6 +321,7 @@ class Audio extends Component {
           src="./resources/silence.mp3"
           allow="autoplay"
           style={{ display: 'none' }}
+          title="slience"
         />
         <audio id="_audio" preload="none" />
       </article>

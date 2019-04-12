@@ -79,9 +79,6 @@ export class Sidebar extends Component {
               </NavLink>
             )}
           </li>
-          {/* <li>
-            <Icon name='cube' size='large' color='grey' link />
-          </li> */}
         </ul>
       </nav>
     )

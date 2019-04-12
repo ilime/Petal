@@ -200,6 +200,8 @@ class Pattern extends Component {
                   })}
                 </div>
               )
+            } else {
+              return <div />
             }
           })}
       </article>

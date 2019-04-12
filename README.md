@@ -1,11 +1,14 @@
 <p align="center">
-  <img src="build/icons/128x128.png" alt="Petal" />
+  <img src="assets/icons/128x128.png" alt="Petal" />
 </p>
 <h1 align="center">Petal</h1>
 <p align="center">
   <a href="https://travis-ci.org/ilime/Petal"><img src="https://travis-ci.org/ilime/Petal.svg?branch=dev" /></a>
   <img src="https://david-dm.org/ilime/Petal.svg" />
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
+  <img alt="David" src="https://img.shields.io/david/dev/ilime/Petal.svg">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/ilime/Petal.svg">
+  <img alt="GitHub Releases (by Release)" src="https://img.shields.io/github/downloads/ilime/Petal/v2.16.0/total.svg">
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
   <a href="https://gitter.im/ilime/Petal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
     <img src="https://badges.gitter.im/ilime/Petal.svg" alt="Gitter" />
   </a>
@@ -26,9 +29,11 @@ Go to [release page](https://github.com/ilime/Petal/releases)
 
 ```sh
 git clone git@github.com:ilime/Petal.git && cd Petal/
-yarn && yarn run bundle:dev+electron-dev && yarn run dev:hot
+yarn && yarn start
+
 // Open a new terminal
-yarn start
+yarn build:electron:dev
+yarn start:electron
 ```
 
 ## How to build

@@ -1,4 +1,4 @@
-import fmReducer from '../src/reducers/fm'
+import fmReducer from '../reducers/fm'
 
 const typeSpecs = [
   ['PLAYLIST_NEW_REQUEST', 'n'],

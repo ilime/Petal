@@ -1,9 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { NavLink } from 'react-router-dom'
-import { Sidebar } from '../src/components/Sidebar/index.jsx'
+import { Sidebar } from '../components/Sidebar/index.jsx'
 
 describe('<Sidebar />', () => {
+  window.require = jest.fn()
+
   const wrapper = shallow(<Sidebar _id={0} />)
   const withoutAuthRoutes = ['/', '/pattern', '/setting', '/about', '/login']
   const authRoutes = [

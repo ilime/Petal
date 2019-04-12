@@ -2,7 +2,7 @@
   "name": "Petal",
   "version": "2.16.0",
   "description": "Douban.FM Client With Extra - - -",
-  "main": "main.js",
   "author": "Yue Yang <g1enyy0ung@gmail.com> (http://g1eny0ung.site)",
-  "license": "MIT"
+  "license": "MIT",
+  "private": true
 }

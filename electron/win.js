@@ -10,14 +10,20 @@ export const createWindow = () => {
     height: 330,
     resizable: false,
     frame: false,
-    show: false
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      webSecurity: false
+    }
   })
 
   mainWindow.loadURL(
-    url.format({
-      pathname: __dirname + '/index.html',
-      protocol: 'file:'
-    })
+    process.env.NODE_ENV === 'development'
+      ? url.format('http://localhost:3000')
+      : url.format({
+          pathname: __dirname + '/index.html',
+          protocol: 'file:'
+        })
   )
 
   if (process.env.NODE_ENV === 'development') {

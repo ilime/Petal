@@ -8,10 +8,6 @@ import Downloads from './Downloads'
 import Shares from './Shares'
 
 class Personal extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     document.querySelector('.fm-region').style.display = 'none'
   }

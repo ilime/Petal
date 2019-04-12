@@ -1,6 +1,6 @@
 import http from 'http'
 import fs from 'fs'
-import { remote } from 'electron'
+const { remote } = window.require('electron')
 
 const UserMusicPath = remote.app.getPath('music')
 

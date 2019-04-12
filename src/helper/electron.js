@@ -1,4 +1,5 @@
-import { shell, remote, ipcRenderer, clipboard } from 'electron'
+const electron = window.require('electron')
+const { shell, remote, ipcRenderer, clipboard } = electron
 
 /**
  * Open url in default broswer.

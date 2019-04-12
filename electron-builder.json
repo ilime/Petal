@@ -1,4 +1,11 @@
 {
+  "directories": {
+    "buildResources": "assets"
+  },
+  "extraMetadata": {
+    "main": "build/main.js"
+  },
+  "extends": null,
   "appId": "org.ilime.petal",
   "mac": {
     "category": "public.app-category.music",
@@ -35,10 +42,7 @@
   "linux": {
     "category": "Audio",
     "icon": "./icons",
-    "target": [
-      "deb",
-      "tar.gz"
-    ]
+    "target": ["deb", "tar.gz"]
   },
   "deb": {
     "compression": "gz"
