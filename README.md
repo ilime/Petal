@@ -17,6 +17,8 @@
 
 ## Screenshot
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ilime/Petal.svg)](https://greenkeeper.io/)
+
 <p align="center">
   <img src="petal-screenshot.png" alt="petal-screenshot.png" width="400">
 </p>
