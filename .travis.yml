@@ -3,7 +3,7 @@ node_js:
   - "node"
 
 install:
-  - yarn --ignore-engines
+  - yarn
 
 script:
   - yarn test
