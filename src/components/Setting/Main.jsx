@@ -11,7 +11,8 @@ class Main extends Component {
     this.state = {
       volume: this.props.audioVolume,
       openWithPlaying: this.props.settingOpenWithPlaying,
-      restoreLastWinPos: this.props.settingRestoreLastWinPos
+      restoreLastWinPos: this.props.settingRestoreLastWinPos,
+      hideAbout: this.props.hideAbout
     }
   }
 
@@ -36,7 +37,6 @@ class Main extends Component {
   }
 
   handleOpenWithPlayingState = () => {
-    console.log(1)
     this.setState({
       openWithPlaying: !this.state.openWithPlaying
     })
@@ -48,13 +48,19 @@ class Main extends Component {
     })
   }
 
+  handleHideAbout = () => {
+    this.setState({
+      hideAbout: !this.state.hideAbout
+    })
+  }
+
   handleSettingStore = () => {
     this.props.handleSettingStore(this.state)
   }
 
   render() {
     const { saveSuccess } = this.props
-    const { volume, openWithPlaying, restoreLastWinPos } = this.state
+    const { volume, openWithPlaying, restoreLastWinPos, hideAbout } = this.state
 
     return (
       <div className="petal-setting-main">
@@ -78,6 +84,13 @@ class Main extends Component {
               label="记住上次窗口位置"
               onChange={this.handleRestorelastWinPosState}
               checked={restoreLastWinPos}
+            />
+          </div>
+          <div>
+            <Checkbox
+              label="隐藏关于界面"
+              onChange={this.handleHideAbout}
+              checked={hideAbout}
             />
           </div>
         </div>
@@ -109,7 +122,8 @@ Main.propTypes = {
   handleSettingStore: PropTypes.func,
   handleSaveSuccessReset: PropTypes.func,
   settingOpenWithPlaying: PropTypes.bool,
-  settingRestoreLastWinPos: PropTypes.bool
+  settingRestoreLastWinPos: PropTypes.bool,
+  hideAbout: PropTypes.bool
 }
 
 const mapStateToProps = state => {
@@ -117,7 +131,8 @@ const mapStateToProps = state => {
     saveSuccess: state.settingReducer.saveSuccess,
     audioVolume: state.settingReducer.volume,
     settingOpenWithPlaying: state.settingReducer.openWithPlaying,
-    settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos
+    settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos,
+    hideAbout: state.settingReducer.hideAbout
   }
 }
 

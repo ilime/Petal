@@ -8,6 +8,7 @@ const settingReducer = (
     volume: 20,
     openWithPlaying: true,
     restoreLastWinPos: false,
+    hideAbout: false,
     saveSuccess: false
   },
   action
@@ -27,6 +28,11 @@ const settingReducer = (
     (state, action) =>
       _sch(state, {
         restoreLastWinPos: action.restoreLastWinPos
+      }),
+    types.HIDE_ABOUT,
+    (state, action) =>
+      _sch(state, {
+        hideAbout: action.hideAbout
       }),
     types.SETTING_SAVE_SUCCESS,
     state =>

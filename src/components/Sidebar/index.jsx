@@ -7,7 +7,7 @@ import { appMinimize, appQuit } from '../../helper/electron'
 
 export class Sidebar extends Component {
   render() {
-    const { _id, avatar } = this.props
+    const { _id, avatar, hideAbout } = this.props
 
     return (
       <nav className="petal-sidebar">
@@ -54,7 +54,11 @@ export class Sidebar extends Component {
           {_id === 1 && (
             <li>
               <NavLink exact to="/trashList" activeClassName="selected">
-                <Icon name="trash alternate outline" size="large" color="grey" />
+                <Icon
+                  name="trash alternate outline"
+                  size="large"
+                  color="grey"
+                />
               </NavLink>
             </li>
           )}
@@ -63,11 +67,13 @@ export class Sidebar extends Component {
               <Icon name="setting" size="large" color="grey" />
             </NavLink>
           </li>
-          <li>
-            <NavLink exact to="/about" activeClassName="selected">
-              <Icon name="idea" size="large" color="grey" />
-            </NavLink>
-          </li>
+          {!hideAbout && (
+            <li>
+              <NavLink exact to="/about" activeClassName="selected">
+                <Icon name="idea" size="large" color="grey" />
+              </NavLink>
+            </li>
+          )}
           <li className="auth">
             {_id === 0 ? (
               <NavLink to="/login" activeClassName="selected">
@@ -87,14 +93,21 @@ export class Sidebar extends Component {
 
 Sidebar.propTypes = {
   _id: PropTypes.number.isRequired,
-  avatar: PropTypes.string
+  avatar: PropTypes.string,
+  hideAbout: PropTypes.bool
 }
 
 const mapStateToProps = state => {
   return {
     _id: state.authReducer._id,
-    avatar: state.authReducer.userInfo.icon
+    avatar: state.authReducer.userInfo.icon,
+    hideAbout: state.settingReducer.hideAbout
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(Sidebar))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    null
+  )(Sidebar)
+)
