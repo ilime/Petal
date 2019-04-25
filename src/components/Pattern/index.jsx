@@ -201,7 +201,7 @@ class Pattern extends Component {
                 </div>
               )
             } else {
-              return <div />
+              return null
             }
           })}
       </article>

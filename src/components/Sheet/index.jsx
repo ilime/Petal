@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Header, Item, Image } from 'semantic-ui-react'
+import { Header, Item } from 'semantic-ui-react'
 import { songLyricGET } from '../../actions/fm/apis'
 import { dailyPattern } from '../../actions/fm/actions'
 import { rendererProcessSend } from '../../helper/electron'
