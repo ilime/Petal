@@ -54,10 +54,7 @@ class Sheet extends Component {
               />
               <Item.Content>
                 <Item.Header>{daily.title}</Item.Header>
-                <Item.Meta>
-                  <Image avatar src={daily.creator.picture} />{' '}
-                  {daily.creator.name}
-                </Item.Meta>
+                <Item.Meta>由{daily.creator.name}创建</Item.Meta>
                 <Item.Description>{daily.description}</Item.Description>
               </Item.Content>
             </Item>
@@ -96,4 +93,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sheet)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Sheet)
