@@ -9442,10 +9442,10 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
-redux-cond@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/redux-cond/-/redux-cond-1.1.4.tgz#c06e2d637088da1d93780cbda18234b395a5139b"
-  integrity sha512-VZYril4K6YQG0mCtU6k6ro8rYOnIELy5mYIsyj3JJNlb1fQhcPrcvtWMfNEPFI1GIR3ZMIXW6seHWqqXstGxDg==
+redux-cond@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/redux-cond/-/redux-cond-1.1.5.tgz#2e03d8a0eb315c45973ab09103ea76514e5deff3"
+  integrity sha512-hsVuPd9xR9E6ckyBQCjFSZbJnMa3VBL4hYJuh1OJjitA7GvvgIKiaUud7/7AaTTMH1qrLybW1YNahZtxwy6XUg==
 
 redux-logger@^3.0.6:
   version "3.0.6"
