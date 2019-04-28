@@ -38,9 +38,6 @@
     "build:electron:prod": "cross-env NODE_ENV=production webpack --config webpack/config.electron.js --progress",
     "dist:electron": "electron-builder"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
