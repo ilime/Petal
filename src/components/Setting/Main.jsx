@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Header, Message, Button, Checkbox } from 'semantic-ui-react'
+import { Button, Checkbox, Header, Message, Select } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { settingSaveSuccessReset } from '../../actions/setting/actions'
 import { settingStore } from '../../actions/setting/apis'
@@ -12,7 +12,8 @@ class Main extends Component {
       volume: this.props.audioVolume,
       openWithPlaying: this.props.settingOpenWithPlaying,
       restoreLastWinPos: this.props.settingRestoreLastWinPos,
-      hideAbout: this.props.hideAbout
+      hideAbout: this.props.hideAbout,
+      openPattern: this.props.openPattern
     }
   }
 
@@ -54,13 +55,30 @@ class Main extends Component {
     })
   }
 
+  handleSelectInitialPattern = (e, data) => {
+    this.setState({
+      openPattern: data.value
+    })
+  }
+
   handleSettingStore = () => {
     this.props.handleSettingStore(this.state)
   }
 
   render() {
-    const { saveSuccess } = this.props
-    const { volume, openWithPlaying, restoreLastWinPos, hideAbout } = this.state
+    const { _id, saveSuccess } = this.props
+    const {
+      volume,
+      openWithPlaying,
+      restoreLastWinPos,
+      hideAbout,
+      openPattern
+    } = this.state
+
+    const patternOptions = [
+      { key: 'select', text: '豆瓣精选 MHz', value: 'select' },
+      { key: 'personal', text: '我的私人 MHz', value: 'personal' }
+    ]
 
     return (
       <div className="petal-setting-main">
@@ -70,7 +88,7 @@ class Main extends Component {
           <Button>{volume + '%'}</Button>
           <Button icon="plus" onClick={this.handleVolumeUp} />
         </Button.Group>
-        <Header as="h5">其他设置: </Header>
+        <Header as="h5">播放设置：</Header>
         <div>
           <div>
             <Checkbox
@@ -79,6 +97,19 @@ class Main extends Component {
               checked={openWithPlaying}
             />
           </div>
+          {_id === 1 && (
+            <div>
+              <div style={{ margin: '8px 0' }}>初始模式：</div>
+              <Select
+                value={openPattern}
+                options={patternOptions}
+                onChange={this.handleSelectInitialPattern}
+              />
+            </div>
+          )}
+        </div>
+        <Header as="h5">其他设置: </Header>
+        <div>
           <div>
             <Checkbox
               label="记住上次窗口位置"
@@ -117,21 +148,25 @@ class Main extends Component {
 }
 
 Main.propTypes = {
+  _id: PropTypes.number.isRequired,
   audioVolume: PropTypes.number.isRequired,
   saveSuccess: PropTypes.bool,
   handleSettingStore: PropTypes.func,
   handleSaveSuccessReset: PropTypes.func,
   settingOpenWithPlaying: PropTypes.bool,
   settingRestoreLastWinPos: PropTypes.bool,
-  hideAbout: PropTypes.bool
+  hideAbout: PropTypes.bool,
+  openPattern: PropTypes.string
 }
 
 const mapStateToProps = state => ({
+  _id: state.authReducer._id,
   saveSuccess: state.settingReducer.saveSuccess,
   audioVolume: state.settingReducer.volume,
   settingOpenWithPlaying: state.settingReducer.openWithPlaying,
   settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos,
-  hideAbout: state.settingReducer.hideAbout
+  hideAbout: state.settingReducer.hideAbout,
+  openPattern: state.settingReducer.openPattern
 })
 
 const mapDispatchToProps = dispatch => ({

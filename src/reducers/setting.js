@@ -9,6 +9,7 @@ const settingReducer = (
     openWithPlaying: true,
     restoreLastWinPos: false,
     hideAbout: false,
+    openPattern: 'select',
     saveSuccess: false
   },
   action
@@ -33,6 +34,11 @@ const settingReducer = (
     (state, action) =>
       _sch(state, {
         hideAbout: action.hideAbout
+      }),
+    types.OPEN_PATTERN,
+    (state, action) =>
+      _sch(state, {
+        openPattern: action.openPattern
       }),
     types.SETTING_SAVE_SUCCESS,
     state =>

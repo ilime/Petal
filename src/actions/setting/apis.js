@@ -21,6 +21,7 @@ export const settingLoad = () => {
         dispatch(actions.openWithPlayingSet(doc.openWithPlaying || true))
         dispatch(actions.restoreLastWinPosSet(doc.restoreLastWinPos || false))
         dispatch(actions.hideAboutSet(doc.hideAbout || false))
+        dispatch(actions.openPatternSet(doc.openPattern || 'select'))
       }
     })
   }
@@ -48,7 +49,8 @@ export const settingStore = state => {
               volume: state.volume,
               openWithPlaying: state.openWithPlaying,
               restoreLastWinPos: state.restoreLastWinPos,
-              hideAbout: state.hideAbout
+              hideAbout: state.hideAbout,
+              openPattern: state.openPattern
             }
           },
           {
@@ -61,6 +63,7 @@ export const settingStore = state => {
               dispatch(actions.openWithPlayingSet(state.openWithPlaying))
               dispatch(actions.restoreLastWinPosSet(state.restoreLastWinPos))
               dispatch(actions.hideAboutSet(state.hideAbout))
+              dispatch(actions.openPatternSet(state.openPattern))
               dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset())
@@ -75,7 +78,8 @@ export const settingStore = state => {
             volume: state.volume,
             openWithPlaying: state.openWithPlaying,
             restoreLastWinPos: state.restoreLastWinPos,
-            hideAbout: state.hideAbout
+            hideAbout: state.hideAbout,
+            openPattern: state.openPattern
           },
           (err, doc) => {
             if (err === null) {
@@ -84,6 +88,7 @@ export const settingStore = state => {
               dispatch(actions.openWithPlayingSet(state.openWithPlaying))
               dispatch(actions.restoreLastWinPosSet(state.restoreLastWinPos))
               dispatch(actions.hideAboutSet(state.hideAbout))
+              dispatch(actions.openPatternSet(state.openPattern))
               dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset())

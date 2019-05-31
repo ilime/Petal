@@ -41,6 +41,8 @@ const playlistTypes = {
   end: actions.playlistEndRequest
 }
 
+let alreadySetOpenPattern = false
+
 // Playlist url without type and sid
 const playlistOriginUrl =
   FM_ROOT_URL +
@@ -94,6 +96,17 @@ export const playlistGET = (type, callback = null) => {
       dispatch(actions.playlistLoading())
     }
     dispatch(playlistTypes[type]()) // dispatch action according playlistTypes
+
+    if (
+      !alreadySetOpenPattern &&
+      type === 'new' &&
+      getState().authReducer._id === 1 &&
+      getState().settingReducer.openPattern === 'personal'
+    ) {
+      dispatch(actions.appChannelSet(0))
+    }
+    alreadySetOpenPattern = true
+
     axios(
       Object.assign(
         {

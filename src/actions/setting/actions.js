@@ -20,6 +20,11 @@ const hideAboutSet = bool => ({
   hideAbout: bool
 })
 
+const openPatternSet = pattern => ({
+  type: types.OPEN_PATTERN,
+  openPattern: pattern
+})
+
 const settingSaveSuccess = () => ({ type: types.SETTING_SAVE_SUCCESS })
 const settingSaveSuccessReset = () => ({
   type: types.SETTING_SAVE_SUCCESS_RESET
@@ -30,6 +35,7 @@ export {
   openWithPlayingSet,
   restoreLastWinPosSet,
   hideAboutSet,
+  openPatternSet,
   settingSaveSuccess,
   settingSaveSuccessReset
 }
