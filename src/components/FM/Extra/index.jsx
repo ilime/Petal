@@ -33,7 +33,7 @@ class Extra extends Component {
       if (this.scrollId) {
         clearInterval(this.scrollId)
         this.scrollId = 0
-        console.log('scroll end and clear id(skip)')
+        console.log('Scroll end and clear id (skip)')
         this.resetScroll()
       }
       this.setState(
@@ -95,7 +95,7 @@ class Extra extends Component {
     let index = 0
 
     const scroll = () => {
-      console.log('scroll begin')
+      console.log('Scroll begin')
       this.scrollId = setInterval(() => {
         let time = lyric.lyricArr[index][0]
         let currentTime = audio.currentTime
@@ -112,7 +112,7 @@ class Extra extends Component {
         if (index === lyric.lyricArr.length) {
           clearInterval(this.scrollId)
           this.scrollId = 0
-          console.log('scroll end normally')
+          console.log('Scroll end normally')
         }
       }, 1000)
     }
@@ -196,7 +196,7 @@ class Extra extends Component {
         usedFor: 'share'
       },
       (err, newDoc) => {
-        console.log('save share: ', newDoc)
+        console.log('Save share: ', newDoc)
       }
     )
   }
@@ -298,26 +298,22 @@ Extra.propTypes = {
   songListIndex: PropTypes.number
 }
 
-function mapStateToProps(state) {
-  return {
-    lyric: state.fmReducer.lyric,
-    sid: state.fmReducer.sid,
-    song: state.fmReducer.song,
-    pattern: state.fmReducer.pattern,
-    redheartSong: state.fmReducer.redheart,
-    recentSong: state.fmReducer.recent.songs,
-    dailySong: state.fmReducer.daily.songs,
-    songListIndex: state.fmReducer.songListIndex
-  }
-}
+const mapStateToProps = state => ({
+  lyric: state.fmReducer.lyric,
+  sid: state.fmReducer.sid,
+  song: state.fmReducer.song,
+  pattern: state.fmReducer.pattern,
+  redheartSong: state.fmReducer.redheart,
+  recentSong: state.fmReducer.recent.songs,
+  dailySong: state.fmReducer.daily.songs,
+  songListIndex: state.fmReducer.songListIndex
+})
 
-function mapDispatchToProps(dispatch) {
-  return {
-    handleSongLyricGET: () => dispatch(songLyricGET()),
-    handleGlobalLyricDisplayTrue: () => dispatch(lyricDisplayTrue),
-    handleGlobalLyricDisplayFalse: () => dispatch(lyricDisplayFalse)
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  handleSongLyricGET: () => dispatch(songLyricGET()),
+  handleGlobalLyricDisplayTrue: () => dispatch(lyricDisplayTrue()),
+  handleGlobalLyricDisplayFalse: () => dispatch(lyricDisplayFalse())
+})
 
 export default connect(
   mapStateToProps,

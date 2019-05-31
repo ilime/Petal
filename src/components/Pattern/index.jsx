@@ -223,29 +223,25 @@ Pattern.propTypes = {
   handleSongLyricGET: PropTypes.func
 }
 
-const mapStateToProps = state => {
-  return {
-    _id: state.authReducer._id,
-    avatar: state.authReducer.userInfo.icon,
-    pattern: state.fmReducer.pattern,
-    channelId: state.fmReducer.channelId,
-    channels: state.fmReducer.channels,
-    recentSong: state.fmReducer.recent.songs,
-    redheartSong: state.fmReducer.redheart,
-    lyricGlobalDisplay: state.fmReducer.lyricDisplay
-  }
-}
+const mapStateToProps = state => ({
+  _id: state.authReducer._id,
+  avatar: state.authReducer.userInfo.icon,
+  pattern: state.fmReducer.pattern,
+  channelId: state.fmReducer.channelId,
+  channels: state.fmReducer.channels,
+  recentSong: state.fmReducer.recent.songs,
+  redheartSong: state.fmReducer.redheart,
+  lyricGlobalDisplay: state.fmReducer.lyricDisplay
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    switchToSelect: () => dispatch(selectPattern),
-    switchToRecent: () => dispatch(recentPattern),
-    switchToRedheart: () => dispatch(redheartPattern),
-    getPlaylist: (type, callback) => dispatch(playlistGET(type, callback)),
-    handleAppChannelSet: id => dispatch(appChannelSet(id)),
-    handleSongLyricGET: () => dispatch(songLyricGET())
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  switchToSelect: () => dispatch(selectPattern()),
+  switchToRecent: () => dispatch(recentPattern()),
+  switchToRedheart: () => dispatch(redheartPattern()),
+  getPlaylist: (type, callback) => dispatch(playlistGET(type, callback)),
+  handleAppChannelSet: id => dispatch(appChannelSet(id)),
+  handleSongLyricGET: () => dispatch(songLyricGET())
+})
 
 export default connect(
   mapStateToProps,

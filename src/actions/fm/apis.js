@@ -210,7 +210,7 @@ const recentOriginUrl =
 
 export const recentListGET = () => {
   return (dispatch, getState) => {
-    dispatch(actions.songlistRefreshLoading)
+    dispatch(actions.songlistRefreshLoading())
     return axios(
       Object.assign(
         {
@@ -242,7 +242,7 @@ const redHeartSidsOriginUrl =
 
 export const redHeartListGET = () => {
   return (dispatch, getState) => {
-    dispatch(actions.songlistRefreshLoading)
+    dispatch(actions.songlistRefreshLoading())
     return axios(
       Object.assign(
         {
@@ -304,7 +304,7 @@ const trashOriginUrl =
 
 export const trashListGET = () => {
   return (dispatch, getState) => {
-    dispatch(actions.songlistRefreshLoading)
+    dispatch(actions.songlistRefreshLoading())
     return axios(
       Object.assign(
         {

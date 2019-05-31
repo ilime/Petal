@@ -126,22 +126,18 @@ Main.propTypes = {
   hideAbout: PropTypes.bool
 }
 
-const mapStateToProps = state => {
-  return {
-    saveSuccess: state.settingReducer.saveSuccess,
-    audioVolume: state.settingReducer.volume,
-    settingOpenWithPlaying: state.settingReducer.openWithPlaying,
-    settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos,
-    hideAbout: state.settingReducer.hideAbout
-  }
-}
+const mapStateToProps = state => ({
+  saveSuccess: state.settingReducer.saveSuccess,
+  audioVolume: state.settingReducer.volume,
+  settingOpenWithPlaying: state.settingReducer.openWithPlaying,
+  settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos,
+  hideAbout: state.settingReducer.hideAbout
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleSaveSuccessReset: () => dispatch(settingSaveSuccessReset),
-    handleSettingStore: state => dispatch(settingStore(state))
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  handleSaveSuccessReset: () => dispatch(settingSaveSuccessReset()),
+  handleSettingStore: state => dispatch(settingStore(state))
+})
 
 export default connect(
   mapStateToProps,

@@ -191,32 +191,28 @@ SongList.propTypes = {
   handleUpdateSidSsid: PropTypes.func
 }
 
-const mapStateToProps = state => {
-  return {
-    pattern: state.fmReducer.pattern,
-    recentSong: state.fmReducer.recent.songs,
-    redheartSong: state.fmReducer.redheart,
-    songListIndex: state.fmReducer.songListIndex,
-    lyricGlobalDisplay: state.fmReducer.lyricDisplay,
-    songlistRefreshLoading: state.fmReducer.refreshLoading
-  }
-}
+const mapStateToProps = state => ({
+  pattern: state.fmReducer.pattern,
+  recentSong: state.fmReducer.recent.songs,
+  redheartSong: state.fmReducer.redheart,
+  songListIndex: state.fmReducer.songListIndex,
+  lyricGlobalDisplay: state.fmReducer.lyricDisplay,
+  songlistRefreshLoading: state.fmReducer.refreshLoading
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleSongListIndexSet: (index, pattern) =>
-      dispatch(songListIndexSet(index, pattern)),
-    handleRemoveTrashSong: (sid, callback) =>
-      dispatch(removeTrashSong(sid, callback)),
-    handleTrashListGET: () => dispatch(trashListGET()),
-    handlePlayLog: (sid, type, play_source) =>
-      dispatch(playLog(sid, type, play_source)),
-    handleSongLyricGET: () => dispatch(songLyricGET()),
-    handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid)),
-    handleRecentListGET: () => dispatch(recentListGET()),
-    handleRedHeartListGET: () => dispatch(redHeartListGET())
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  handleSongListIndexSet: (index, pattern) =>
+    dispatch(songListIndexSet(index, pattern)),
+  handleRemoveTrashSong: (sid, callback) =>
+    dispatch(removeTrashSong(sid, callback)),
+  handleTrashListGET: () => dispatch(trashListGET()),
+  handlePlayLog: (sid, type, play_source) =>
+    dispatch(playLog(sid, type, play_source)),
+  handleSongLyricGET: () => dispatch(songLyricGET()),
+  handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid)),
+  handleRecentListGET: () => dispatch(recentListGET()),
+  handleRedHeartListGET: () => dispatch(redHeartListGET())
+})
 
 export default connect(
   mapStateToProps,

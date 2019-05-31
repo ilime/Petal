@@ -23,10 +23,11 @@ Trash.propTypes = {
   trash: PropTypes.array.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    trash: state.fmReducer.trash.songs
-  }
-}
+const mapStateToProps = state => ({
+  trash: state.fmReducer.trash.songs
+})
 
-export default connect(mapStateToProps, null)(Trash)
+export default connect(
+  mapStateToProps,
+  null
+)(Trash)

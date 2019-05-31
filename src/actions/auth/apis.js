@@ -61,7 +61,7 @@ export const authPost = (usernameAndPassword, callback) => {
           douban_user_name: data.douban_user_name
         }
         dispatch(actions.authLoginResponse(userToken))
-        dispatch(selectPattern)
+        dispatch(selectPattern())
         rendererProcessSend('touchBarResetPause')
         rendererProcessSend('patternSwitch', 'select')
         dispatch(playlistGET('new'))
@@ -159,7 +159,7 @@ export const authRemove = (dispatch, callback) => {
         callback()
       }
       dispatch(actions.authLogout())
-      dispatch(selectPattern)
+      dispatch(selectPattern())
       rendererProcessSend('touchBarResetPause')
       rendererProcessSend('patternSwitch', 'select')
       dispatch(playlistGET('new'))

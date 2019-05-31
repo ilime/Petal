@@ -112,19 +112,15 @@ Container.propTypes = {
   secondaryVersion: PropTypes.number.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    mainVersion: state.settingReducer.mainVersion,
-    secondaryVersion: state.settingReducer.secondaryVersion,
-  }
-}
+const mapStateToProps = state => ({
+  mainVersion: state.settingReducer.mainVersion,
+  secondaryVersion: state.settingReducer.secondaryVersion
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleAuthLoad: () => dispatch(authLoad()),
-    handleSettingLoad: () => dispatch(settingLoad())
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  handleAuthLoad: () => dispatch(authLoad()),
+  handleSettingLoad: () => dispatch(settingLoad())
+})
 
 export default connect(
   mapStateToProps,

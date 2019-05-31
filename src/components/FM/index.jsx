@@ -38,10 +38,11 @@ FM.propTypes = {
   isFetching: PropTypes.bool.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    isFetching: state.fmReducer.isFetching
-  }
-}
+const mapStateToProps = state => ({
+  isFetching: state.fmReducer.isFetching
+})
 
-export default connect(mapStateToProps, null)(FM)
+export default connect(
+  mapStateToProps,
+  null
+)(FM)

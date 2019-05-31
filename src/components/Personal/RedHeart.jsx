@@ -23,10 +23,11 @@ RedHeart.propTypes = {
   redheart: PropTypes.array.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    redheart: state.fmReducer.redheart
-  }
-}
+const mapStateToProps = state => ({
+  redheart: state.fmReducer.redheart
+})
 
-export default connect(mapStateToProps, null)(RedHeart)
+export default connect(
+  mapStateToProps,
+  null
+)(RedHeart)

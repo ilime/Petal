@@ -74,16 +74,15 @@ Personal.propTypes = {
   handleAuthRemove: PropTypes.func
 }
 
-const mapStateToProps = state => {
-  return {
-    userInfo: state.authReducer.userInfo
-  }
-}
+const mapStateToProps = state => ({
+  userInfo: state.authReducer.userInfo
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleAuthRemove: callback => authRemove(dispatch, callback)
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  handleAuthRemove: callback => authRemove(dispatch, callback)
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Personal)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Personal)

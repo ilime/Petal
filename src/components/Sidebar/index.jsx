@@ -97,13 +97,11 @@ Sidebar.propTypes = {
   hideAbout: PropTypes.bool
 }
 
-const mapStateToProps = state => {
-  return {
-    _id: state.authReducer._id,
-    avatar: state.authReducer.userInfo.icon,
-    hideAbout: state.settingReducer.hideAbout
-  }
-}
+const mapStateToProps = state => ({
+  _id: state.authReducer._id,
+  avatar: state.authReducer.userInfo.icon,
+  hideAbout: state.settingReducer.hideAbout
+})
 
 export default withRouter(
   connect(

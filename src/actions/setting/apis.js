@@ -61,9 +61,9 @@ export const settingStore = state => {
               dispatch(actions.openWithPlayingSet(state.openWithPlaying))
               dispatch(actions.restoreLastWinPosSet(state.restoreLastWinPos))
               dispatch(actions.hideAboutSet(state.hideAbout))
-              dispatch(actions.settingSaveSuccess)
+              dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
-                dispatch(actions.settingSaveSuccessReset)
+                dispatch(actions.settingSaveSuccessReset())
               }, 3000)
             }
           }
@@ -84,9 +84,9 @@ export const settingStore = state => {
               dispatch(actions.openWithPlayingSet(state.openWithPlaying))
               dispatch(actions.restoreLastWinPosSet(state.restoreLastWinPos))
               dispatch(actions.hideAboutSet(state.hideAbout))
-              dispatch(actions.settingSaveSuccess)
+              dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
-                dispatch(actions.settingSaveSuccessReset)
+                dispatch(actions.settingSaveSuccessReset())
               }, 3000)
             }
           }

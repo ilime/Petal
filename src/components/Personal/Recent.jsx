@@ -23,10 +23,11 @@ Recent.propTypes = {
   recent: PropTypes.array.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    recent: state.fmReducer.recent.songs
-  }
-}
+const mapStateToProps = state => ({
+  recent: state.fmReducer.recent.songs
+})
 
-export default connect(mapStateToProps, null)(Recent)
+export default connect(
+  mapStateToProps,
+  null
+)(Recent)

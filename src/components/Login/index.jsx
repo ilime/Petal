@@ -115,21 +115,20 @@ Login.propTypes = {
   handleRemoveLoginFailMessage: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    isFetching: state.authReducer.isFetching,
-    loginFail: state.authReducer.loginFail,
-    loginFailMessage: state.authReducer.loginFailMessage
-  }
-}
+const mapStateToProps = state => ({
+  isFetching: state.authReducer.isFetching,
+  loginFail: state.authReducer.loginFail,
+  loginFailMessage: state.authReducer.loginFailMessage
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleAuthPost: (usernameAndPassword, callback) =>
-      dispatch(authPost(usernameAndPassword, callback)),
-    handleAuthLoginFail: message => dispatch(authLoginFail(message)),
-    handleRemoveLoginFailMessage: () => dispatch(authRemoveFailMessage)
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  handleAuthPost: (usernameAndPassword, callback) =>
+    dispatch(authPost(usernameAndPassword, callback)),
+  handleAuthLoginFail: message => dispatch(authLoginFail(message)),
+  handleRemoveLoginFailMessage: () => dispatch(authRemoveFailMessage())
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)
