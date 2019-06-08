@@ -9,15 +9,15 @@ const FM_ROOT_URL = 'https://api.douban.com/v2/fm' // Root Url
 
 // Fixed params for fm's operations
 const fixedParams = {
-  apikey: '02f7751a55066bcb08e65f4eff134361',
-  version: 652,
-  audio_patch_version: 4,
   app_name: 'radio_android',
+  apikey: '02f7751a55066bcb08e65f4eff134361',
   user_accept_play_third_party: 0,
   client:
-    's%3Amobile%7Cv%3A4.6.11%7Cy%3Aandroid+7.1.1%7Cf%3A651%7Cm%3AXiaomi%7Cd%3Acf9aed3a0bc54032661c6f84d220b1f28d3722ec%7Ce%3Axiaomi_mi_6',
-  udid: 'cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
-  push_device_id: '3ec7f0336d3a0e6db6b07b9f9a2c1f304f3ef154'
+    's%3Amobile%7Cv%3A5.0.1%7Cy%3Aandroid+9%7Cf%3A654%7Cm%3AXiaomi%7Cd%3Aa57dd2f934f5911582ac34b2256c265287c62377%7Ce%3Axiaomi_mi_9',
+  udid: 'a57dd2f934f5911582ac34b2256c265287c62377',
+  version: 654,
+  push_device_id: '8654eb9b2854da9684f9a62a8b2505dd57074b70',
+  audio_patch_version: 4
 }
 
 /**
