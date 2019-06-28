@@ -3,5 +3,6 @@
     "default": {
       "packages": ["package.json"]
     }
-  }
+  },
+  "ignore": ["electron"]
 }
