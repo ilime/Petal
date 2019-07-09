@@ -1,4 +1,4 @@
-echo "Build start ..."
+echo "Start building..."
 
 # yarn build:electron:prod && yarn build
 if [[ ! -e app/build/index.html ]]
