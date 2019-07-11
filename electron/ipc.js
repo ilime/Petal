@@ -1,6 +1,11 @@
 import { app, ipcMain } from 'electron'
 import { mainWindow } from './win'
-import { contextMenu } from './tray'
+import {
+  appIcon,
+  osxContextMenu,
+  appIconTypeInOSX,
+  setAppIconTypeInOSX
+} from './tray'
 import t, {
   resourcesFolder,
   pauseAndStart,
@@ -10,7 +15,7 @@ import t, {
   touchBarState
 } from './touchbar'
 
-ipcMain.on('touchBarPauseAndStart', (event, arg) => {
+ipcMain.on('touchBarPauseAndStart', (_, arg) => {
   if (arg === true) {
     pauseAndStart.icon = `${resourcesFolder}pause.png`
   } else {
@@ -18,11 +23,33 @@ ipcMain.on('touchBarPauseAndStart', (event, arg) => {
   }
 })
 
+ipcMain.on('appIconPauseAndStart', (_, arg) => {
+  if (process.platform !== 'darwin') {
+    return
+  }
+
+  let status = ''
+
+  if (arg.pattern === 'select') {
+    setAppIconTypeInOSX('normal')
+  } else {
+    setAppIconTypeInOSX('list')
+  }
+
+  if (!arg.playing) {
+    status = '-pause'
+  }
+
+  appIcon.setImage(
+    `${resourcesFolder}osx/icon-${appIconTypeInOSX}${status}.png`
+  )
+})
+
 ipcMain.on('touchBarResetPause', () => {
   pauseAndStart.icon = `${resourcesFolder}pause.png`
 })
 
-ipcMain.on('touchBarRateColor', (event, arg) => {
+ipcMain.on('touchBarRateColor', (_, arg) => {
   if (arg === 'red') {
     rateAndUnrate.icon = `${resourcesFolder}rate.png`
   }
@@ -32,16 +59,24 @@ ipcMain.on('touchBarRateColor', (event, arg) => {
   }
 })
 
-ipcMain.on('patternSwitch', (event, arg) => {
+ipcMain.on('patternSwitch', (_, arg) => {
   switch (arg) {
     case 'select':
       toPlaylist()
+      if (process.platform === 'darwin') {
+        setAppIconTypeInOSX('normal')
+        appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}.png`)
+      }
       break
     case 'recent':
     case 'redheart':
     case 'daily':
       // case 'sheet':
       toSonglist()
+      if (process.platform === 'darwin') {
+        setAppIconTypeInOSX('list')
+        appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}.png`)
+      }
       break
     default:
       return
@@ -63,8 +98,8 @@ ipcMain.on('setTouchBar', () => {
 ipcMain.on('appQuit', () => {
   if (process.platform === 'darwin') {
     mainWindow.hide()
-    contextMenu.items[0].enabled = true
-    contextMenu.items[1].enabled = false
+    osxContextMenu.items[0].enabled = true
+    osxContextMenu.items[1].enabled = false
   } else {
     app.quit()
   }

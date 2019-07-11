@@ -133,6 +133,10 @@ class Cover extends Component {
       () => {
         rendererProcessSend('touchBarRateColor', this.state.love)
         rendererProcessSend('touchBarPauseAndStart', this.state.playing)
+        rendererProcessSend('appIconPauseAndStart', {
+          playing: this.state.playing,
+          pattern
+        })
       }
     )
   }
@@ -151,11 +155,19 @@ class Cover extends Component {
       audio.play()
       this.setState({ playing: true }, () => {
         rendererProcessSend('touchBarPauseAndStart', this.state.playing)
+        rendererProcessSend('appIconPauseAndStart', {
+          playing: this.state.playing,
+          pattern: this.props.pattern
+        })
       })
     } else {
       audio.pause()
       this.setState({ playing: false }, () => {
         rendererProcessSend('touchBarPauseAndStart', this.state.playing)
+        rendererProcessSend('appIconPauseAndStart', {
+          playing: this.state.playing,
+          pattern: this.props.pattern
+        })
       })
     }
   }
