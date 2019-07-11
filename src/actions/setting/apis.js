@@ -17,8 +17,9 @@ export const settingLoad = () => {
   return dispatch => {
     db.findOne({ setting: 'normal' }, (err, doc) => {
       if (doc !== null) {
+        console.log('Petal Setting:', doc)
         dispatch(actions.audioVolumeSet(doc.volume))
-        dispatch(actions.openWithPlayingSet(doc.openWithPlaying || true))
+        dispatch(actions.openWithPlayingSet(doc.openWithPlaying ? true : false))
         dispatch(actions.restoreLastWinPosSet(doc.restoreLastWinPos || false))
         dispatch(actions.hideAboutSet(doc.hideAbout || false))
         dispatch(actions.openPatternSet(doc.openPattern || 'select'))
