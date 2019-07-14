@@ -47,9 +47,6 @@ export const skipOrForward = new TouchBarButton({
   }
 })
 
-export default new TouchBar([
-  trashOrBackward,
-  pauseAndStart,
-  skipOrForward,
-  rateAndUnrate
-])
+export default new TouchBar({
+  items: [trashOrBackward, pauseAndStart, skipOrForward, rateAndUnrate]
+})
