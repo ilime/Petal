@@ -24,10 +24,10 @@
 
 > g1enyy0ung/petal 项目原作者 @g1enyy0ung 缺少时间单独维护 Petal。 rapiz1/petal 将继续维护
 
-## Todo List
--[ ] Fix: Linux 下窗口装饰显示不正确
--[ ] Feature: 可调整窗口大小，自适应布局
--[ ] Feature: Linux 下与 DE 通信
+## TO-DO
+- [ ] Fix: Linux 下窗口装饰显示不正确
+- [ ] Feature: 可调整窗口大小，自适应布局
+- [ ] Feature: Linux 下与 DE 通信
 
 ## Screenshot
 
