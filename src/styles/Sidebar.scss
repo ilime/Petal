@@ -40,6 +40,7 @@
         bottom: 0;
         right: 0;
         top: 0;
+        text-align: center;
       }
     }
   }
@@ -49,10 +50,18 @@
 
     &:hover {
       &:before {
-        position: relative;
+        display: block;
+        position: absolute;
         content: '–';
-        left: 1px;
-        bottom: 5px;
+        line-height: 10px;
+        height: 10px;
+        width : 10px;
+        font-size: 10px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        text-align: center;
       }
     }
   }
