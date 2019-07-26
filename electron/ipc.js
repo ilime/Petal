@@ -1,11 +1,6 @@
 import { app, ipcMain } from 'electron'
-import { mainWindow } from './win'
-import {
-  appIcon,
-  osxContextMenu,
-  appIconTypeInOSX,
-  setAppIconTypeInOSX
-} from './tray'
+import { mainWindow, backgroundWindow } from './win'
+import Tray from './tray'
 import t, {
   resourcesFolder,
   pauseAndStart,
@@ -14,6 +9,17 @@ import t, {
   skipOrForward,
   touchBarState
 } from './touchbar'
+
+dispatchMsgBgToMain('trayCtrlPause', 'pause')
+dispatchMsgBgToMain('trayCtrlLove', 'love')
+dispatchMsgBgToMain('trayCtrlTrash', 'trash')
+dispatchMsgBgToMain('trayCtrlSkip', 'skip')
+dispatchMsgBgToMain('trayCtrlForward', 'forward')
+dispatchMsgBgToMain('trayCtrlBackward', 'backward')
+
+ipcMain.on('trayDraw', (_, arg) => {
+  Tray.setTrayImage(arg)
+})
 
 ipcMain.on('touchBarPauseAndStart', (_, arg) => {
   if (arg === true) {
@@ -27,35 +33,23 @@ ipcMain.on('appIconPauseAndStart', (_, arg) => {
   if (process.platform !== 'darwin') {
     return
   }
-
-  let status = ''
-
-  if (arg.pattern === 'select') {
-    setAppIconTypeInOSX('normal')
-  } else {
-    setAppIconTypeInOSX('list')
-  }
-
-  if (!arg.playing) {
-    status = '-pause'
-  }
-
-  appIcon.setImage(
-    `${resourcesFolder}osx/icon-${appIconTypeInOSX}${status}.png`
-  )
+  backgroundWindow.webContents.send('trayPauseAndStart', arg)
 })
 
 ipcMain.on('touchBarResetPause', () => {
   pauseAndStart.icon = `${resourcesFolder}pause.png`
+  backgroundWindow.webContents.send('trayPauseAndStart', true)
 })
 
 ipcMain.on('touchBarRateColor', (_, arg) => {
   if (arg === 'red') {
     rateAndUnrate.icon = `${resourcesFolder}rate.png`
+    backgroundWindow.webContents.send('trayRateAndUnrate', true)
   }
 
   if (arg === 'white') {
     rateAndUnrate.icon = `${resourcesFolder}unrate.png`
+    backgroundWindow.webContents.send('trayRateAndUnrate', false)
   }
 })
 
@@ -63,20 +57,14 @@ ipcMain.on('patternSwitch', (_, arg) => {
   switch (arg) {
     case 'select':
       toPlaylist()
-      if (process.platform === 'darwin') {
-        setAppIconTypeInOSX('normal')
-        appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}.png`)
-      }
+      backgroundWindow.webContents.send('trayPlaylistPattern')
       break
     case 'recent':
     case 'redheart':
     case 'daily':
       // case 'sheet':
       toSonglist()
-      if (process.platform === 'darwin') {
-        setAppIconTypeInOSX('list')
-        appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}.png`)
-      }
+      backgroundWindow.webContents.send('traySonglistPattern')
       break
     default:
       return
@@ -91,15 +79,16 @@ ipcMain.on('reInitWindowSize', () => {
   mainWindow.setSize(330, 330)
 })
 
-ipcMain.on('setTouchBar', () => {
+ipcMain.on('mainWindowReady', () => {
   mainWindow.setTouchBar(t)
+  backgroundWindow.webContents.send('trayShow')
 })
 
 ipcMain.on('appQuit', () => {
   if (process.platform === 'darwin') {
     mainWindow.hide()
-    osxContextMenu.items[0].enabled = true
-    osxContextMenu.items[1].enabled = false
+    Tray.osxContextMenu.items[0].enabled = true
+    Tray.osxContextMenu.items[1].enabled = false
   } else {
     app.quit()
   }
@@ -115,4 +104,10 @@ function toSonglist() {
   touchBarState.pattern = 1
   trashOrBackward.icon = `${resourcesFolder}backward.png`
   skipOrForward.icon = `${resourcesFolder}forward.png`
+}
+
+function dispatchMsgBgToMain(channelBg, channelMain) {
+  ipcMain.on(channelBg, () => {
+    mainWindow.webContents.send(channelMain)
+  })
 }

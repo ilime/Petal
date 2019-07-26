@@ -3,7 +3,7 @@ import { app } from 'electron'
 import fs from 'fs'
 import { createWindow, saveCurrentWindowPosition } from './win'
 import createMenu from './menu'
-import createTray from './tray'
+import Tray from './tray'
 import './ipc'
 
 const createDB = () => {
@@ -46,7 +46,7 @@ app.on('ready', () => {
   createMusicDir()
   createWindow()
   createMenu()
-  createTray()
+  Tray.init()
 })
 
 app.on('before-quit', () => {

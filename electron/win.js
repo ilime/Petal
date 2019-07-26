@@ -3,6 +3,7 @@ import url from 'url'
 import db from './db'
 
 export let mainWindow = null
+export let backgroundWindow = null
 
 export const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -26,6 +27,30 @@ export const createWindow = () => {
         })
   )
 
+  backgroundWindow = new BrowserWindow({
+    minimizable: false,
+    fullscreenable: false,
+    maximizable: false,
+    resizable: false,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+    show: false,
+    webPreferences: {
+      backgroundThrottling: false,
+      nodeIntegration: true
+    },
+    hasShadow: false,
+  })
+  backgroundWindow.loadURL(
+    process.env.NODE_ENV === 'development'
+      ? url.format('http://localhost:3000/background.html')
+      : url.format({
+        pathname: __dirname + '/background.html',
+        protocol: 'file:'
+      })
+  )
+
   if (process.env.NODE_ENV === 'development') {
     const {
       default: installer,
@@ -40,6 +65,7 @@ export const createWindow = () => {
       .catch(console.log)
     /* eslint-enable */
     mainWindow.webContents.openDevTools()
+    backgroundWindow.webContents.openDevTools()
   }
 
   mainWindow.once('ready-to-show', () => {
