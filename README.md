@@ -24,7 +24,8 @@
 
 ## TO-DO
 - [x] Fix: Linux 下窗口装饰显示不正确
-- [ ] Feature: 可调整窗口大小，自适应布局
+- [x] Feature: 可调整窗口大小，自适应布局
+- [ ] Feature: 更好的响应式设计
 - [ ] Feature: 支持 mpris
 - [ ] Feature: 更多的动画效果
 ## Screenshot
