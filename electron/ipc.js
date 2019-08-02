@@ -21,6 +21,14 @@ ipcMain.on('trayDraw', (_, arg) => {
   Tray.setTrayImage(arg)
 })
 
+ipcMain.on('trayLyricNextSong', (_, arg) => {
+  backgroundWindow.webContents.send('trayLyricNextSong', arg)
+})
+
+ipcMain.on('trayLyricNext', (_, arg) => {
+  backgroundWindow.webContents.send('trayLyricNext', arg)
+})
+
 ipcMain.on('touchBarPauseAndStart', (_, arg) => {
   if (arg === true) {
     pauseAndStart.icon = `${resourcesFolder}pause.png`

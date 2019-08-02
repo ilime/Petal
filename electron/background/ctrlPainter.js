@@ -10,8 +10,8 @@ export const ctrlPattern = {
 export class Controller extends Canvas {
   // button's icon is the same as touchbar
   // trashOrBackward, pauseAndStart, skipOrForward, rateAndUnrate
-  constructor() {
-    super(ctrlBtnCount * ctrlBtnWidth, ctrlBtnWidth, 2)
+  constructor(devicePixelRatio) {
+    super(ctrlBtnCount * ctrlBtnWidth, ctrlBtnWidth, devicePixelRatio)
     this.ctx.textBaseline = 'middle'
     this.pattern = ctrlPattern.playlist
     this.images = [

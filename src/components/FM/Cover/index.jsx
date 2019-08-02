@@ -124,6 +124,9 @@ class Cover extends Component {
    * @memberof Cover
    */
   setCover = (song, pattern, openWithPlaying = true) => {
+    rendererProcessSend('trayLyricNextSong', {
+      song: song
+    })
     this.setState(
       {
         playing: openWithPlaying ? true : false,
