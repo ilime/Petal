@@ -8,7 +8,7 @@ export const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 330,
     height: 330,
-    resizable: false,
+    resizable: true,
     frame: false,
     show: false,
     webPreferences: {

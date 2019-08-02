@@ -1,31 +1,103 @@
 .petal-container {
   display: flex;
+  flex-direction: column;
 }
-
+.petal-container-window {
+  display: flex;
+  flex-direction: row;
+}
 .petal-sidebar-container {
   flex: none;
-  width: 40px;
+  width:10vw;
 }
 
 .petal-routes-container {
   flex: 1;
+  width: 90vw;
+  /*
+  display:flex;
+  flex-direction: column;
+ */ 
+}
+.petal-container-titlebar {
+  height: 24px;
+  -webkit-app-region: drag;
+}
+.more-options {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
 
-  .titlebar {
+  .checkupdate {
     position: relative;
-    height: 24px;
-    -webkit-app-region: drag;
+    top: 0;
+    right: 2px;
+    -webkit-app-region: no-drag;
+  }
+}
+
+.petal-app-control {
+display: flex;
+height: 24px;
+width: 40px;
+-webkit-app-region: no-drag;
+  div {
+    @include VHCenter();
+    flex: 1;
   }
 
-  .more-options {
-    position: absolute;
-    right: 0;
-    cursor: pointer;
+  span {
+    position: relative;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    color: $petal-black;
 
-    .checkupdate {
-      position: relative;
-      top: 0;
-      right: 2px;
-      -webkit-app-region: no-drag;
+    &:hover {
+      border: 1px solid $petal-black;
+    }
+  }
+
+  .quit {
+    background: rgb(239, 107, 96);
+
+    &:hover {
+      &:before {
+        display: block;
+        position: absolute;
+        content: '×';
+        line-height: 10px;
+        height: 10px;
+        width : 10px;
+        font-size: 10px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        text-align: center;
+      }
+    }
+  }
+
+  .hide {
+    background: rgb(247, 195, 81);
+
+    &:hover {
+      &:before {
+        display: block;
+        position: absolute;
+        content: '–';
+        line-height: 10px;
+        height: 10px;
+        width : 10px;
+        font-size: 10px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        text-align: center;
+      }
     }
   }
 }

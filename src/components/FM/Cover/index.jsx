@@ -14,7 +14,7 @@ import {
   playtimeSet,
   updateSidSsid
 } from '../../../actions/fm/actions'
-import {setMprisMetadata} from './mpris'
+//import {setMprisMetadata} from './mpris'
 
 class Cover extends Component {
   constructor(props) {
@@ -125,7 +125,7 @@ class Cover extends Component {
    * @memberof Cover
    */
   setCover = (song, pattern, openWithPlaying = true) => {
-    setMprisMetadata(song);
+//    setMprisMetadata(song);
     this.setState(
       {
         playing: openWithPlaying ? true : false,
@@ -510,9 +510,7 @@ class Cover extends Component {
         <div className="info">
           <div className="title">
             <Header as="h3" title={song.title}>
-              {song.title.length > 20
-                ? song.title.substring(0, 17) + '...'
-                : song.title}
+              {song.title}
               <Header.Subheader title={song.artist}>
                 {song.artist.length > 20
                   ? song.artist.substring(0, 17) + '...'

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Image } from 'semantic-ui-react'
 import { NavLink, withRouter } from 'react-router-dom'
-import { appMinimize, appQuit } from '../../helper/electron'
 
 export class Sidebar extends Component {
   render() {
@@ -11,14 +10,6 @@ export class Sidebar extends Component {
 
     return (
       <nav className="petal-sidebar">
-        <section className="petal-app-control">
-          <div>
-            <span className="quit" onClick={appQuit} title="关闭" />
-          </div>
-          <div>
-            <span className="hide" onClick={appMinimize} title="最小化" />
-          </div>
-        </section>
         <ul className="petal-sidebar-itemlist">
           <li>
             <NavLink exact to="/" activeClassName="selected">

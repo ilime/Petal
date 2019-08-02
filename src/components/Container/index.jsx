@@ -23,7 +23,7 @@ import {
 } from '../../helper/electron'
 import checkUpdate from '../../helper/updateCheck'
 import '../../styles/app.scss'
-
+import { appMinimize, appQuit } from '../../helper/electron'
 class Container extends Component {
   constructor(props) {
     super(props)
@@ -68,36 +68,46 @@ class Container extends Component {
       return (
         <Router>
           <main className="petal-container">
-            <article className="petal-sidebar-container">
-              <Sidebar />
-            </article>
-            <article className="petal-routes-container">
-              <section className="titlebar">
-                <div className="more-options">
-                  {checkUpdateDisplay && (
-                    <Label
-                      as="a"
-                      className="checkupdate"
-                      content="新的版本更新:)"
-                      color="green"
-                      size="mini"
-                      onClick={openInDefaultBrowser(
-                        'https://github.com/ilime/Petal/releases'
-                      )}
-                    />
-                  )}
+            <article className="petal-container-titlebar">
+              <section className="petal-app-control">
+                <div>
+                  <span className="quit" onClick={appQuit} title="关闭" />
+                </div>
+                <div>
+                  <span className="hide" onClick={appMinimize} title="最小化" />
                 </div>
               </section>
-              <FM />
-              <Route path="/setting" component={Setting} />
-              <Route path="/login" component={Login} />
-              <Route path="/redHeartList" component={RedHeart} />
-              <Route path="/recentList" component={Recent} />
-              <Route path="/trashList" component={Trash} />
-              <Route path="/pattern" component={Pattern} />
-              <Route path="/personal" component={Personal} />
-              <Route path="/sheet" component={Sheet} />
-              <Route path="/about" component={About} />
+              <div className="more-options">
+                {checkUpdateDisplay && (
+                  <Label
+                    as="a"
+                    className="checkupdate"
+                    content="新的版本更新:)"
+                    color="green"
+                    size="mini"
+                    onClick={openInDefaultBrowser(
+                      'https://github.com/ilime/Petal/releases'
+                    )}
+                  />
+                )}
+              </div>
+            </article>
+            <article className="petal-container-window">
+              <article className="petal-sidebar-container">
+                <Sidebar />
+              </article>
+              <article className="petal-routes-container">
+                <FM />
+                <Route path="/setting" component={Setting} />
+                <Route path="/login" component={Login} />
+                <Route path="/redHeartList" component={RedHeart} />
+                <Route path="/recentList" component={Recent} />
+                <Route path="/trashList" component={Trash} />
+                <Route path="/pattern" component={Pattern} />
+                <Route path="/personal" component={Personal} />
+                <Route path="/sheet" component={Sheet} />
+                <Route path="/about" component={About} />
+              </article>
             </article>
           </main>
         </Router>

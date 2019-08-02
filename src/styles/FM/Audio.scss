@@ -1,7 +1,9 @@
 @import '../common';
 
 .petal-player {
-  margin-top: 0.5rem;
+//  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
 
   .ui.progress {
     margin-bottom: 1em;
@@ -15,6 +17,8 @@
 
 .petal-player .player-bar {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   .player-time {
     color: $petal-grey;
@@ -23,8 +27,10 @@
 
   .player-volume {
     display: flex;
+    /*
     position: relative;
     padding-left: 1rem;
+    */
 
     i.volume.up.icon {
       margin: 0 0 0 0.25rem;
