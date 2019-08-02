@@ -26,7 +26,7 @@
 - [x] Fix: Linux 下窗口装饰显示不正确
 - [ ] Feature: 可调整窗口大小，自适应布局
 - [ ] Feature: 支持 mpris
-
+- [ ] Feature: 更多的动画效果
 ## Screenshot
 
 <p align="center">

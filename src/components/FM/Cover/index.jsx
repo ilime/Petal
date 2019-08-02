@@ -14,6 +14,7 @@ import {
   playtimeSet,
   updateSidSsid
 } from '../../../actions/fm/actions'
+import {setMprisMetadata} from './mpris'
 
 class Cover extends Component {
   constructor(props) {
@@ -124,6 +125,7 @@ class Cover extends Component {
    * @memberof Cover
    */
   setCover = (song, pattern, openWithPlaying = true) => {
+    setMprisMetadata(song);
     this.setState(
       {
         playing: openWithPlaying ? true : false,
