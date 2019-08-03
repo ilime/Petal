@@ -1,19 +1,8 @@
 import { app, ipcMain } from 'electron'
 import { mainWindow } from './win'
-import {
-  appIcon,
-  osxContextMenu,
-  appIconTypeInOSX,
-  setAppIconTypeInOSX
-} from './tray'
-import t, {
-  resourcesFolder,
-  pauseAndStart,
-  rateAndUnrate,
-  trashOrBackward,
-  skipOrForward,
-  touchBarState
-} from './touchbar'
+import { appIcon, osxContextMenu, appIconTypeInOSX, setAppIconTypeInOSX } from './tray'
+import t, { resourcesFolder, pauseAndStart, rateAndUnrate, trashOrBackward, skipOrForward } from './touchbar'
+import { pattern } from './pattern'
 
 ipcMain.on('touchBarPauseAndStart', (_, arg) => {
   if (arg === true) {
@@ -40,9 +29,7 @@ ipcMain.on('appIconPauseAndStart', (_, arg) => {
     status = '-pause'
   }
 
-  appIcon.setImage(
-    `${resourcesFolder}osx/icon-${appIconTypeInOSX}${status}.png`
-  )
+  appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}${status}.png`)
 })
 
 ipcMain.on('touchBarResetPause', () => {
@@ -106,13 +93,13 @@ ipcMain.on('appQuit', () => {
 })
 
 function toPlaylist() {
-  touchBarState.pattern = 0
+  pattern.state = 0
   trashOrBackward.icon = `${resourcesFolder}trash.png`
   skipOrForward.icon = `${resourcesFolder}skip.png`
 }
 
 function toSonglist() {
-  touchBarState.pattern = 1
+  pattern.state = 1
   trashOrBackward.icon = `${resourcesFolder}backward.png`
   skipOrForward.icon = `${resourcesFolder}forward.png`
 }
