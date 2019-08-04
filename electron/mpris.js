@@ -11,7 +11,7 @@ var player = Player({
 player.on('quit', function () {
 	process.exit();
 });
-function setMprisState({title, album, artist}) {
+export function setMprisState({title, album, artist}) {
     player.metadata = {
 		'mpris:trackid': player.objectPath('track/0'),
 		'mpris:length': 60 * 1000 * 1000, // In microseconds
