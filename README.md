@@ -26,6 +26,7 @@
 - [x] Fix: Linux 下窗口装饰显示不正确
 - [x] Feature: 可调整窗口大小，自适应布局
 - [x] Improvement: 引入`titlebar`
+- [ ] Fix: Linux 下无法最小化
 - [ ] Feature: 更好的响应式设计
 - [ ] Feature: 支持 mpris
 - [ ] Feature: 更多的动画效果

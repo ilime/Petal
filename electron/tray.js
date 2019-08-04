@@ -6,26 +6,14 @@ const resourcesFolder = __dirname + '/resources/'
 
 const contextMenu = Menu.buildFromTemplate([
   {
-    label: '打开',
-    enabled: false,
-    click() {
-      mainWindow.show()
-      contextMenu.items[0].enabled = false
-      contextMenu.items[1].enabled = true
-      if (process.platform === 'linux') {
-        appIcon.setContextMenu(contextMenu)
-      }
-    }
-  },
-  {
-    label: '隐藏',
+    label: '切换显示/隐藏',
     enabled: true,
     click() {
-      mainWindow.hide()
-      contextMenu.items[0].enabled = true
-      contextMenu.items[1].enabled = false
-      if (process.platform === 'linux') {
-        appIcon.setContextMenu(contextMenu)
+      if (mainWindow.isVisible()) {
+        mainWindow.hide();
+      }
+      else {
+        mainWindow.show();
       }
     }
   },

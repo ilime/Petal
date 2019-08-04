@@ -19,7 +19,12 @@ export function copyToClipboard(text) {
 }
 
 export function appMinimize() {
-  remote.getCurrentWindow().minimize()
+  if (remote.process.env.XDG_CURRENT_DESKTOP != 'i3') {
+    remote.getCurrentWindow().minimize();
+  }
+  else {
+    remote.getCurrentWindow().hide();
+  }
 }
 export function appMaximize() {
   remote.getCurrentWindow().maximize()
