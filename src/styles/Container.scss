@@ -1,6 +1,7 @@
 .petal-container {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .petal-container-window {
   display: flex;
@@ -21,6 +22,7 @@
 }
 .petal-container-titlebar {
   height: 24px;
+  display: flex;
   -webkit-app-region: drag;
 }
 .more-options {
@@ -125,9 +127,7 @@
 	margin-left: 1px;
 	opacity: 0;
 }
-.titlebar-fullscreen {
-  display: none;
-}
+
 .titlebar-fullscreen,
 .titlebar-maximize {
 	border: 1px solid #12ac28;

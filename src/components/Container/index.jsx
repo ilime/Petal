@@ -108,7 +108,7 @@ class Container extends Component {
                   <Label
                     as="a"
                     className="checkupdate"
-                    content="新的版本更新:)"
+                    content="新的版本更新♪(^∇^*)"
                     color="green"
                     size="mini"
                     onClick={openInDefaultBrowser(
