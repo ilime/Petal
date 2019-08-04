@@ -21,7 +21,9 @@ export function copyToClipboard(text) {
 export function appMinimize() {
   remote.getCurrentWindow().minimize()
 }
-
+export function appMaximize() {
+  remote.getCurrentWindow().maximize()
+}
 export function appQuit() {
   // remote.app.quit()
   rendererProcessSend('appQuit')

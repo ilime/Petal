@@ -25,10 +25,10 @@
 ## TO-DO
 - [x] Fix: Linux 下窗口装饰显示不正确
 - [x] Feature: 可调整窗口大小，自适应布局
+- [x] Improvement: 引入`titlebar`
 - [ ] Feature: 更好的响应式设计
 - [ ] Feature: 支持 mpris
 - [ ] Feature: 更多的动画效果
-- [ ] Improvement: 引入`titlebar`
 ## Screenshot
 
 <p align="center">
