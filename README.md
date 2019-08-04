@@ -28,6 +28,7 @@
 - [ ] Feature: 更好的响应式设计
 - [ ] Feature: 支持 mpris
 - [ ] Feature: 更多的动画效果
+- [ ] Improvement: 引入`titlebar`
 ## Screenshot
 
 <p align="center">
