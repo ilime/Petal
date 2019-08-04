@@ -10,10 +10,10 @@ const contextMenu = Menu.buildFromTemplate([
     enabled: true,
     click() {
       if (mainWindow.isVisible()) {
-        mainWindow.hide();
+        mainWindow.hide()
       }
       else {
-        mainWindow.show();
+        mainWindow.show()
       }
     }
   },
