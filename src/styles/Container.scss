@@ -128,7 +128,9 @@
 	margin-left: 1px;
 	opacity: 0;
 }
-
+.titlebar-fullscreen {
+	display: none;
+}
 .titlebar-fullscreen,
 .titlebar-maximize {
 	border: 1px solid #12ac28;
