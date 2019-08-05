@@ -25,7 +25,7 @@ class Sheet extends Component {
 
   handleDailyPlay = () => {
     if (this.props.pattern !== 'daily') {
-      rendererProcessSend('touchBarResetPause')
+      rendererProcessSend('FMResetPause')
       rendererProcessSend('patternSwitch', 'daily')
     }
     this.props.switchToDailyPattern()

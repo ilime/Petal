@@ -25,6 +25,7 @@ yarn-error.log*
 .idea
 
 public/main.js
+public/background.js
 
 dist
 app/node_modules

@@ -67,7 +67,7 @@ class Pattern extends Component {
     if (pattern !== name) {
       this._patterns.get(name)()
       this.handleLyricUpdated()
-      rendererProcessSend('touchBarResetPause')
+      rendererProcessSend('FMResetPause')
       rendererProcessSend('patternSwitch', name)
     }
     this.props.history.push('/')
@@ -77,7 +77,7 @@ class Pattern extends Component {
     if (!(this.props.channelId === id && this.props.pattern === 'select')) {
       this.props.handleAppChannelSet(id)
       this.props.getPlaylist('new', this.handleLyricUpdated)
-      rendererProcessSend('touchBarResetPause')
+      rendererProcessSend('FMResetPause')
       rendererProcessSend('patternSwitch', 'select')
     }
     this.props.history.push('/')

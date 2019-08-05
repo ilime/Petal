@@ -1,69 +1,67 @@
 import { app, ipcMain } from 'electron'
 import { mainWindow } from './win'
-import { appIcon, osxContextMenu, appIconTypeInOSX, setAppIconTypeInOSX } from './tray'
+import { backgroundWindow } from './backgroundWin'
+import Tray from './tray'
 import t, { resourcesFolder, pauseAndStart, rateAndUnrate, trashOrBackward, skipOrForward } from './touchbar'
-import { pattern } from './pattern'
+import { pattern as FMPattern } from './pattern'
 
-ipcMain.on('touchBarPauseAndStart', (_, arg) => {
-  if (arg === true) {
+ipcMain.on('trayDraw', (_, arg) => {
+  Tray.setTrayImage(arg)
+})
+
+ipcMain.on('trayLyricNextSong', (_, arg) => {
+  backgroundWindow.webContents.send('trayLyricNextSong', arg)
+})
+
+ipcMain.on('trayLyricNext', (_, arg) => {
+  backgroundWindow.webContents.send('trayLyricNext', arg)
+})
+
+dispatchMsgBgToMain('trayCtrlPause', 'pause')
+dispatchMsgBgToMain('trayCtrlLove', 'love')
+dispatchMsgBgToMain('trayCtrlTrash', 'trash')
+dispatchMsgBgToMain('trayCtrlSkip', 'skip')
+dispatchMsgBgToMain('trayCtrlForward', 'forward')
+dispatchMsgBgToMain('trayCtrlBackward', 'backward')
+
+ipcMain.on('FMPauseAndStart', (_, playing) => {
+  if (playing) {
     pauseAndStart.icon = `${resourcesFolder}pause.png`
   } else {
     pauseAndStart.icon = `${resourcesFolder}play.png`
   }
+
+  sendToTrayRenderer('trayPause', playing)
 })
 
-ipcMain.on('appIconPauseAndStart', (_, arg) => {
-  if (process.platform !== 'darwin') {
-    return
-  }
-
-  let status = ''
-
-  if (arg.pattern === 'select') {
-    setAppIconTypeInOSX('normal')
-  } else {
-    setAppIconTypeInOSX('list')
-  }
-
-  if (!arg.playing) {
-    status = '-pause'
-  }
-
-  appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}${status}.png`)
-})
-
-ipcMain.on('touchBarResetPause', () => {
+ipcMain.on('FMResetPause', () => {
   pauseAndStart.icon = `${resourcesFolder}pause.png`
+
+  sendToTrayRenderer('trayResetPause')
 })
 
-ipcMain.on('touchBarRateColor', (_, arg) => {
-  if (arg === 'red') {
+ipcMain.on('FMRateColor', (_, love) => {
+  if (love === 'red') {
     rateAndUnrate.icon = `${resourcesFolder}rate.png`
   }
 
-  if (arg === 'white') {
+  if (love === 'white') {
     rateAndUnrate.icon = `${resourcesFolder}unrate.png`
   }
+
+  sendToTrayRenderer('trayRateColor', love)
 })
 
 ipcMain.on('patternSwitch', (_, arg) => {
   switch (arg) {
     case 'select':
       toPlaylist()
-      if (process.platform === 'darwin') {
-        setAppIconTypeInOSX('normal')
-        appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}.png`)
-      }
       break
     case 'recent':
     case 'redheart':
     case 'daily':
       // case 'sheet':
       toSonglist()
-      if (process.platform === 'darwin') {
-        setAppIconTypeInOSX('list')
-        appIcon.setImage(`${resourcesFolder}osx/icon-${appIconTypeInOSX}.png`)
-      }
       break
     default:
       return
@@ -78,28 +76,45 @@ ipcMain.on('reInitWindowSize', () => {
   mainWindow.setSize(330, 330)
 })
 
-ipcMain.on('setTouchBar', () => {
-  mainWindow.setTouchBar(t)
+ipcMain.on('mainWindowReady', () => {
+  if (process.platform === 'darwin') {
+    mainWindow.setTouchBar(t)
+    backgroundWindow.webContents.send('trayShow')
+  }
 })
 
 ipcMain.on('appQuit', () => {
   if (process.platform === 'darwin') {
     mainWindow.hide()
-    osxContextMenu.items[0].enabled = true
-    osxContextMenu.items[1].enabled = false
+    Tray.osxContextMenu.items[0].enabled = true
+    Tray.osxContextMenu.items[1].enabled = false
   } else {
     app.quit()
   }
 })
 
 function toPlaylist() {
-  pattern.state = 0
+  FMPattern.state = 0
   trashOrBackward.icon = `${resourcesFolder}trash.png`
   skipOrForward.icon = `${resourcesFolder}skip.png`
+
+  sendToTrayRenderer('trayToPlaylist')
 }
 
 function toSonglist() {
-  pattern.state = 1
+  FMPattern.state = 1
   trashOrBackward.icon = `${resourcesFolder}backward.png`
   skipOrForward.icon = `${resourcesFolder}forward.png`
+
+  sendToTrayRenderer('trayToSonglist')
+}
+
+function sendToTrayRenderer(channel, arg) {
+  backgroundWindow.webContents.send(channel, arg)
+}
+
+function dispatchMsgBgToMain(channelBg, channelMain) {
+  ipcMain.on(channelBg, () => {
+    mainWindow.webContents.send(channelMain)
+  })
 }

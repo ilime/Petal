@@ -23,7 +23,6 @@ export function appMinimize() {
 }
 
 export function appQuit() {
-  // remote.app.quit()
   rendererProcessSend('appQuit')
 }
 
@@ -38,7 +37,7 @@ export function isOnline(callback) {
             type: 'info',
             title: '无网络连接',
             message: '检测不到可用网络，是否重新加载？',
-            buttons: ['重新加载', '退出Petal'],
+            buttons: ['重新加载', '退出'],
             defaultId: 0
           },
           function(index) {

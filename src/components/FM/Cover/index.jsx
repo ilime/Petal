@@ -108,7 +108,7 @@ class Cover extends Component {
 
     if (_id === 0 && this.props._id === 1) {
       this.setState({ love: 'white' }, () => {
-        rendererProcessSend('touchBarRateColor', this.state.love)
+        rendererProcessSend('FMRateColor', this.state.love)
       })
     }
   }
@@ -124,6 +124,8 @@ class Cover extends Component {
    * @memberof Cover
    */
   setCover = (song, pattern, openWithPlaying = true) => {
+    rendererProcessSend('trayLyricNextSong', { song })
+
     this.setState(
       {
         playing: openWithPlaying ? true : false,
@@ -131,12 +133,8 @@ class Cover extends Component {
         love: pattern === 'redheart' ? 'red' : song.like === 1 ? 'red' : 'white'
       },
       () => {
-        rendererProcessSend('touchBarRateColor', this.state.love)
-        rendererProcessSend('touchBarPauseAndStart', this.state.playing)
-        rendererProcessSend('appIconPauseAndStart', {
-          playing: this.state.playing,
-          pattern
-        })
+        rendererProcessSend('FMRateColor', this.state.love)
+        rendererProcessSend('FMPauseAndStart', this.state.playing)
       }
     )
   }
@@ -154,20 +152,12 @@ class Cover extends Component {
     if (audio.paused) {
       audio.play()
       this.setState({ playing: true }, () => {
-        rendererProcessSend('touchBarPauseAndStart', this.state.playing)
-        rendererProcessSend('appIconPauseAndStart', {
-          playing: this.state.playing,
-          pattern: this.props.pattern
-        })
+        rendererProcessSend('FMPauseAndStart', this.state.playing)
       })
     } else {
       audio.pause()
       this.setState({ playing: false }, () => {
-        rendererProcessSend('touchBarPauseAndStart', this.state.playing)
-        rendererProcessSend('appIconPauseAndStart', {
-          playing: this.state.playing,
-          pattern: this.props.pattern
-        })
+        rendererProcessSend('FMPauseAndStart', this.state.playing)
       })
     }
   }
@@ -400,7 +390,7 @@ class Cover extends Component {
       // }
 
       this.setState({ love: 'red' }, () => {
-        rendererProcessSend('touchBarRateColor', this.state.love)
+        rendererProcessSend('FMRateColor', this.state.love)
       })
     }
 
@@ -426,7 +416,7 @@ class Cover extends Component {
       // }
 
       this.setState({ love: 'white' }, () => {
-        rendererProcessSend('touchBarRateColor', this.state.love)
+        rendererProcessSend('FMRateColor', this.state.love)
       })
     }
   }
