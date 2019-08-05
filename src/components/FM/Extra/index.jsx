@@ -10,7 +10,7 @@ import {
 import lyricParsing from '../../../helper/lyricParsing'
 import db from '../../../helper/db'
 import { UserMusicPath, fileDownload } from '../../../helper/utils'
-import { copyToClipboard } from '../../../helper/electron'
+import { copyToClipboard, rendererProcessSend } from '../../../helper/electron'
 
 class Extra extends Component {
   constructor(props) {
@@ -108,6 +108,10 @@ class Extra extends Component {
           this.lyricScrollArea.scrollTop = lineHeight * index
           prevIndex = index
           index++
+          rendererProcessSend('trayLyricNext', {
+            lyricText: lyric.lyricArr[prevIndex][1],
+            duration: index === lyric.lyricArr.length ? 15 : lyric.lyricArr[index][0] - lyric.lyricArr[prevIndex][0]
+          })
         }
         if (index === lyric.lyricArr.length) {
           clearInterval(this.scrollId)

@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron'
-import url from 'url'
 import db from './db'
+import url from 'url'
 
 export let mainWindow = null
 
@@ -27,11 +27,7 @@ export const createWindow = () => {
   )
 
   if (process.env.NODE_ENV === 'development') {
-    const {
-      default: installer,
-      REACT_DEVELOPER_TOOLS,
-      REDUX_DEVTOOLS
-    } = require('electron-devtools-installer')
+    const { default: installer, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer')
     /* eslint-disable */
     Promise.all([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].map(installer))
       .then(() => {

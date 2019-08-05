@@ -62,7 +62,7 @@ export const authPost = (usernameAndPassword, callback) => {
         }
         dispatch(actions.authLoginResponse(userToken))
         dispatch(selectPattern())
-        rendererProcessSend('touchBarResetPause')
+        rendererProcessSend('FMResetPause')
         rendererProcessSend('patternSwitch', 'select')
         dispatch(playlistGET('new'))
 
@@ -160,7 +160,7 @@ export const authRemove = (dispatch, callback) => {
       }
       dispatch(actions.authLogout())
       dispatch(selectPattern())
-      rendererProcessSend('touchBarResetPause')
+      rendererProcessSend('FMResetPause')
       rendererProcessSend('patternSwitch', 'select')
       dispatch(playlistGET('new'))
 

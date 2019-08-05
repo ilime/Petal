@@ -77,7 +77,7 @@ class SongList extends Component {
         )
       }
       this.handleLyricUpdated()
-      rendererProcessSend('touchBarResetPause')
+      rendererProcessSend('FMResetPause')
       rendererProcessSend('patternSwitch', pattern)
       this.props.history.push('/')
     }
