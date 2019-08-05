@@ -4,6 +4,7 @@ import { getConsoleOutput } from '@jest/console';
 //const Player = require('mpris-service')
 class Mpris {
 	constructor() {
+		if (process.platform !== 'linux') return null;
 		this.player = Player({
 			name: 'Petal',
 			identity: 'douban.FM player',
@@ -19,6 +20,14 @@ class Mpris {
 		this.player.on('quit', ()=> process.exit());
 		this.player.on('playpause' , ()=>{
 			console.log('MPRIS playpasue');
+			mainWindow.webContents.send('pause');
+		});
+		this.player.on('play' , ()=>{
+			console.log('MPRIS play');
+			mainWindow.webContents.send('pause');
+		});
+		this.player.on('pause' , ()=>{
+			console.log('MPRIS pause');
 			mainWindow.webContents.send('pause');
 		});
 		this.player.on('next', ()=>{

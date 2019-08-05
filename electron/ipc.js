@@ -18,7 +18,8 @@ ipcMain.on('trayLyricNext', (_, arg) => {
 })
 
 ipcMain.on('mprisSetMetadata', (_, arg) => {
-  mpris.setMetadata(arg);
+  if (process.platform === 'linux')
+    mpris.setMetadata(arg);
 })
 
 dispatchMsgBgToMain('trayCtrlPause', 'pause')//actually play-pause
