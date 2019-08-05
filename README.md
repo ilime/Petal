@@ -25,7 +25,6 @@
 
 > 另外，因为我个人已经没有很多精力单独维护它了，所以，**Look For Maintainers**，如果你喜欢 豆瓣 FM 或者 Petal，并且有意愿了解和贡献 Petal，可以邮件到 g1enyy0ung@gmail.com，注明来意就好，我会帮助你了解整个项目。
 
-
 ## Screenshot
 
 <p align="center">
