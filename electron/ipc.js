@@ -86,8 +86,6 @@ ipcMain.on('mainWindowReady', () => {
 ipcMain.on('appQuit', () => {
   if (process.platform === 'darwin') {
     mainWindow.hide()
-    Tray.osxContextMenu.items[0].enabled = true
-    Tray.osxContextMenu.items[1].enabled = false
   } else {
     app.quit()
   }
