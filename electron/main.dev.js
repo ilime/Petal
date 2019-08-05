@@ -6,7 +6,6 @@ import { createBackgroundWindow } from './backgroundWin'
 import createMenu from './menu'
 import Tray from './tray'
 import './ipc'
-//require('./mpris')
 
 const createDB = () => {
   fs.access(app.getPath('home') + '/.petal.db', err => {
