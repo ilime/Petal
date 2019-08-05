@@ -16,10 +16,5 @@ module.exports = {
   target: 'electron-main',
   node: {
     __dirname: false
-  },
-  resolve: {
-    alias: {
-      jsbi: path.resolve(__dirname, '..', 'node_modules', 'jsbi', 'dist', 'jsbi-cjs.js')
-    }
   }
 }
