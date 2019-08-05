@@ -2,7 +2,7 @@ import { Controller as TrayController, ctrlPattern, ctrlBtnWidth } from './ctrlP
 
 import Canvas from './canvas'
 import { Lyric } from './lyricPainter'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, remote } from 'electron'
 
 const devicePixelRatio = 2
 const trayController = new TrayController(devicePixelRatio)
@@ -62,4 +62,8 @@ ipcRenderer.on('trayLyricNextSong', (_, { song }) => {
 
 ipcRenderer.on('trayLyricNext', (_, { lyricText, duration }) => {
   lyric.nextLyric(lyricText, parseInt(duration * 1000 * 0.8))
+})
+
+remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+  freshTray()
 })
