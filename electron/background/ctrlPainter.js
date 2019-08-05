@@ -1,6 +1,7 @@
+import { ipcRenderer, remote } from 'electron'
+
 import Canvas from './canvas'
 import { freshTray } from './'
-import { ipcRenderer, remote } from 'electron'
 
 export const ctrlBtnWidth = 22
 const ctrlBtnCount = 4
@@ -10,8 +11,10 @@ export const ctrlPattern = {
 }
 
 function getModeAwareImage(suffix) {
-  return `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : __dirname}/resources/osx/${remote.systemPreferences.isDarkMode() ? 'dark' : 'normal'}/${suffix}`
-} 
+  return `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : __dirname}/resources/osx/${
+    remote.systemPreferences.isDarkMode() ? 'dark' : 'normal'
+  }/${suffix}`
+}
 
 export class Controller extends Canvas {
   // All buttons' icon is the same as touchbar
@@ -20,12 +23,7 @@ export class Controller extends Canvas {
     super(ctrlBtnCount * ctrlBtnWidth, ctrlBtnWidth, devicePixelRatio)
     this.ctx.textBaseline = 'middle'
     this.pattern = ctrlPattern.playlist
-    this.images = [
-      'trash.png',
-      'pause.png',
-      'forward.png',
-      'unrate.png'
-    ]
+    this.images = ['trash.png', 'pause.png', 'skip.png', 'unrate.png']
 
     this.pauseAndStart = this.pauseAndStart.bind(this)
     this.rateAndUnrate = this.rateAndUnrate.bind(this)
