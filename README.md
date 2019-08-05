@@ -21,17 +21,10 @@
   </a>
 </p>
 <p align="center">:hibiscus: <a href="https://douban.fm">Douban.FM</a> Client With Extra - - -</p>
+<p align="center">喜欢 Petal 的话，可以给它一个 star ✨，这样就能让更多的人知道它啦，十分感谢🙏。</p>
 
-## Progress
-- [x] Fix: Linux 下窗口装饰显示不正确
-- [x] Fix: i3wm 下可以正确最小化（隐藏）了
-- [x] Feature: 可调整窗口大小，自适应布局
-- [x] Improvement: 使用 [kapetan/titlebar](https://github.com/kapetan/titlebar) 的 OS X 样式标题栏
-- [x] Improvement: 合并托盘菜单显示/隐藏
-- [x] Feature: 支持 MPRIS 基本功能 ( Events: playpause, previous, next, raise, quit )
-- [ ] Feature: 完善支持 MPRIS ( Method: seek, getPosition )
-- [ ] Feature: 更好的响应式设计
-- [ ] Feature: 更多的动画效果
+> 另外，因为我个人已经没有很多精力单独维护它了，所以，**Look For Maintainers**，如果你喜欢 豆瓣 FM 或者 Petal，并且有意愿了解和贡献 Petal，可以邮件到 g1enyy0ung@gmail.com，注明来意就好，我会帮助你了解整个项目。
+
 ## Screenshot
 
 <p align="center">
