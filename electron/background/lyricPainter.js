@@ -1,4 +1,5 @@
 import Canvas from './canvas'
+import { remote } from 'electron'
 
 export const lyricWidth = 150
 const lyricHeight = 22
@@ -21,6 +22,7 @@ export class Lyric extends Canvas {
 
   draw(text, xOffset) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.ctx.fillStyle = remote.systemPreferences.isDarkMode() ? 'white' : 'black'
     this.ctx.fillText(text, xOffset, this.textYOffset)
     this.freshCb()
   }
