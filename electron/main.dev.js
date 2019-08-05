@@ -5,7 +5,7 @@ import { createWindow, saveCurrentWindowPosition } from './win'
 import createMenu from './menu'
 import createTray from './tray'
 import './ipc'
-import './mpris'
+//require('./mpris')
 
 const createDB = () => {
   fs.access(app.getPath('home') + '/.petal.db', err => {
