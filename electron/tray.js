@@ -34,7 +34,7 @@ export default {
     }
 
     if (p !== 'darwin') {
-      this.setContextMenu(this.contextMenu)
+      this.tray.setContextMenu(this.contextMenu)
     }
   },
   setTrayImage(img) {
@@ -49,26 +49,14 @@ export default {
 function initNormalContextMenu() {
   this.contextMenu = Menu.buildFromTemplate([
     {
-      label: '打开',
-      enabled: false,
-      click: () => {
-        mainWindow.show()
-        this.contextMenu.items[0].enabled = false
-        this.contextMenu.items[1].enabled = true
-        if (process.platform === 'linux') {
-          this.tray.setContextMenu(this.contextMenu)
-        }
-      }
-    },
-    {
-      label: '隐藏',
+      label: '切换显示/隐藏',
       enabled: true,
       click: () => {
-        mainWindow.hide()
-        this.contextMenu.items[0].enabled = true
-        this.contextMenu.items[1].enabled = false
-        if (process.platform === 'linux') {
-          this.tray.setContextMenu(this.contextMenu)
+        if (mainWindow.isVisible()) {
+          mainWindow.hide();
+        }
+        else {
+          mainWindow.show()
         }
       }
     },
@@ -104,21 +92,15 @@ function initNormalContextMenu() {
 function initOSXContextMenu() {
   this.osxContextMenu = Menu.buildFromTemplate([
     {
-      label: '打开',
-      enabled: false,
-      click: () => {
-        mainWindow.show()
-        this.osxContextMenu.items[0].enabled = false
-        this.osxContextMenu.items[1].enabled = true
-      }
-    },
-    {
-      label: '隐藏',
+      label: '切换显示/隐藏',
       enabled: true,
       click: () => {
-        mainWindow.hide()
-        this.osxContextMenu.items[0].enabled = true
-        this.osxContextMenu.items[1].enabled = false
+        if (mainWindow.isVisible()) {
+          mainWindow.hide();
+        }
+        else {
+          mainWindow.show()
+        }
       }
     },
     { type: 'separator' },

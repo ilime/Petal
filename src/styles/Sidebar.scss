@@ -1,73 +1,10 @@
 .petal-sidebar {
-  height: 100vh;
-}
-
-.petal-app-control {
-  display: flex;
-  height: 24px;
-
-  div {
-    @include VHCenter();
-    flex: 1;
-  }
-
-  span {
-    position: relative;
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    color: $petal-black;
-
-    &:hover {
-      border: 1px solid $petal-black;
-    }
-  }
-
-  .quit {
-    background: rgb(239, 107, 96);
-
-    &:hover {
-      &:before {
-        display: block;
-        position: absolute;
-        content: '×';
-        line-height: 10px;
-        height: 10px;
-        width : 10px;
-        font-size: 10px;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        top: 0;
-        text-align: center;
-      }
-    }
-  }
-
-  .hide {
-    background: rgb(247, 195, 81);
-
-    &:hover {
-      &:before {
-        display: block;
-        position: absolute;
-        content: '–';
-        line-height: 10px;
-        height: 10px;
-        width : 10px;
-        font-size: 10px;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        top: 0;
-        text-align: center;
-      }
-    }
-  }
+  height: 100%;
 }
 
 .petal-sidebar-itemlist {
+  display:flex;
+  flex-direction: column;
   position: relative;
   list-style: none;
   margin: 0;
@@ -81,9 +18,7 @@
   }
 
   .auth {
-    position: absolute;
-    bottom: 5px;
-
+    margin-top:auto;
     .ui.avatar.image {
       width: 21px !important;
       height: 21px !important;
@@ -92,18 +27,12 @@
   }
 
   .selected {
-    &:after {
-      position: absolute;
-      right: 1px;
-      content: '';
-      display: inline-block;
-      width: 2px;
-      height: 22px;
-      background: $petal-green;
-    }
-
     i.grey.large.icon {
       color: $petal-green !important;
     }
+    border-right: solid 2px $petal-green;
+  }
+  >li>a {
+    padding: 4px 0;
   }
 }

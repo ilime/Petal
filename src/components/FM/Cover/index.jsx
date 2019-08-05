@@ -14,7 +14,6 @@ import {
   playtimeSet,
   updateSidSsid
 } from '../../../actions/fm/actions'
-
 class Cover extends Component {
   constructor(props) {
     super(props)
@@ -498,9 +497,7 @@ class Cover extends Component {
         <div className="info">
           <div className="title">
             <Header as="h3" title={song.title}>
-              {song.title.length > 20
-                ? song.title.substring(0, 17) + '...'
-                : song.title}
+              {song.title}
               <Header.Subheader title={song.artist}>
                 {song.artist.length > 20
                   ? song.artist.substring(0, 17) + '...'
