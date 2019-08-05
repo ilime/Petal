@@ -1,38 +1,63 @@
-var Player = require('mpris-service');
-var player = Player({
-	name: 'Petal',
-	identity: 'douban.FM player',
-	supportedUriSchemes: ['file'],
-	supportedMimeTypes: ['audio/mpeg', 'application/ogg'],
-	supportedInterfaces: ['player']
-});
-
-player.getPosition = function() {
-  // return the position of your player
-  return 0;
+import Player from 'mpris-service';
+import { mainWindow } from './win'
+import { getConsoleOutput } from '@jest/console';
+//const Player = require('mpris-service')
+class Mpris {
+	constructor() {
+		this.player = Player({
+			name: 'Petal',
+			identity: 'douban.FM player',
+			supportedUriSchemes: ['file'],
+			supportedMimeTypes: ['audio/mpeg', 'application/ogg'],
+			supportedInterfaces: ['player']
+		});
+		this.player.getPosition = ()=> {
+			//TODO:
+			return 0;
+		};
+		this.player.on('raise', ()=> mainWindow.show());
+		this.player.on('quit', ()=> process.exit());
+		this.player.on('playpause' , ()=>{
+			console.log('MPRIS playpasue');
+			mainWindow.webContents.send('pause');
+		});
+		this.player.on('next', ()=>{
+			console.log('MPRIS next');
+			mainWindow.webContents.send('forward');
+			mainWindow.webContents.send('skip');
+		})
+		this.player.on('previous', ()=>{
+			console.log('MPRIS previous');
+			mainWindow.webContents.send('backward');
+		})
+	};
+	setPlaying(song) {
+		this.setMetadata(song);
+		this.setPlayingStatus(true);
+	}
+	setMetadata(song) {
+		this.player.metadata = {
+			'mpris:trackid': this.player.objectPath('track/0'),
+			'mpris:length': 60 * 1000 * 1000, // In microseconds TODO:
+			'mpris:artUrl': song.picture,
+			'xesam:title': song.title,
+			'xesam:album': song.albumtitle,
+			'xesam:artist': [song.artist]
+		}
+		console.log(`MPRIS Metadata: ${song.title} - ${song.artist} - ${song.albumtitle}`);
+	}
+	setPlayingStatus(playing) {
+		this.player.playbackStatus = playing ? 'Playing' : 'Paused';
+		console.log('MPRIS PlayStatus: ' + this.player.playbackStatus);
+	}
 }
-
+export const mpris = new Mpris;
 // Events
+/*
 var events = ['raise', 'quit', 'next', 'previous', 'pause', 'playpause', 'stop', 'play', 'seek', 'position', 'open', 'volume', 'loopStatus', 'shuffle'];
 events.forEach(function (eventName) {
 	player.on(eventName, function () {
 		console.log('Event:', eventName, arguments);
 	});
 });
-
-player.on('quit', function () {
-	process.exit();
-});
-
-exports = function setMprisMetadata(song) {
-    player.metadata = {
-		'mpris:trackid': player.objectPath('track/0'),
-		'mpris:length': 60 * 1000 * 1000, // In microseconds
-		'mpris:artUrl': song.picture,
-		'xesam:title': song.title,
-		'xesam:album': song.album,
-		'xesam:artist': [song.artist]
-    }
-    player.playbackStatus = Player.PLAYBACK_STATUS_PLAYING;
-    console.log(`Now playing: ${song.title} - ${song.artist} - ${song.album}`);
-}
+*/

@@ -28,8 +28,9 @@
 - [x] Feature: 可调整窗口大小，自适应布局
 - [x] Improvement: 使用 [kapetan/titlebar](https://github.com/kapetan/titlebar) 的 OS X 样式标题栏
 - [x] Improvement: 合并托盘菜单显示/隐藏
+- [x] Feature: 支持 MPRIS 基本功能 ( Events: playpause, previous, next, raise, quit )
+- [ ] Feature: 完善支持 MPRIS ( Method: seek, getPosition )
 - [ ] Feature: 更好的响应式设计
-- [ ] Feature: 支持 mpris
 - [ ] Feature: 更多的动画效果
 ## Screenshot
 
