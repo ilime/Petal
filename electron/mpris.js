@@ -21,14 +21,17 @@ class Mpris {
 		this.player.on('playpause' , ()=>{
 			console.log('MPRIS playpasue');
 			mainWindow.webContents.send('pause');
+			this.togglePlayingStatus();
 		});
 		this.player.on('play' , ()=>{
 			console.log('MPRIS play');
 			mainWindow.webContents.send('pause');
+			this.togglePlayingStatus();
 		});
 		this.player.on('pause' , ()=>{
 			console.log('MPRIS pause');
 			mainWindow.webContents.send('pause');
+			this.togglePlayingStatus();
 		});
 		this.player.on('next', ()=>{
 			console.log('MPRIS next');
@@ -58,6 +61,9 @@ class Mpris {
 	setPlayingStatus(playing) {
 		this.player.playbackStatus = playing ? 'Playing' : 'Paused';
 		console.log('MPRIS PlayStatus: ' + this.player.playbackStatus);
+	}
+	togglePlayingStatus() {
+		this.player.playbackStatus = this.playbackStatus == 'Playing' ? 'Paused' : 'Playing';
 	}
 }
 export const mpris = new Mpris;
