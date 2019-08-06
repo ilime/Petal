@@ -91,7 +91,7 @@ function initOSXContextMenu() {
         // windowTopSwitch
         let appIconRect = this.tray.getBounds()
         let mainWindowRect = mainWindow.getBounds()
-        let currentItem = this.osxContextMenu.items[3]
+        let currentItem = this.osxContextMenu.items[2]
 
         if (currentItem.checked === true) {
           if (process.platform === 'darwin') {
