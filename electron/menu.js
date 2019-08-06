@@ -1,6 +1,7 @@
-import { app, Menu } from 'electron'
+import { Menu, app } from 'electron'
 
 import { mainWindow } from './win'
+import { isDarwin } from './platform'
 
 const template = [
   {
@@ -12,8 +13,18 @@ const template = [
       { role: 'cut' },
       { role: 'copy' },
       { role: 'paste' },
-      { role: 'delete' },
-      { role: 'selectall' }
+      ...(isDarwin
+        ? [
+            { role: 'pasteAndMatchStyle' },
+            { role: 'delete' },
+            { role: 'selectAll' },
+            { type: 'separator' },
+            {
+              label: 'Speech',
+              submenu: [{ role: 'startspeaking' }, { role: 'stopspeaking' }]
+            }
+          ]
+        : [{ role: 'delete' }, { type: 'separator' }, { role: 'selectAll' }])
     ]
   },
   {
@@ -21,15 +32,25 @@ const template = [
     submenu: [
       { role: 'reload' },
       { role: 'forcereload' },
-      { role: 'toggledevtools' }
+      { role: 'toggledevtools' },
+      { type: 'separator' },
+      { role: 'resetzoom' },
+      { role: 'zoomin' },
+      { role: 'zoomout' },
+      { type: 'separator' },
+      { role: 'togglefullscreen' }
     ]
   },
   {
     label: 'Window',
-    submenu: [{ role: 'minimize' }]
+    submenu: [
+      { role: 'minimize' },
+      { role: 'zoom' },
+      ...(isDarwin ? [{ type: 'separator' }, { role: 'front' }] : [{ role: 'close' }])
+    ]
   },
   {
-    label: 'Operation',
+    label: 'Operations',
     submenu: [
       {
         label: 'Pause',
@@ -76,19 +97,12 @@ const template = [
     ]
   },
   {
-    label: 'Related',
+    label: 'Help',
     submenu: [
       {
-        label: 'Source Code Repo',
+        label: 'Source Code Repository',
         click() {
-          require('electron').shell.openExternal('https://github.com/ilime')
-        }
-      },
-      { type: 'separator' },
-      {
-        label: 'About Author',
-        click() {
-          require('electron').shell.openExternal('https://github.com/g1eny0ung')
+          require('electron').shell.openExternal('https://github.com/ilime/Petal')
         }
       }
     ]
@@ -96,11 +110,22 @@ const template = [
 ]
 
 export default function createMenu() {
-  if (process.platform === 'darwin') {
+  if (isDarwin) {
     template.unshift({
       label: app.getName(),
-      submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }]
+      submenu: [
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'services' },
+        { type: 'separator' },
+        { role: 'hide' },
+        { role: 'hideothers' },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' }
+      ]
     })
   }
+
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
