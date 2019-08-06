@@ -13,21 +13,15 @@ const typeSpecs = [
 describe('fmReducer', () => {
   // loading test
   test('fetching', () => {
-    expect(
-      fmReducer({ isFetching: false }, { type: 'PLAYLIST_LOADING' })
-    ).toEqual({ isFetching: true })
+    expect(fmReducer({ isFetching: false }, { type: 'PLAYLIST_LOADING' })).toEqual({ isFetching: true })
   })
   test('end fetching', () => {
-    expect(
-      fmReducer({ isFetching: true }, { type: 'PLAYLIST_RESPONSE' })
-    ).toEqual({ isFetching: false })
+    expect(fmReducer({ isFetching: true }, { type: 'PLAYLIST_RESPONSE' })).toEqual({ isFetching: false })
   })
 
   // type test
   test('new', () => {
-    typeSpecs.map(t => {
-      expect(fmReducer({ type: '' }, { type: t[0] })).toEqual({ type: t[1] })
-    })
+    typeSpecs.map(t => expect(fmReducer({ type: '' }, { type: t[0] })).toEqual({ type: t[1] }))
   })
 
   // pattern test
@@ -59,16 +53,10 @@ describe('fmReducer', () => {
   })
   test('redheart pattern', () => {
     expect(
-      fmReducer(
-        { pattern: 'select', redheart: [{ sid: 'mock', ssid: 'mock' }] },
-        { type: 'REDHEART_PATTERN' }
-      )
+      fmReducer({ pattern: 'select', redheart: [{ sid: 'mock', ssid: 'mock' }] }, { type: 'REDHEART_PATTERN' })
     ).toHaveProperty('pattern', 'redheart')
     expect(
-      fmReducer(
-        { pattern: 'select', redheart: [{ sid: 'mock', ssid: 'mock' }] },
-        { type: 'REDHEART_PATTERN' }
-      )
+      fmReducer({ pattern: 'select', redheart: [{ sid: 'mock', ssid: 'mock' }] }, { type: 'REDHEART_PATTERN' })
     ).toHaveProperty('songListIndex', 0)
   })
 })

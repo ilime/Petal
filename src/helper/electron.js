@@ -20,15 +20,16 @@ export function copyToClipboard(text) {
 
 export function appMinimize() {
   if (remote.process.env.XDG_CURRENT_DESKTOP !== 'i3') {
-    remote.getCurrentWindow().minimize();
-  }
-  else {
-    remote.getCurrentWindow().hide();
+    remote.getCurrentWindow().minimize()
+  } else {
+    remote.getCurrentWindow().hide()
   }
 }
+
 export function appMaximize() {
   remote.getCurrentWindow().maximize()
 }
+
 export function appQuit() {
   rendererProcessSend('appQuit')
 }
