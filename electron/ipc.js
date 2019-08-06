@@ -1,4 +1,5 @@
 import { app, ipcMain } from 'electron'
+import { isDarwin, isLinux } from './platform'
 import t, { pauseAndStart, rateAndUnrate, resourcesFolder, skipOrForward, trashOrBackward } from './touchbar'
 
 import { pattern as FMPattern } from './pattern'
@@ -20,7 +21,9 @@ ipcMain.on('trayLyricNext', (_, arg) => {
 })
 
 ipcMain.on('mprisSetMetadata', (_, arg) => {
-  if (process.platform === 'linux') mpris.setMetadata(arg)
+  if (isLinux) {
+    mpris.setMetadata(arg)
+  }
 })
 
 dispatchMsgBgToMain('trayCtrlPause', 'pause') // Actually play-pause
@@ -31,7 +34,7 @@ dispatchMsgBgToMain('trayCtrlForward', 'forward')
 dispatchMsgBgToMain('trayCtrlBackward', 'backward')
 
 ipcMain.on('FMPauseAndStart', (_, playing) => {
-  if (process.platform === 'darwin') {
+  if (isDarwin) {
     if (playing) {
       pauseAndStart.icon = `${resourcesFolder}pause.png`
     } else {
@@ -39,18 +42,18 @@ ipcMain.on('FMPauseAndStart', (_, playing) => {
     }
 
     sendToTrayRenderer('trayPause', playing)
-  } else if (process.platform === 'linux') {
+  } else if (isLinux) {
     // mpris pause and start
     mpris.setPlayingStatus(playing)
   }
 })
 
 ipcMain.on('FMResetPause', () => {
-  if (process.platform === 'darwin') {
+  if (isDarwin) {
     pauseAndStart.icon = `${resourcesFolder}pause.png`
 
     sendToTrayRenderer('trayResetPause')
-  } else if (process.platform === 'linux') {
+  } else if (isLinux) {
     mpris.setPlayingStatus(false)
   }
 })
@@ -92,14 +95,14 @@ ipcMain.on('reInitWindowSize', () => {
 })
 
 ipcMain.on('mainWindowReady', () => {
-  if (process.platform === 'darwin') {
+  if (isDarwin) {
     mainWindow.setTouchBar(t)
     backgroundWindow.webContents.send('trayShow')
   }
 })
 
 ipcMain.on('appQuit', () => {
-  if (process.platform === 'darwin') {
+  if (isDarwin) {
     mainWindow.hide()
   } else {
     app.quit()

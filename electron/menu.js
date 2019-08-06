@@ -1,7 +1,7 @@
 import { Menu, app } from 'electron'
 
-import { mainWindow } from './win'
 import { isDarwin } from './platform'
+import { mainWindow } from './win'
 
 const template = [
   ...(isDarwin

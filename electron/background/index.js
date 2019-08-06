@@ -1,8 +1,8 @@
-import { Controller as TrayController, ctrlPattern, ctrlBtnWidth } from './ctrlPainter'
+import { Controller as TrayController, ctrlBtnWidth, ctrlPattern } from './ctrlPainter'
+import { ipcRenderer, remote } from 'electron'
 
 import Canvas from './canvas'
 import { Lyric } from './lyricPainter'
-import { ipcRenderer, remote } from 'electron'
 
 const devicePixelRatio = 2
 const trayController = new TrayController(devicePixelRatio)

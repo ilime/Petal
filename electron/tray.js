@@ -1,6 +1,8 @@
-import { Tray, Menu, app, nativeImage } from 'electron'
-import { mainWindow } from './win'
+import { Menu, Tray, app, nativeImage } from 'electron'
+import { isDarwin, isLinux, isWin } from './platform'
+
 import { backgroundWindow } from './backgroundWin'
+import { mainWindow } from './win'
 
 const resourcesFolder = __dirname + '/resources/'
 
@@ -9,15 +11,13 @@ export default {
   contextMenu: null,
   osxContextMenu: null,
   init() {
-    const p = process.platform
-
-    if (p === 'darwin') {
+    if (isDarwin) {
       initOSXContextMenu.bind(this)()
     } else {
       initNormalContextMenu.bind(this)()
     }
 
-    if (p === 'darwin') {
+    if (isDarwin) {
       this.tray = new Tray(nativeImage.createEmpty())
       // https://electronjs.org/docs/api/tray#traysethighlightmodemode-macos
       this.tray.setHighlightMode('never')
@@ -27,13 +27,13 @@ export default {
       this.tray.on('click', (event, bounds, position) => {
         backgroundWindow.webContents.send('trayClick', { event, bounds, position })
       })
-    } else if (p === 'win32') {
+    } else if (isWin) {
       this.tray = new Tray(`${resourcesFolder}win/icon.ico`)
-    } else if (p === 'linux') {
+    } else if (isLinux) {
       this.tray = new Tray(`${resourcesFolder}linux/icon.png`)
     }
 
-    if (p !== 'darwin') {
+    if (!isDarwin) {
       this.tray.setContextMenu(this.contextMenu)
     }
   },
@@ -94,7 +94,7 @@ function initOSXContextMenu() {
         let currentItem = this.osxContextMenu.items[2]
 
         if (currentItem.checked === true) {
-          if (process.platform === 'darwin') {
+          if (isDarwin) {
             mainWindow.setPosition(appIconRect.x - mainWindowRect.width / 2 + appIconRect.width / 2, appIconRect.y)
           }
         } else {

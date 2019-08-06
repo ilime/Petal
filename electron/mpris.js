@@ -1,9 +1,13 @@
 import Player from 'mpris-service'
+import { isLinux } from './platform'
 import { mainWindow } from './win'
 
 class Mpris {
   constructor() {
-    if (process.platform !== 'linux') return null
+    if (!isLinux) {
+      return null
+    }
+
     this.player = Player({
       name: 'Petal',
       identity: 'douban.FM player',
