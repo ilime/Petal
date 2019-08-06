@@ -4,6 +4,24 @@ import { mainWindow } from './win'
 import { isDarwin } from './platform'
 
 const template = [
+  ...(isDarwin
+    ? [
+        {
+          label: app.getName(),
+          submenu: [
+            { role: 'about' },
+            { type: 'separator' },
+            { role: 'services' },
+            { type: 'separator' },
+            { role: 'hide' },
+            { role: 'hideothers' },
+            { role: 'unhide' },
+            { type: 'separator' },
+            { role: 'quit' }
+          ]
+        }
+      ]
+    : []),
   {
     label: 'Edit',
     submenu: [
@@ -110,22 +128,5 @@ const template = [
 ]
 
 export default function createMenu() {
-  if (isDarwin) {
-    template.unshift({
-      label: app.getName(),
-      submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideothers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' }
-      ]
-    })
-  }
-
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
