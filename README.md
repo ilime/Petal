@@ -73,3 +73,5 @@ Very thankful to all the people below:
 ## License
 
 MIT &copy; [ilime](https://github.com/ilime)
+## Credits
+[kapetan/titlebar](https://github.com/kapetan/titlebar) 

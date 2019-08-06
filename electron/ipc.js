@@ -4,7 +4,7 @@ import { backgroundWindow } from './backgroundWin'
 import Tray from './tray'
 import t, { resourcesFolder, pauseAndStart, rateAndUnrate, trashOrBackward, skipOrForward } from './touchbar'
 import { pattern as FMPattern } from './pattern'
-
+import { mpris } from './mpris' // MPRIS: Linux D-BUS Remote Music Control Interface
 ipcMain.on('trayDraw', (_, arg) => {
   Tray.setTrayImage(arg)
 })
@@ -17,7 +17,12 @@ ipcMain.on('trayLyricNext', (_, arg) => {
   backgroundWindow.webContents.send('trayLyricNext', arg)
 })
 
-dispatchMsgBgToMain('trayCtrlPause', 'pause')
+ipcMain.on('mprisSetMetadata', (_, arg) => {
+  if (process.platform === 'linux')
+    mpris.setMetadata(arg);
+})
+
+dispatchMsgBgToMain('trayCtrlPause', 'pause')//actually play-pause
 dispatchMsgBgToMain('trayCtrlLove', 'love')
 dispatchMsgBgToMain('trayCtrlTrash', 'trash')
 dispatchMsgBgToMain('trayCtrlSkip', 'skip')
@@ -25,19 +30,29 @@ dispatchMsgBgToMain('trayCtrlForward', 'forward')
 dispatchMsgBgToMain('trayCtrlBackward', 'backward')
 
 ipcMain.on('FMPauseAndStart', (_, playing) => {
-  if (playing) {
-    pauseAndStart.icon = `${resourcesFolder}pause.png`
-  } else {
-    pauseAndStart.icon = `${resourcesFolder}play.png`
+  if (process.platform === 'darwin') {
+    if (playing) {
+      pauseAndStart.icon = `${resourcesFolder}pause.png`
+    } else {
+      pauseAndStart.icon = `${resourcesFolder}play.png`
+    }
+  
+    sendToTrayRenderer('trayPause', playing)
   }
-
-  sendToTrayRenderer('trayPause', playing)
+  else if (process.platform == 'linux') {// mpris pause and start
+    mpris.setPlayingStatus(playing);
+  }
 })
 
 ipcMain.on('FMResetPause', () => {
-  pauseAndStart.icon = `${resourcesFolder}pause.png`
+  if (process.platform == 'darwin') {
+    pauseAndStart.icon = `${resourcesFolder}pause.png`
 
-  sendToTrayRenderer('trayResetPause')
+    sendToTrayRenderer('trayResetPause')
+  }
+  else if (process.platform == 'linux') {
+    mpris.setPlayingStatus(false);
+  }
 })
 
 ipcMain.on('FMRateColor', (_, love) => {
