@@ -27,9 +27,9 @@
 
 ## Current Maintainers
 
-- [g1eny0ung](github.com/g1eny0ung)
-- [Rapiz1](github.com/Rapiz1)
-- [lxs137](github.com/lxs137)
+- [g1eny0ung](https://github.com/g1eny0ung)
+- [Rapiz1](https://github.com/Rapiz1)
+- [lxs137](https://github.com/lxs137)
 
 ## Screenshot
 
@@ -67,8 +67,8 @@ Pull a request or open an issue to describe your changes or problems
 
 Very thankful to all the people below:
 
-- [Rapiz1](github.com/Rapiz1)
-- [lxs137](github.com/lxs137)
+- [Rapiz1](https://github.com/Rapiz1)
+- [lxs137](https://github.com/lxs137)
 
 ## License
 
