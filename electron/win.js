@@ -46,9 +46,7 @@ export const createWindow = () => {
 }
 
 function getCurrentWindowPostion() {
-  const pos = mainWindow.getPosition()
-
-  return pos
+  return mainWindow.getPosition()
 }
 
 export function setWindowPostionFromDB() {
