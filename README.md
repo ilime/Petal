@@ -25,6 +25,12 @@
 
 > 另外，因为我个人已经没有很多精力单独维护它了，所以，**Look For Maintainers**，如果你喜欢 豆瓣 FM 或者 Petal，并且有意愿了解和贡献 Petal，可以邮件到 g1enyy0ung@gmail.com，注明来意就好，我会帮助你了解整个项目。
 
+## Current Maintainers
+
+- [g1eny0ung](github.com/g1eny0ung)
+- [Rapiz1](github.com/Rapiz1)
+- [lxs137](github.com/lxs137)
+
 ## Screenshot
 
 <p align="center">
@@ -33,7 +39,7 @@
 
 ## Use it
 
-Go to [release page](https://github.com/ilime/Petal/releases)
+Go to the [release page](https://github.com/ilime/Petal/releases)
 
 ## How to develop
 
@@ -56,6 +62,13 @@ chmod +x build.sh
 ## How to contribute
 
 Pull a request or open an issue to describe your changes or problems
+
+## Contributors
+
+Very thankful to all the people below:
+
+- [Rapiz1](github.com/Rapiz1)
+- [lxs137](github.com/lxs137)
 
 ## License
 
