@@ -12,6 +12,10 @@ ipcMain.on('trayDraw', (_, arg) => {
   Tray.setTrayImage(arg)
 })
 
+ipcMain.on('trayMenuShow', () => {
+  Tray.popUpContextMenu()
+})
+
 ipcMain.on('trayLyricNextSong', (_, arg) => {
   backgroundWindow.webContents.send('trayLyricNextSong', arg)
 })

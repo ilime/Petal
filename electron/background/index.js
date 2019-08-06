@@ -47,6 +47,9 @@ ipcRenderer.on('trayClick', (_, { position }) => {
     case 3:
       ipcRenderer.send('trayCtrlLove')
       break
+    case 4:
+      ipcRenderer.send('trayMenuShow')
+      break
     default:
       return
   }

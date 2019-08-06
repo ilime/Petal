@@ -43,6 +43,9 @@ export default {
       height: bounds ? bounds.height : 22
     })
     this.tray.setImage(Image)
+  },
+  popUpContextMenu() {
+    this.tray.popUpContextMenu(this.osxContextMenu)
   }
 }
 
