@@ -58,6 +58,10 @@ function initNormalContextMenu() {
     },
     { type: 'separator' },
     {
+      label: '切换暂停/开始',
+      click: () => mainWindow.webContents.send('pause')
+    },
+    {
       label: '红心',
       click: () => mainWindow.webContents.send('love')
     },
@@ -72,7 +76,7 @@ function initNormalContextMenu() {
     { type: 'separator' },
     {
       label: '退出',
-      click: () => app.quit()
+      click: app.quit
     }
   ])
 }
@@ -108,7 +112,7 @@ function initOSXContextMenu() {
     { type: 'separator' },
     {
       label: '退出',
-      click: () => app.quit()
+      click: app.quit
     }
   ])
 }
