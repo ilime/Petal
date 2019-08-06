@@ -65,7 +65,5 @@ ipcRenderer.on('trayLyricNext', (_, { lyricText, duration }) => {
 })
 
 if (remote.process.platform === 'darwin') {
-  remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
-    freshTray()
-  })
+  remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', freshTray)
 }

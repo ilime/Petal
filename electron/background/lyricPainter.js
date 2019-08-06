@@ -41,6 +41,7 @@ export class Lyric extends Canvas {
     const waitTime = Math.min((this.canvas.width * duration) / fullWidth, minWaitTime)
     let xOffset = lyricTextPadding
     this.draw(text, xOffset)
+
     this.lyricWaitTimer = setTimeout(() => {
       const overflowWidth = fullWidth - this.canvas.width + 2 * lyricTextPadding,
         scrollFrame = ((duration - waitTime) * scrollFPS) / 1000,
@@ -51,6 +52,7 @@ export class Lyric extends Canvas {
         return
       }, 1000 / scrollFPS)
     }, waitTime)
+
     this.lyricClearTimer = setTimeout(() => {
       clearInterval(this.lyricScrollTimer)
     }, duration)
