@@ -9,7 +9,9 @@ import { mainWindow } from './win'
 import { mpris } from './mpris' // MPRIS: Linux D-BUS Remote Music Control Interface
 
 ipcMain.on('trayDraw', (_, arg) => {
-  Tray.setTrayImage(arg)
+  if (isDarwin) {
+    Tray.setTrayImage(arg)
+  }
 })
 
 ipcMain.on('trayMenuShow', () => {
@@ -17,11 +19,15 @@ ipcMain.on('trayMenuShow', () => {
 })
 
 ipcMain.on('trayLyricNextSong', (_, arg) => {
-  backgroundWindow.webContents.send('trayLyricNextSong', arg)
+  if (isDarwin) {
+    backgroundWindow.webContents.send('trayLyricNextSong', arg)
+  }
 })
 
 ipcMain.on('trayLyricNext', (_, arg) => {
-  backgroundWindow.webContents.send('trayLyricNext', arg)
+  if (isDarwin) {
+    backgroundWindow.webContents.send('trayLyricNext', arg)
+  }
 })
 
 ipcMain.on('mprisSetMetadata', (_, arg) => {
