@@ -51,40 +51,25 @@ function initNormalContextMenu() {
     {
       label: '切换显示/隐藏',
       enabled: true,
-      click: () => {
-        if (mainWindow.isVisible()) {
-          mainWindow.hide();
-        }
-        else {
-          mainWindow.show()
-        }
-      }
+      click: mainWindowVisiableSwitch
     },
     { type: 'separator' },
     {
       label: '红心',
-      click: () => {
-        mainWindow.webContents.send('love')
-      }
+      click: () => mainWindow.webContents.send('love')
     },
     {
       label: '跳过',
-      click: () => {
-        mainWindow.webContents.send('skip')
-      }
+      click: () => mainWindow.webContents.send('skip')
     },
     {
       label: '垃圾桶',
-      click: () => {
-        mainWindow.webContents.send('trash')
-      }
+      click: () => mainWindow.webContents.send('trash')
     },
     { type: 'separator' },
     {
       label: '退出',
-      click: () => {
-        app.quit()
-      }
+      click: () => app.quit()
     }
   ])
 }
@@ -94,14 +79,7 @@ function initOSXContextMenu() {
     {
       label: '切换显示/隐藏',
       enabled: true,
-      click: () => {
-        if (mainWindow.isVisible()) {
-          mainWindow.hide();
-        }
-        else {
-          mainWindow.show()
-        }
-      }
+      click: mainWindowVisiableSwitch
     },
     { type: 'separator' },
     {
@@ -127,9 +105,15 @@ function initOSXContextMenu() {
     { type: 'separator' },
     {
       label: '退出',
-      click: () => {
-        app.quit()
-      }
+      click: () => app.quit()
     }
   ])
+}
+
+function mainWindowVisiableSwitch() {
+  if (mainWindow.isVisible()) {
+    mainWindow.hide()
+  } else {
+    mainWindow.show()
+  }
 }

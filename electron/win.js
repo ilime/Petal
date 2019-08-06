@@ -54,7 +54,7 @@ export function setWindowPostionFromDB() {
       if (doc.restoreLastWinPos) {
         db.findOne({ window: 'position' }, (err, doc) => {
           if (doc != null) {
-            mainWindow.setPosition(doc.pos[0], doc.pos[1])
+            mainWindow.setPosition(doc.pos[0], doc.pos[1], process.platform === 'darwin' ? true : undefined)
           }
         })
       }
