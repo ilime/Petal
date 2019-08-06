@@ -1,10 +1,12 @@
 import { app, ipcMain } from 'electron'
-import { mainWindow } from './win'
-import { backgroundWindow } from './backgroundWin'
-import Tray from './tray'
-import t, { resourcesFolder, pauseAndStart, rateAndUnrate, trashOrBackward, skipOrForward } from './touchbar'
+import t, { pauseAndStart, rateAndUnrate, resourcesFolder, skipOrForward, trashOrBackward } from './touchbar'
+
 import { pattern as FMPattern } from './pattern'
+import Tray from './tray'
+import { backgroundWindow } from './backgroundWin'
+import { mainWindow } from './win'
 import { mpris } from './mpris' // MPRIS: Linux D-BUS Remote Music Control Interface
+
 ipcMain.on('trayDraw', (_, arg) => {
   Tray.setTrayImage(arg)
 })
@@ -18,11 +20,10 @@ ipcMain.on('trayLyricNext', (_, arg) => {
 })
 
 ipcMain.on('mprisSetMetadata', (_, arg) => {
-  if (process.platform === 'linux')
-    mpris.setMetadata(arg);
+  if (process.platform === 'linux') mpris.setMetadata(arg)
 })
 
-dispatchMsgBgToMain('trayCtrlPause', 'pause')//actually play-pause
+dispatchMsgBgToMain('trayCtrlPause', 'pause') // Actually play-pause
 dispatchMsgBgToMain('trayCtrlLove', 'love')
 dispatchMsgBgToMain('trayCtrlTrash', 'trash')
 dispatchMsgBgToMain('trayCtrlSkip', 'skip')
@@ -36,22 +37,21 @@ ipcMain.on('FMPauseAndStart', (_, playing) => {
     } else {
       pauseAndStart.icon = `${resourcesFolder}play.png`
     }
-  
+
     sendToTrayRenderer('trayPause', playing)
-  }
-  else if (process.platform == 'linux') {// mpris pause and start
-    mpris.setPlayingStatus(playing);
+  } else if (process.platform === 'linux') {
+    // mpris pause and start
+    mpris.setPlayingStatus(playing)
   }
 })
 
 ipcMain.on('FMResetPause', () => {
-  if (process.platform == 'darwin') {
+  if (process.platform === 'darwin') {
     pauseAndStart.icon = `${resourcesFolder}pause.png`
 
     sendToTrayRenderer('trayResetPause')
-  }
-  else if (process.platform == 'linux') {
-    mpris.setPlayingStatus(false);
+  } else if (process.platform === 'linux') {
+    mpris.setPlayingStatus(false)
   }
 })
 

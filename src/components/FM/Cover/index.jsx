@@ -1,19 +1,11 @@
+import { Dimmer, Header, Icon, Image, Popup } from 'semantic-ui-react'
 import React, { Component } from 'react'
+import { onReceiveFromMainProcess, rendererProcessSend } from '../../../helper/electron'
+import { playLog, playlistGET, songLyricGET } from '../../../actions/fm/apis'
+import { playtimeSet, songListBack, songListGo, songListIndexSet, updateSidSsid } from '../../../actions/fm/actions'
+
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Dimmer, Image, Icon, Popup, Header } from 'semantic-ui-react'
-import {
-  onReceiveFromMainProcess,
-  rendererProcessSend
-} from '../../../helper/electron'
-import { playlistGET, playLog, songLyricGET } from '../../../actions/fm/apis'
-import {
-  songListGo,
-  songListBack,
-  songListIndexSet,
-  playtimeSet,
-  updateSidSsid
-} from '../../../actions/fm/actions'
 class Cover extends Component {
   constructor(props) {
     super(props)
@@ -48,10 +40,7 @@ class Cover extends Component {
     const { _id, pattern, songListIndex, song } = nextProps
 
     if (pattern === 'select' && song !== this.props.song) {
-      if (
-        this.props.openWithPlaying === false &&
-        this.firstOpenWithPlayingChange
-      ) {
+      if (this.props.openWithPlaying === false && this.firstOpenWithPlayingChange) {
         this.firstOpenWithPlayingChange = false
         this.setCover(song, pattern, false)
       } else {
@@ -80,10 +69,7 @@ class Cover extends Component {
     //   return
     // }
 
-    if (
-      songListIndex !== this.props.songListIndex &&
-      pattern === this.props.pattern
-    ) {
+    if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
       if (pattern === 'redheart') {
         this.setCover(this.props.redheartSong[songListIndex], pattern)
         return
@@ -125,6 +111,7 @@ class Cover extends Component {
   setCover = (song, pattern, openWithPlaying = true) => {
     rendererProcessSend('trayLyricNextSong', { song })
     rendererProcessSend('mprisSetMetadata', song)
+
     this.setState(
       {
         playing: openWithPlaying ? true : false,
@@ -162,13 +149,7 @@ class Cover extends Component {
   }
 
   handleSongForward = () => {
-    const {
-      pattern,
-      recentSong,
-      redheartSong,
-      dailySong,
-      songListIndex
-    } = this.props
+    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
 
     if (pattern === 'select') {
       return
@@ -181,10 +162,7 @@ class Cover extends Component {
         this.props.handleUpdateSidSsid(recentSong[0].sid, recentSong[0].ssid)
       } else {
         this.props.handleSongListGo()
-        this.props.handleUpdateSidSsid(
-          recentSong[songListIndex + 1].sid,
-          recentSong[songListIndex + 1].ssid
-        )
+        this.props.handleUpdateSidSsid(recentSong[songListIndex + 1].sid, recentSong[songListIndex + 1].ssid)
       }
       this.handleLyricUpdated()
     }
@@ -193,16 +171,10 @@ class Cover extends Component {
       this.props.handlePlayLog(redheartSong[songListIndex].sid, 'j', 'h')
       if (songListIndex === redheartSong.length - 1) {
         this.props.handleSongListIndexSet(0)
-        this.props.handleUpdateSidSsid(
-          redheartSong[0].sid,
-          redheartSong[0].ssid
-        )
+        this.props.handleUpdateSidSsid(redheartSong[0].sid, redheartSong[0].ssid)
       } else {
         this.props.handleSongListGo()
-        this.props.handleUpdateSidSsid(
-          redheartSong[songListIndex + 1].sid,
-          redheartSong[songListIndex + 1].ssid
-        )
+        this.props.handleUpdateSidSsid(redheartSong[songListIndex + 1].sid, redheartSong[songListIndex + 1].ssid)
       }
       this.handleLyricUpdated()
     }
@@ -214,10 +186,7 @@ class Cover extends Component {
         this.props.handleUpdateSidSsid(dailySong[0].sid, dailySong[0].ssid)
       } else {
         this.props.handleSongListGo()
-        this.props.handleUpdateSidSsid(
-          dailySong[songListIndex + 1].sid,
-          dailySong[songListIndex + 1].ssid
-        )
+        this.props.handleUpdateSidSsid(dailySong[songListIndex + 1].sid, dailySong[songListIndex + 1].ssid)
       }
       this.handleLyricUpdated()
     }
@@ -233,13 +202,7 @@ class Cover extends Component {
   }
 
   handleSongBackward = () => {
-    const {
-      pattern,
-      recentSong,
-      redheartSong,
-      dailySong,
-      songListIndex
-    } = this.props
+    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
 
     if (pattern === 'select') {
       return
@@ -249,16 +212,10 @@ class Cover extends Component {
       this.props.handlePlayLog(recentSong[songListIndex].sid, 'k', 'y')
       if (songListIndex === 0) {
         this.props.handleSongListIndexSet(recentSong.length - 1)
-        this.props.handleUpdateSidSsid(
-          recentSong[recentSong.length - 1].sid,
-          recentSong[recentSong.length - 1].ssid
-        )
+        this.props.handleUpdateSidSsid(recentSong[recentSong.length - 1].sid, recentSong[recentSong.length - 1].ssid)
       } else {
         this.props.handleSongListBack()
-        this.props.handleUpdateSidSsid(
-          recentSong[songListIndex - 1].sid,
-          recentSong[songListIndex - 1].ssid
-        )
+        this.props.handleUpdateSidSsid(recentSong[songListIndex - 1].sid, recentSong[songListIndex - 1].ssid)
       }
       this.handleLyricUpdated()
     }
@@ -273,10 +230,7 @@ class Cover extends Component {
         )
       } else {
         this.props.handleSongListBack()
-        this.props.handleUpdateSidSsid(
-          redheartSong[songListIndex - 1].sid,
-          redheartSong[songListIndex - 1].ssid
-        )
+        this.props.handleUpdateSidSsid(redheartSong[songListIndex - 1].sid, redheartSong[songListIndex - 1].ssid)
       }
       this.handleLyricUpdated()
     }
@@ -285,16 +239,10 @@ class Cover extends Component {
       this.props.handlePlayLog(dailySong[songListIndex].sid, 'k', 'd')
       if (songListIndex === 0) {
         this.props.handleSongListIndexSet(dailySong.length - 1)
-        this.props.handleUpdateSidSsid(
-          dailySong[dailySong.length - 1].sid,
-          dailySong[dailySong.length - 1].ssid
-        )
+        this.props.handleUpdateSidSsid(dailySong[dailySong.length - 1].sid, dailySong[dailySong.length - 1].ssid)
       } else {
         this.props.handleSongListBack()
-        this.props.handleUpdateSidSsid(
-          dailySong[songListIndex - 1].sid,
-          dailySong[songListIndex - 1].ssid
-        )
+        this.props.handleUpdateSidSsid(dailySong[songListIndex - 1].sid, dailySong[songListIndex - 1].ssid)
       }
       this.handleLyricUpdated()
     }
@@ -320,9 +268,7 @@ class Cover extends Component {
       return
     }
 
-    this.props.handlePlaytimeSet(
-      Number.parseFloat(this.props.audio.currentTime).toFixed(3)
-    )
+    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
     this.props.getPlayList('skip', this.handleLyricUpdated)
   }
 
@@ -331,9 +277,7 @@ class Cover extends Component {
       return
     }
 
-    this.props.handlePlaytimeSet(
-      Number.parseFloat(this.props.audio.currentTime).toFixed(3)
-    )
+    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
     this.props.getPlayList('trash', this.handleLyricUpdated)
   }
 
@@ -348,24 +292,14 @@ class Cover extends Component {
    * @memberof Cover
    */
   handleLoveSong = () => {
-    const {
-      _id,
-      pattern,
-      getPlayList,
-      recentSong,
-      redheartSong,
-      dailySong,
-      songListIndex
-    } = this.props
+    const { _id, pattern, getPlayList, recentSong, redheartSong, dailySong, songListIndex } = this.props
     const { love } = this.state
     if (_id === 0) {
       this.handleLoveIsLoginPopupOpen()
       return
     }
 
-    this.props.handlePlaytimeSet(
-      Number.parseFloat(this.props.audio.currentTime).toFixed(3)
-    )
+    this.props.handlePlaytimeSet(Number.parseFloat(this.props.audio.currentTime).toFixed(3))
 
     if (love === 'white') {
       if (pattern === 'select') {
@@ -444,14 +378,7 @@ class Cover extends Component {
           {pattern === 'select' && (
             <div>
               <Popup
-                trigger={
-                  <Icon
-                    name="heart"
-                    size="big"
-                    style={{ color: love }}
-                    onClick={this.handleLoveSong}
-                  />
-                }
+                trigger={<Icon name="heart" size="big" style={{ color: love }} onClick={this.handleLoveSong} />}
                 content="想要喜欢歌曲，请先登录"
                 position="bottom center"
                 on="click"
@@ -459,33 +386,14 @@ class Cover extends Component {
                 onClose={this.handleLoveIsLoginPopupClose}
               />
               <Icon name="trash" size="big" onClick={this.handleTrashSong} />
-              <Icon
-                name="step forward"
-                size="big"
-                onClick={this.handleSkipSong}
-              />
+              <Icon name="step forward" size="big" onClick={this.handleSkipSong} />
             </div>
           )}
-          {(pattern === 'recent' ||
-            pattern === 'redheart' ||
-            pattern === 'daily') && (
+          {(pattern === 'recent' || pattern === 'redheart' || pattern === 'daily') && (
             <div>
-              <Icon
-                name="step backward"
-                size="big"
-                onClick={this.handleSongBackward}
-              />
-              <Icon
-                name="heart"
-                size="big"
-                style={{ color: love }}
-                onClick={this.handleLoveSong}
-              />
-              <Icon
-                name="step forward"
-                size="big"
-                onClick={this.handleSongForward}
-              />
+              <Icon name="step backward" size="big" onClick={this.handleSongBackward} />
+              <Icon name="heart" size="big" style={{ color: love }} onClick={this.handleLoveSong} />
+              <Icon name="step forward" size="big" onClick={this.handleSongForward} />
             </div>
           )}
         </div>
@@ -499,9 +407,7 @@ class Cover extends Component {
             <Header as="h3" title={song.title}>
               {song.title}
               <Header.Subheader title={song.artist}>
-                {song.artist.length > 20
-                  ? song.artist.substring(0, 17) + '...'
-                  : song.artist}
+                {song.artist.length > 20 ? song.artist.substring(0, 17) + '...' : song.artist}
               </Header.Subheader>
             </Header>
           </div>
@@ -564,8 +470,7 @@ const mapDispatchToProps = dispatch => ({
   handleSongListGo: () => dispatch(songListGo()),
   handleSongListBack: () => dispatch(songListBack()),
   handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
-  handlePlayLog: (sid, type, play_source) =>
-    dispatch(playLog(sid, type, play_source)),
+  handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source)),
   handlePlaytimeSet: pt => dispatch(playtimeSet(pt)),
   handleSongLyricGET: () => dispatch(songLyricGET()),
   handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid))
