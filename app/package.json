@@ -2,7 +2,11 @@
   "name": "Petal",
   "version": "2.19.0",
   "description": "Douban.FM Client With Extra - - -",
-  "author": "Yue Yang <g1enyy0ung@gmail.com> (http://g1eny0ung.site)",
+  "author": "Yue Yang <g1enyy0ung@gmail.com> (https://g1eny0ung.site/)",
+  "contributors": [
+    "Rapiz1 <contact@rapiz.me> (https://rapiz.me/)",
+    "lxs137 <lxs137@hotmail.com>"
+  ],
   "license": "MIT",
   "private": true
 }

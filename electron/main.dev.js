@@ -1,11 +1,14 @@
 import './db'
-import { app } from 'electron'
-import fs from 'fs'
+import './ipc'
+
 import { createWindow, saveCurrentWindowPosition } from './win'
+
+import Tray from './tray'
+import { app } from 'electron'
 import { createBackgroundWindow } from './backgroundWin'
 import createMenu from './menu'
-import Tray from './tray'
-import './ipc'
+import fs from 'fs'
+
 const createDB = () => {
   fs.access(app.getPath('home') + '/.petal.db', err => {
     /* eslint-disable */
@@ -27,6 +30,7 @@ function createMusicDir() {
   if (!fs.existsSync(musicDir)) {
     fs.mkdirSync(musicDir)
   }
+
   const dir = app.getPath('music') + '/PETAL豆瓣FM'
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
@@ -50,6 +54,4 @@ app.on('ready', () => {
   Tray.init()
 })
 
-app.on('before-quit', () => {
-  saveCurrentWindowPosition()
-})
+app.on('before-quit', saveCurrentWindowPosition)

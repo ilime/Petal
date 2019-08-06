@@ -1,5 +1,6 @@
 import { BrowserWindow } from 'electron'
 import db from './db'
+import { isDarwin } from './platform'
 import url from 'url'
 
 export let mainWindow = null
@@ -54,7 +55,7 @@ export function setWindowPostionFromDB() {
       if (doc.restoreLastWinPos) {
         db.findOne({ window: 'position' }, (err, doc) => {
           if (doc != null) {
-            mainWindow.setPosition(doc.pos[0], doc.pos[1], process.platform === 'darwin' ? true : undefined)
+            mainWindow.setPosition(doc.pos[0], doc.pos[1], isDarwin ? true : undefined)
           }
         })
       }
