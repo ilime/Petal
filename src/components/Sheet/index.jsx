@@ -43,6 +43,7 @@ class Sheet extends Component {
           {_id === 1 && (
             <Item>
               <Item.Image
+                fluid
                 className="daily-image"
                 src={daily.songs[0].picture}
                 label={{
