@@ -30,7 +30,7 @@ export default {
     } else if (isWin) {
       this.tray = new Tray(`${resourcesFolder}win/icon.ico`)
     } else if (isLinux) {
-      this.tray = new Tray(`${resourcesFolder}linux/icon.png`)
+      this.tray = new Tray(process.env.PETAL_FORCE_OSX_ICON?`${resourcesFolder}osx/${process.env.PETAL_FORCE_OSX_ICON}/logo.png`:`${resourcesFolder}linux/icon.png`)
     }
 
     if (!isDarwin) {
