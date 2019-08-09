@@ -15,26 +15,20 @@ class Mpris {
       supportedMimeTypes: ['audio/mpeg', 'application/ogg'],
       supportedInterfaces: ['player']
     })
-    this.player.getPosition = () => {
-      // TODO:
-      return 0
-    }
+    this.player.getPosition = () => 0
     this.player.on('raise', () => mainWindow.show())
     this.player.on('quit', () => process.exit())
     this.player.on('playpause', () => {
       // console.log('MPRIS playpasue')
       mainWindow.webContents.send('pause')
-      // this.togglePlayingStatus();
     })
     this.player.on('play', () => {
       // console.log('MPRIS play')
       mainWindow.webContents.send('pause')
-      // this.setPlayingStatus(true);
     })
     this.player.on('pause', () => {
       // console.log('MPRIS pause')
       mainWindow.webContents.send('pause')
-      // this.setPlayingStatus(false);
     })
     this.player.on('next', () => {
       // console.log('MPRIS next')
