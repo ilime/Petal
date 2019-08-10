@@ -1,40 +1,34 @@
 @import '../common';
 
+// Collapse overflow text with dots(...). Use with the title of the song and the name of the artists
+.dothidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.clearbottomrounded {// The cover and the progress bar together makes up a rounded square
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.clearbottomrounded > *{
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
 .petal-cover {
   user-select: none;
   display:flex;
   flex-direction: column;
-  .cover img {
-    width: 100%;
-  }
-  .info {
+  // semantic-ui does not have visibility transition for dimmer. add our own.
+  .ui.dimmer {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 5px;
-
-    .title {
-      max-width: 200px;
-      h3 {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-
-    .artist {
-      img {
-        height: 35px !important;
-      }
-    }
+    transition: opacity .2s linear;
   }
-
-  .cover {
-    img {
-      /*
-      width: 250px !important;
-      height: 250px !important;
-      */
-    }
+  .ui.dimmer.visible {
+    opacity: 100%;
+  }
+  .ui.segment.info .content {
+    // Only with max-width, .dothidden will behave as expected
+    max-width: 80%;
   }
 
   .play-pause {

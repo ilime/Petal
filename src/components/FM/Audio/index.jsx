@@ -300,7 +300,7 @@ class Audio extends Component {
     const { percent } = this.state
     return (
       <article className="petal-player">
-        <Progress percent={percent} size="tiny" />
+        <Progress percent={percent} size="tiny" attached="bottom"/>
         <div className="player-bar">
           <div className="player-time">
             <span className="currenttime">0:00</span>
