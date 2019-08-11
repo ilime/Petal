@@ -1,25 +1,11 @@
-.petal-container {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
 .petal-container-window {
   display: flex;
   flex-direction: row;
-}
-.petal-sidebar-container {
-  flex: none;
-  width:10vw;
-  min-width: 30px;
+  height: calc(100% - 24px);
 }
 
 .petal-routes-container {
   flex: 1;
-  width: 90vw;
-  /*
-  display:flex;
-  flex-direction: column;
- */ 
 }
 .petal-container-titlebar {
   height: 24px;

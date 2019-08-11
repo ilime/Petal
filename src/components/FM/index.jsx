@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Dimmer, Loader, Container } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 import Cover from './Cover'
 import Audio from './Audio'
 import Extra from './Extra'
@@ -20,7 +20,7 @@ class FM extends Component {
   render() {
     const { isFetching } = this.props
     return (
-      <Container className="fm-region">
+      <article className="fm-region">
         <Dimmer.Dimmable>
           <Dimmer className="fm-dimmer" active={isFetching} inverted>
             <Loader>加载中</Loader>
@@ -29,7 +29,7 @@ class FM extends Component {
           <Audio handleAudioSpan={this.handleAudioSpan} />
           <Extra audio={this.state.audio} />
         </Dimmer.Dimmable>
-      </Container>
+      </article>
     )
   }
 }

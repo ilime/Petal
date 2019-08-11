@@ -7,7 +7,7 @@ import { openInDefaultBrowser, rendererProcessSend } from '../../helper/electron
 
 import About from '../About/index'
 import FM from '../FM'
-import { Label } from 'semantic-ui-react'
+import { Label, Container as UIContainer } from 'semantic-ui-react'
 import Loading from '../Loading'
 import Login from '../Login'
 import Pattern from '../Pattern/index'
@@ -65,68 +65,64 @@ class Container extends Component {
     } else {
       return (
         <Router>
-          <main className="petal-container">
-            <article className="petal-container-titlebar">
-              <div className="titlebar">
-                <div className="titlebar-stoplight">
-                  <div className="titlebar-close" onClick={appQuit} title="关闭">
-                    <svg x="0px" y="0px" viewBox="0 0 6.4 6.4">
-                      <polygon
-                        fill="#4d0000"
-                        points="6.4,0.8 5.6,0 3.2,2.4 0.8,0 0,0.8 2.4,3.2 0,5.6 0.8,6.4 3.2,4 5.6,6.4 6.4,5.6 4,3.2"
-                      />
-                    </svg>
-                  </div>
-                  <div className="titlebar-minimize" onClick={appMinimize} title="最小化">
-                    <svg x="0px" y="0px" viewBox="0 0 8 1.1">
-                      <rect fill="#995700" width="8" height="1.1" />
-                    </svg>
-                  </div>
-                  <div className="titlebar-fullscreen" onClick={appMaximize} title="最大化">
-                    <svg className="fullscreen-svg" x="0px" y="0px" viewBox="0 0 6 5.9">
-                      <path fill="#006400" d="M5.4,0h-4L6,4.5V0.6C5.7,0.6,5.3,0.3,5.4,0z" />
-                      <path fill="#006400" d="M0.6,5.9h4L0,1.4l0,3.9C0.3,5.3,0.6,5.6,0.6,5.9z" />
-                    </svg>
-                    <svg className="maximize-svg" x="0px" y="0px" viewBox="0 0 7.9 7.9">
-                      <polygon
-                        fill="#006400"
-                        points="7.9,4.5 7.9,3.4 4.5,3.4 4.5,0 3.4,0 3.4,3.4 0,3.4 0,4.5 3.4,4.5 3.4,7.9 4.5,7.9 4.5,4.5"
-                      />
-                    </svg>
-                  </div>
+          <article className="petal-container-titlebar">
+            <div className="titlebar">
+              <div className="titlebar-stoplight">
+                <div className="titlebar-close" onClick={appQuit} title="关闭">
+                  <svg x="0px" y="0px" viewBox="0 0 6.4 6.4">
+                    <polygon
+                      fill="#4d0000"
+                      points="6.4,0.8 5.6,0 3.2,2.4 0.8,0 0,0.8 2.4,3.2 0,5.6 0.8,6.4 3.2,4 5.6,6.4 6.4,5.6 4,3.2"
+                    />
+                  </svg>
+                </div>
+                <div className="titlebar-minimize" onClick={appMinimize} title="最小化">
+                  <svg x="0px" y="0px" viewBox="0 0 8 1.1">
+                    <rect fill="#995700" width="8" height="1.1" />
+                  </svg>
+                </div>
+                <div className="titlebar-fullscreen" onClick={appMaximize} title="最大化">
+                  <svg className="fullscreen-svg" x="0px" y="0px" viewBox="0 0 6 5.9">
+                    <path fill="#006400" d="M5.4,0h-4L6,4.5V0.6C5.7,0.6,5.3,0.3,5.4,0z" />
+                    <path fill="#006400" d="M0.6,5.9h4L0,1.4l0,3.9C0.3,5.3,0.6,5.6,0.6,5.9z" />
+                  </svg>
+                  <svg className="maximize-svg" x="0px" y="0px" viewBox="0 0 7.9 7.9">
+                    <polygon
+                      fill="#006400"
+                      points="7.9,4.5 7.9,3.4 4.5,3.4 4.5,0 3.4,0 3.4,3.4 0,3.4 0,4.5 3.4,4.5 3.4,7.9 4.5,7.9 4.5,4.5"
+                    />
+                  </svg>
                 </div>
               </div>
-              <div className="more-options">
-                {checkUpdateDisplay && (
-                  <Label
-                    as="a"
-                    className="checkupdate"
-                    content="新的版本更新♪(^∇^*)"
-                    color="green"
-                    size="mini"
-                    onClick={openInDefaultBrowser('https://github.com/ilime/Petal/releases')}
-                  />
-                )}
-              </div>
-            </article>
-            <article className="petal-container-window">
-              <article className="petal-sidebar-container">
-                <Sidebar />
-              </article>
-              <article className="petal-routes-container">
-                <FM />
-                <Route path="/setting" component={Setting} />
-                <Route path="/login" component={Login} />
-                <Route path="/redHeartList" component={RedHeart} />
-                <Route path="/recentList" component={Recent} />
-                <Route path="/trashList" component={Trash} />
-                <Route path="/pattern" component={Pattern} />
-                <Route path="/personal" component={Personal} />
-                <Route path="/sheet" component={Sheet} />
-                <Route path="/about" component={About} />
-              </article>
-            </article>
-          </main>
+            </div>
+            <div className="more-options">
+              {checkUpdateDisplay && (
+                <Label
+                  as="a"
+                  className="checkupdate"
+                  content="新的版本更新♪(^∇^*)"
+                  color="green"
+                  size="mini"
+                  onClick={openInDefaultBrowser('https://github.com/ilime/Petal/releases')}
+                />
+              )}
+            </div>
+          </article>
+          <article className="petal-container-window">
+            <Sidebar />
+            <UIContainer fluid className="petal-routes-container">
+              <FM />
+              <Route path="/setting" component={Setting} />
+              <Route path="/login" component={Login} />
+              <Route path="/redHeartList" component={RedHeart} />
+              <Route path="/recentList" component={Recent} />
+              <Route path="/trashList" component={Trash} />
+              <Route path="/pattern" component={Pattern} />
+              <Route path="/personal" component={Personal} />
+              <Route path="/sheet" component={Sheet} />
+              <Route path="/about" component={About} />
+            </UIContainer>
+          </article>
         </Router>
       )
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon, Image } from 'semantic-ui-react'
+import { Icon, Image, Menu} from 'semantic-ui-react'
 import { NavLink, withRouter } from 'react-router-dom'
 
 export class Sidebar extends Component {
@@ -9,75 +9,62 @@ export class Sidebar extends Component {
     const { _id, avatar, hideAbout } = this.props
 
     return (
-      <nav className="petal-sidebar">
-        <ul className="petal-sidebar-itemlist">
-          <li>
-            <NavLink exact to="/" activeClassName="selected">
+      <Menu 
+        className="petal-sidebar"
+        vertical
+        icon
+        secondary
+        pointing
+        fitted
+        >
+            <Menu.Item as={NavLink} exact to="/" activeClassName="active">
               <Icon name="leaf" size="large" color="grey" />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact to="/pattern" activeClassName="selected">
+            </Menu.Item>
+            <Menu.Item as={NavLink} exact to="/pattern" activeClassName="active">
               <Icon name="options" size="large" color="grey" />
-            </NavLink>
-          </li>
+            </Menu.Item>
           {_id === 1 && (
-            <li>
-              <NavLink exact to="/sheet" activeClassName="selected">
+              <Menu.Item as={NavLink} exact to="/sheet" activeClassName="active">
                 <Icon name="lab" size="large" color="grey" />
-              </NavLink>
-            </li>
+              </Menu.Item>
           )}
           {_id === 1 && (
-            <li>
-              <NavLink exact to="/redHeartList" activeClassName="selected">
+              <Menu.Item as={NavLink} exact to="/redHeartList" activeClassName="active">
                 <Icon name="heart outline" size="large" color="grey" />
-              </NavLink>
-            </li>
+              </Menu.Item>
           )}
           {_id === 1 && (
-            <li>
-              <NavLink exact to="/recentList" activeClassName="selected">
+              <Menu.Item as={NavLink} exact to="/recentList" activeClassName="active">
                 <Icon name="history" size="large" color="grey" />
-              </NavLink>
-            </li>
+              </Menu.Item>
           )}
           {_id === 1 && (
-            <li>
-              <NavLink exact to="/trashList" activeClassName="selected">
+              <Menu.Item as={NavLink} exact to="/trashList" activeClassName="active">
                 <Icon
                   name="trash alternate outline"
                   size="large"
                   color="grey"
                 />
-              </NavLink>
-            </li>
+              </Menu.Item>
           )}
-          <li>
-            <NavLink exact to="/setting" activeClassName="selected">
+            <Menu.Item as={NavLink} exact to="/setting" activeClassName="active">
               <Icon name="setting" size="large" color="grey" />
-            </NavLink>
-          </li>
+            </Menu.Item>
           {!hideAbout && (
-            <li>
-              <NavLink exact to="/about" activeClassName="selected">
+              <Menu.Item as={NavLink} exact to="/about" activeClassName="active">
                 <Icon name="idea" size="large" color="grey" />
-              </NavLink>
-            </li>
+              </Menu.Item>
           )}
-          <li className="auth">
             {_id === 0 ? (
-              <NavLink to="/login" activeClassName="selected">
+              <Menu.Item as={NavLink} to="/login" activeClassName="active">
                 <Icon name="user circle" size="large" color="grey" />
-              </NavLink>
+              </Menu.Item>
             ) : (
-              <NavLink to="/personal" activeClassName="selected">
+              <Menu.Item as={NavLink} to="/personal" activeClassName="active" id="auth">
                 <Image src={avatar} avatar />
-              </NavLink>
+              </Menu.Item>
             )}
-          </li>
-        </ul>
-      </nav>
+      </Menu>
     )
   }
 }

@@ -19,6 +19,8 @@
   display:flex;
   flex-direction: column;
   // semantic-ui does not have visibility transition for dimmer. add our own.
+  // unstable due to chromium rendering. disable for now
+  /*
   .ui.dimmer {
     display: flex;
     transition: opacity .2s linear;
@@ -26,11 +28,15 @@
   .ui.dimmer.visible {
     opacity: 100%;
   }
+  */
   .ui.segment.info .content {
     // Only with max-width, .dothidden will behave as expected
     max-width: 80%;
   }
 
+  .ui.segment.info.basic {
+    padding: 0;
+  }
   .play-pause {
     @include VHCenter();
     width: 5rem;

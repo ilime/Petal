@@ -402,10 +402,10 @@ class Cover extends Component {
 
     return (
       <article className="petal-cover">
-        <Segment className="info">
-          <Header title={song.title} className="title dothidden">
-            <Image src={song.singers[0].avatar} size="medium" circular className="artist" />
-            <Header.Content>
+        <Segment basic className="info">
+          <Header title={song.title} className="title">
+            <Image src={song.singers[0].avatar} size="small" circular className="artist" />
+            <Header.Content className="dothidden">
               {song.title}
               <Header.Subheader title={song.artist} className="dothidden">
                 {song.artist}
