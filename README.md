@@ -12,6 +12,7 @@
   <img src="https://david-dm.org/ilime/Petal.svg" />
   <img alt="David" src="https://img.shields.io/david/dev/ilime/Petal.svg">
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/ilime/Petal.svg">
+  <img alt="GitHub release" src="https://img.shields.io/github/release/ilime/Petal">
   <img alt="GitHub Releases (by Release)" src="https://img.shields.io/github/downloads/ilime/Petal/total.svg">
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
