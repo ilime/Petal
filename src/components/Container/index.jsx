@@ -7,7 +7,7 @@ import { openInDefaultBrowser, rendererProcessSend } from '../../helper/electron
 
 import About from '../About/index'
 import FM from '../FM'
-import { Label, Container as UIContainer } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 import Loading from '../Loading'
 import Login from '../Login'
 import Pattern from '../Pattern/index'
@@ -110,7 +110,7 @@ class Container extends Component {
           </article>
           <article className="petal-container-window">
             <Sidebar />
-            <UIContainer fluid className="petal-routes-container">
+            <article className="petal-routes-container">
               <FM />
               <Route path="/setting" component={Setting} />
               <Route path="/login" component={Login} />
@@ -121,7 +121,7 @@ class Container extends Component {
               <Route path="/personal" component={Personal} />
               <Route path="/sheet" component={Sheet} />
               <Route path="/about" component={About} />
-            </UIContainer>
+            </article>
           </article>
         </Router>
       )

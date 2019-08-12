@@ -1,4 +1,4 @@
-import { Dimmer, Header, Icon, Image, Popup, Segment} from 'semantic-ui-react'
+import { Dimmer, Header, Icon, Image, Popup, Segment } from 'semantic-ui-react'
 import React, { Component } from 'react'
 import { onReceiveFromMainProcess, rendererProcessSend } from '../../../helper/electron'
 import { playLog, playlistGET, songLyricGET } from '../../../actions/fm/apis'
@@ -414,7 +414,7 @@ class Cover extends Component {
           </Header>
         </Segment>
         <Dimmer.Dimmable
-          className="cover clearbottomrounded"
+          className="cover"
           as={Image}
           blurring={true}
           dimmed={controlPanelActive}

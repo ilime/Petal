@@ -26,8 +26,8 @@ class FM extends Component {
             <Loader>加载中</Loader>
           </Dimmer>
           <Cover audio={this.state.audio} />
-          <Audio handleAudioSpan={this.handleAudioSpan} />
           <Extra audio={this.state.audio} />
+          <Audio handleAudioSpan={this.handleAudioSpan} />
         </Dimmer.Dimmable>
       </article>
     )

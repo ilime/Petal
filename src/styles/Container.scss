@@ -1,11 +1,12 @@
 .petal-container-window {
   display: flex;
   flex-direction: row;
-  height: calc(100% - 24px);
+  height: calc(100vh - 24px);
 }
 
 .petal-routes-container {
-  flex: 1;
+  width: calc(100vw - 50px - 2em);
+  margin: 0 1em;
 }
 .petal-container-titlebar {
   height: 24px;
