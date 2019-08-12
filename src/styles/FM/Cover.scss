@@ -37,6 +37,11 @@
   .ui.segment.info.basic {
     padding: 0;
   }
+
+  >div>img {
+    object-fit: contain;
+    max-height: calc(100vh - 80px);
+  }
   .play-pause {
     @include VHCenter();
     width: 5rem;

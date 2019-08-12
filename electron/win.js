@@ -8,6 +8,8 @@ export let mainWindow = null
 export const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 330,
+    minWidth: 250,
+    minHeight: 385,
     height: 330,
     resizable: true,
     frame: false,
