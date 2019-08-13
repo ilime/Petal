@@ -1,16 +1,24 @@
 .petal-sidebar {
   .active {
     border-color: $petal-green !important;
+
     i.grey.large.icon {
       color: $petal-green !important;
     }
   }
+
   a.item {
     padding-left: 0.8em !important;
     padding-right: 0.8em !important;
   }
+
   #auth {
     position: absolute;
-    bottom: 0;
+    bottom: 15px;
+
+    img.avatar {
+      width: 1.5em;
+      height: 1.5em;
+    }
   }
 }

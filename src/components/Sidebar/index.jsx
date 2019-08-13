@@ -9,7 +9,7 @@ export class Sidebar extends Component {
     const { _id, avatar, hideAbout } = this.props
 
     return (
-      <Menu className="petal-sidebar" vertical icon secondary pointing fitted>
+      <Menu className="petal-sidebar" vertical icon secondary pointing>
         <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           <Icon name="leaf" size="large" color="grey" />
         </Menu.Item>
