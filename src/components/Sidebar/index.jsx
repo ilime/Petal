@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon, Image } from 'semantic-ui-react'
+import { Icon, Image, Menu } from 'semantic-ui-react'
 import { NavLink, withRouter } from 'react-router-dom'
 
 export class Sidebar extends Component {
@@ -9,75 +9,51 @@ export class Sidebar extends Component {
     const { _id, avatar, hideAbout } = this.props
 
     return (
-      <nav className="petal-sidebar">
-        <ul className="petal-sidebar-itemlist">
-          <li>
-            <NavLink exact to="/" activeClassName="selected">
-              <Icon name="leaf" size="large" color="grey" />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact to="/pattern" activeClassName="selected">
-              <Icon name="options" size="large" color="grey" />
-            </NavLink>
-          </li>
-          {_id === 1 && (
-            <li>
-              <NavLink exact to="/sheet" activeClassName="selected">
-                <Icon name="lab" size="large" color="grey" />
-              </NavLink>
-            </li>
-          )}
-          {_id === 1 && (
-            <li>
-              <NavLink exact to="/redHeartList" activeClassName="selected">
-                <Icon name="heart outline" size="large" color="grey" />
-              </NavLink>
-            </li>
-          )}
-          {_id === 1 && (
-            <li>
-              <NavLink exact to="/recentList" activeClassName="selected">
-                <Icon name="history" size="large" color="grey" />
-              </NavLink>
-            </li>
-          )}
-          {_id === 1 && (
-            <li>
-              <NavLink exact to="/trashList" activeClassName="selected">
-                <Icon
-                  name="trash alternate outline"
-                  size="large"
-                  color="grey"
-                />
-              </NavLink>
-            </li>
-          )}
-          <li>
-            <NavLink exact to="/setting" activeClassName="selected">
-              <Icon name="setting" size="large" color="grey" />
-            </NavLink>
-          </li>
-          {!hideAbout && (
-            <li>
-              <NavLink exact to="/about" activeClassName="selected">
-                <Icon name="idea" size="large" color="grey" />
-              </NavLink>
-            </li>
-          )}
-          <li className="auth">
-            {_id === 0 ? (
-              <NavLink to="/login" activeClassName="selected">
-                <Icon name="user circle" size="large" color="grey" />
-              </NavLink>
-            ) : (
-              <NavLink to="/personal" activeClassName="selected">
-                <Image src={avatar} avatar />
-              </NavLink>
-            )}
-          </li>
-        </ul>
-      </nav>
+      <Menu className="petal-sidebar" vertical icon secondary pointing fitted>
+        <Menu.Item as={NavLink} exact to="/" activeClassName="active">
+          <Icon name="leaf" size="large" color="grey" />
+        </Menu.Item>
+        <Menu.Item as={NavLink} exact to="/pattern" activeClassName="active">
+          <Icon name="options" size="large" color="grey" />
+        </Menu.Item>
+        {_id === 1 && (
+          <Menu.Item as={NavLink} exact to="/sheet" activeClassName="active">
+            <Icon name="lab" size="large" color="grey" />
+          </Menu.Item>
+        )}
+        {_id === 1 && (
+          <Menu.Item as={NavLink} exact to="/redHeartList" activeClassName="active">
+            <Icon name="heart outline" size="large" color="grey" />
+          </Menu.Item>
+        )}
+        {_id === 1 && (
+          <Menu.Item as={NavLink} exact to="/recentList" activeClassName="active">
+            <Icon name="history" size="large" color="grey" />
+          </Menu.Item>
+        )}
+        {_id === 1 && (
+          <Menu.Item as={NavLink} exact to="/trashList" activeClassName="active">
+            <Icon name="trash alternate outline" size="large" color="grey" />
+          </Menu.Item>
+        )}
+        <Menu.Item as={NavLink} exact to="/setting" activeClassName="active">
+          <Icon name="setting" size="large" color="grey" />
+        </Menu.Item>
+        {!hideAbout && (
+          <Menu.Item as={NavLink} exact to="/about" activeClassName="active">
+            <Icon name="idea" size="large" color="grey" />
+          </Menu.Item>
+        )}
+        {_id === 0 ? (
+          <Menu.Item as={NavLink} to="/login" activeClassName="active">
+            <Icon name="user circle" size="large" color="grey" />
+          </Menu.Item>
+        ) : (
+          <Menu.Item as={NavLink} to="/personal" activeClassName="active" id="auth">
+            <Image src={avatar} avatar />
+          </Menu.Item>
+        )}
+      </Menu>
     )
   }
 }

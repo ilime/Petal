@@ -1,4 +1,4 @@
-import { Dimmer, Header, Icon, Image, Popup } from 'semantic-ui-react'
+import { Dimmer, Header, Icon, Image, Popup, Segment } from 'semantic-ui-react'
 import React, { Component } from 'react'
 import { onReceiveFromMainProcess, rendererProcessSend } from '../../../helper/electron'
 import { playLog, playlistGET, songLyricGET } from '../../../actions/fm/apis'
@@ -402,19 +402,17 @@ class Cover extends Component {
 
     return (
       <article className="petal-cover">
-        <div className="info">
-          <div className="title">
-            <Header as="h3" title={song.title}>
+        <Segment basic className="info">
+          <Header title={song.title} className="title">
+            <Image src={song.singers[0].avatar} size="small" circular className="artist" />
+            <Header.Content className="dothidden">
               {song.title}
-              <Header.Subheader title={song.artist}>
-                {song.artist.length > 20 ? song.artist.substring(0, 17) + '...' : song.artist}
+              <Header.Subheader title={song.artist} className="dothidden">
+                {song.artist}
               </Header.Subheader>
-            </Header>
-          </div>
-          <div className="artist">
-            <Image src={song.singers[0].avatar} size="mini" circular />
-          </div>
-        </div>
+            </Header.Content>
+          </Header>
+        </Segment>
         <Dimmer.Dimmable
           className="cover"
           as={Image}
@@ -425,6 +423,7 @@ class Cover extends Component {
           onMouseLeave={this.handleControlHide}
           src={song.picture}
           rounded
+          fluid
         />
       </article>
     )

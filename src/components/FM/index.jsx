@@ -21,7 +21,7 @@ class FM extends Component {
     const { isFetching } = this.props
     return (
       <article className="fm-region">
-        <Dimmer.Dimmable dimmed>
+        <Dimmer.Dimmable>
           <Dimmer className="fm-dimmer" active={isFetching} inverted>
             <Loader>加载中</Loader>
           </Dimmer>

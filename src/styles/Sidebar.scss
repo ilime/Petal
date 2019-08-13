@@ -1,38 +1,16 @@
 .petal-sidebar {
-  height: 100%;
-}
-
-.petal-sidebar-itemlist {
-  display:flex;
-  flex-direction: column;
-  position: relative;
-  list-style: none;
-  margin: 0;
-  margin-top: 5px;
-  padding: 0;
-  height: calc(100vh - 24px - 5px);
-
-  li {
-    padding: 5px;
-    padding-right: 0;
-  }
-
-  .auth {
-    margin-top:auto;
-    .ui.avatar.image {
-      width: 21px !important;
-      height: 21px !important;
-      user-select: none;
-    }
-  }
-
-  .selected {
+  .active {
+    border-color: $petal-green !important;
     i.grey.large.icon {
       color: $petal-green !important;
     }
-    border-right: solid 2px $petal-green;
   }
-  >li>a {
-    padding: 4px 0;
+  a.item {
+    padding-left: 0.8em !important;
+    padding-right: 0.8em !important;
+  }
+  #auth {
+    position: absolute;
+    bottom: 0;
   }
 }
