@@ -64,21 +64,13 @@ export function setWindowPostionFromDB() {
 }
 
 export function saveCurrentWindowPosition() {
-  db.findOne({ window: 'position' }, (err, doc) => {
-    if (doc !== null) {
-      db.update(
-        { window: 'position' },
-        {
-          $set: {
-            pos: getCurrentWindowPostion()
-          }
-        }
-      )
-    } else {
-      db.insert({
-        window: 'position',
-        pos: getCurrentWindowPostion()
-      })
-    }
+  db.update({
+    window: 'position'
+  }, {
+    window: 'position',
+    pos: getCurrentWindowPostion()
+  }, {
+    multi: false,
+    upsert: true
   })
 }
