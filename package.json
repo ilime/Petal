@@ -31,7 +31,7 @@
     "redux-cond": "^1.1.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "semantic-ui-react": "^0.87.2"
+    "semantic-ui-react": "^0.88.0"
   },
   "main": "public/main.js",
   "scripts": {
