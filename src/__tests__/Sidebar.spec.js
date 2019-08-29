@@ -16,7 +16,7 @@ describe('<Sidebar />', () => {
     '/recentList',
     '/trashList',
     '/setting',
-    'about',
+    '/about',
     '/personal'
   ]
 
