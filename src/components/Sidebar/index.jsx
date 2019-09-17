@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Icon, Image, Menu } from 'semantic-ui-react'
 import { NavLink, withRouter } from 'react-router-dom'
+import React, { Component } from 'react'
+
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 export class Sidebar extends Component {
   render() {
@@ -41,11 +42,11 @@ export class Sidebar extends Component {
         </Menu.Item>
         {!hideAbout && (
           <Menu.Item as={NavLink} exact to="/about" activeClassName="active">
-            <Icon name="idea" size="large" color="grey" />
+            <Icon name="question circle outline" size="large" color="grey" />
           </Menu.Item>
         )}
         {_id === 0 ? (
-          <Menu.Item as={NavLink} to="/login" activeClassName="active">
+          <Menu.Item as={NavLink} to="/login" activeClassName="active" id="auth">
             <Icon name="user circle" size="large" color="grey" />
           </Menu.Item>
         ) : (

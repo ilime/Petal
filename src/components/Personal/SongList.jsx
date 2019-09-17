@@ -111,7 +111,6 @@ class SongList extends Component {
           className="refresh-button"
           link
           loading={songlistRefreshLoading}
-          color="grey"
           name="refresh"
           title="刷新"
           onClick={this.handleSonglistRefresh}

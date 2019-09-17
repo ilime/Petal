@@ -3,16 +3,22 @@
   height: calc(100vh - 24px);
   overflow-y: scroll;
 
-  .daily-image {
+  .daily-play {
+    position: absolute;
+    top: 32px;
+    right: 25px;
+    cursor: pointer;
 
-    a.ui.right.corner.label {
-      i {
-        cursor: pointer;
-      }
+    &:hover {
+      color: $petal-green;
+    }
+  }
 
-      &:hover {
-        color: $petal-green;
-      }
+  .ui.items:not(.unstackable) > .item > .image.daily-cover {
+    max-height: none !important;
+
+    > img {
+      max-height: none !important;
     }
   }
 }

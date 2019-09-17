@@ -3,13 +3,29 @@
   height: calc(100vh - 24px);
   overflow-y: scroll;
 
-  .ui.tiny.image.avatar-icon {
+  .ui.unstackable.items > .item > .image.avatar-icon {
     width: 100px !important;
     height: 100px !important;
+
+    > img {
+      width: 100px !important;
+      height: 100px !important;
+    }
+
+    @media screen and (min-width: 380px) and (max-width: 430px) {
+      width: 125px !important;
+      height: 125px !important;
+
+      > img {
+        width: 125px !important;
+        height: 125px !important;
+      }
+    }
   }
 
   .operations {
-    margin-top: 0.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 
     .ui.button {
       &:hover {
@@ -23,8 +39,9 @@
 .petal-personal-shares {
   .close-page {
     position: absolute;
-    right: 10px;
-    top: 25px;
+    top: 32px;
+    right: 25px;
+    cursor: pointer;
 
     &:hover {
       color: $petal-green;
@@ -40,12 +57,11 @@
 
 .petal-personal-shares {
   .ui.tiny.image.album-picture {
-    width: 40px !important;
-    height: 40px !important;
+    width: 80px !important;
+    height: 80px !important;
   }
 
   .ui.items > .item > .content > .description {
-    width: 200px;
     word-wrap: break-word;
   }
 }
@@ -58,8 +74,8 @@
 
   .refresh-button {
     position: absolute;
-    top: 5px;
-    right: 10px;
+    top: 8px;
+    right: 15px;
 
     &:hover {
       color: $petal-green !important;

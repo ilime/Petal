@@ -1,11 +1,12 @@
+import { Button, Header, Item } from 'semantic-ui-react'
+import { Link, Route } from 'react-router-dom'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Header, Item, Button } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
-import { authRemove } from '../../actions/auth/apis'
+
 import Downloads from './Downloads'
+import PropTypes from 'prop-types'
 import Shares from './Shares'
+import { authRemove } from '../../actions/auth/apis'
+import { connect } from 'react-redux'
 
 class Personal extends Component {
   componentDidMount() {
@@ -31,11 +32,7 @@ class Personal extends Component {
         <div className="main-view">
           <Item.Group unstackable>
             <Item>
-              <Item.Image
-                className="avatar-icon"
-                size="tiny"
-                src={userInfo.icon}
-              />
+              <Item.Image className="avatar-icon" src={userInfo.icon} />
               <Item.Content>
                 <Item.Header as="a">{userInfo.name}</Item.Header>
                 <Item.Meta>
@@ -46,9 +43,6 @@ class Personal extends Component {
               </Item.Content>
             </Item>
           </Item.Group>
-          <Button fluid negative onClick={this.handleAuthRemoveWrapper}>
-            退出登录
-          </Button>
           <div className="operations">
             <Link to="/personal/downloads">
               <Button basic size="small">
@@ -61,6 +55,9 @@ class Personal extends Component {
               </Button>
             </Link>
           </div>
+          <Button fluid negative onClick={this.handleAuthRemoveWrapper}>
+            退出登录
+          </Button>
         </div>
         <Route path="/personal/downloads" component={Downloads} />
         <Route path="/personal/shares" component={Shares} />

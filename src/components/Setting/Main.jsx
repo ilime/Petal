@@ -67,13 +67,7 @@ class Main extends Component {
 
   render() {
     const { _id, saveSuccess } = this.props
-    const {
-      volume,
-      openWithPlaying,
-      restoreLastWinPos,
-      hideAbout,
-      openPattern
-    } = this.state
+    const { volume, openWithPlaying, restoreLastWinPos, hideAbout, openPattern } = this.state
 
     const patternOptions = [
       { key: 'select', text: '豆瓣精选 MHz', value: 'select' },
@@ -91,20 +85,12 @@ class Main extends Component {
         <Header as="h5">播放设置：</Header>
         <div>
           <div>
-            <Checkbox
-              label="打开后自动播放"
-              onChange={this.handleOpenWithPlayingState}
-              checked={openWithPlaying}
-            />
+            <Checkbox label="打开后自动播放" onChange={this.handleOpenWithPlayingState} checked={openWithPlaying} />
           </div>
           {_id === 1 && (
             <div>
               <div style={{ margin: '8px 0' }}>初始模式：</div>
-              <Select
-                value={openPattern}
-                options={patternOptions}
-                onChange={this.handleSelectInitialPattern}
-              />
+              <Select value={openPattern} options={patternOptions} onChange={this.handleSelectInitialPattern} />
             </div>
           )}
         </div>
@@ -118,24 +104,17 @@ class Main extends Component {
             />
           </div>
           <div>
-            <Checkbox
-              label="隐藏关于界面"
-              onChange={this.handleHideAbout}
-              checked={hideAbout}
-            />
+            <Checkbox label="隐藏关于界面" onChange={this.handleHideAbout} checked={hideAbout} />
           </div>
         </div>
         {saveSuccess && (
-          <Message
-            size="small"
-            positive
-            onDismiss={this.props.handleSaveSuccessReset}
-          >
+          <Message size="small" positive onDismiss={this.props.handleSaveSuccessReset}>
             保存成功
           </Message>
         )}
         <Button
           className="save"
+          style={{ maxWidth: '232px', backgroudColor: 'seagreen' }}
           content="保存"
           fluid
           color="green"

@@ -1,5 +1,6 @@
+import { Button, Confirm, Header, Icon, Item } from 'semantic-ui-react'
 import React, { Component } from 'react'
-import { Header, Button, Item, Confirm } from 'semantic-ui-react'
+
 import db from '../../helper/db'
 
 class Shares extends Component {
@@ -51,13 +52,12 @@ class Shares extends Component {
     return (
       <article className="petal-personal-shares">
         <Header as="h3">所有分享</Header>
-        <Button
+        <Icon
+          name="close"
           className="close-page"
-          circular
-          icon="close"
           onClick={this.handleReturnPrev}
         />
-        <Item.Group divided unstackable>
+        <Item.Group divided unstackable  relaxed={true}>
           {this.state.shares.length > 0 &&
             this.state.shares.map(album => {
               return (

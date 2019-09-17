@@ -1,5 +1,6 @@
+import { Button, Confirm, Header, Icon, List } from 'semantic-ui-react'
 import React, { Component } from 'react'
-import { Header, Button, List, Confirm } from 'semantic-ui-react'
+
 import db from '../../helper/db'
 import { removeFile } from '../../helper/utils'
 
@@ -53,27 +54,17 @@ class Downloads extends Component {
     return (
       <article className="petal-personal-downloads">
         <Header as="h3">所有下载</Header>
-        <Button
-          className="close-page"
-          circular
-          icon="close"
-          onClick={this.handleReturnPrev}
-        />
-        <List ordered verticalAlign="middle">
+        <Icon name="close" className="close-page" onClick={this.handleReturnPrev} />
+        <List ordered verticalAlign="middle" relaxed={true}>
           {this.state.downloads.length > 0 &&
             this.state.downloads.map(song => (
               <List.Item key={song.title}>
                 <List.Content floated="right">
-                  <Button
-                    basic
-                    size="tiny"
-                    icon="trash"
-                    onClick={() => this.show(song.path)}
-                  />
+                  <Button basic size="tiny" icon="trash" onClick={() => this.show(song.path)} />
                 </List.Content>
                 <List.Content>
                   <List.Header>{song.title}</List.Header>
-                  {song.artist}
+                  <List.Description>{song.artist}</List.Description>
                 </List.Content>
               </List.Item>
             ))}
@@ -83,8 +74,16 @@ class Downloads extends Component {
           onCancel={this.handleCancel}
           onConfirm={this.handleConfirm}
           content="确认从下载中移除此歌曲？"
-          cancelButton={<Button size="tiny" negative>取消</Button>}
-          confirmButton={<Button size="tiny" positive>确认</Button>}
+          cancelButton={
+            <Button size="tiny" negative>
+              取消
+            </Button>
+          }
+          confirmButton={
+            <Button size="tiny" positive>
+              确认
+            </Button>
+          }
           size="mini"
         />
       </article>

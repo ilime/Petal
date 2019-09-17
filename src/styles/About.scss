@@ -1,6 +1,7 @@
 .petal-about {
   padding: 5px 10px;
   height: calc(100vh - 24px);
+  overflow-y: scroll;
 
   .content {
     margin-top: 2rem;
@@ -11,4 +12,8 @@
     color: $petal-green;
     cursor: pointer;
   }
+}
+
+.petal-about::-webkit-scrollbar {
+  display: none;
 }

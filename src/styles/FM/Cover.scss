@@ -6,17 +6,21 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.clearbottomrounded {// The cover and the progress bar together makes up a rounded square
+
+.clearbottomrounded {
+  // The cover and the progress bar together makes up a rounded square
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
-.clearbottomrounded > *{
+
+.clearbottomrounded > * {
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
+
 .petal-cover {
   user-select: none;
-  display:flex;
+  display: flex;
   flex-direction: column;
   // semantic-ui does not have visibility transition for dimmer. add our own.
   // unstable due to chromium rendering. disable for now
@@ -38,10 +42,17 @@
     padding: 0;
   }
 
-  >div>img {
+  > div > img {
     object-fit: contain;
     max-height: calc(100vh - 80px);
   }
+
+  .cover {
+    img {
+      min-height: 250px;
+    }
+  }
+
   .play-pause {
     @include VHCenter();
     width: 5rem;

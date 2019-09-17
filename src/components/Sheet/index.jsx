@@ -1,10 +1,11 @@
+import { Header, Icon, Item } from 'semantic-ui-react'
 import React, { Component } from 'react'
+
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Header, Item } from 'semantic-ui-react'
-import { songLyricGET } from '../../actions/fm/apis'
 import { dailyPattern } from '../../actions/fm/actions'
 import { rendererProcessSend } from '../../helper/electron'
+import { songLyricGET } from '../../actions/fm/apis'
 
 class Sheet extends Component {
   componentDidMount() {
@@ -39,20 +40,11 @@ class Sheet extends Component {
     return (
       <article className="petal-sheet">
         <Header as="h2">歌单</Header>
+        <Icon className="daily-play" name="play" link />
         <Item.Group divided>
           {_id === 1 && (
             <Item>
-              <Item.Image
-                fluid
-                className="daily-image"
-                src={daily.songs[0].picture}
-                label={{
-                  as: 'a',
-                  corner: 'right',
-                  icon: 'play',
-                  onClick: this.handleDailyPlay
-                }}
-              />
+              <Item.Image className="daily-cover" src={daily.songs[0].picture} />
               <Item.Content>
                 <Item.Header>{daily.title}</Item.Header>
                 <Item.Meta>由{daily.creator.name}创建</Item.Meta>
