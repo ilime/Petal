@@ -98,9 +98,11 @@ ipcMain.on('patternSwitch', (_, arg) => {
 
 ipcMain.on('resizeWindowAfterLoading', () => {
   mainWindow.setSize(330, 500)
+  mainWindow.setMinimumSize(330, 500)
 })
 
 ipcMain.on('reInitWindowSize', () => {
+  mainWindow.setMinimumSize(330, 330)
   mainWindow.setSize(330, 330)
 })
 

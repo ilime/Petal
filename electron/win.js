@@ -8,9 +8,11 @@ export let mainWindow = null
 export const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 330,
-    minWidth: 250,
-    minHeight: 385,
     height: 330,
+    minWidth: 330,
+    minHeight: 330,
+    maxWidth: 430,
+    maxHeight: 800,
     resizable: true,
     frame: false,
     show: false,
@@ -66,13 +68,17 @@ export function setWindowPostionFromDB() {
 }
 
 export function saveCurrentWindowPosition() {
-  db.update({
-    window: 'position'
-  }, {
-    window: 'position',
-    pos: getCurrentWindowPostion()
-  }, {
-    multi: false,
-    upsert: true
-  })
+  db.update(
+    {
+      window: 'position'
+    },
+    {
+      window: 'position',
+      pos: getCurrentWindowPostion()
+    },
+    {
+      multi: false,
+      upsert: true
+    }
+  )
 }
