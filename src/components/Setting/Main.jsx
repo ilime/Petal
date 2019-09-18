@@ -114,7 +114,6 @@ class Main extends Component {
         )}
         <Button
           className="save"
-          style={{ maxWidth: '232px', backgroudColor: 'seagreen' }}
           content="保存"
           fluid
           color="green"
