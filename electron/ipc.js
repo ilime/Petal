@@ -121,6 +121,14 @@ ipcMain.on('appQuit', () => {
   }
 })
 
+ipcMain.on('appMinimize', () => {
+  if (isDarwin) {
+    mainWindow.minimize()
+  } else {
+    mainWindow.hide()
+  }
+})
+
 function toPlaylist() {
   FMPattern.state = 0
   trashOrBackward.icon = `${resourcesFolder}trash.png`
