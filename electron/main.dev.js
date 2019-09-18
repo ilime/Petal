@@ -1,7 +1,7 @@
 import './db'
 import './ipc'
 
-import { createWindow, saveCurrentWindowPosition } from './win'
+import { createWindow, mainWindow, saveCurrentWindowPosition } from './win'
 
 import Tray from './tray'
 import { app } from 'electron'
@@ -52,6 +52,20 @@ app.on('ready', () => {
   createBackgroundWindow()
   createMenu()
   Tray.init()
+})
+
+app.on('activate', () => {
+  if (!mainWindow.isVisible()) {
+    mainWindow.show()
+
+    return
+  }
+
+  if (!mainWindow.isMinimized()) {
+    mainWindow.restore()
+
+    return
+  }
 })
 
 app.on('before-quit', saveCurrentWindowPosition)
