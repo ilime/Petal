@@ -42,6 +42,8 @@
 
 Go to the [release page](https://github.com/ilime/Petal/releases)
 
+Arch Linux User can install [petal-bin](https://aur.archlinux.org/packages/petal-bin/) from AUR
+
 ## How to develop
 
 ```sh
