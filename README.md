@@ -40,9 +40,13 @@
 
 ## Use it
 
-Go to the [release page](https://github.com/ilime/Petal/releases)
+### Releases
 
-Arch Linux User can install [petal-bin](https://aur.archlinux.org/packages/petal-bin/) from AUR
+Go to the [release page](https://github.com/ilime/Petal/releases) and download the latest version
+
+### Arch Linux
+
+You can install [petal-bin](https://aur.archlinux.org/packages/petal-bin/) from AUR
 
 ## How to develop
 
