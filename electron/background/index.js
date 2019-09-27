@@ -55,7 +55,7 @@ ipcRenderer.on('trayClick', (_, { position }) => {
   }
 })
 
-ipcRenderer.on('trayLyricNextSong', (_, { song }) => {
+ipcRenderer.on('trayLyricNextSong', (_, song) => {
   const { title, artist, length } = song
   let cycleText = `${title} - ${artist}`
   // 30 second per cycle

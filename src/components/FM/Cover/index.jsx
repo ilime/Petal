@@ -109,7 +109,7 @@ class Cover extends Component {
    * @memberof Cover
    */
   setCover = (song, pattern, openWithPlaying = true) => {
-    rendererProcessSend('trayLyricNextSong', { song })
+    rendererProcessSend('trayLyricNextSong', song)
     rendererProcessSend('mprisSetMetadata', song)
 
     this.setState(
