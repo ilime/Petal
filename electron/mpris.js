@@ -29,7 +29,7 @@ class Mpris {
       })
       this.player.on('previous', () => mainWindow.webContents.send('backward'))
     } catch {
-      // if mpris failed to initalize, provide empty interface
+      // If mpris failed to initialize, provide an empty interface
       this.player = {}
       this.player.objectPath = () => {}
     }
