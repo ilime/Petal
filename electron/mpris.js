@@ -8,25 +8,31 @@ class Mpris {
       return null
     }
 
-    this.player = Player({
-      name: 'Petal',
-      identity: 'douban.FM player',
-      supportedUriSchemes: ['file'],
-      supportedMimeTypes: ['audio/mpeg', 'application/ogg'],
-      supportedInterfaces: ['player']
-    })
+    try {
+      this.player = Player({
+        name: 'Petal',
+        identity: 'douban.FM player',
+        supportedUriSchemes: ['file'],
+        supportedMimeTypes: ['audio/mpeg', 'application/ogg'],
+        supportedInterfaces: ['player']
+      })
 
-    this.player.getPosition = () => 0 // TODO
-    this.player.on('raise', () => mainWindow.show())
-    this.player.on('quit', () => process.exit())
-    this.player.on('playpause', () => mainWindow.webContents.send('pause'))
-    this.player.on('play', () => mainWindow.webContents.send('pause'))
-    this.player.on('pause', () => mainWindow.webContents.send('pause'))
-    this.player.on('next', () => {
-      mainWindow.webContents.send('skip')
-      mainWindow.webContents.send('forward')
-    })
-    this.player.on('previous', () => mainWindow.webContents.send('backward'))
+      this.player.getPosition = () => 0 // TODO
+      this.player.on('raise', () => mainWindow.show())
+      this.player.on('quit', () => process.exit())
+      this.player.on('playpause', () => mainWindow.webContents.send('pause'))
+      this.player.on('play', () => mainWindow.webContents.send('pause'))
+      this.player.on('pause', () => mainWindow.webContents.send('pause'))
+      this.player.on('next', () => {
+        mainWindow.webContents.send('skip')
+        mainWindow.webContents.send('forward')
+      })
+      this.player.on('previous', () => mainWindow.webContents.send('backward'))
+    } catch {
+      // if mpris failed to initalize, provide empty interface
+      this.player = {}
+      this.player.objectPath = () => {}
+    }
   }
 
   setPlaying(song) {
