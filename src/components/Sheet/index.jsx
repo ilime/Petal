@@ -40,7 +40,7 @@ class Sheet extends Component {
     return (
       <article className="petal-sheet">
         <Header as="h2">歌单</Header>
-        <Icon className="daily-play" name="play" link />
+        <Icon className="daily-play" name="play" link onClick={this.handleDailyPlay} />
         <Item.Group divided>
           {_id === 1 && (
             <Item>
