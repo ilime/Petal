@@ -9847,10 +9847,10 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
-redux-cond@^1.1.5:
-  version "1.1.6"
-  resolved "https://registry.npm.taobao.org/redux-cond/download/redux-cond-1.1.6.tgz#62fdb90e52e9f3d41815e192f8072a6bfd8ee167"
-  integrity sha1-Yv25DlLp89QYFeGS+Acqa/2O4Wc=
+redux-cond@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/redux-cond/-/redux-cond-2.0.0.tgz#2dddac3cbb20cd215e9e9a371d7bac25b371a9e6"
+  integrity sha512-na+AA0fePGiG+3mohbQEa55CFmrJJ/wt2r+ZA0gA0wfmOs+hYtKp3ok/BnBpcippliPOxUGW1jhFVb4G49bzJw==
 
 redux-logger@^3.0.6:
   version "3.0.6"
