@@ -42,8 +42,7 @@
     "start:electron": "cross-env NODE_ENV=development electron .",
     "build:electron:dev": "cross-env NODE_ENV=development webpack --config webpack/config.electron.js --progress",
     "build:electron:prod": "cross-env NODE_ENV=production webpack --config webpack/config.electron.js --progress",
-    "dist:electron": "electron-builder -mw",
-    "dist:electron:auto": "electron-builder",
+    "dist:electron": "electron-builder -mwl",
     "code:check": "eslint . --rule 'no-console: [0]'"
   },
   "pre-commit": [
