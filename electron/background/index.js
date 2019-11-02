@@ -27,7 +27,7 @@ ipcRenderer.on('trayClick', (_, { position }) => {
   switch (parseInt((position.x - ctrlPosOffset / devicePixelRatio) / ctrlBtnWidth)) {
     case 0:
       if (trayController.pattern === ctrlPattern.playlist) {
-        ipcRenderer.send('trayCtrlTash')
+        ipcRenderer.send('trayCtrlTrash')
       }
       if (trayController.pattern === ctrlPattern.songlist) {
         ipcRenderer.send('trayCtrlBackward')
