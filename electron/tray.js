@@ -19,8 +19,6 @@ export default {
 
     if (isDarwin) {
       this.tray = new Tray(nativeImage.createEmpty())
-      // https://electronjs.org/docs/api/tray#traysethighlightmodemode-macos
-      this.tray.setHighlightMode('never')
       this.tray.on('right-click', () => {
         this.tray.popUpContextMenu(this.osxContextMenu)
       })

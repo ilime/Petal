@@ -12,7 +12,7 @@ export const ctrlPattern = {
 
 function getModeAwareImage(suffix) {
   return `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : __dirname}/resources/osx/${
-    remote.systemPreferences.isDarkMode() ? 'dark' : 'normal'
+    remote.nativeTheme.shouldUseDarkColors ? 'dark' : 'normal'
   }/${suffix}`
 }
 
@@ -48,7 +48,7 @@ export class Controller extends Canvas {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    return Promise.all(this.images.map((item, idx) => this.drawImageBtn(idx, getModeAwareImage(item))))
+    return Promise.all(this.images.map((item, i) => this.drawImageBtn(i, getModeAwareImage(item))))
   }
 
   drawImageBtn(index, image) {
