@@ -21,7 +21,7 @@
     <img src="https://badges.gitter.im/ilime/Petal.svg" alt="Gitter" />
   </a>
 </p>
-<p align="center">:hibiscus: <a href="https://douban.fm">Douban.FM</a> Client With Extra - - -</p>
+<p align="center">🌺 <a href="https://douban.fm">Douban.FM</a> Client With Extra - - -</p>
 <p align="center">喜欢 Petal 的话，可以给它一个 star ✨，这样就能让更多的人知道它啦，十分感谢🙏。</p>
 
 > 另外，因为我个人已经没有很多精力单独维护它了，所以，**Look For Maintainers**，如果你喜欢 豆瓣 FM 或者 Petal，并且有意愿了解和贡献 Petal，可以邮件到 g1enyy0ung@gmail.com，注明来意就好，我会帮助你了解整个项目。
