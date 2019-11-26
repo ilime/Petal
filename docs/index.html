@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" href="./icon.ico" />
+    <link rel="icon" href="icon.ico" />
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" />
     <title>Petal: Douban.FM Client With Extra - - -</title>
   </head>
@@ -15,11 +15,9 @@
       align-items: center;
       margin: 0;
       padding: 0;
-      color: #000;
       background: #fff;
-      font-family: 'Helvetica Neue', Helvetica, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'Heiti SC',
-        'WenQuanYi Micro Hei', sans-serif;
-      font-family: 'Pacifico', cursive;
+      color: #000;
+      font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     }
 
     a {
@@ -34,7 +32,6 @@
       justify-content: center;
       margin: 0 1rem;
       padding: 1rem;
-      border-radius: 5px;
       text-align: center;
     }
 
@@ -45,6 +42,10 @@
       width: 100%;
     }
 
+    .title,
+    .subtitle {
+      font-family: 'Pacifico', cursive;
+    }
     .title {
       margin-bottom: 0;
     }
@@ -55,6 +56,7 @@
     #intro {
       margin-top: 2rem;
       height: 2rem;
+      font-family: 'Pacifico', cursive;
     }
 
     .logo-img {
@@ -69,10 +71,14 @@
       color: white;
       background: seagreen;
       border: none;
-      border-radius: 4px;
+      border-radius: 3px;
       font-weight: bold;
       outline: none;
       cursor: pointer;
+    }
+
+    footer {
+      font-family: 'Pacifico', cursive;
     }
 
     @keyframes petal {
@@ -105,7 +111,7 @@
   <body>
     <div class="container">
       <header>
-        <img class="logo-img" src="./logo.png" alt="logo" />
+        <img class="logo-img" src="logo.png" alt="logo" />
       </header>
       <h1 class="title">Petal</h1>
       <span class="subtitle">Douban.FM Client With Extra - - -</span>
@@ -129,6 +135,9 @@
         <button class="download" onclick="openDownload()">
           点击下载
         </button>
+        <button class="download" onclick="openV3()">
+          v3.0 计划
+        </button>
       </div>
 
       <div class="screenshot">
@@ -136,8 +145,20 @@
       </div>
 
       <footer>
-        Created with 💚by
-        <img style="position: relative; top: 3px; width: 18px" src="ilime.png" alt="ilime" />
+        <div>
+          Created with 💚by
+          <img style="position: relative; top: 3px; width: 18px" src="ilime.png" alt="ilime" />
+        </div>
+        <p style="margin-bottom: 0;">Authors:</p>
+        <div>
+          <a href="https://github.com/g1eny0ung" target="_blank">g1eny0ung</a>
+        </div>
+        <div>
+          <a href="https://github.com/Rapiz1" target="_blank">Rapiz1</a>
+        </div>
+        <div>
+          <a href="https://github.com/lxs137" target="_blank">lxs137</a>
+        </div>
       </footer>
     </div>
   </body>
@@ -146,6 +167,10 @@
   <script>
     function openDownload() {
       var win = window.open('https://github.com/ilime/Petal/releases', '_blank')
+    }
+
+    function openV3() {
+      var win = window.open('https://github.com/ilime/Petal/releases/tag/v2.20.0', '_blank')
     }
 
     var typed = new Typed('#intro', {
