@@ -24,13 +24,15 @@
 <p align="center">🌺 <a href="https://douban.fm">Douban.FM</a> Client With Extra - - -</p>
 <p align="center">喜欢 Petal 的话，可以给它一个 star ✨，这样就能让更多的人知道它啦，十分感谢🙏。</p>
 
-> 另外，因为我个人已经没有很多精力单独维护它了，所以，**Look For Maintainers**，如果你喜欢 豆瓣 FM 或者 Petal，并且有意愿了解和贡献 Petal，可以邮件到 g1enyy0ung@gmail.com，注明来意就好，我会帮助你了解整个项目。
+> 另外，因为我个人已经没有很多精力单独维护它了，所以，**Look For Maintainers**，如果你喜欢 豆瓣 FM 或者 Petal，并且有意愿了解和贡献 Petal，可以邮件到 g1enyy0ung@gmail.com，注明来意，我会帮助你了解整个项目。
 
 ## Current Maintainers
 
 - [g1eny0ung](https://github.com/g1eny0ung)
 - [Rapiz1](https://github.com/Rapiz1)
 - [lxs137](https://github.com/lxs137)
+
+如果你有任何问题，也可以邮件联系我们。
 
 ## Screenshot
 
@@ -42,11 +44,11 @@
 
 ### Releases
 
-Go to the [release page](https://github.com/ilime/Petal/releases) and download the latest version
+Go to the [release page](https://github.com/ilime/Petal/releases) and download the latest app.
 
 ### Arch Linux
 
-You can install [petal-bin](https://aur.archlinux.org/packages/petal-bin/) from AUR
+You can also install [petal-bin](https://aur.archlinux.org/packages/petal-bin/) from AUR.
 
 ## How to develop
 
@@ -68,7 +70,7 @@ chmod +x build.sh
 
 ## How to contribute
 
-Pull a request or open an issue to describe your changes or problems
+Open an issue or pull a request to describe your problems or changes.
 
 ## Contributors
 
