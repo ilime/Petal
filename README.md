@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icons/128x128.png" alt="Petal" />
+  <img src="assets/icons/128x128.png" alt="Petal Logo" />
 </p>
 <h1 align="center">Petal</h1>
 <p align="center">
@@ -41,7 +41,7 @@
 ## Screenshot
 
 <p align="center">
-  <img src="petal-screenshot.png" alt="petal-screenshot.png" width="400">
+  <img src="petal-screenshot.png" alt="Petal Screenshot" width="384">
 </p>
 
 ## Use it
