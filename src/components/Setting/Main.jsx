@@ -13,7 +13,8 @@ class Main extends Component {
       openWithPlaying: this.props.settingOpenWithPlaying,
       restoreLastWinPos: this.props.settingRestoreLastWinPos,
       hideAbout: this.props.hideAbout,
-      openPattern: this.props.openPattern
+      openPattern: this.props.openPattern,
+      compactStatusBar: this.props.compactStatusBar
     }
   }
 
@@ -61,13 +62,20 @@ class Main extends Component {
     })
   }
 
+  handleCompactStausBar = () => {
+    const val = !this.state.compactStatusBar
+    this.setState({
+      compactStatusBar: val
+    })
+  }
+
   handleSettingStore = () => {
     this.props.handleSettingStore(this.state)
   }
 
   render() {
     const { _id, saveSuccess } = this.props
-    const { volume, openWithPlaying, restoreLastWinPos, hideAbout, openPattern } = this.state
+    const { volume, openWithPlaying, restoreLastWinPos, hideAbout, openPattern, compactStatusBar } = this.state
 
     const patternOptions = [
       { key: 'select', text: '豆瓣精选 MHz', value: 'select' },
@@ -106,6 +114,9 @@ class Main extends Component {
           <div>
             <Checkbox label="隐藏关于界面" onChange={this.handleHideAbout} checked={hideAbout} />
           </div>
+          <div>
+            <Checkbox label="精简状态栏" onChange={this.handleCompactStausBar} checked={compactStatusBar} />
+          </div>
         </div>
         {saveSuccess && (
           <Message size="small" positive onDismiss={this.props.handleSaveSuccessReset}>
@@ -134,7 +145,8 @@ Main.propTypes = {
   settingOpenWithPlaying: PropTypes.bool,
   settingRestoreLastWinPos: PropTypes.bool,
   hideAbout: PropTypes.bool,
-  openPattern: PropTypes.string
+  openPattern: PropTypes.string,
+  compactStatusBar: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
@@ -144,7 +156,8 @@ const mapStateToProps = state => ({
   settingOpenWithPlaying: state.settingReducer.openWithPlaying,
   settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos,
   hideAbout: state.settingReducer.hideAbout,
-  openPattern: state.settingReducer.openPattern
+  openPattern: state.settingReducer.openPattern,
+  compactStatusBar: state.settingReducer.compactStatusBar
 })
 
 const mapDispatchToProps = dispatch => ({

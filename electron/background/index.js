@@ -67,6 +67,10 @@ ipcRenderer.on('trayLyricNext', (_, { lyricText, duration }) => {
   lyric.nextLyric(lyricText, parseInt(duration * 1000 * 0.8))
 })
 
+ipcRenderer.on('trayCompactStatusBar', (_, arg) => {
+  console.log('trayCompactStatusBar: %s', arg)
+})
+
 if (remote.process.platform === 'darwin') {
   remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', freshTray)
 }

@@ -23,6 +23,7 @@ export const settingLoad = () => {
         dispatch(actions.restoreLastWinPosSet(doc.restoreLastWinPos || false))
         dispatch(actions.hideAboutSet(doc.hideAbout || false))
         dispatch(actions.openPatternSet(doc.openPattern || 'select'))
+        dispatch(actions.compactStatusBarSet(doc.compactStatusBar || false))
       }
     })
   }
@@ -36,6 +37,7 @@ export const settingLoad = () => {
  * 2. Whether open with playing
  * 3. Whether remember last window position
  * 4. Whether hide about page
+ * 5. Whether use compact status bar
  *
  * @param {number} volume
  */
@@ -51,7 +53,8 @@ export const settingStore = state => {
               openWithPlaying: state.openWithPlaying,
               restoreLastWinPos: state.restoreLastWinPos,
               hideAbout: state.hideAbout,
-              openPattern: state.openPattern
+              openPattern: state.openPattern,
+              compactStatusBar: state.compactStatusBar
             }
           },
           {
@@ -65,6 +68,7 @@ export const settingStore = state => {
               dispatch(actions.restoreLastWinPosSet(state.restoreLastWinPos))
               dispatch(actions.hideAboutSet(state.hideAbout))
               dispatch(actions.openPatternSet(state.openPattern))
+              dispatch(actions.compactStatusBarSet(state.compactStatusBar))
               dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset())
@@ -80,7 +84,8 @@ export const settingStore = state => {
             openWithPlaying: state.openWithPlaying,
             restoreLastWinPos: state.restoreLastWinPos,
             hideAbout: state.hideAbout,
-            openPattern: state.openPattern
+            openPattern: state.openPattern,
+            compactStatusBar: state.compactStatusBar
           },
           (err, doc) => {
             if (err === null) {
@@ -90,6 +95,7 @@ export const settingStore = state => {
               dispatch(actions.restoreLastWinPosSet(state.restoreLastWinPos))
               dispatch(actions.hideAboutSet(state.hideAbout))
               dispatch(actions.openPatternSet(state.openPattern))
+              dispatch(actions.compactStatusBarSet(state.compactStatusBar))
               dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset())

@@ -25,6 +25,11 @@ const openPatternSet = pattern => ({
   openPattern: pattern
 })
 
+const compactStatusBarSet = pattern => ({
+  type: types.COMPACT_STATUS_BAR,
+  compactStatusBar: pattern
+})
+
 const settingSaveSuccess = () => ({ type: types.SETTING_SAVE_SUCCESS })
 const settingSaveSuccessReset = () => ({
   type: types.SETTING_SAVE_SUCCESS_RESET
@@ -36,6 +41,7 @@ export {
   restoreLastWinPosSet,
   hideAboutSet,
   openPatternSet,
+  compactStatusBarSet,
   settingSaveSuccess,
   settingSaveSuccessReset
 }
