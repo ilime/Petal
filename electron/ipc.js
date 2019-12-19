@@ -30,6 +30,12 @@ ipcMain.on('trayLyricNext', (_, arg) => {
   }
 })
 
+ipcMain.on('trayCompactStatusBar', (_, arg) => {
+  if (isDarwin) {
+    backgroundWindow.webContents.send('trayCompactStatusBar', arg)
+  }
+})
+
 ipcMain.on('mprisSetMetadata', (_, arg) => {
   if (isLinux) {
     mpris.setMetadata(arg)

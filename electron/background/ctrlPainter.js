@@ -1,7 +1,6 @@
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer } from 'electron'
 
 import Canvas from './canvas'
-import { freshTray } from './'
 
 export const ctrlBtnWidth = 22
 const ctrlBtnCount = 5
@@ -10,17 +9,18 @@ export const ctrlPattern = {
   playlist: 1
 }
 
-function getModeAwareImage(suffix) {
+function getModeAwareImage(suffix, isDarkMode) {
   return `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : __dirname}/resources/osx/${
-    remote.nativeTheme.shouldUseDarkColors ? 'dark' : 'normal'
+    isDarkMode ? 'dark' : 'normal'
   }/${suffix}`
 }
 
 export class Controller extends Canvas {
   // All buttons' icon is the same as touchbar
   // trashOrBackward, pauseAndStart, skipOrForward, rateAndUnrate
-  constructor(devicePixelRatio) {
+  constructor(devicePixelRatio, isDarkMode) {
     super(ctrlBtnCount * ctrlBtnWidth, ctrlBtnWidth, devicePixelRatio)
+    this.isDarkMode = isDarkMode
     this.ctx.textBaseline = 'middle'
     this.pattern = ctrlPattern.playlist
     this.images = ['trash.png', 'pause.png', 'skip.png', 'unrate.png', 'logo.png']
@@ -29,26 +29,11 @@ export class Controller extends Canvas {
     this.rateAndUnrate = this.rateAndUnrate.bind(this)
     this.toPlaylistPattern = this.toPlaylistPattern.bind(this)
     this.toSonglistPattern = this.toSonglistPattern.bind(this)
-    this.initRendererListener()
-  }
-
-  initRendererListener() {
-    ipcRenderer.on('trayPause', (_, playing) => {
-      this.pauseAndStart(playing)
-    })
-    ipcRenderer.on('trayResetPause', () => {
-      this.pauseAndStart(true)
-    })
-    ipcRenderer.on('trayRateColor', (_, love) => {
-      this.rateAndUnrate(love)
-    })
-    ipcRenderer.on('trayToPlaylist', this.toPlaylistPattern)
-    ipcRenderer.on('trayToSonglist', this.toSonglistPattern)
   }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    return Promise.all(this.images.map((item, i) => this.drawImageBtn(i, getModeAwareImage(item))))
+    return Promise.all(this.images.map((item, i) => this.drawImageBtn(i, getModeAwareImage(item, this.isDarkMode))))
   }
 
   drawImageBtn(index, image) {
@@ -68,35 +53,58 @@ export class Controller extends Canvas {
     } else {
       this.images[1] = 'play.png'
     }
-
-    freshTray()
   }
 
   rateAndUnrate(love) {
     if (love === 'red') {
       this.images[3] = 'rate.png'
     }
-
     if (love === 'white') {
       this.images[3] = 'unrate.png'
     }
-
-    freshTray()
   }
 
   toPlaylistPattern() {
     this.pattern = ctrlPattern.playlist
     this.images[0] = 'trash.png'
     this.images[2] = 'skip.png'
-
-    freshTray()
   }
 
   toSonglistPattern() {
     this.pattern = ctrlPattern.songlist
     this.images[0] = 'backward.png'
     this.images[2] = 'forward.png'
+  }
 
-    freshTray()
+  onClick(x, y) {
+    switch (parseInt(x / ctrlBtnWidth)) {
+      case 0:
+        if (this.pattern === ctrlPattern.playlist) {
+          ipcRenderer.send('trayCtrlTrash')
+        }
+        if (this.pattern === ctrlPattern.songlist) {
+          ipcRenderer.send('trayCtrlBackward')
+        }
+        break
+      case 1:
+        ipcRenderer.send('trayCtrlPause')
+        break
+      case 2:
+        if (this.pattern === ctrlPattern.playlist) {
+          ipcRenderer.send('trayCtrlSkip')
+        }
+        if (this.pattern === ctrlPattern.songlist) {
+          ipcRenderer.send('trayCtrlForward')
+        }
+        break
+      case 3:
+        ipcRenderer.send('trayCtrlLove')
+        break
+      case 4:
+        ipcRenderer.send('trayMenuShow')
+        break
+      default:
+        return
+    }
   }
 }

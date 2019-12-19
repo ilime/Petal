@@ -10,6 +10,7 @@ const settingReducer = (
     restoreLastWinPos: false,
     hideAbout: false,
     openPattern: 'select',
+    compactStatusBar: false,
     saveSuccess: false
   },
   action
@@ -25,6 +26,8 @@ const settingReducer = (
     (state, action) => ({ ...state, hideAbout: action.hideAbout }),
     types.OPEN_PATTERN,
     (state, action) => ({ ...state, openPattern: action.openPattern }),
+    types.COMPACT_STATUS_BAR,
+    (state, action) => ({ ...state, compactStatusBar: action.compactStatusBar }),
     types.SETTING_SAVE_SUCCESS,
     state => ({ ...state, saveSuccess: true }),
     types.SETTING_SAVE_SUCCESS_RESET,

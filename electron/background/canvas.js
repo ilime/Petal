@@ -10,4 +10,11 @@ export default class Canvas {
     this.canvas.height = this.height * this.devicePixelRatio
     this.ctx = this.canvas.getContext('2d')
   }
+
+  resize(width, height) {
+    this.width = width
+    this.height = height
+    this.canvas.width = this.width * this.devicePixelRatio
+    this.canvas.height = this.height * this.devicePixelRatio
+  }
 }
