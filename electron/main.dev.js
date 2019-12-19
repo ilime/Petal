@@ -55,7 +55,6 @@ app.on('ready', () => {
 })
 
 app.on('activate', () => {
-  console.log('active, visible: %s', mainWindow.isVisible())
   if (!mainWindow.isVisible()) {
     mainWindow.show()
 

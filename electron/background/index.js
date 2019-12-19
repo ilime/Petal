@@ -21,7 +21,6 @@ ipcRenderer.on('trayLyricNext', (_, { lyricText, duration }) => {
 })
 
 ipcRenderer.on('trayCompactStatusBar', (_, arg) => {
-  console.log('trayCompactStatusBar: %s', arg)
   tray.onThemeChange(arg)
 })
 
