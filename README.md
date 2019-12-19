@@ -72,6 +72,19 @@ chmod +x build.sh
 ./build.sh
 ```
 
+For single platform:
+
+```sh
+# OSX
+./build-platform.sh -m
+
+# Win
+./build-platform.sh -w
+
+# Linux
+./build-platform.sh -l
+```
+
 ## How to contribute
 
 Open an issue or pull a request to describe your problems or changes.
