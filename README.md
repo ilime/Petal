@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icons/128x128.png" alt="Petal Logo" />
+  <img src="assets/icons/512x512.png" width="128 height="128" alt="Petal Logo" />
 </p>
 <h1 align="center">Petal</h1>
 <p align="center">
