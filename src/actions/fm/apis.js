@@ -50,7 +50,9 @@ const playlistOriginUrl =
   Object.entries(fixedParams).reduce((previous, [key, value]) => {
     return previous + key + '=' + value + '&'
   }, '') +
-  'format=null&kbps=128&pb=128&from='
+  'format=null&from='
+    
+const genBitRate = (isPro, preferBitRate) => isPro ? ('&pb=192&kbps=' + preferBitRate) : '&kbps=128&pb=128'
 
 const songLyricOriginUrl =
   FM_ROOT_URL +
@@ -107,26 +109,28 @@ export const playlistGET = (type, callback = null) => {
     }
     alreadySetOpenPattern = true
 
+    const { authReducer, fmReducer, settingReducer } = getState()
     axios(
       Object.assign(
         {
           method: 'GET',
           url:
             playlistOriginUrl +
+            genBitRate(authReducer.userInfo.pro_status && authReducer.userInfo.pro_status === 'S', settingReducer.preferBitRate) +
             '&pt=' +
-            getState().fmReducer.playtime +
+            fmReducer.playtime +
             '&channel=' +
-            getState().fmReducer.channelId +
+            fmReducer.channelId +
             '&type=' +
-            getState().fmReducer.type +
+            fmReducer.type +
             '&sid=' +
-            (type !== 'new' ? getState().fmReducer.sid : '')
+            (type !== 'new' ? fmReducer.sid : '')
         },
         // is login
-        getState().authReducer._id === 1 && {
+        authReducer._id === 1 && {
           headers: {
             Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
+              'Bearer ' + authReducer.userToken.access_token
           }
         }
       )

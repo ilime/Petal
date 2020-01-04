@@ -34,7 +34,12 @@ class Personal extends Component {
             <Item>
               <Item.Image className="avatar-icon" src={userInfo.icon} />
               <Item.Content>
-                <Item.Header as="a">{userInfo.name}</Item.Header>
+                <Item.Header as="a">
+                  <span>{userInfo.name}</span>
+                  {(userInfo.pro_status && userInfo.pro_status === 'S') && (
+                    <span className="pro-badget">PRO</span>
+                  )} 
+                </Item.Header>
                 <Item.Meta>
                   <p>已听 {userInfo.played_num} 首</p>
                   <p>红心 {userInfo.liked_num} 首</p>

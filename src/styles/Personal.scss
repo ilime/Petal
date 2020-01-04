@@ -33,6 +33,17 @@
       }
     }
   }
+
+  .pro-badget {
+    margin: 0 0.5rem;
+    padding: 0 0.3rem;
+    font-size: 12px;
+    border: 1px solid rgb(211, 187, 129);
+    border-radius: 0.2rem;
+    color: #977e42;
+    transform: skew(-10deg);
+    -webkit-transform: skew(-10deg);
+  }
 }
 
 .petal-personal-downloads,

@@ -11,6 +11,7 @@ const settingReducer = (
     hideAbout: false,
     openPattern: 'select',
     compactStatusBar: false,
+    preferBitRate: '128',
     saveSuccess: false
   },
   action
@@ -28,6 +29,8 @@ const settingReducer = (
     (state, action) => ({ ...state, openPattern: action.openPattern }),
     types.COMPACT_STATUS_BAR,
     (state, action) => ({ ...state, compactStatusBar: action.compactStatusBar }),
+    types.PREFER_BIT_RATE,
+    (state, action) => ({ ...state, preferBitRate: action.preferBitRate }),
     types.SETTING_SAVE_SUCCESS,
     state => ({ ...state, saveSuccess: true }),
     types.SETTING_SAVE_SUCCESS_RESET,

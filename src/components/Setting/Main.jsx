@@ -14,7 +14,8 @@ class Main extends Component {
       restoreLastWinPos: this.props.settingRestoreLastWinPos,
       hideAbout: this.props.hideAbout,
       openPattern: this.props.openPattern,
-      compactStatusBar: this.props.compactStatusBar
+      compactStatusBar: this.props.compactStatusBar,
+      preferBitRate: this.props.preferBitRate
     }
   }
 
@@ -69,13 +70,19 @@ class Main extends Component {
     })
   }
 
+  handlePreferBitRate = (e, data) => {
+    this.setState({
+      preferBitRate: data.value
+    })
+  }
+
   handleSettingStore = () => {
     this.props.handleSettingStore(this.state)
   }
 
   render() {
-    const { _id, saveSuccess } = this.props
-    const { volume, openWithPlaying, restoreLastWinPos, hideAbout, openPattern, compactStatusBar } = this.state
+    const { _id, saveSuccess, userInfo } = this.props
+    const { volume, openWithPlaying, restoreLastWinPos, hideAbout, openPattern, compactStatusBar, preferBitRate } = this.state
 
     const patternOptions = [
       { key: 'select', text: '豆瓣精选 MHz', value: 'select' },
@@ -97,11 +104,21 @@ class Main extends Component {
           </div>
           {_id === 1 && (
             <div>
-              <div style={{ margin: '8px 0' }}>初始模式：</div>
+              <div style={{ margin: '4px 0' }}>初始模式：</div>
               <Select value={openPattern} options={patternOptions} onChange={this.handleSelectInitialPattern} />
             </div>
           )}
         </div>
+        {(userInfo.pro_status && userInfo.pro_status === 'S') && (
+          <div>
+            <div style={{ margin: '4px 0' }}>首选音质：</div>
+            <Select placeholder='首选音质' value={preferBitRate} options={[
+              { key: '128', value: '128', text: '中等音质 (128k)' },
+              { key: '192', value: '192', text: '高音质 (192k)' },
+              { key: '320', value: '320', text: '最佳音质 (320k)' }
+            ]} onChange={this.handlePreferBitRate} />
+          </div>
+        )}
         <Header as="h5">其他设置: </Header>
         <div>
           <div>
@@ -146,7 +163,9 @@ Main.propTypes = {
   settingRestoreLastWinPos: PropTypes.bool,
   hideAbout: PropTypes.bool,
   openPattern: PropTypes.string,
-  compactStatusBar: PropTypes.bool
+  compactStatusBar: PropTypes.bool,
+  userInfo: PropTypes.any,
+  preferBitRate: PropTypes.string
 }
 
 const mapStateToProps = state => ({
@@ -157,7 +176,9 @@ const mapStateToProps = state => ({
   settingRestoreLastWinPos: state.settingReducer.restoreLastWinPos,
   hideAbout: state.settingReducer.hideAbout,
   openPattern: state.settingReducer.openPattern,
-  compactStatusBar: state.settingReducer.compactStatusBar
+  compactStatusBar: state.settingReducer.compactStatusBar,
+  userInfo: state.authReducer.userInfo,
+  preferBitRate: state.settingReducer.preferBitRate 
 })
 
 const mapDispatchToProps = dispatch => ({
