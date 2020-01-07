@@ -30,6 +30,11 @@ const compactStatusBarSet = pattern => ({
   compactStatusBar: pattern
 })
 
+const preferBitRateSet = bitRate => ({
+  type: types.PREFER_BIT_RATE,
+  preferBitRate: bitRate
+})
+
 const settingSaveSuccess = () => ({ type: types.SETTING_SAVE_SUCCESS })
 const settingSaveSuccessReset = () => ({
   type: types.SETTING_SAVE_SUCCESS_RESET
@@ -42,6 +47,7 @@ export {
   hideAboutSet,
   openPatternSet,
   compactStatusBarSet,
+  preferBitRateSet,
   settingSaveSuccess,
   settingSaveSuccessReset
 }

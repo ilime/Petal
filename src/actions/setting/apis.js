@@ -24,6 +24,7 @@ export const settingLoad = () => {
         dispatch(actions.hideAboutSet(doc.hideAbout || false))
         dispatch(actions.openPatternSet(doc.openPattern || 'select'))
         dispatch(actions.compactStatusBarSet(doc.compactStatusBar || false))
+        dispatch(actions.preferBitRateSet(doc.preferBitRate || '128'))
       }
     })
   }
@@ -54,7 +55,8 @@ export const settingStore = state => {
               restoreLastWinPos: state.restoreLastWinPos,
               hideAbout: state.hideAbout,
               openPattern: state.openPattern,
-              compactStatusBar: state.compactStatusBar
+              compactStatusBar: state.compactStatusBar,
+              preferBitRateSet: state.preferBitRate
             }
           },
           {
@@ -69,6 +71,7 @@ export const settingStore = state => {
               dispatch(actions.hideAboutSet(state.hideAbout))
               dispatch(actions.openPatternSet(state.openPattern))
               dispatch(actions.compactStatusBarSet(state.compactStatusBar))
+              dispatch(actions.preferBitRateSet(state.preferBitRate))
               dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset())
@@ -85,7 +88,8 @@ export const settingStore = state => {
             restoreLastWinPos: state.restoreLastWinPos,
             hideAbout: state.hideAbout,
             openPattern: state.openPattern,
-            compactStatusBar: state.compactStatusBar
+            compactStatusBar: state.compactStatusBar,
+            preferBitRateSet: state.preferBitRate
           },
           (err, doc) => {
             if (err === null) {
@@ -96,6 +100,7 @@ export const settingStore = state => {
               dispatch(actions.hideAboutSet(state.hideAbout))
               dispatch(actions.openPatternSet(state.openPattern))
               dispatch(actions.compactStatusBarSet(state.compactStatusBar))
+              dispatch(actions.preferBitRateSet(state.preferBitRate))
               dispatch(actions.settingSaveSuccess())
               setTimeout(() => {
                 dispatch(actions.settingSaveSuccessReset())
