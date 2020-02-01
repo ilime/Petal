@@ -1,4 +1,3 @@
-import cond from 'redux-cond'
 import * as types from '../actions/setting/types'
 
 const settingReducer = (
@@ -16,26 +15,28 @@ const settingReducer = (
   },
   action
 ) => {
-  return cond(
-    types.AUDIO_VOLUME_SET,
-    (state, action) => ({ ...state, volume: action.volume }),
-    types.OPEN_WITH_PLAYING_SET,
-    (state, action) => ({ ...state, openWithPlaying: action.openWithPlaying }),
-    types.RESTORE_LAST_WIN_POS,
-    (state, action) => ({ ...state, restoreLastWinPos: action.restoreLastWinPos }),
-    types.HIDE_ABOUT,
-    (state, action) => ({ ...state, hideAbout: action.hideAbout }),
-    types.OPEN_PATTERN,
-    (state, action) => ({ ...state, openPattern: action.openPattern }),
-    types.COMPACT_STATUS_BAR,
-    (state, action) => ({ ...state, compactStatusBar: action.compactStatusBar }),
-    types.PREFER_BIT_RATE,
-    (state, action) => ({ ...state, preferBitRate: action.preferBitRate }),
-    types.SETTING_SAVE_SUCCESS,
-    state => ({ ...state, saveSuccess: true }),
-    types.SETTING_SAVE_SUCCESS_RESET,
-    state => ({ ...state, saveSuccess: false })
-  )(state, action)
+  switch (action.type) {
+    case types.AUDIO_VOLUME_SET:
+      return { ...state, volume: action.volume }
+    case types.OPEN_WITH_PLAYING_SET:
+      return { ...state, openWithPlaying: action.openWithPlaying }
+    case types.RESTORE_LAST_WIN_POS:
+      return { ...state, restoreLastWinPos: action.restoreLastWinPos }
+    case types.HIDE_ABOUT:
+      return { ...state, hideAbout: action.hideAbout }
+    case types.OPEN_PATTERN:
+      return { ...state, openPattern: action.openPattern }
+    case types.COMPACT_STATUS_BAR:
+      return { ...state, compactStatusBar: action.compactStatusBar }
+    case types.PREFER_BIT_RATE:
+      return { ...state, preferBitRate: action.preferBitRate }
+    case types.SETTING_SAVE_SUCCESS:
+      return { ...state, saveSuccess: true }
+    case types.SETTING_SAVE_SUCCESS_RESET:
+      return { ...state, saveSuccess: false }
+    default:
+      return state
+  }
 }
 
 export default settingReducer

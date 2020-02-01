@@ -1,4 +1,3 @@
-import cond from 'redux-cond'
 import {
   AUTH_LOGIN_REQUEST,
   AUTH_LOGIN_RESPONSE,
@@ -20,22 +19,24 @@ const authReducer = (
   },
   action
 ) => {
-  return cond(
-    AUTH_LOGIN_REQUEST,
-    state => ({ ...state, isFetching: true }),
-    AUTH_LOGIN_RESPONSE,
-    (state, action) => ({ ...state, isFetching: false, _id: action._id, userToken: action.userToken }),
-    AUTH_LOGIN_FAIL,
-    (state, action) => ({ ...state, isFetching: false, loginFail: true, loginFailMessage: action.message }),
-    AUTH_REMOVE_FAIL_MESSAGE,
-    state => ({ ...state, loginFail: false, loginFailMessage: '' }),
-    AUTH_TOKEN_LOAD,
-    state => ({ ...state, _id: action._id, userToken: action.userToken }),
-    AUTH_LOGOUT,
-    state => ({ ...state, _id: 0, userToken: {}, userInfo: {} }),
-    USER_INFO,
-    (state, action) => ({ ...state, userInfo: action.userInfo })
-  )(state, action)
+  switch (action.type) {
+    case AUTH_LOGIN_REQUEST:
+      return { ...state, isFetching: true }
+    case AUTH_LOGIN_RESPONSE:
+      return { ...state, isFetching: false, _id: action._id, userToken: action.userToken }
+    case AUTH_LOGIN_FAIL:
+      return { ...state, isFetching: false, loginFail: true, loginFailMessage: action.message }
+    case AUTH_REMOVE_FAIL_MESSAGE:
+      return { ...state, loginFail: false, loginFailMessage: '' }
+    case AUTH_TOKEN_LOAD:
+      return { ...state, _id: action._id, userToken: action.userToken }
+    case AUTH_LOGOUT:
+      return { ...state, _id: 0, userToken: {}, userInfo: {} }
+    case USER_INFO:
+      return { ...state, userInfo: action.userInfo }
+    default:
+      return state
+  }
 }
 
 export default authReducer
