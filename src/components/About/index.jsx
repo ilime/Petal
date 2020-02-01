@@ -49,9 +49,9 @@ export default class About extends Component {
             下提出。
           </p>
           <p>
-            使用 <span onClick={openInDefaultBrowser('https://opensource.org/licenses/MIT')}>MIT</span> 许可证。
+            使用 <span onClick={openInDefaultBrowser('https://opensource.org/licenses/MIT')}>MIT</span> 许可证发布。
           </p>
-          <p>Copyright (c) 2019 ilime。</p>
+          <p>Copyright (c) 2020 ilime。</p>
         </div>
       </div>
     )
