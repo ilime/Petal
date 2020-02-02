@@ -19,7 +19,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      jsbi: path.resolve(__dirname, '..', 'node_modules', 'jsbi', 'dist', 'jsbi-cjs.js')
+      jsbi: path.resolve(__dirname, '../node_modules/jsbi/dist/jsbi-cjs.js')
     }
   }
 }
