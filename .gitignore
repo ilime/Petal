@@ -24,9 +24,12 @@ yarn-error.log*
 
 .idea
 
-public/main.js
-public/background.js
+/public/main.js
+/public/background.js
 
-dist
-app/node_modules
-app/yarn.lock
+/dist
+/app/node_modules
+/app/yarn.lock
+/app/package-lock.json
+
+package-lock.json
