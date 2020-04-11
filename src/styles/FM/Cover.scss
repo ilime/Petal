@@ -44,7 +44,7 @@
 
   > div > img {
     object-fit: contain;
-    max-height: calc(100vh - 80px);
+    max-height: calc(100% - 80px);
   }
 
   .cover {

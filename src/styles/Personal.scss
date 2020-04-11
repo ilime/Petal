@@ -1,6 +1,6 @@
 .petal-personal {
   padding: 5px 10px;
-  height: calc(100vh - 24px);
+  height: calc(100% - 24px);
   overflow-y: scroll;
 
   .ui.unstackable.items > .item > .image.avatar-icon {
@@ -80,7 +80,7 @@
 .petal-personal-songlist {
   position: relative;
   padding: 5px 10px;
-  height: calc(100vh - 24px);
+  height: calc(100% - 24px);
   overflow-y: scroll;
 
   .refresh-button {
