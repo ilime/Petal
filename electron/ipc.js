@@ -5,7 +5,7 @@ import t, { pauseAndStart, rateAndUnrate, resourcesFolder, skipOrForward, trashO
 import { pattern as FMPattern } from './pattern'
 import Tray from './tray'
 import { backgroundWindow } from './backgroundWin'
-import { mainWindow } from './win'
+import { mainWindow, mainWindowProps, mainWindowPropsLoadingFinish } from './win'
 import { mpris } from './mpris' // MPRIS: Linux D-BUS Remote Music Control Interface
 
 ipcMain.on('trayDraw', (_, arg) => {
@@ -103,13 +103,13 @@ ipcMain.on('patternSwitch', (_, arg) => {
 })
 
 ipcMain.on('resizeWindowAfterLoading', () => {
-  mainWindow.setSize(330, 500)
-  mainWindow.setMinimumSize(330, 500)
+  mainWindow.setSize(mainWindowPropsLoadingFinish.width, mainWindowPropsLoadingFinish.height)
+  mainWindow.setMinimumSize(mainWindowPropsLoadingFinish.minWidth, mainWindowPropsLoadingFinish.minHeight)
 })
 
 ipcMain.on('reInitWindowSize', () => {
-  mainWindow.setMinimumSize(330, 330)
-  mainWindow.setSize(330, 330)
+  mainWindow.setSize(mainWindowProps.width, mainWindowProps.height)
+  mainWindow.setMinimumSize(mainWindowProps.minWidth, mainWindowProps.minHeight)
 })
 
 ipcMain.on('mainWindowReady', () => {
