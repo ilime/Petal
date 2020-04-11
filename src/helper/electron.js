@@ -66,3 +66,7 @@ export function onReceiveFromMainProcess(channel, f) {
 export function rendererProcessSend(channel, arg) {
   ipcRenderer.send(channel, arg)
 }
+
+export function isPlasma() {
+  return remote.process.platform === 'linux' && remote.process.env.XDG_CURRENT_DESKTOP === 'KDE'
+}
