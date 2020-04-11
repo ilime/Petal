@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron'
 import db from './db'
-import { isDarwin, isLinux } from './platform'
+import { isDarwin, isPlasma} from './platform'
 import url from 'url'
 
 export let mainWindow = null
@@ -38,7 +38,7 @@ const plasmaWindowPropsLoadingFinish = {
 }
 export const createWindow = () => {
   let delay = 0
-  if (isLinux) {
+  if (isPlasma) {
     Object.assign(mainWindowProps, plasmaWindowProps)
     Object.assign(mainWindowPropsLoadingFinish, plasmaWindowPropsLoadingFinish)
     delay = 300
