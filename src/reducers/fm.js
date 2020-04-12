@@ -19,7 +19,7 @@ const fmReducer = (
     refreshLoading: false,
     daily: {}, // daliy list
     sheet: [],
-    playtime: '0.0'
+    playtime: '0.0',
   },
   action
 ) => {
@@ -46,7 +46,7 @@ const fmReducer = (
         isFetching: false,
         sid: action.sid,
         ssid: action.ssid,
-        song: action.song
+        song: action.song,
       }
     case types.SONG_LYRIC_RESPONSE:
       return { ...state, lyric: action.lyric }
@@ -54,7 +54,7 @@ const fmReducer = (
       return {
         ...state,
         refreshLoading: false,
-        recent: action.recent
+        recent: action.recent,
       }
     case types.RECENT_EMPTY:
       return { ...state, recent: {} }
@@ -62,7 +62,7 @@ const fmReducer = (
       return {
         ...state,
         refreshLoading: false,
-        redheart: action.redheart
+        redheart: action.redheart,
       }
     case types.RED_HEART_EMPTY:
       return { ...state, redheart: [] }
@@ -70,7 +70,7 @@ const fmReducer = (
       return {
         ...state,
         refreshLoading: false,
-        trash: action.trash
+        trash: action.trash,
       }
     case types.TRASH_EMPTY:
       return { ...state, trash: {} }
@@ -80,7 +80,7 @@ const fmReducer = (
       return {
         ...state,
         pattern: 'select',
-        channelId: -10
+        channelId: -10,
       }
     case types.RECENT_PATTERN:
       return {
@@ -88,7 +88,7 @@ const fmReducer = (
         pattern: 'recent',
         songListIndex: 0,
         sid: state.recent.songs[0].sid,
-        ssid: state.recent.songs[0].ssid
+        ssid: state.recent.songs[0].ssid,
       }
     case types.REDHEART_PATTERN:
       return {
@@ -96,7 +96,7 @@ const fmReducer = (
         pattern: 'redheart',
         songListIndex: 0,
         sid: state.redheart[0].sid,
-        ssid: state.redheart[0].ssid
+        ssid: state.redheart[0].ssid,
       }
     case types.DAILY_PATTERN:
       return {
@@ -104,13 +104,13 @@ const fmReducer = (
         pattern: 'daily',
         songListIndex: 0,
         sid: state.daily.songs[0].sid,
-        ssid: state.daily.songs[0].ssid
+        ssid: state.daily.songs[0].ssid,
       }
     case types.SHEET_PATTERN:
       return {
         ...state,
         pattern: 'sheet',
-        songListIndex: 0
+        songListIndex: 0,
       }
     case types.SONGLIST_GO:
       return { ...state, songListIndex: state.songListIndex + 1 }
@@ -120,13 +120,13 @@ const fmReducer = (
       return {
         ...state,
         pattern: action.pattern ? action.pattern : state.pattern,
-        songListIndex: action.index
+        songListIndex: action.index,
       }
     case types.APP_CHANNEL_SET:
       return {
         ...state,
         pattern: 'select',
-        channelId: action.id
+        channelId: action.id,
       }
     case types.APP_CHANNEL:
       return { ...state, channels: action.chls }
@@ -146,7 +146,7 @@ const fmReducer = (
       return {
         ...state,
         sid: action.sid,
-        ssid: action.ssid
+        ssid: action.ssid,
       }
     default:
       return state

@@ -1,13 +1,7 @@
 import axios from 'axios'
 
 import * as actions from './actions'
-import {
-  selectPattern,
-  recentEmpty,
-  redHeartEmpty,
-  trashEmpty,
-  dailyEmpty
-} from '../fm/actions'
+import { selectPattern, recentEmpty, redHeartEmpty, trashEmpty, dailyEmpty } from '../fm/actions'
 import {
   playlistGET,
   recentListGET,
@@ -15,21 +9,20 @@ import {
   trashListGET,
   userInfoGET,
   appChannelGET,
-  dailyListGET
+  dailyListGET,
 } from '../fm/apis'
 import oToFd from '../../helper/objToFormD'
 import db from '../../helper/db'
 import { rendererProcessSend } from '../../helper/electron'
 
-const AUTH_URL =
-  'https://www.douban.com/service/auth2/token?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec' // Auth Url
+const AUTH_URL = 'https://www.douban.com/service/auth2/token?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec' // Auth Url
 
 // Fixed params for logining
 const authFixedParams = {
   client_id: '02f7751a55066bcb08e65f4eff134361',
   client_secret: '63cf04ebd7b0ff3b',
   grant_type: 'password',
-  redirect_uri: 'http://douban.fm'
+  redirect_uri: 'http://douban.fm',
 }
 
 /**
@@ -47,18 +40,18 @@ const authFixedParams = {
  * @returns {Function} - a thunk func which return Axios login request
  */
 export const authPost = (usernameAndPassword, callback) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(actions.authLoginRequest())
     return axios({
       method: 'POST',
       url: AUTH_URL,
-      data: oToFd(Object.assign(authFixedParams, usernameAndPassword))
+      data: oToFd(Object.assign(authFixedParams, usernameAndPassword)),
     })
-      .then(response => {
+      .then((response) => {
         const data = response.data
         const userToken = {
           access_token: data.access_token,
-          douban_user_name: data.douban_user_name
+          douban_user_name: data.douban_user_name,
         }
         dispatch(actions.authLoginResponse(userToken))
         dispatch(selectPattern())
@@ -77,7 +70,7 @@ export const authPost = (usernameAndPassword, callback) => {
           {
             _id: 1,
             userToken,
-            time: new Date().getTime()
+            time: new Date().getTime(),
           },
           (err, doc) => {
             console.log(doc)
@@ -99,10 +92,10 @@ export const authPost = (usernameAndPassword, callback) => {
  * @returns {Function} - a thunk function
  */
 export const authLoad = () => {
-  return dispatch => {
+  return (dispatch) => {
     db.findOne(
       {
-        _id: 1
+        _id: 1,
       },
       (err, doc) => {
         if (doc !== null) {
@@ -114,7 +107,7 @@ export const authLoad = () => {
           console.log('token storage time ' + fromNowDisplay + ' day(s)')
           if (fromNow > 5184000000) {
             db.remove({
-              _id: 1
+              _id: 1,
             })
             dispatch(playlistGET('new'))
             dispatch(appChannelGET())
@@ -151,7 +144,7 @@ export const authLoad = () => {
 export const authRemove = (dispatch, callback) => {
   db.remove(
     {
-      _id: 1
+      _id: 1,
     },
     (err, numRemoved) => {
       console.log('token remove: num(' + numRemoved + ')')

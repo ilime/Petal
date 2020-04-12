@@ -10,7 +10,7 @@ class Downloads extends Component {
     this.state = {
       open: false,
       path: undefined,
-      downloads: []
+      downloads: [],
     }
   }
 
@@ -30,12 +30,12 @@ class Downloads extends Component {
   loadDownloads = () => {
     db.find({ usedFor: 'download' }, (err, docs) => {
       this.setState({
-        downloads: docs
+        downloads: docs,
       })
     })
   }
 
-  removeDownload = path => {
+  removeDownload = (path) => {
     db.remove({ path }, {}, (err, numRemoved) => {
       console.log('Removed: ', numRemoved)
       removeFile(path)
@@ -43,7 +43,7 @@ class Downloads extends Component {
     })
   }
 
-  show = path => this.setState({ open: true, path })
+  show = (path) => this.setState({ open: true, path })
   handleConfirm = () => {
     this.setState({ open: false })
     this.removeDownload(this.state.path)
@@ -57,7 +57,7 @@ class Downloads extends Component {
         <Icon name="close" className="close-page" onClick={this.handleReturnPrev} />
         <List ordered verticalAlign="middle" relaxed={true}>
           {this.state.downloads.length > 0 &&
-            this.state.downloads.map(song => (
+            this.state.downloads.map((song) => (
               <List.Item key={song.title}>
                 <List.Content floated="right">
                   <Button basic size="tiny" icon="trash" onClick={() => this.show(song.path)} />

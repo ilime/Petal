@@ -16,14 +16,14 @@ class Cover extends Component {
         title: '',
         singers: [
           {
-            avatar: ''
-          }
+            avatar: '',
+          },
         ],
         artist: '',
-        picture: ''
+        picture: '',
       },
       love: 'white',
-      isLoginPopup: false
+      isLoginPopup: false,
     }
   }
 
@@ -116,7 +116,7 @@ class Cover extends Component {
       {
         playing: openWithPlaying ? true : false,
         song,
-        love: pattern === 'redheart' ? 'red' : song.like === 1 ? 'red' : 'white'
+        love: pattern === 'redheart' ? 'red' : song.like === 1 ? 'red' : 'white',
       },
       () => {
         rendererProcessSend('FMRateColor', this.state.love)
@@ -448,10 +448,10 @@ Cover.propTypes = {
   lyricGlobalDisplay: PropTypes.bool,
   handleSongLyricGET: PropTypes.func,
   handleUpdateSidSsid: PropTypes.func,
-  openWithPlaying: PropTypes.bool
+  openWithPlaying: PropTypes.bool,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   pattern: state.fmReducer.pattern,
   song: state.fmReducer.song,
   _id: state.authReducer._id,
@@ -461,21 +461,18 @@ const mapStateToProps = state => ({
   // sheetSong: state.fmReducer.sheet,
   songListIndex: state.fmReducer.songListIndex,
   lyricGlobalDisplay: state.fmReducer.lyricDisplay,
-  openWithPlaying: state.settingReducer.openWithPlaying
+  openWithPlaying: state.settingReducer.openWithPlaying,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getPlayList: (type, callback) => dispatch(playlistGET(type, callback)),
   handleSongListGo: () => dispatch(songListGo()),
   handleSongListBack: () => dispatch(songListBack()),
-  handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
+  handleSongListIndexSet: (index) => dispatch(songListIndexSet(index)),
   handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source)),
-  handlePlaytimeSet: pt => dispatch(playtimeSet(pt)),
+  handlePlaytimeSet: (pt) => dispatch(playtimeSet(pt)),
   handleSongLyricGET: () => dispatch(songLyricGET()),
-  handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid))
+  handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid)),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Cover)
+export default connect(mapStateToProps, mapDispatchToProps)(Cover)

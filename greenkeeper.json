@@ -1,13 +1,8 @@
 {
   "groups": {
     "default": {
-      "packages": [
-        "package.json"
-      ]
+      "packages": ["package.json"]
     }
   },
-  "ignore": [
-    "electron",
-    "electron-builder"
-  ]
+  "ignore": ["electron", "electron-builder"]
 }

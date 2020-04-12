@@ -17,9 +17,9 @@ const template = [
             { role: 'hideothers' },
             { role: 'unhide' },
             { type: 'separator' },
-            { role: 'quit' }
-          ]
-        }
+            { role: 'quit' },
+          ],
+        },
       ]
     : []),
   {
@@ -39,11 +39,11 @@ const template = [
             { type: 'separator' },
             {
               label: 'Speech',
-              submenu: [{ role: 'startspeaking' }, { role: 'stopspeaking' }]
-            }
+              submenu: [{ role: 'startspeaking' }, { role: 'stopspeaking' }],
+            },
           ]
-        : [{ role: 'delete' }, { type: 'separator' }, { role: 'selectAll' }])
-    ]
+        : [{ role: 'delete' }, { type: 'separator' }, { role: 'selectAll' }]),
+    ],
   },
   {
     label: 'View',
@@ -56,16 +56,16 @@ const template = [
       { role: 'zoomin' },
       { role: 'zoomout' },
       { type: 'separator' },
-      { role: 'togglefullscreen' }
-    ]
+      { role: 'togglefullscreen' },
+    ],
   },
   {
     label: 'Window',
     submenu: [
       { role: 'minimize' },
       { role: 'zoom' },
-      ...(isDarwin ? [{ type: 'separator' }, { role: 'front' }] : [{ role: 'close' }])
-    ]
+      ...(isDarwin ? [{ type: 'separator' }, { role: 'front' }] : [{ role: 'close' }]),
+    ],
   },
   {
     label: 'Operations',
@@ -75,44 +75,44 @@ const template = [
         accelerator: 'Space',
         click() {
           mainWindow.webContents.send('pause')
-        }
+        },
       },
       {
         label: 'Love',
         accelerator: 'CmdOrCtrl+l',
         click() {
           mainWindow.webContents.send('love')
-        }
+        },
       },
       {
         label: 'Skip',
         accelerator: 'CmdOrCtrl+k',
         click() {
           mainWindow.webContents.send('skip')
-        }
+        },
       },
       {
         label: 'Trash',
         accelerator: 'CmdOrCtrl+t',
         click() {
           mainWindow.webContents.send('trash')
-        }
+        },
       },
       {
         label: 'Forward',
         accelerator: 'CmdOrCtrl+Right',
         click() {
           mainWindow.webContents.send('forward')
-        }
+        },
       },
       {
         label: 'Backward',
         accelerator: 'CmdOrCtrl+Left',
         click() {
           mainWindow.webContents.send('backward')
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'Help',
@@ -121,10 +121,10 @@ const template = [
         label: 'Source Code Repository',
         click() {
           require('electron').shell.openExternal('https://github.com/ilime/Petal')
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 ]
 
 export default function createMenu() {

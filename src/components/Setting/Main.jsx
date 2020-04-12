@@ -15,7 +15,7 @@ class Main extends Component {
       hideAbout: this.props.hideAbout,
       openPattern: this.props.openPattern,
       compactStatusBar: this.props.compactStatusBar,
-      preferBitRate: this.props.preferBitRate
+      preferBitRate: this.props.preferBitRate,
     }
   }
 
@@ -41,38 +41,38 @@ class Main extends Component {
 
   handleOpenWithPlayingState = () => {
     this.setState({
-      openWithPlaying: !this.state.openWithPlaying
+      openWithPlaying: !this.state.openWithPlaying,
     })
   }
 
   handleRestorelastWinPosState = () => {
     this.setState({
-      restoreLastWinPos: !this.state.restoreLastWinPos
+      restoreLastWinPos: !this.state.restoreLastWinPos,
     })
   }
 
   handleHideAbout = () => {
     this.setState({
-      hideAbout: !this.state.hideAbout
+      hideAbout: !this.state.hideAbout,
     })
   }
 
   handleSelectInitialPattern = (e, data) => {
     this.setState({
-      openPattern: data.value
+      openPattern: data.value,
     })
   }
 
   handleCompactStausBar = () => {
     const val = !this.state.compactStatusBar
     this.setState({
-      compactStatusBar: val
+      compactStatusBar: val,
     })
   }
 
   handlePreferBitRate = (e, data) => {
     this.setState({
-      preferBitRate: data.value
+      preferBitRate: data.value,
     })
   }
 
@@ -82,11 +82,19 @@ class Main extends Component {
 
   render() {
     const { _id, saveSuccess, userInfo } = this.props
-    const { volume, openWithPlaying, restoreLastWinPos, hideAbout, openPattern, compactStatusBar, preferBitRate } = this.state
+    const {
+      volume,
+      openWithPlaying,
+      restoreLastWinPos,
+      hideAbout,
+      openPattern,
+      compactStatusBar,
+      preferBitRate,
+    } = this.state
 
     const patternOptions = [
       { key: 'select', text: '豆瓣精选 MHz', value: 'select' },
-      { key: 'personal', text: '我的私人 MHz', value: 'personal' }
+      { key: 'personal', text: '我的私人 MHz', value: 'personal' },
     ]
 
     return (
@@ -109,14 +117,19 @@ class Main extends Component {
             </div>
           )}
         </div>
-        {(userInfo.pro_status && userInfo.pro_status === 'S') && (
+        {userInfo.pro_status && userInfo.pro_status === 'S' && (
           <div>
             <div style={{ margin: '4px 0' }}>首选音质：</div>
-            <Select placeholder='首选音质' value={preferBitRate} options={[
-              { key: '128', value: '128', text: '中等音质 (128k)' },
-              { key: '192', value: '192', text: '高音质 (192k)' },
-              { key: '320', value: '320', text: '最佳音质 (320k)' }
-            ]} onChange={this.handlePreferBitRate} />
+            <Select
+              placeholder="首选音质"
+              value={preferBitRate}
+              options={[
+                { key: '128', value: '128', text: '中等音质 (128k)' },
+                { key: '192', value: '192', text: '高音质 (192k)' },
+                { key: '320', value: '320', text: '最佳音质 (320k)' },
+              ]}
+              onChange={this.handlePreferBitRate}
+            />
           </div>
         )}
         <Header as="h5">其他设置: </Header>
@@ -140,14 +153,7 @@ class Main extends Component {
             保存成功
           </Message>
         )}
-        <Button
-          className="save"
-          content="保存"
-          fluid
-          color="green"
-          size="tiny"
-          onClick={this.handleSettingStore}
-        />
+        <Button className="save" content="保存" fluid color="green" size="tiny" onClick={this.handleSettingStore} />
       </div>
     )
   }
@@ -165,10 +171,10 @@ Main.propTypes = {
   openPattern: PropTypes.string,
   compactStatusBar: PropTypes.bool,
   userInfo: PropTypes.any,
-  preferBitRate: PropTypes.string
+  preferBitRate: PropTypes.string,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   _id: state.authReducer._id,
   saveSuccess: state.settingReducer.saveSuccess,
   audioVolume: state.settingReducer.volume,
@@ -178,15 +184,12 @@ const mapStateToProps = state => ({
   openPattern: state.settingReducer.openPattern,
   compactStatusBar: state.settingReducer.compactStatusBar,
   userInfo: state.authReducer.userInfo,
-  preferBitRate: state.settingReducer.preferBitRate 
+  preferBitRate: state.settingReducer.preferBitRate,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   handleSaveSuccessReset: () => dispatch(settingSaveSuccessReset()),
-  handleSettingStore: state => dispatch(settingStore(state))
+  handleSettingStore: (state) => dispatch(settingStore(state)),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Main)
+export default connect(mapStateToProps, mapDispatchToProps)(Main)

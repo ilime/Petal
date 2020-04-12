@@ -42,13 +42,13 @@ export default {
   setTrayImage(img) {
     const bounds = this.tray.getBounds()
     const Image = nativeImage.createFromDataURL(img).resize({
-      height: bounds ? bounds.height : 22
+      height: bounds ? bounds.height : 22,
     })
     this.tray.setImage(Image)
   },
   popUpContextMenu() {
     this.tray.popUpContextMenu(this.osxContextMenu)
-  }
+  },
 }
 
 function initNormalContextMenu() {
@@ -56,30 +56,30 @@ function initNormalContextMenu() {
     {
       label: '切换显示/隐藏',
       enabled: true,
-      click: mainWindowVisiableSwitch
+      click: mainWindowVisiableSwitch,
     },
     { type: 'separator' },
     {
       label: '切换暂停/开始',
-      click: () => mainWindow.webContents.send('pause')
+      click: () => mainWindow.webContents.send('pause'),
     },
     {
       label: '红心',
-      click: () => mainWindow.webContents.send('love')
+      click: () => mainWindow.webContents.send('love'),
     },
     {
       label: '跳过',
-      click: () => mainWindow.webContents.send('skip')
+      click: () => mainWindow.webContents.send('skip'),
     },
     {
       label: '垃圾桶',
-      click: () => mainWindow.webContents.send('trash')
+      click: () => mainWindow.webContents.send('trash'),
     },
     { type: 'separator' },
     {
       label: '退出',
-      click: app.quit
-    }
+      click: app.quit,
+    },
   ])
 }
 
@@ -88,7 +88,7 @@ function initOSXContextMenu() {
     {
       label: '切换显示/隐藏',
       enabled: true,
-      click: mainWindowVisiableSwitch
+      click: mainWindowVisiableSwitch,
     },
     { type: 'separator' },
     {
@@ -109,13 +109,13 @@ function initOSXContextMenu() {
         } else {
           mainWindow.center()
         }
-      }
+      },
     },
     { type: 'separator' },
     {
       label: '退出',
-      click: app.quit
-    }
+      click: app.quit,
+    },
   ])
 }
 

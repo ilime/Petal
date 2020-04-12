@@ -42,9 +42,9 @@ export function isOnline(callback) {
             title: '无网络连接',
             message: '检测不到可用网络，是否重新加载？',
             buttons: ['重新加载', '退出'],
-            defaultId: 0
+            defaultId: 0,
           },
-          function(index) {
+          function (index) {
             if (index === 0) {
               remote.getCurrentWindow().reload()
             } else {

@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Header, Button, Image, Popup } from 'semantic-ui-react'
-import {
-  selectPattern,
-  recentPattern,
-  redheartPattern,
-  appChannelSet
-} from '../../actions/fm/actions'
+import { selectPattern, recentPattern, redheartPattern, appChannelSet } from '../../actions/fm/actions'
 import { playlistGET, songLyricGET } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
@@ -15,21 +10,21 @@ class Pattern extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      songlistEmpty: ''
+      songlistEmpty: '',
     }
     this._patterns = new Map([
       [
         'recent',
         () => {
           props.switchToRecent()
-        }
+        },
       ],
       [
         'redheart',
         () => {
           props.switchToRedheart()
-        }
-      ]
+        },
+      ],
     ])
   }
 
@@ -58,7 +53,7 @@ class Pattern extends Component {
    *
    * @memberof Pattern
    */
-  handleSwitchPattern = name => {
+  handleSwitchPattern = (name) => {
     const { pattern, recentSong, redheartSong } = this.props
 
     if (name === 'recent' && recentSong.length === 0) return
@@ -73,7 +68,7 @@ class Pattern extends Component {
     this.props.history.push('/')
   }
 
-  handleAppChannelSetWrapper = id => {
+  handleAppChannelSetWrapper = (id) => {
     if (!(this.props.channelId === id && this.props.pattern === 'select')) {
       this.props.handleAppChannelSet(id)
       this.props.getPlaylist('new', this.handleLyricUpdated)
@@ -83,12 +78,9 @@ class Pattern extends Component {
     this.props.history.push('/')
   }
 
-  handleOpen = pattern => {
+  handleOpen = (pattern) => {
     const { recentSong, redheartSong } = this.props
-    if (
-      (pattern === 'recent' && recentSong.length === 0) ||
-      (pattern === 'redheart' && redheartSong.length === 0)
-    ) {
+    if ((pattern === 'recent' && recentSong.length === 0) || (pattern === 'redheart' && redheartSong.length === 0)) {
       this.setState({ songlistEmpty: pattern })
 
       this.timeout = setTimeout(() => {
@@ -111,9 +103,7 @@ class Pattern extends Component {
         <div className="default-MHz">
           <Button
             basic
-            className={
-              pattern === 'select' && channelId === -10 ? 'selected' : ''
-            }
+            className={pattern === 'select' && channelId === -10 ? 'selected' : ''}
             onClick={() => this.handleAppChannelSetWrapper(-10)}
           >
             <Icon name="leaf" />
@@ -162,9 +152,7 @@ class Pattern extends Component {
           {_id === 1 && (
             <Button
               basic
-              className={
-                pattern === 'select' && channelId === 0 ? 'selected' : ''
-              }
+              className={pattern === 'select' && channelId === 0 ? 'selected' : ''}
               onClick={() => this.handleAppChannelSetWrapper(0)}
             >
               <Image src={avatar} avatar />
@@ -173,23 +161,19 @@ class Pattern extends Component {
           )}
         </div>
         {channels.length > 0 &&
-          channels.map(channel => {
+          channels.map((channel) => {
             if (channel.chls.length > 0) {
               return (
                 <div key={channel.group_name} style={{ marginTop: '10px' }}>
                   <Header as="h5" dividing>
                     {channel.group_name}
                   </Header>
-                  {channel.chls.map(c => {
+                  {channel.chls.map((c) => {
                     return (
                       <Button
                         key={c.name}
                         basic
-                        className={
-                          pattern === 'select' && channelId === c.id
-                            ? 'selected'
-                            : ''
-                        }
+                        className={pattern === 'select' && channelId === c.id ? 'selected' : ''}
                         onClick={() => this.handleAppChannelSetWrapper(c.id)}
                         title={c.intro}
                       >
@@ -220,10 +204,10 @@ Pattern.propTypes = {
   redheartSong: PropTypes.array,
   handleAppChannelSet: PropTypes.func,
   lyricGlobalDisplay: PropTypes.bool,
-  handleSongLyricGET: PropTypes.func
+  handleSongLyricGET: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   _id: state.authReducer._id,
   avatar: state.authReducer.userInfo.icon,
   pattern: state.fmReducer.pattern,
@@ -231,19 +215,16 @@ const mapStateToProps = state => ({
   channels: state.fmReducer.channels,
   recentSong: state.fmReducer.recent.songs,
   redheartSong: state.fmReducer.redheart,
-  lyricGlobalDisplay: state.fmReducer.lyricDisplay
+  lyricGlobalDisplay: state.fmReducer.lyricDisplay,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   switchToSelect: () => dispatch(selectPattern()),
   switchToRecent: () => dispatch(recentPattern()),
   switchToRedheart: () => dispatch(redheartPattern()),
   getPlaylist: (type, callback) => dispatch(playlistGET(type, callback)),
-  handleAppChannelSet: id => dispatch(appChannelSet(id)),
-  handleSongLyricGET: () => dispatch(songLyricGET())
+  handleAppChannelSet: (id) => dispatch(appChannelSet(id)),
+  handleSongLyricGET: () => dispatch(songLyricGET()),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Pattern)
+export default connect(mapStateToProps, mapDispatchToProps)(Pattern)

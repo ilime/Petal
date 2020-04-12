@@ -36,9 +36,7 @@ class Personal extends Component {
               <Item.Content>
                 <Item.Header as="a">
                   <span>{userInfo.name}</span>
-                  {(userInfo.pro_status && userInfo.pro_status === 'S') && (
-                    <span className="pro-badget">PRO</span>
-                  )} 
+                  {userInfo.pro_status && userInfo.pro_status === 'S' && <span className="pro-badget">PRO</span>}
                 </Item.Header>
                 <Item.Meta>
                   <p>已听 {userInfo.played_num} 首</p>
@@ -73,18 +71,15 @@ class Personal extends Component {
 
 Personal.propTypes = {
   userInfo: PropTypes.object.isRequired,
-  handleAuthRemove: PropTypes.func
+  handleAuthRemove: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
-  userInfo: state.authReducer.userInfo
+const mapStateToProps = (state) => ({
+  userInfo: state.authReducer.userInfo,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handleAuthRemove: callback => authRemove(dispatch, callback)
+const mapDispatchToProps = (dispatch) => ({
+  handleAuthRemove: (callback) => authRemove(dispatch, callback),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Personal)
+export default connect(mapStateToProps, mapDispatchToProps)(Personal)

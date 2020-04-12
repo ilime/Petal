@@ -51,10 +51,7 @@ export class TrayPainter extends Canvas {
         ipcRenderer.send('trayDraw', this.canvas.toDataURL(), this.width)
       })
     } else {
-      Promise.all([
-        this.lyricPainter.draw(),
-        this.ctrlPainter.draw()
-      ]).then(() => {
+      Promise.all([this.lyricPainter.draw(), this.ctrlPainter.draw()]).then(() => {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.drawImage(this.lyricPainter.canvas, 0, 0)
         this.ctx.drawImage(this.ctrlPainter.canvas, this.lyricPainter.canvas.width, 0)
@@ -62,7 +59,7 @@ export class TrayPainter extends Canvas {
       })
     }
   }
-  
+
   onThemeChange(val) {
     this.isCompactTheme = val
     if (this.isCompactTheme) {
@@ -87,8 +84,7 @@ export class TrayPainter extends Canvas {
     const { title, artist, length } = song
     let cycleText = `${title} - ${artist}`
     // 30 second per cycle
-    for (let i = 0, n = parseInt(length / 30); i < n; i++) 
-      cycleText = cycleText.concat(`        ${title} - ${artist}`)
+    for (let i = 0, n = parseInt(length / 30); i < n; i++) cycleText = cycleText.concat(`        ${title} - ${artist}`)
     this.lyricPainter.setText(cycleText, length * 1000)
     if (!this.isCompactTheme) {
       this.refreshLyricInterval(cycleText, length * 1000)

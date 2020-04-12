@@ -3,7 +3,7 @@ import { app } from 'electron'
 
 const db = new Datastore({
   filename: app.getPath('home') + '/.petal.db',
-  autoload: true
+  autoload: true,
 })
 
 global.db = db

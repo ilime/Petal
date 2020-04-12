@@ -10,14 +10,14 @@ export const pauseAndStart = new TouchBarButton({
   icon: `${resourcesFolder}pause.png`,
   click() {
     mainWindow.webContents.send('pause')
-  }
+  },
 })
 
 export const rateAndUnrate = new TouchBarButton({
   icon: `${resourcesFolder}unrate.png`,
   click() {
     mainWindow.webContents.send('love')
-  }
+  },
 })
 
 export const trashOrBackward = new TouchBarButton({
@@ -29,7 +29,7 @@ export const trashOrBackward = new TouchBarButton({
     if (pattern.state === 1) {
       mainWindow.webContents.send('backward')
     }
-  }
+  },
 })
 
 export const skipOrForward = new TouchBarButton({
@@ -41,9 +41,9 @@ export const skipOrForward = new TouchBarButton({
     if (pattern.state === 1) {
       mainWindow.webContents.send('forward')
     }
-  }
+  },
 })
 
 export default new TouchBar({
-  items: [trashOrBackward, pauseAndStart, skipOrForward, rateAndUnrate]
+  items: [trashOrBackward, pauseAndStart, skipOrForward, rateAndUnrate],
 })

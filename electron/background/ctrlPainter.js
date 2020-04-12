@@ -6,7 +6,7 @@ export const ctrlBtnWidth = 22
 const ctrlBtnCount = 5
 export const ctrlPattern = {
   songlist: 0,
-  playlist: 1
+  playlist: 1,
 }
 
 function getModeAwareImage(suffix, isDarkMode) {
@@ -37,7 +37,7 @@ export class Controller extends Canvas {
   }
 
   drawImageBtn(index, image) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const img = new Image()
       img.onload = () => {
         this.ctx.drawImage(img, ctrlBtnWidth * index * this.devicePixelRatio, this.canvas.height / 2 - img.height / 2)

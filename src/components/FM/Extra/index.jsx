@@ -3,10 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Popup } from 'semantic-ui-react'
 import { songLyricGET } from '../../../actions/fm/apis'
-import {
-  lyricDisplayTrue,
-  lyricDisplayFalse
-} from '../../../actions/fm/actions'
+import { lyricDisplayTrue, lyricDisplayFalse } from '../../../actions/fm/actions'
 import lyricParsing from '../../../helper/lyricParsing'
 import db from '../../../helper/db'
 import { UserMusicPath, fileDownload } from '../../../helper/utils'
@@ -18,12 +15,12 @@ class Extra extends Component {
     this.state = {
       lyric: {
         lyricArr: [],
-        canScroll: false
+        canScroll: false,
       },
       lyricAreaDisplay: false,
       lyricAreaHeight: 0,
       redheartAlreadyDownload: false,
-      shareLinkIsOpen: false
+      shareLinkIsOpen: false,
     }
   }
 
@@ -38,7 +35,7 @@ class Extra extends Component {
       }
       this.setState(
         {
-          lyric: lyricParsing(nextProps.lyric.lyric)
+          lyric: lyricParsing(nextProps.lyric.lyric),
         },
         () => {
           this.resetScroll()
@@ -51,13 +48,12 @@ class Extra extends Component {
 
     if (
       (nextProps.pattern === 'redheart' && this.props.pattern !== 'redheart') ||
-      (this.props.pattern === 'redheart' &&
-        nextProps.songListIndex !== this.props.songListIndex)
+      (this.props.pattern === 'redheart' && nextProps.songListIndex !== this.props.songListIndex)
     ) {
       setTimeout(() => {
         db.findOne({ _id: this.props.sid }, (err, doc) => {
           this.setState({
-            redheartAlreadyDownload: doc !== null ? true : false
+            redheartAlreadyDownload: doc !== null ? true : false,
           })
         })
       }, 1000)
@@ -74,13 +70,13 @@ class Extra extends Component {
       this.props.handleGlobalLyricDisplayTrue()
       this.setState({
         lyricAreaDisplay: true,
-        lyricAreaHeight: 80
+        lyricAreaHeight: 80,
       })
     } else {
       this.props.handleGlobalLyricDisplayFalse()
       this.setState({
         lyricAreaDisplay: false,
-        lyricAreaHeight: 0
+        lyricAreaHeight: 0,
       })
     }
   }
@@ -103,14 +99,14 @@ class Extra extends Component {
           lyric.lyricArr[prevIndex].active = false
           lyric.lyricArr[index].active = true
           this.setState({
-            lyric
+            lyric,
           })
           this.lyricScrollArea.scrollTop = lineHeight * index
           prevIndex = index
           index++
           rendererProcessSend('trayLyricNext', {
             lyricText: lyric.lyricArr[prevIndex][1],
-            duration: index === lyric.lyricArr.length ? 15 : lyric.lyricArr[index][0] - lyric.lyricArr[prevIndex][0]
+            duration: index === lyric.lyricArr.length ? 15 : lyric.lyricArr[index][0] - lyric.lyricArr[prevIndex][0],
           })
         }
         if (index === lyric.lyricArr.length) {
@@ -144,31 +140,19 @@ class Extra extends Component {
         title,
         artist,
         path: UserMusicPath + '/PETAL豆瓣FM/' + name,
-        usedFor: 'download'
+        usedFor: 'download',
       },
       () => {
-        fileDownload(
-          redheartSong[songListIndex].url,
-          UserMusicPath + '/PETAL豆瓣FM',
-          name,
-          () => {
-            this.setState({ redheartAlreadyDownload: true })
-          }
-        )
+        fileDownload(redheartSong[songListIndex].url, UserMusicPath + '/PETAL豆瓣FM', name, () => {
+          this.setState({ redheartAlreadyDownload: true })
+        })
       }
     )
   }
 
   shareSong = () => {
     let link, albumtitle, picture
-    const {
-      pattern,
-      song,
-      redheartSong,
-      recentSong,
-      dailySong,
-      songListIndex
-    } = this.props
+    const { pattern, song, redheartSong, recentSong, dailySong, songListIndex } = this.props
     if (pattern === 'select') {
       link = song.release.link
       albumtitle = song.albumtitle
@@ -197,7 +181,7 @@ class Extra extends Component {
         albumtitle: title,
         shareLink: link,
         sharePicture: picture,
-        usedFor: 'share'
+        usedFor: 'share',
       },
       (err, newDoc) => {
         console.log('Save share: ', newDoc)
@@ -236,15 +220,7 @@ class Extra extends Component {
           </div>
           <div>
             <Popup
-              trigger={
-                <Icon
-                  link
-                  name="share alternate"
-                  color="grey"
-                  title="分享专辑"
-                  onClick={this.shareSong}
-                />
-              }
+              trigger={<Icon link name="share alternate" color="grey" title="分享专辑" onClick={this.shareSong} />}
               content="已复制"
               on="click"
               open={this.state.shareLinkIsOpen}
@@ -258,14 +234,10 @@ class Extra extends Component {
                   link
                   name="download"
                   color="grey"
-                  title={
-                    this.state.redheartAlreadyDownload ? '已下载' : '下载歌曲'
-                  }
+                  title={this.state.redheartAlreadyDownload ? '已下载' : '下载歌曲'}
                   onClick={this.downloadSong}
                 />
-                {this.state.redheartAlreadyDownload && (
-                  <Icon corner name="check" color="green" />
-                )}
+                {this.state.redheartAlreadyDownload && <Icon corner name="check" color="green" />}
               </Icon.Group>
             )}
           </div>
@@ -273,7 +245,7 @@ class Extra extends Component {
         <div
           className="lyric-area"
           style={{ height: `${lyricAreaHeight}px` }}
-          ref={node => (this.lyricScrollArea = node)}
+          ref={(node) => (this.lyricScrollArea = node)}
         >
           <h5>{this.props.lyric.name}</h5>
           {lyric.lyricArr.length > 0 &&
@@ -299,10 +271,10 @@ Extra.propTypes = {
   redheartSong: PropTypes.array,
   recentSong: PropTypes.array,
   dailySong: PropTypes.array,
-  songListIndex: PropTypes.number
+  songListIndex: PropTypes.number,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   lyric: state.fmReducer.lyric,
   sid: state.fmReducer.sid,
   song: state.fmReducer.song,
@@ -310,16 +282,13 @@ const mapStateToProps = state => ({
   redheartSong: state.fmReducer.redheart,
   recentSong: state.fmReducer.recent.songs,
   dailySong: state.fmReducer.daily.songs,
-  songListIndex: state.fmReducer.songListIndex
+  songListIndex: state.fmReducer.songListIndex,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   handleSongLyricGET: () => dispatch(songLyricGET()),
   handleGlobalLyricDisplayTrue: () => dispatch(lyricDisplayTrue()),
-  handleGlobalLyricDisplayFalse: () => dispatch(lyricDisplayFalse())
+  handleGlobalLyricDisplayFalse: () => dispatch(lyricDisplayFalse()),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Extra)
+export default connect(mapStateToProps, mapDispatchToProps)(Extra)

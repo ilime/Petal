@@ -3,7 +3,7 @@ const linePattern = /^\[(\d{2}:\d{2}\.\d{2,3})\](.*)$/
 function lyricParsing(lyric) {
   let result = {
     lyricArr: [],
-    canScroll: false
+    canScroll: false,
   }
 
   if (lyric === '暂无歌词') {
@@ -14,17 +14,17 @@ function lyricParsing(lyric) {
   if (!lyric.startsWith('[')) {
     result.lyricArr = lyric
       .split('\r\n')
-      .filter(line => line !== '')
-      .map(line => line.trim())
+      .filter((line) => line !== '')
+      .map((line) => line.trim())
 
     return result
   }
 
   if (lyric.search(/\r\n/) !== -1) {
-    result.lyricArr = lyric.split('\r\n').filter(line => line !== '')
+    result.lyricArr = lyric.split('\r\n').filter((line) => line !== '')
 
     result.lyricArr = result.lyricArr
-      .map(line => {
+      .map((line) => {
         let matched = line.match(linePattern)
         if (matched !== null) {
           let time = matched[1]
@@ -39,7 +39,7 @@ function lyricParsing(lyric) {
           return null
         }
       })
-      .filter(line => line !== null && line[1] !== '')
+      .filter((line) => line !== null && line[1] !== '')
 
     result.canScroll = true
   }

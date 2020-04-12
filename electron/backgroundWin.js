@@ -15,9 +15,9 @@ export const createBackgroundWindow = () => {
     show: false,
     webPreferences: {
       backgroundThrottling: false,
-      nodeIntegration: true
+      nodeIntegration: true,
     },
-    hasShadow: false
+    hasShadow: false,
   })
 
   backgroundWindow.loadURL(
@@ -25,7 +25,7 @@ export const createBackgroundWindow = () => {
       ? url.format('http://localhost:3000/background.html')
       : url.format({
           pathname: __dirname + '/background.html',
-          protocol: 'file:'
+          protocol: 'file:',
         })
   )
 

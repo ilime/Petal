@@ -1,19 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  Header,
-  Image,
-  Form,
-  Button,
-  Dimmer,
-  Loader,
-  Message
-} from 'semantic-ui-react'
-import {
-  authLoginFail,
-  authRemoveFailMessage
-} from '../../actions/auth/actions'
+import { Header, Image, Form, Button, Dimmer, Loader, Message } from 'semantic-ui-react'
+import { authLoginFail, authRemoveFailMessage } from '../../actions/auth/actions'
 import { authPost } from '../../actions/auth/apis'
 import { openInDefaultBrowser } from '../../helper/electron'
 
@@ -22,7 +11,7 @@ class Login extends Component {
     super(props)
     this.state = {
       username: '',
-      password: ''
+      password: '',
     }
   }
 
@@ -40,7 +29,7 @@ class Login extends Component {
     this.setState({ [name]: value })
   }
 
-  handleLoginSubmit = e => {
+  handleLoginSubmit = (e) => {
     e.preventDefault()
     const { username, password } = this.state
     const { handleAuthPost, handleAuthLoginFail } = this.props
@@ -68,21 +57,12 @@ class Login extends Component {
           </Dimmer>
           <Form className="login-form">
             {loginFail && (
-              <Message
-                size="small"
-                negative
-                onDismiss={this.props.handleRemoveLoginFailMessage}
-              >
+              <Message size="small" negative onDismiss={this.props.handleRemoveLoginFailMessage}>
                 <Message.Header>登录失败</Message.Header>
                 <p>{loginFailMessage}</p>
               </Message>
             )}
-            <Form.Input
-              name="username"
-              value={username}
-              onChange={this.handleInputChange}
-              placeholder="豆瓣账号"
-            />
+            <Form.Input name="username" value={username} onChange={this.handleInputChange} placeholder="豆瓣账号" />
             <Form.Input
               type="password"
               name="password"
@@ -96,10 +76,7 @@ class Login extends Component {
           </Form>
         </Dimmer.Dimmable>
         <p className="login-extra">
-          没有豆瓣账号?{' '}
-          <span onClick={openInDefaultBrowser('https://www.douban.com')}>
-            去注册
-          </span>
+          没有豆瓣账号? <span onClick={openInDefaultBrowser('https://www.douban.com')}>去注册</span>
         </p>
       </article>
     )
@@ -112,23 +89,19 @@ Login.propTypes = {
   loginFail: PropTypes.bool.isRequired,
   loginFailMessage: PropTypes.string.isRequired,
   handleAuthLoginFail: PropTypes.func.isRequired,
-  handleRemoveLoginFailMessage: PropTypes.func.isRequired
+  handleRemoveLoginFailMessage: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isFetching: state.authReducer.isFetching,
   loginFail: state.authReducer.loginFail,
-  loginFailMessage: state.authReducer.loginFailMessage
+  loginFailMessage: state.authReducer.loginFailMessage,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handleAuthPost: (usernameAndPassword, callback) =>
-    dispatch(authPost(usernameAndPassword, callback)),
-  handleAuthLoginFail: message => dispatch(authLoginFail(message)),
-  handleRemoveLoginFailMessage: () => dispatch(authRemoveFailMessage())
+const mapDispatchToProps = (dispatch) => ({
+  handleAuthPost: (usernameAndPassword, callback) => dispatch(authPost(usernameAndPassword, callback)),
+  handleAuthLoginFail: (message) => dispatch(authLoginFail(message)),
+  handleRemoveLoginFailMessage: () => dispatch(authRemoveFailMessage()),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

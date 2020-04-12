@@ -17,29 +17,24 @@ describe('<Sidebar />', () => {
     '/trashList',
     '/setting',
     '/about',
-    '/personal'
+    '/personal',
   ]
 
   test('navlink worked as expectly', () => {
     let index = 0
-    wrapper.find(Menu.Item).forEach(l => {
+    wrapper.find(Menu.Item).forEach((l) => {
       expect(l.props().to).toBe(withoutAuthRoutes[index++])
     })
   })
 
   test('navlink active class', () => {
-    expect(
-      wrapper
-        .find(Menu.Item)
-        .first()
-        .props().activeClassName
-    ).toBe('active')
+    expect(wrapper.find(Menu.Item).first().props().activeClassName).toBe('active')
   })
 
   test('after login, navlink change', () => {
     let wrapperWithId = shallow(<Sidebar _id={1} />)
     let index = 0
-    wrapperWithId.find(Menu.Item).forEach(l => {
+    wrapperWithId.find(Menu.Item).forEach((l) => {
       expect(l.props().to).toMatch(authRoutes[index++])
     })
   })

@@ -3,19 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Progress, Icon } from 'semantic-ui-react'
 import { playlistGET, playLog, songLyricGET } from '../../../actions/fm/apis'
-import {
-  songListGo,
-  songListIndexSet,
-  playtimeSet,
-  updateSidSsid
-} from '../../../actions/fm/actions'
+import { songListGo, songListIndexSet, playtimeSet, updateSidSsid } from '../../../actions/fm/actions'
 
 class Audio extends Component {
   constructor(props) {
     super(props)
     this.firstOpenWithPlayingChange = true
     this.state = {
-      percent: 0
+      percent: 0,
     }
   }
 
@@ -30,12 +25,7 @@ class Audio extends Component {
       this.setVolume(audioVolume)
     }
 
-    if (
-      pattern === 'select' &&
-      song !== this.props.song &&
-      type !== 'r' &&
-      type !== 'u'
-    ) {
+    if (pattern === 'select' && song !== this.props.song && type !== 'r' && type !== 'u') {
       this.nextAudio(song)
       return
     }
@@ -58,10 +48,7 @@ class Audio extends Component {
     //   this.nextAudio(this.props.sheetSong[songListIndex])
     // }
 
-    if (
-      songListIndex !== this.props.songListIndex &&
-      pattern === this.props.pattern
-    ) {
+    if (songListIndex !== this.props.songListIndex && pattern === this.props.pattern) {
       if (pattern === 'redheart') {
         this.nextAudio(this.props.redheartSong[songListIndex])
         return
@@ -89,7 +76,7 @@ class Audio extends Component {
    *
    * @memberof Audio
    */
-  nextAudio = song => {
+  nextAudio = (song) => {
     this.audio.src = song.url
     this.audio.load()
   }
@@ -105,10 +92,7 @@ class Audio extends Component {
     this.props.handleAudioSpan(this.audio)
     const currentTime = document.querySelector('.currenttime')
 
-    audio.addEventListener(
-      'timeupdate',
-      this.updateAudioTimeAndProgress(currentTime, audio)
-    )
+    audio.addEventListener('timeupdate', this.updateAudioTimeAndProgress(currentTime, audio))
     audio.addEventListener('ended', this.endedAudio)
     audio.addEventListener('loadedmetadata', () => {
       const totalTime = document.querySelector('.totaltime')
@@ -131,13 +115,13 @@ class Audio extends Component {
    * @memberof Audio
    * @return {string} - the formated time
    */
-  formatTime = time => {
+  formatTime = (time) => {
     let min = Math.floor(time / 60)
     let sec = Math.floor(time % 60)
     return min + ':' + (sec < 10 ? '0' + sec : sec)
   }
 
-  setVolume = volume => {
+  setVolume = (volume) => {
     let range = document.querySelector('.volume-bar'),
       volumeProgress = range.children[0],
       slider = range.children[1]
@@ -152,21 +136,21 @@ class Audio extends Component {
    *
    * @memberof Audio
    */
-  initVolume = audio => {
+  initVolume = (audio) => {
     let range = document.querySelector('.volume-bar'),
       rangeRect = range.getBoundingClientRect(),
       volumeProgress = range.children[0],
       slider = range.children[1],
       mouseDown = false
 
-    range.addEventListener('mousedown', function(e) {
+    range.addEventListener('mousedown', function (e) {
       mouseDown = true
       forbidSelect()
       updateSlider(e)
       document.addEventListener('mousemove', updateSlider)
     })
 
-    document.addEventListener('mouseup', function() {
+    document.addEventListener('mouseup', function () {
       mouseDown = false
       restoreSelect()
       document.removeEventListener('mousemove', updateSlider)
@@ -177,10 +161,7 @@ class Audio extends Component {
         let mousePositionX = e.clientX
         let rangeLeft = rangeRect.left
         let rangeWidth = rangeRect.width
-        let percent = Math.round(
-          ((mousePositionX - rangeLeft - slider.offsetWidth / 2) / rangeWidth) *
-            100
-        )
+        let percent = Math.round(((mousePositionX - rangeLeft - slider.offsetWidth / 2) / rangeWidth) * 100)
         if (percent > 100) {
           percent = 100
         }
@@ -208,7 +189,7 @@ class Audio extends Component {
         let currentTime = audio.currentTime
         currentTimeElement.textContent = this.formatTime(currentTime)
         this.setState({
-          percent: (currentTime / audio.duration) * 100
+          percent: (currentTime / audio.duration) * 100,
         })
       }
     }
@@ -230,17 +211,9 @@ class Audio extends Component {
    * @memberof Audio
    */
   endedAudio = () => {
-    const {
-      pattern,
-      recentSong,
-      redheartSong,
-      dailySong,
-      songListIndex
-    } = this.props
+    const { pattern, recentSong, redheartSong, dailySong, songListIndex } = this.props
 
-    this.props.handlePlaytimeSet(
-      Number.parseFloat(this.audio.currentTime).toFixed(3)
-    )
+    this.props.handlePlaytimeSet(Number.parseFloat(this.audio.currentTime).toFixed(3))
 
     if (pattern === 'select') {
       this.props.getPlaylist('end')
@@ -254,10 +227,7 @@ class Audio extends Component {
         this.props.handleUpdateSidSsid(recentSong[0].sid, recentSong[0].ssid)
       } else {
         this.props.handleSongListGo()
-        this.props.handleUpdateSidSsid(
-          recentSong[songListIndex + 1].sid,
-          recentSong[songListIndex + 1].ssid
-        )
+        this.props.handleUpdateSidSsid(recentSong[songListIndex + 1].sid, recentSong[songListIndex + 1].ssid)
       }
       this.handleLyricUpdated()
     } else if (pattern === 'redheart') {
@@ -266,16 +236,10 @@ class Audio extends Component {
         this.audio.load()
       } else if (songListIndex === redheartSong.length - 1) {
         this.props.handleSongListIndexSet(0)
-        this.props.handleUpdateSidSsid(
-          redheartSong[0].sid,
-          redheartSong[0].ssid
-        )
+        this.props.handleUpdateSidSsid(redheartSong[0].sid, redheartSong[0].ssid)
       } else {
         this.props.handleSongListGo()
-        this.props.handleUpdateSidSsid(
-          redheartSong[songListIndex + 1].sid,
-          redheartSong[songListIndex + 1].ssid
-        )
+        this.props.handleUpdateSidSsid(redheartSong[songListIndex + 1].sid, redheartSong[songListIndex + 1].ssid)
       }
       this.handleLyricUpdated()
     } else if (pattern === 'daily') {
@@ -287,10 +251,7 @@ class Audio extends Component {
         this.props.handleUpdateSidSsid(dailySong[0].sid, dailySong[0].ssid)
       } else {
         this.props.handleSongListGo()
-        this.props.handleUpdateSidSsid(
-          dailySong[songListIndex + 1].sid,
-          dailySong[songListIndex + 1].ssid
-        )
+        this.props.handleUpdateSidSsid(dailySong[songListIndex + 1].sid, dailySong[songListIndex + 1].ssid)
       }
       this.handleLyricUpdated()
     }
@@ -317,12 +278,7 @@ class Audio extends Component {
           </div>
         </div>
         {/* chrome 66: Autoplay Policy Changes */}
-        <iframe
-          src="./resources/silence.mp3"
-          allow="autoplay"
-          style={{ display: 'none' }}
-          title="slience"
-        />
+        <iframe src="./resources/silence.mp3" allow="autoplay" style={{ display: 'none' }} title="slience" />
         <audio id="_audio" preload="none" />
       </article>
     )
@@ -347,10 +303,10 @@ Audio.propTypes = {
   lyricGlobalDisplay: PropTypes.bool,
   handleSongLyricGET: PropTypes.func,
   handleUpdateSidSsid: PropTypes.func,
-  openWithPlaying: PropTypes.bool
+  openWithPlaying: PropTypes.bool,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   pattern: state.fmReducer.pattern,
   songListIndex: state.fmReducer.songListIndex,
   song: state.fmReducer.song,
@@ -361,21 +317,17 @@ const mapStateToProps = state => ({
   // sheetSong: state.fmReducer.sheet,
   audioVolume: state.settingReducer.volume,
   lyricGlobalDisplay: state.fmReducer.lyricDisplay,
-  openWithPlaying: state.settingReducer.openWithPlaying
+  openWithPlaying: state.settingReducer.openWithPlaying,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getPlaylist: (type, callback) => dispatch(playlistGET(type, callback)),
   handleSongListGo: () => dispatch(songListGo()),
-  handleSongListIndexSet: index => dispatch(songListIndexSet(index)),
-  handlePlayLog: (sid, type, play_source) =>
-    dispatch(playLog(sid, type, play_source)),
-  handlePlaytimeSet: pt => dispatch(playtimeSet(pt)),
+  handleSongListIndexSet: (index) => dispatch(songListIndexSet(index)),
+  handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source)),
+  handlePlaytimeSet: (pt) => dispatch(playtimeSet(pt)),
   handleSongLyricGET: () => dispatch(songLyricGET()),
-  handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid))
+  handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid)),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Audio)
+export default connect(mapStateToProps, mapDispatchToProps)(Audio)

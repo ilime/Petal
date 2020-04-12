@@ -14,7 +14,7 @@ import db from '../../helper/db'
  * @returns {Function} - a thunk function
  */
 export const settingLoad = () => {
-  return dispatch => {
+  return (dispatch) => {
     db.findOne({ setting: 'normal' }, (err, doc) => {
       if (doc !== null) {
         console.log('Petal Setting:', doc)
@@ -42,8 +42,8 @@ export const settingLoad = () => {
  *
  * @param {number} volume
  */
-export const settingStore = state => {
-  return dispatch => {
+export const settingStore = (state) => {
+  return (dispatch) => {
     db.findOne({ setting: 'normal' }, (err, doc) => {
       if (doc !== null) {
         db.update(
@@ -56,11 +56,11 @@ export const settingStore = state => {
               hideAbout: state.hideAbout,
               openPattern: state.openPattern,
               compactStatusBar: state.compactStatusBar,
-              preferBitRateSet: state.preferBitRate
-            }
+              preferBitRateSet: state.preferBitRate,
+            },
           },
           {
-            upsert: true
+            upsert: true,
           },
           (err, numReplaced) => {
             if (err === null) {
@@ -89,7 +89,7 @@ export const settingStore = state => {
             hideAbout: state.hideAbout,
             openPattern: state.openPattern,
             compactStatusBar: state.compactStatusBar,
-            preferBitRateSet: state.preferBitRate
+            preferBitRateSet: state.preferBitRate,
           },
           (err, doc) => {
             if (err === null) {

@@ -17,7 +17,7 @@ const fixedParams = {
   udid: 'a57dd2f934f5911582ac34b2256c265287c62377',
   version: 654,
   push_device_id: '8654eb9b2854da9684f9a62a8b2505dd57074b70',
-  audio_patch_version: 4
+  audio_patch_version: 4,
 }
 
 /**
@@ -38,7 +38,7 @@ const playlistTypes = {
   trash: actions.playlistTrashRequest,
   rate: actions.redHeartRate,
   unrate: actions.redHeartUnRate,
-  end: actions.playlistEndRequest
+  end: actions.playlistEndRequest,
 }
 
 let alreadySetOpenPattern = false
@@ -51,8 +51,8 @@ const playlistOriginUrl =
     return previous + key + '=' + value + '&'
   }, '') +
   'format=null&from='
-    
-const genBitRate = (isPro, preferBitRate) => isPro ? ('&pb=192&kbps=' + preferBitRate) : '&kbps=128&pb=128'
+
+const genBitRate = (isPro, preferBitRate) => (isPro ? '&pb=192&kbps=' + preferBitRate : '&kbps=128&pb=128')
 
 const songLyricOriginUrl =
   FM_ROOT_URL +
@@ -78,7 +78,7 @@ export const songLyricGET = (sid = null, ssid = null) => {
           '&ssid=' +
           (ssid === null ? getState().fmReducer.ssid : ssid)
       )
-      .then(response => {
+      .then((response) => {
         const lyric = response.data
         dispatch(actions.songLyricResponse(lyric))
       })
@@ -116,7 +116,10 @@ export const playlistGET = (type, callback = null) => {
           method: 'GET',
           url:
             playlistOriginUrl +
-            genBitRate(authReducer.userInfo.pro_status && authReducer.userInfo.pro_status === 'S', settingReducer.preferBitRate) +
+            genBitRate(
+              authReducer.userInfo.pro_status && authReducer.userInfo.pro_status === 'S',
+              settingReducer.preferBitRate
+            ) +
             '&pt=' +
             fmReducer.playtime +
             '&channel=' +
@@ -124,18 +127,17 @@ export const playlistGET = (type, callback = null) => {
             '&type=' +
             fmReducer.type +
             '&sid=' +
-            (type !== 'new' ? fmReducer.sid : '')
+            (type !== 'new' ? fmReducer.sid : ''),
         },
         // is login
         authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + authReducer.userToken.access_token,
+          },
         }
       )
     )
-      .then(response => {
+      .then((response) => {
         if (type === 'end' || type === 'rate' || type === 'unrate') {
           return
         }
@@ -167,17 +169,16 @@ export const appChannelGET = () => {
       Object.assign(
         {
           method: 'GET',
-          url: appChannelOriginUrl
+          url: appChannelOriginUrl,
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     )
-      .then(response => {
+      .then((response) => {
         let data = response.data.groups
         dispatch(actions.appChannel(data.slice(1, data.length - 1)))
       })
@@ -199,17 +200,16 @@ export const dailyListGET = () => {
       Object.assign(
         {
           method: 'GET',
-          url: dailyOriginUrl
+          url: dailyOriginUrl,
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     )
-      .then(response => {
+      .then((response) => {
         dispatch(actions.dailyList(response.data))
       })
       .catch(console.log)
@@ -232,17 +232,16 @@ export const recentListGET = () => {
       Object.assign(
         {
           method: 'GET',
-          url: recentOriginUrl
+          url: recentOriginUrl,
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     )
-      .then(response => {
+      .then((response) => {
         dispatch(actions.recentList(response.data))
       })
       .catch(console.log)
@@ -264,17 +263,16 @@ export const redHeartListGET = () => {
       Object.assign(
         {
           method: 'GET',
-          url: redHeartSidsOriginUrl
+          url: redHeartSidsOriginUrl,
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     )
-      .then(response => {
+      .then((response) => {
         let songs = response.data.songs
         let songsChain = songs
           .reduce((prev, song) => {
@@ -285,25 +283,23 @@ export const redHeartListGET = () => {
           Object.assign(
             {
               method: 'POST',
-              url:
-                'https://api.douban.com/v2/fm/songs?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
+              url: 'https://api.douban.com/v2/fm/songs?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
               data: oToFd(
                 Object.assign(JSON.parse(JSON.stringify(fixedParams)), {
                   sids: songsChain,
-                  kbps: 128
+                  kbps: 128,
                 })
-              )
+              ),
             },
             getState().authReducer._id === 1 && {
               headers: {
-                Authorization:
-                  'Bearer ' + getState().authReducer.userToken.access_token
-              }
+                Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+              },
             }
           )
         )
       })
-      .then(response => {
+      .then((response) => {
         dispatch(actions.redHeartList(response.data))
       })
       .catch(console.log)
@@ -326,25 +322,23 @@ export const trashListGET = () => {
       Object.assign(
         {
           method: 'GET',
-          url: trashOriginUrl
+          url: trashOriginUrl,
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     )
-      .then(response => {
+      .then((response) => {
         dispatch(actions.trashList(response.data))
       })
       .catch(console.log)
   }
 }
 
-const PLAY_LOG_URL =
-  'https://api.douban.com/v2/fm/play_log?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec' // handle play log, used in recent or redheart list
+const PLAY_LOG_URL = 'https://api.douban.com/v2/fm/play_log?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec' // handle play log, used in recent or redheart list
 
 /**
  *
@@ -367,9 +361,7 @@ export const playLog = (sid, type, play_source) => {
   return (dispatch, getState) => {
     const tzOffset = new Date().getTimezoneOffset() * 60000
     const time = new Date(Date.now() - tzOffset).toISOString()
-    const timeFormat = `${time.split('T')[0]} ${
-      time.split('T')[1].split('.')[0]
-    }`
+    const timeFormat = `${time.split('T')[0]} ${time.split('T')[1].split('.')[0]}`
 
     return axios(
       Object.assign(
@@ -387,15 +379,14 @@ export const playLog = (sid, type, play_source) => {
                 type +
                 '","play_source":"' +
                 play_source +
-                '","pid":"0"}]'
+                '","pid":"0"}]',
             })
-          )
+          ),
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     )
@@ -408,17 +399,13 @@ export const removeTrashSong = (sid, callback) => {
       Object.assign(
         {
           method: 'POST',
-          url:
-            'https://api.douban.com/v2/fm/unban_song?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
-          data: oToFd(
-            Object.assign(JSON.parse(JSON.stringify(fixedParams)), { sid })
-          )
+          url: 'https://api.douban.com/v2/fm/unban_song?udid=cf9aed3a0bc54032661c6f84d220b1f28d3722ec',
+          data: oToFd(Object.assign(JSON.parse(JSON.stringify(fixedParams)), { sid })),
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     ).then(() => {
@@ -443,17 +430,16 @@ export const userInfoGET = () => {
       Object.assign(
         {
           method: 'GET',
-          url: userInfoOriginUrl
+          url: userInfoOriginUrl,
         },
         getState().authReducer._id === 1 && {
           headers: {
-            Authorization:
-              'Bearer ' + getState().authReducer.userToken.access_token
-          }
+            Authorization: 'Bearer ' + getState().authReducer.userToken.access_token,
+          },
         }
       )
     )
-      .then(response => {
+      .then((response) => {
         dispatch(userInfo(response.data))
       })
       .catch(console.log)

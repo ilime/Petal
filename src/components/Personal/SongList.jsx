@@ -10,34 +10,32 @@ import {
   playLog,
   songLyricGET,
   recentListGET,
-  redHeartListGET
+  redHeartListGET,
 } from '../../actions/fm/apis'
 import { rendererProcessSend } from '../../helper/electron'
 
 const typeRender = {
   recent: '最近收听',
   redheart: '红心',
-  trash: '垃圾桶'
+  trash: '垃圾桶',
 }
 
 const tipRender = {
   recent: '你还没有收听过歌曲。',
   redheart: '这里没有你喜欢的歌曲。',
-  trash: '这里没有你不喜欢的歌曲。'
+  trash: '这里没有你不喜欢的歌曲。',
 }
 
 class SongList extends Component {
   state = {
     open: false,
-    sid: undefined
+    sid: undefined,
   }
 
-  show = sid => this.setState({ open: true, sid })
+  show = (sid) => this.setState({ open: true, sid })
   handleConfirm = () => {
     this.setState({ open: false })
-    this.props.handleRemoveTrashSong(this.state.sid, () =>
-      this.props.handleTrashListGET()
-    )
+    this.props.handleRemoveTrashSong(this.state.sid, () => this.props.handleTrashListGET())
   }
   handleCancel = () => this.setState({ open: false })
 
@@ -49,12 +47,7 @@ class SongList extends Component {
 
   handleSongListIndexSetWrapper = (index, pattern) => {
     return () => {
-      const {
-        songListIndex,
-        handlePlayLog,
-        recentSong,
-        redheartSong
-      } = this.props
+      const { songListIndex, handlePlayLog, recentSong, redheartSong } = this.props
       if (index !== songListIndex && pattern === this.props.pattern) {
         if (this.props.pattern === 'recent') {
           handlePlayLog(recentSong[songListIndex].sid, 's', 'y')
@@ -66,15 +59,9 @@ class SongList extends Component {
 
       this.props.handleSongListIndexSet(index, pattern)
       if (pattern === 'recent') {
-        this.props.handleUpdateSidSsid(
-          recentSong[index].sid,
-          recentSong[index].ssid
-        )
+        this.props.handleUpdateSidSsid(recentSong[index].sid, recentSong[index].ssid)
       } else if (pattern === 'redheart') {
-        this.props.handleUpdateSidSsid(
-          redheartSong[index].sid,
-          redheartSong[index].ssid
-        )
+        this.props.handleUpdateSidSsid(redheartSong[index].sid, redheartSong[index].ssid)
       }
       this.handleLyricUpdated()
       rendererProcessSend('FMResetPause')
@@ -126,30 +113,15 @@ class SongList extends Component {
                   <Item.Content>
                     <Item.Header>{song.title}</Item.Header>
                     <Item.Meta>{song.artist}</Item.Meta>
-                    <Item.Description>{`${song.albumtitle} - ${
-                      song.public_time
-                    }`}</Item.Description>
+                    <Item.Description>{`${song.albumtitle} - ${song.public_time}`}</Item.Description>
                     <Item.Extra>
                       {(type === 'redheart' || type === 'recent') && (
-                        <Button
-                          size="mini"
-                          basic
-                          icon
-                          onClick={this.handleSongListIndexSetWrapper(
-                            index,
-                            type
-                          )}
-                        >
+                        <Button size="mini" basic icon onClick={this.handleSongListIndexSetWrapper(index, type)}>
                           <Icon name="play" />
                         </Button>
                       )}
                       {type === 'trash' && (
-                        <Button
-                          size="mini"
-                          basic
-                          icon
-                          onClick={() => this.show(songArray[index].sid)}
-                        >
+                        <Button size="mini" basic icon onClick={() => this.show(songArray[index].sid)}>
                           <Icon name="trash" />
                         </Button>
                       )}
@@ -187,33 +159,27 @@ SongList.propTypes = {
   handlePlayLog: PropTypes.func,
   lyricGlobalDisplay: PropTypes.bool,
   handleSongLyricGET: PropTypes.func,
-  handleUpdateSidSsid: PropTypes.func
+  handleUpdateSidSsid: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   pattern: state.fmReducer.pattern,
   recentSong: state.fmReducer.recent.songs,
   redheartSong: state.fmReducer.redheart,
   songListIndex: state.fmReducer.songListIndex,
   lyricGlobalDisplay: state.fmReducer.lyricDisplay,
-  songlistRefreshLoading: state.fmReducer.refreshLoading
+  songlistRefreshLoading: state.fmReducer.refreshLoading,
 })
 
-const mapDispatchToProps = dispatch => ({
-  handleSongListIndexSet: (index, pattern) =>
-    dispatch(songListIndexSet(index, pattern)),
-  handleRemoveTrashSong: (sid, callback) =>
-    dispatch(removeTrashSong(sid, callback)),
+const mapDispatchToProps = (dispatch) => ({
+  handleSongListIndexSet: (index, pattern) => dispatch(songListIndexSet(index, pattern)),
+  handleRemoveTrashSong: (sid, callback) => dispatch(removeTrashSong(sid, callback)),
   handleTrashListGET: () => dispatch(trashListGET()),
-  handlePlayLog: (sid, type, play_source) =>
-    dispatch(playLog(sid, type, play_source)),
+  handlePlayLog: (sid, type, play_source) => dispatch(playLog(sid, type, play_source)),
   handleSongLyricGET: () => dispatch(songLyricGET()),
   handleUpdateSidSsid: (sid, ssid) => dispatch(updateSidSsid(sid, ssid)),
   handleRecentListGET: () => dispatch(recentListGET()),
-  handleRedHeartListGET: () => dispatch(redHeartListGET())
+  handleRedHeartListGET: () => dispatch(redHeartListGET()),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(SongList))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SongList))

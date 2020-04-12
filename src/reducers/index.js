@@ -7,5 +7,5 @@ import settingReducer from './setting'
 export default combineReducers({
   fmReducer,
   authReducer,
-  settingReducer
+  settingReducer,
 })

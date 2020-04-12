@@ -5,7 +5,7 @@ import {
   AUTH_REMOVE_FAIL_MESSAGE,
   AUTH_TOKEN_LOAD,
   AUTH_LOGOUT,
-  USER_INFO
+  USER_INFO,
 } from '../actions/auth/types'
 
 const authReducer = (
@@ -15,7 +15,7 @@ const authReducer = (
     loginFailMessage: '',
     _id: 0, // if _id === 1, use is login
     userToken: {},
-    userInfo: {}
+    userInfo: {},
   },
   action
 ) => {

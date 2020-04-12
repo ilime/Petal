@@ -63,26 +63,23 @@ Sheet.propTypes = {
   pattern: PropTypes.string,
   daily: PropTypes.object,
   lyricGlobalDisplay: PropTypes.bool,
-  handleSongLyricGET: PropTypes.func
+  handleSongLyricGET: PropTypes.func,
   // switchToSheetPattern: PropTypes.func,
   // handleSheetSet: PropTypes.func
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   _id: state.authReducer._id,
   pattern: state.fmReducer.pattern,
   daily: state.fmReducer.daily,
-  lyricGlobalDisplay: state.fmReducer.lyricDisplay
+  lyricGlobalDisplay: state.fmReducer.lyricDisplay,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   switchToDailyPattern: () => dispatch(dailyPattern()),
-  handleSongLyricGET: () => dispatch(songLyricGET())
+  handleSongLyricGET: () => dispatch(songLyricGET()),
   // switchToSheetPattern: () => dispatch(sheetPattern()),
   // handleSheetSet: list => dispatch(sheetSet(list))
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sheet)
+export default connect(mapStateToProps, mapDispatchToProps)(Sheet)

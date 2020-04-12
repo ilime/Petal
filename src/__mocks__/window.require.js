@@ -1,7 +1,7 @@
-global.require = jest.fn(name => {
+global.require = jest.fn((name) => {
   if (name === 'electron') {
     return {
-      shell: jest.fn()
+      shell: jest.fn(),
     }
   }
 })

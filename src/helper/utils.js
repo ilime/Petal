@@ -6,7 +6,7 @@ const UserMusicPath = remote.app.getPath('music')
 
 function fileDownload(url, writePath, name, callback) {
   const file = fs.createWriteStream(`${writePath}/${name}`)
-  http.get(url, response => {
+  http.get(url, (response) => {
     response.pipe(file)
   })
 
@@ -16,7 +16,7 @@ function fileDownload(url, writePath, name, callback) {
 }
 
 function removeFile(path) {
-  fs.unlink(path, err => {
+  fs.unlink(path, (err) => {
     if (err) throw err
     console.log(path, ' was deleted.')
   })

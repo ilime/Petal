@@ -58,7 +58,7 @@ You can also install [petal-bin](https://aur.archlinux.org/packages/petal-bin/) 
 
 如果 GitHub 下载速度缓慢的话，可以前往百度网盘下载：
 
-链接:<https://pan.baidu.com/s/1l-3ExzKzsim3LBiJHzCY_Q>  密码:cjp1
+链接:<https://pan.baidu.com/s/1l-3ExzKzsim3LBiJHzCY_Q> 密码:cjp1
 
 ## How to develop
 

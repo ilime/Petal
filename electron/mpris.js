@@ -14,7 +14,7 @@ class Mpris {
         identity: 'douban.FM player',
         supportedUriSchemes: ['file'],
         supportedMimeTypes: ['audio/mpeg', 'application/ogg'],
-        supportedInterfaces: ['player']
+        supportedInterfaces: ['player'],
       })
 
       this.player.getPosition = () => 0 // TODO
@@ -47,7 +47,7 @@ class Mpris {
       'mpris:artUrl': song.picture,
       'xesam:title': song.title,
       'xesam:album': song.albumtitle,
-      'xesam:artist': [song.artist]
+      'xesam:artist': [song.artist],
     }
   }
 

@@ -7,7 +7,7 @@ const typeSpecs = [
   ['PLAYLIST_TRASH_REQUEST', 'b'],
   ['RED_HEART_RATE', 'r'],
   ['RED_HEART_UNRATE', 'u'],
-  ['PLAYLIST_END_REQUEST', 'e']
+  ['PLAYLIST_END_REQUEST', 'e'],
 ]
 
 describe('fmReducer', () => {
@@ -21,14 +21,14 @@ describe('fmReducer', () => {
 
   // type test
   test('new', () => {
-    typeSpecs.map(t => expect(fmReducer({ type: '' }, { type: t[0] })).toEqual({ type: t[1] }))
+    typeSpecs.map((t) => expect(fmReducer({ type: '' }, { type: t[0] })).toEqual({ type: t[1] }))
   })
 
   // pattern test
   test('select pattern', () => {
     expect(fmReducer({ pattern: '' }, { type: 'SELECT_PATTERN' })).toEqual({
       pattern: 'select',
-      channelId: -10
+      channelId: -10,
     })
   })
   test('recent pattern', () => {
@@ -36,7 +36,7 @@ describe('fmReducer', () => {
       fmReducer(
         {
           pattern: 'select',
-          recent: { songs: [{ sid: 'mock', ssid: 'mock' }] }
+          recent: { songs: [{ sid: 'mock', ssid: 'mock' }] },
         },
         { type: 'RECENT_PATTERN' }
       )
@@ -45,7 +45,7 @@ describe('fmReducer', () => {
       fmReducer(
         {
           pattern: 'select',
-          recent: { songs: [{ sid: 'mock', ssid: 'mock' }] }
+          recent: { songs: [{ sid: 'mock', ssid: 'mock' }] },
         },
         { type: 'RECENT_PATTERN' }
       )

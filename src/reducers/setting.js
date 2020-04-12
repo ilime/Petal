@@ -11,7 +11,7 @@ const settingReducer = (
     openPattern: 'select',
     compactStatusBar: false,
     preferBitRate: '128',
-    saveSuccess: false
+    saveSuccess: false,
   },
   action
 ) => {

@@ -9,7 +9,7 @@ class Shares extends Component {
     this.state = {
       open: false,
       link: undefined,
-      shares: []
+      shares: [],
     }
   }
 
@@ -29,19 +29,19 @@ class Shares extends Component {
   loadShares = () => {
     db.find({ usedFor: 'share' }, (err, docs) => {
       this.setState({
-        shares: docs
+        shares: docs,
       })
     })
   }
 
-  removeShare = link => {
+  removeShare = (link) => {
     db.remove({ shareLink: link }, {}, (err, numRemoved) => {
       console.log('Removed: ', numRemoved)
       this.loadShares()
     })
   }
 
-  show = link => this.setState({ open: true, link })
+  show = (link) => this.setState({ open: true, link })
   handleConfirm = () => {
     this.setState({ open: false })
     this.removeShare(this.state.link)
@@ -52,31 +52,18 @@ class Shares extends Component {
     return (
       <article className="petal-personal-shares">
         <Header as="h3">所有分享</Header>
-        <Icon
-          name="close"
-          className="close-page"
-          onClick={this.handleReturnPrev}
-        />
-        <Item.Group divided unstackable  relaxed={true}>
+        <Icon name="close" className="close-page" onClick={this.handleReturnPrev} />
+        <Item.Group divided unstackable relaxed={true}>
           {this.state.shares.length > 0 &&
-            this.state.shares.map(album => {
+            this.state.shares.map((album) => {
               return (
                 <Item key={album.albumtitle}>
-                  <Item.Image
-                    className="album-picture"
-                    size="tiny"
-                    src={album.sharePicture}
-                  />
+                  <Item.Image className="album-picture" size="tiny" src={album.sharePicture} />
                   <Item.Content>
                     <Item.Header as="h4">{album.albumtitle}</Item.Header>
                     <Item.Description>{album.shareLink}</Item.Description>
                     <Item.Extra>
-                      <Button
-                        basic
-                        size="tiny"
-                        icon="trash"
-                        onClick={() => this.show(album.shareLink)}
-                      />
+                      <Button basic size="tiny" icon="trash" onClick={() => this.show(album.shareLink)} />
                     </Item.Extra>
                   </Item.Content>
                 </Item>
@@ -88,8 +75,16 @@ class Shares extends Component {
           onCancel={this.handleCancel}
           onConfirm={this.handleConfirm}
           content="确认从分享中移除此专辑？"
-          cancelButton={<Button size="tiny" negative>取消</Button>}
-          confirmButton={<Button size="tiny" positive>确认</Button>}
+          cancelButton={
+            <Button size="tiny" negative>
+              取消
+            </Button>
+          }
+          confirmButton={
+            <Button size="tiny" positive>
+              确认
+            </Button>
+          }
           size="mini"
         />
       </article>

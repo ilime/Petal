@@ -62,18 +62,13 @@ export class Sidebar extends Component {
 Sidebar.propTypes = {
   _id: PropTypes.number.isRequired,
   avatar: PropTypes.string,
-  hideAbout: PropTypes.bool
+  hideAbout: PropTypes.bool,
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   _id: state.authReducer._id,
   avatar: state.authReducer.userInfo.icon,
-  hideAbout: state.settingReducer.hideAbout
+  hideAbout: state.settingReducer.hideAbout,
 })
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(Sidebar)
-)
+export default withRouter(connect(mapStateToProps, null)(Sidebar))
