@@ -28,7 +28,6 @@ export let mainWindowPropsLoadingFinish ={
 }
 const plasmaWindowProps = {
   transparent: true,
-  resizable: false,
   width: mainWindowProps.width + 15*2,
   height: mainWindowProps.height + 15*2,
 }
