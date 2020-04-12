@@ -38,7 +38,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:electron": "cross-env NODE_ENV=development electron .",
+    "start:electron": "cross-env NODE_ENV=development electron --enable-transparent-visuals --disable-gpu .",
     "build:electron:dev": "cross-env NODE_ENV=development webpack --config webpack/config.electron.js --progress",
     "build:electron:prod": "cross-env NODE_ENV=production webpack --config webpack/config.electron.js --progress",
     "dist:electron": "electron-builder -mwl",

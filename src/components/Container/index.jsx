@@ -1,8 +1,9 @@
 import '../../styles/app.scss'
+import { plasmaBorderStyle } from './styles.linux.js'
 
 import React, { Component } from 'react'
 import { Route, HashRouter as Router } from 'react-router-dom'
-import { appMaximize, appMinimize, appQuit } from '../../helper/electron'
+import { appMaximize, appMinimize, appQuit, isPlasma } from '../../helper/electron'
 import { openInDefaultBrowser, rendererProcessSend } from '../../helper/electron'
 
 import About from '../About/index'
@@ -56,15 +57,13 @@ class Container extends Component {
 
   render() {
     const { loading, checkUpdateDisplay } = this.state
-    if (loading) {
-      return (
-        <Router>
+    const borderStyle = isPlasma() ? plasmaBorderStyle : null
+    const content = loading ?
+        (<Router>
           <Loading end={this.handleLoadingOver} />
-        </Router>
-      )
-    } else {
-      return (
-        <Router>
+        </Router>)
+        :
+        (<Router>
           <article className="petal-container-titlebar">
             <div className="titlebar">
               <div className="titlebar-stoplight">
@@ -123,9 +122,10 @@ class Container extends Component {
               <Route path="/about" component={About} />
             </article>
           </article>
-        </Router>
-      )
-    }
+        </Router>)
+      return (<div className='windowWrapper' style={borderStyle}>
+        {content}
+        </div>)
   }
 }
 
