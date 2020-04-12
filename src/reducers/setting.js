@@ -3,7 +3,7 @@ import * as types from '../actions/setting/types'
 const settingReducer = (
   state = {
     mainVersion: 2,
-    secondaryVersion: 24,
+    secondaryVersion: 25,
     volume: 20,
     openWithPlaying: true,
     restoreLastWinPos: false,
