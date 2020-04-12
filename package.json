@@ -66,7 +66,7 @@
     "cross-env": "^7.0.0",
     "electron": "^8.0.0",
     "electron-builder": "22.2.0",
-    "electron-devtools-installer": "^2.2.4",
+    "electron-devtools-installer": "^3.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "node-sass": "^4.12.0",
